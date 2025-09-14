@@ -6,89 +6,90 @@
 <title>EVR:RDY — Coming Soon</title>
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon." />
 <style>
-  /* Brand */
+  /* ===== Brand palette ===== */
   :root{
-    --bone:#e5e4d8;           /* main text */
-    --olive:#848c6a;          /* accents / buttons */
-    --blue:#2b5faa;           /* secondary accent */
-    --ink:#0e1012;            /* deep background */
-    --ink2:#1a1f24;           /* gradient partner */
-    --bright:#a9d68a;         /* COMING SOON green */
+    --bone:#e5e4d8;  /* main text */
+    --olive:#848c6a; /* accents / buttons */
+    --blue:#2b5faa;  /* secondary accent */
+    --ink:#0e1012;   /* deep bg */
+    --ink2:#1a1f24;  /* bg gradient partner */
+    --bright:#a9d68a;/* COMING SOON green */
   }
 
-  /* Page base */
+  /* ===== Base ===== */
   html,body{height:100%}
   body{
     margin:0;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:var(--bone);
-    background: radial-gradient(1200px 800px at 15% 0%, #20262f 0%, var(--ink) 45%, var(--ink2) 100%);
+    background: radial-gradient(1200px 800px at 12% -10%, #20262f 0%, var(--ink) 45%, var(--ink2) 100%);
   }
 
-  /* Banner */
-  header.hero-banner{
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(229,228,216,.14);
-    box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  /* ===== Top banner as background (full-bleed) ===== */
+  .hero-banner{
+    position:relative;
+    height: clamp(220px, 30vw, 360px); /* responsive height */
+    background: url("assets/img/banner.png") center left 35% / cover no-repeat;
+    /* darken edges so text below has contrast */
   }
-  .hero-banner img{
-    width: 100%;
-    height: clamp(220px, 32vw, 340px);
-    object-fit: cover;
-    display: block;
-    filter: saturate(105%);
+  .hero-banner::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.00) 40%, rgba(0,0,0,0.45) 100%),
+      radial-gradient(70% 80% at 10% 0%, rgba(0,0,0,.35), transparent 60%);
   }
 
-  /* Content card */
+  /* ===== Content wrapper ===== */
   .wrap{
     max-width: 1100px;
-    margin: 0 auto;
-    padding: clamp(20px, 3vw, 40px) 16px;
+    margin: clamp(-56px, -6vw, -84px) auto 0; /* pull card up toward banner */
+    padding: 0 16px 40px;
   }
+
+  /* ===== Text card ===== */
   .text-card{
-    background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.22));
-    border: 1px solid rgba(229,228,216,.16);
-    border-radius: 18px;
-    padding: clamp(18px, 2.5vw, 28px);
-    box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    background: linear-gradient(180deg, rgba(0,0,0,.42), rgba(0,0,0,.28));
+    border: 1px solid rgba(229,228,216,.14);
+    border-radius: 20px;
+    padding: clamp(20px, 3vw, 32px);
+    box-shadow: 0 28px 70px rgba(0,0,0,.40);
     backdrop-filter: blur(2px) saturate(115%);
   }
 
-  /* Typography */
+  /* ===== Typography ===== */
   .soon{
-    font-size: clamp(28px, 6vw, 44px);
+    font-size: clamp(28px, 6vw, 48px);
     font-weight: 900;
-    color: var(--bright);
+    color: var(--bright);              /* brighter green */
     margin: 0 0 1rem 0;
-    letter-spacing: .5px;
-    text-shadow: 0 0 12px rgba(169,214,138,.45), 0 4px 18px rgba(0,0,0,.55);
+    letter-spacing: .6px;
+    text-shadow: 0 0 14px rgba(169,214,138,.45), 0 4px 18px rgba(0,0,0,.55);
   }
   .content{
-    color:#d8d9cf;
-    font-size: clamp(15.5px, 1.25vw, 18px);
-    line-height: 1.65;
+    color:#d9dacd;
+    font-size: clamp(16px, 1.25vw, 18px);
+    line-height:1.65;
     max-width: 72ch;
   }
   .content strong{color:#fff}
-  .content ul{margin:.75rem 0 1.25rem 1.1rem}
-  .content li{margin:.35rem 0}
-  .content em{color:#eaeaea}
+  .content ul{margin:.9rem 0 1.25rem 1.1rem}
+  .content li{margin:.4rem 0}
+  .content em{color:#ededeb}
 
-  /* CTA */
+  /* ===== CTA ===== */
   .cta{
     display:inline-flex; align-items:center; gap:.55rem;
     margin-top: 1rem; padding:.9rem 1.15rem;
     background: var(--olive); color: var(--bone);
-    border:1px solid rgba(229,228,216,.25);
+    border:1px solid rgba(229,228,216,.22);
     border-radius: 999px; text-decoration:none; font-weight:700;
     box-shadow: 0 6px 20px rgba(0,0,0,.35);
     transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
   }
-  .cta:hover{ transform: translateY(-1px); box-shadow: 0 10px 30px rgba(0,0,0,.45); background:#94a07d; }
+  .cta:hover{ transform: translateY(-1px); box-shadow: 0 12px 30px rgba(0,0,0,.45); background:#94a07d; }
 
-  /* Footer */
+  /* ===== Footer ===== */
   .footer{
     max-width:1100px; margin: 16px auto 24px; padding:0 16px;
     color:#b9baaf; text-align:center; font-size:.95rem;
@@ -97,10 +98,8 @@
 </head>
 <body>
 
-  <!-- Top banner (your new image) -->
-  <header class="hero-banner" role="banner">
-    <img src="assets/img/banner.png" alt="EVR:RDY — Defend Forward · Advance Always">
-  </header>
+  <!-- Full-bleed banner -->
+  <div class="hero-banner" role="img" aria-label="EVR:RDY — Defend Forward · Advance Always"></div>
 
   <!-- Single column content -->
   <main class="wrap">
