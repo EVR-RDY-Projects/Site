@@ -6,60 +6,117 @@
 <title>EVR:RDY — Coming Soon</title>
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon.">
 <style>
-  :root{
-    --bone:#e5e4d8; --olive:#848c6a; --blue:#2b5faa; --ink:#0e1012;
+  body {
+    margin:0;
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background: radial-gradient(1000px 600px at 20% 20%, #1f2530 0%, #0e1012 40%, #1a1f24 100%);
+    color:#e5e4d8;
   }
-  /* Full-page, fixed background */
-  html,body{height:100%}
-  body{
-    margin:0; font-family:Inter,system-ui,Arial,sans-serif; color:var(--bone);
-    background:#101317 url("background.jpg") no-repeat center center fixed;
-    background-size:cover;
-    display:flex; align-items:center; justify-content:center;
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
   }
-  /* Dark scrim to keep text readable on any image */
-  .scrim{
-    position:fixed; inset:0; background:rgba(14,16,18,.55);
+  @media (max-width: 850px){
+    .hero { grid-template-columns: 1fr; text-align: center; }
   }
-  /* Content container */
-  .wrap{
-    position:relative; z-index:1; text-align:left;
-    max-width:1100px; width:100%; padding:3rem 1rem;
-    display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center;
+  h1.logo {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800;
+    margin:0 0 .5rem;
+    letter-spacing:2px;
   }
-  @media (max-width:900px){ .wrap{grid-template-columns:1fr; text-align:center;} }
-  /* Left column: logo text + copy */
-  h1{
-    font-size:clamp(3rem, 9vw, 6rem); margin:0 0 .25rem; font-weight:900; letter-spacing:2px;
-    text-shadow:0 3px 6px rgba(0,0,0,.7);
+  .motto {
+    font-size: 1.35rem;
+    color:#848c6a;
+    margin-bottom:0.75rem;
   }
-  .motto{ color:var(--olive); font-size:1.35rem; margin:0 0 1.25rem; }
-  .content{ color:#cfd0c6; font-size:1.1rem; line-height:1.65; }
-  .content ul{ margin:1rem 0 1.25rem; padding-left:1.1rem; }
-  .cta{
-    display:inline-block; margin-top:1rem; padding:.9rem 1.2rem;
-    background:var(--olive); color:var(--bone); border-radius:12px; text-decoration:none; font-weight:600;
+  .coming-soon {
+    font-size: clamp(2rem, 6vw, 3rem);
+    font-weight:700;
+    color:#2b5faa;
+    margin-bottom:2rem;
+    text-shadow:0 2px 6px rgba(0,0,0,.5);
   }
-  /* Right column: patch card (optional) */
-  .card{
-    border:1px solid rgba(229,228,216,.2); border-radius:16px; padding:1rem;
-    background:rgba(0,0,0,.25); backdrop-filter:saturate(120%) blur(1px);
+  .content {
+    font-size:1.1rem;
+    line-height:1.6;
+    color:#cfd0c6;
   }
-  .patch{width:100%; border-radius:12px; display:block}
-  /* Footer */
-  .footer{
-    position:fixed; left:0; right:0; bottom:.75rem; text-align:center;
-    color:#b8b9b0; font-size:.95rem; text-shadow:0 2px 4px rgba(0,0,0,.7);
+  .content ul {
+    text-align:left;
+    margin:1rem 0 1.5rem;
+    padding-left:1.2rem;
+  }
+  .cta {
+    display:inline-block;
+    margin-top:1.2rem;
+    padding:.9rem 1.4rem;
+    background:#848c6a;
+    color:#e5e4d8;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+  }
+  .patch {
+    width:100%;
+    max-width:400px;
+    border-radius:16px;
+    border:1px solid rgba(229,228,216,.18);
+    box-shadow:0 8px 40px rgba(0,0,0,.4);
+    justify-self:center;
+  }
+  .footer {
+    max-width:1100px;
+    margin:3rem auto 0;
+    padding:1rem;
+    border-top:1px solid rgba(229,228,216,.18);
+    font-size:.95rem;
+    color:#a9aa9f;
+    text-align:center;
   }
 </style>
 </head>
 <body>
-  <div class="scrim"></div>
-
-  <main class="wrap">
-    <!-- Left: Text -->
+  <main class="hero">
+    <!-- LEFT SIDE (TEXT) -->
     <section>
-      <h1>EVR:RDY</h1>
+      <h1 class="logo">EVR:RDY</h1>
       <div class="motto">Defend Forward · Advance Always</div>
+      <div class="coming-soon">COMING SOON</div>
 
-      <div clas
+      <div class="content">
+        <p><strong>EVR:RDY Cyber Defense & Consulting</strong> is a veteran-led initiative focused on 
+        bringing affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
+
+        <p>We are addressing three major challenges:</p>
+        <ul>
+          <li><strong>High Cost</strong> — Delivering affordable OT/ICS monitoring and sensing solutions.</li>
+          <li><strong>Workforce Gaps</strong> — Combining automation with veteran expertise to strengthen defense.</li>
+          <li><strong>Scalability</strong> — Creating modular solutions that adapt from utilities to SMBs.</li>
+        </ul>
+
+        <p>Our goal: to combine <em>low-cost OT/ICS sensors</em>, <em>unidirectional data diodes</em>, 
+        and <em>AI-enabled SOC automation</em> so every organization can defend forward and advance always.</p>
+
+        <a class="cta" href="mailto:OPS@EVRRDY.com">Contact Us — OPS@EVRRDY.com</a>
+      </div>
+    </section>
+
+    <!-- RIGHT SIDE (PATCH) -->
+    <aside>
+      <img src="assets/img/patch.png" alt="EVR:RDY patch logo" class="patch">
+    </aside>
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
+  </footer>
+
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
