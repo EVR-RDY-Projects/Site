@@ -13,33 +13,42 @@
     background: radial-gradient(1000px 600px at 20% 20%, #1f2530 0%, #0e1012 40%, #1a1f24 100%);
     color:#e5e4d8;
   }
-  .wrap {
-    max-width: 980px;
+  .hero {
+    max-width: 1100px;
     margin: 0 auto;
     padding: 3rem 1rem 4rem;
-    text-align:center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (max-width: 850px){
+    .hero{grid-template-columns:1fr;text-align:center}
   }
   h1.logo {
     font-size: clamp(3rem, 8vw, 5rem);
     font-weight: 800;
-    margin-bottom:.5rem;
+    margin:0 0 .5rem;
     letter-spacing:2px;
   }
   .motto {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     color:#848c6a;
-    margin-bottom:2rem;
+    margin-bottom:1.5rem;
   }
   .content {
-    max-width:700px;
-    margin:0 auto 2.5rem;
-    font-size:1.15rem;
+    font-size:1.1rem;
     line-height:1.6;
     color:#cfd0c6;
   }
+  .content ul {
+    text-align:left;
+    margin:1rem 0 1.5rem;
+    padding-left:1.2rem;
+  }
   .cta {
     display:inline-block;
-    margin-top:1.5rem;
+    margin-top:1.2rem;
     padding:.9rem 1.4rem;
     background:#848c6a;
     color:#e5e4d8;
@@ -48,49 +57,59 @@
     font-weight:600;
   }
   .patch {
-    margin-top:3rem;
-    width:300px;
-    max-width:80%;
+    width:100%;
+    max-width:400px;
     border-radius:16px;
     border:1px solid rgba(229,228,216,.18);
     box-shadow:0 8px 40px rgba(0,0,0,.4);
+    justify-self:center;
   }
   .footer {
-    margin-top:3rem;
-    padding-top:1rem;
+    max-width:1100px;
+    margin:3rem auto 0;
+    padding:1rem;
     border-top:1px solid rgba(229,228,216,.18);
     font-size:.95rem;
     color:#a9aa9f;
+    text-align:center;
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1 class="logo">EVR:RDY</h1>
-    <div class="motto">Defend Forward · Advance Always</div>
+  <main class="hero">
+    <!-- LEFT SIDE (TEXT) -->
+    <section>
+      <h1 class="logo">EVR:RDY</h1>
+      <div class="motto">Defend Forward · Advance Always</div>
 
-    <div class="content">
-      <p><strong>EVR:RDY </strong> is a veteran-led initiative focused on 
-      bringing affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
+      <div class="content">
+        <p><strong>EVR:RDY Cyber Defense & Consulting</strong> is a veteran-led initiative focused on 
+        bringing affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
 
-      <p>Our mission is to solve three major challenges:</p>
-      <ul style="text-align:left;max-width:640px;margin:1rem auto;line-height:1.6;">
-        <li><strong>High Cost</strong> — Providing affordable sensing and monitoring solutions where traditional tools are priced out of reach.</li>
-        <li><strong>Workforce Gaps</strong> — Leveraging automation and veteran expertise to strengthen understaffed teams.</li>
-        <li><strong>Scalability</strong> — Designing modular solutions that can adapt to utilities, SMBs, and critical infrastructure alike.</li>
-      </ul>
+        <p>We are addressing three major challenges:</p>
+        <ul>
+          <li><strong>High Cost</strong> — Delivering affordable OT/ICS monitoring and sensing solutions.</li>
+          <li><strong>Workforce Gaps</strong> — Combining automation with veteran expertise to strengthen defense.</li>
+          <li><strong>Scalability</strong> — Creating modular solutions that adapt from utilities to SMBs.</li>
+        </ul>
 
-      <p>We are building a platform that combines <em>low-cost OT/ICS sensors</em>, 
-      <em>unidirectional data diodes</em>, and <em>AI-enabled SOC automation</em> to empower organizations 
-      to defend forward and advance always.</p>
+        <p>Our goal: to combine <em>low-cost OT/ICS sensors</em>, <em>unidirectional data diodes</em>, 
+        and <em>AI-enabled SOC automation</em> so every organization can defend forward and advance always.</p>
 
-      <a class="cta" href="mailto:OPS@EVRRDY.com">Contact Us — OPS@EVRRDY.com</a>
-    </div>
+        <a class="cta" href="mailto:OPS@EVRRDY.com">Contact Us — OPS@EVRRDY.com</a>
+      </div>
+    </section>
 
-    <img src="assets/img/patch.png" alt="EVR:RDY patch logo" class="patch">
+    <!-- RIGHT SIDE (PATCH) -->
+    <aside>
+      <img src="assets/img/patch.png" alt="EVR:RDY patch logo" class="patch">
+    </aside>
+  </main>
 
-    <div class="footer">© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</div>
-  </div>
+  <footer class="footer">
+    © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
+  </footer>
+
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
