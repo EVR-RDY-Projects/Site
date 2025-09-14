@@ -14,25 +14,25 @@
     --ink:#0e1012;         /* fallback bg */
   }
 
-  /* Global background: your background.png, fixed */
+  /* ===== Global background (static) ===== */
   html,body{height:100%}
   body{
     margin:0;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:var(--bone);
-    background: var(--ink) url("assets/img/background.png") center center / cover fixed no-repeat;
+    background: var(--ink) url("assets/img/background.png") center center / cover no-repeat fixed;
   }
 
-  /* Shared container: banner and text have exactly the same width */
+  /* Shared container: banner + content */
   .container{
-    max-width: 1200px;            /* adjust if you want wider/narrower */
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 16px;
   }
 
-  /* Banner: static image, no crop/stretch */
+  /* Banner */
   header.hero{
-    padding-top: 12px;            /* small breathing room */
+    padding-top: 12px;
   }
   .hero img{
     width: 100%;
@@ -43,7 +43,7 @@
     border: 1px solid rgba(229,228,216,.14);
   }
 
-  /* Text card: same width as banner because it's in the same .container */
+  /* Content */
   .content-wrap{
     margin: 28px auto 48px;
   }
@@ -75,6 +75,7 @@
   .bodycopy li{margin:.4rem 0}
   .bodycopy em{color:#ececec}
 
+  /* CTA */
   .cta{
     display:inline-block;
     margin-top: 1.1rem;
@@ -104,53 +105,39 @@
 </head>
 <body>
 
-  <!-- Banner (static image). Text section below shares this exact width via .container -->
+  <!-- Banner -->
   <header class="hero">
     <div class="container">
       <img src="assets/img/banner.png" alt="EVR:RDY — Defend Forward · Advance Always">
     </div>
   </header>
 
-  <!-- Content (same container → same width as banner) -->
+  <!-- Content -->
   <main class="content-wrap">
     <div class="container">
       <section class="card">
-        <div class="soon">      COMING SOON</div>
+        <div class="soon">COMING SOON</div>
 
         <div class="bodycopy">
-          <p>
-            <strong>EVR:RDY</strong> is a veteran-led cyber company built on the mindset of doing more with less. 
-            The mission is simple: give critical infrastructure and defense partners a practical, affordable way to 
-            protect the systems that matter most.
-          </p>
-          
+          <p><strong>EVR:RDY</strong> is a veteran-led cyber company built on the mindset of doing more with less. 
+          The mission is simple: give critical infrastructure and defense partners a practical, affordable way to 
+          protect the systems that matter most.</p>
+
           <blockquote>
-            “We have done so much, for so long, with so little, we are now qualified to do anything with nothing.” 
-            <br><span style="font-size:0.9em;color:#aaa;">– often attributed to Frank Sinatra</span>
+            “We have done so much, for so long, with so little, we are now qualified to do anything with nothing.”<br>
+            <span style="font-size:0.9em;color:#aaa;">– often attributed to Frank Sinatra</span>
           </blockquote>
-          
-          <p>
-            This isn’t about buzzwords or bloated security stacks. EVR:RDY applies the same grit, discipline, 
-            and resourcefulness forged in uniform and brings it to cyber defense.
-          </p>
 
-          <p>We are addressing three major challenges:</p>
-          <ul>
-            <li><strong>High Cost</strong> — Delivering affordable OT/ICS monitoring and sensing solutions.</li>
-            <li><strong>Workforce Gaps</strong> — Combining automation with veteran expertise to strengthen defense.</li>
-            <li><strong>Scalability</strong> — Creating modular solutions that adapt from utilities to SMBs.</li>
-          </ul>
+          <p>This isn’t about buzzwords or bloated security stacks. EVR:RDY applies the same grit, discipline, 
+          and resourcefulness forged in uniform and brings it to cyber defense.</p>
 
-          <p>Our goal: to combine <em>low-cost OT/ICS sensors</em>, <em>unidirectional data diodes</em>, <em>shared resources to lower cost</em>,<em>specialized Hunter/Killer teams</em>,and
-          <em>AI-enabled SOC automation</em> all at scale so every organization can be defended.</p>
-
-          <a class="cta" href="mailto:OPS@EVRRDY.com">Contact — OPS@EVRRDY.com</a>
+          <a class="cta" href="mailto:OPS@EVRRDY.com">📧 Contact — OPS@EVRRDY.com</a>
         </div>
       </section>
     </div>
   </main>
 
-  <footer>© <span id="y"></span> “The strongest steel is forged in the hottest dumpster fire.” </footer>
+  <footer>© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</footer>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
