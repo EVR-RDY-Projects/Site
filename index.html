@@ -6,102 +6,102 @@
 <title>EVR:RDY — Coming Soon</title>
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon." />
 <style>
-  /* ===== Brand palette ===== */
   :root{
-    --bone:#e5e4d8;  /* main text */
-    --olive:#848c6a; /* accents / buttons */
-    --blue:#2b5faa;  /* secondary accent */
-    --ink:#0e1012;   /* deep bg */
-    --ink2:#1a1f24;  /* bg gradient partner */
-    --bright:#a9d68a;/* COMING SOON green */
+    --bone:#e5e4d8;
+    --olive:#848c6a;
+    --bright:#a9d68a;
   }
 
-  /* ===== Base ===== */
-  html,body{height:100%}
-  body{
+  /* Background stays */
+  body {
     margin:0;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: Inter, system-ui, sans-serif;
     color:var(--bone);
-    background: radial-gradient(1200px 800px at 12% -10%, #20262f 0%, var(--ink) 45%, var(--ink2) 100%);
+    background: radial-gradient(1000px 600px at 20% 20%, #1f2530 0%, #0e1012 40%, #1a1f24 100%);
   }
 
-  /* ===== Top banner as background (full-bleed) ===== */
-  .hero-banner{
-    position:relative;
-    height: clamp(220px, 30vw, 360px); /* responsive height */
-    background: url("assets/img/banner.png") center left 35% / cover no-repeat;
-    /* darken edges so text below has contrast */
+  /* Banner image locked in size */
+  header.hero-banner {
+    width: 100%;
+    background: #0e1012;
+    border-bottom: 2px solid rgba(229,228,216,.15);
   }
-  .hero-banner::after{
-    content:"";
-    position:absolute; inset:0;
-    background:
-      linear-gradient(180deg, rgba(0,0,0,0.00) 40%, rgba(0,0,0,0.45) 100%),
-      radial-gradient(70% 80% at 10% 0%, rgba(0,0,0,.35), transparent 60%);
+  .hero-banner img {
+    width: 100%;
+    max-height: 320px;     /* lock banner height */
+    object-fit: contain;   /* no cropping */
+    display: block;
+    margin: 0 auto;
   }
 
-  /* ===== Content wrapper ===== */
-  .wrap{
-    max-width: 1100px;
-    margin: clamp(-56px, -6vw, -84px) auto 0; /* pull card up toward banner */
+  /* Layout */
+  .wrap {
+    max-width: 1000px;
+    margin: -40px auto 0; /* pull card up slightly */
     padding: 0 16px 40px;
   }
-
-  /* ===== Text card ===== */
-  .text-card{
-    background: linear-gradient(180deg, rgba(0,0,0,.42), rgba(0,0,0,.28));
-    border: 1px solid rgba(229,228,216,.14);
-    border-radius: 20px;
+  .text-card {
+    background: rgba(14,16,18,.7);
+    border: 1px solid rgba(229,228,216,.15);
+    border-radius: 18px;
     padding: clamp(20px, 3vw, 32px);
-    box-shadow: 0 28px 70px rgba(0,0,0,.40);
+    box-shadow: 0 24px 60px rgba(0,0,0,.4);
     backdrop-filter: blur(2px) saturate(115%);
   }
 
-  /* ===== Typography ===== */
-  .soon{
+  /* Typography */
+  .soon {
     font-size: clamp(28px, 6vw, 48px);
     font-weight: 900;
-    color: var(--bright);              /* brighter green */
-    margin: 0 0 1rem 0;
-    letter-spacing: .6px;
+    color: var(--bright);
+    margin: 0 0 1rem;
     text-shadow: 0 0 14px rgba(169,214,138,.45), 0 4px 18px rgba(0,0,0,.55);
   }
-  .content{
+  .content {
     color:#d9dacd;
-    font-size: clamp(16px, 1.25vw, 18px);
-    line-height:1.65;
-    max-width: 72ch;
+    font-size: 1.1rem;
+    line-height: 1.65;
+    max-width: 70ch;
   }
-  .content strong{color:#fff}
-  .content ul{margin:.9rem 0 1.25rem 1.1rem}
-  .content li{margin:.4rem 0}
-  .content em{color:#ededeb}
+  .content strong {color:#fff}
+  .content ul {margin:.9rem 0 1.25rem 1.1rem}
+  .content li {margin:.4rem 0}
+  .content em {color:#ededeb}
 
-  /* ===== CTA ===== */
-  .cta{
-    display:inline-flex; align-items:center; gap:.55rem;
-    margin-top: 1rem; padding:.9rem 1.15rem;
-    background: var(--olive); color: var(--bone);
-    border:1px solid rgba(229,228,216,.22);
-    border-radius: 999px; text-decoration:none; font-weight:700;
-    box-shadow: 0 6px 20px rgba(0,0,0,.35);
-    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  /* CTA */
+  .cta {
+    display:inline-block;
+    margin-top: 1rem;
+    padding:.9rem 1.2rem;
+    background: var(--olive);
+    color: var(--bone);
+    border-radius: 999px;
+    text-decoration:none;
+    font-weight:700;
+    transition: background .2s ease, transform .2s ease;
   }
-  .cta:hover{ transform: translateY(-1px); box-shadow: 0 12px 30px rgba(0,0,0,.45); background:#94a07d; }
+  .cta:hover {
+    background:#9ca889;
+    transform: translateY(-2px);
+  }
 
-  /* ===== Footer ===== */
-  .footer{
-    max-width:1100px; margin: 16px auto 24px; padding:0 16px;
-    color:#b9baaf; text-align:center; font-size:.95rem;
+  /* Footer */
+  .footer {
+    text-align:center;
+    color:#b9baaf;
+    font-size:.95rem;
+    margin: 16px auto 24px;
   }
 </style>
 </head>
 <body>
 
-  <!-- Full-bleed banner -->
-  <div class="hero-banner" role="img" aria-label="EVR:RDY — Defend Forward · Advance Always"></div>
+  <!-- Banner -->
+  <header class="hero-banner">
+    <img src="assets/img/banner.png" alt="EVR:RDY — Defend Forward · Advance Always">
+  </header>
 
-  <!-- Single column content -->
+  <!-- Content -->
   <main class="wrap">
     <section class="text-card">
       <div class="soon">COMING SOON</div>
@@ -120,9 +120,7 @@
         <p>Our goal: to combine <em>low-cost OT/ICS sensors</em>, <em>unidirectional data diodes</em>, and
         <em>AI-enabled SOC automation</em> so every organization can defend forward and advance always.</p>
 
-        <a class="cta" href="mailto:OPS@EVRRDY.com" aria-label="Email OPS at EVR RDY">
-          <span>📧</span> Contact — OPS@EVRRDY.com
-        </a>
+        <a class="cta" href="mailto:OPS@EVRRDY.com">📧 Contact — OPS@EVRRDY.com</a>
       </div>
     </section>
   </main>
