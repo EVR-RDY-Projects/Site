@@ -6,78 +6,60 @@
 <title>EVR:RDY — Coming Soon</title>
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon.">
 <style>
-  body {
-    margin:0;
-    font-family: Inter, system-ui, Arial, sans-serif;
-    color:#e5e4d8;
-    height:100vh;
-    background: url("assets/img/background.png") no-repeat center center fixed;
-    background-size: cover;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
+  :root{
+    --bone:#e5e4d8; --olive:#848c6a; --blue:#2b5faa; --ink:#0e1012;
   }
-  h1 {
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 900;
-    margin:0;
-    letter-spacing:2px;
-    text-shadow: 0 3px 6px rgba(0,0,0,.7);
+  /* Full-page, fixed background */
+  html,body{height:100%}
+  body{
+    margin:0; font-family:Inter,system-ui,Arial,sans-serif; color:var(--bone);
+    background:#101317 url("background.jpg") no-repeat center center fixed;
+    background-size:cover;
+    display:flex; align-items:center; justify-content:center;
   }
-  .motto {
-    font-size: 1.5rem;
-    color:#848c6a;
-    margin: .75rem 0 2rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,.6);
+  /* Dark scrim to keep text readable on any image */
+  .scrim{
+    position:fixed; inset:0; background:rgba(14,16,18,.55);
   }
-  .content {
-    max-width: 720px;
-    font-size: 1.2rem;
-    line-height:1.6;
-    background:rgba(14,16,18,.7);
-    padding:1.5rem;
-    border-radius:12px;
+  /* Content container */
+  .wrap{
+    position:relative; z-index:1; text-align:left;
+    max-width:1100px; width:100%; padding:3rem 1rem;
+    display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center;
   }
-  .cta {
-    display:inline-block;
-    margin-top:1.5rem;
-    padding:.9rem 1.4rem;
-    background:#848c6a;
-    color:#e5e4d8;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:600;
+  @media (max-width:900px){ .wrap{grid-template-columns:1fr; text-align:center;} }
+  /* Left column: logo text + copy */
+  h1{
+    font-size:clamp(3rem, 9vw, 6rem); margin:0 0 .25rem; font-weight:900; letter-spacing:2px;
+    text-shadow:0 3px 6px rgba(0,0,0,.7);
   }
-  .footer {
-    position:absolute;
-    bottom:1rem;
-    font-size:.9rem;
-    color:#cfcfcf;
-    text-shadow:0 2px 4px rgba(0,0,0,.7);
+  .motto{ color:var(--olive); font-size:1.35rem; margin:0 0 1.25rem; }
+  .content{ color:#cfd0c6; font-size:1.1rem; line-height:1.65; }
+  .content ul{ margin:1rem 0 1.25rem; padding-left:1.1rem; }
+  .cta{
+    display:inline-block; margin-top:1rem; padding:.9rem 1.2rem;
+    background:var(--olive); color:var(--bone); border-radius:12px; text-decoration:none; font-weight:600;
+  }
+  /* Right column: patch card (optional) */
+  .card{
+    border:1px solid rgba(229,228,216,.2); border-radius:16px; padding:1rem;
+    background:rgba(0,0,0,.25); backdrop-filter:saturate(120%) blur(1px);
+  }
+  .patch{width:100%; border-radius:12px; display:block}
+  /* Footer */
+  .footer{
+    position:fixed; left:0; right:0; bottom:.75rem; text-align:center;
+    color:#b8b9b0; font-size:.95rem; text-shadow:0 2px 4px rgba(0,0,0,.7);
   }
 </style>
 </head>
 <body>
-  <h1>EVR:RDY</h1>
-  <div class="motto">Defend Forward · Advance Always</div>
+  <div class="scrim"></div>
 
-  <div class="content">
-    <p><strong>EVR:RDY Cyber Defense & Consulting</strong> is a veteran-led initiative focused on 
-    bringing affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
+  <main class="wrap">
+    <!-- Left: Text -->
+    <section>
+      <h1>EVR:RDY</h1>
+      <div class="motto">Defend Forward · Advance Always</div>
 
-    <p>We are tackling three urgent challenges:</p>
-    <ul style="text-align:left;max-width:600px;margin:1rem auto;line-height:1.6;">
-      <li><strong>High Cost</strong> — Offering affordable sensing and monitoring solutions.</li>
-      <li><strong>Workforce Gaps</strong> — Leveraging automation and veteran expertise.</li>
-      <li><strong>Scalability</strong> — Building modular defenses that adapt across industries.</li>
-    </ul>
-
-    <a class="cta" href="mailto:OPS@EVRRDY.com">Contact Us — OPS@EVRRDY.com</a>
-  </div>
-
-  <div class="footer">© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</div>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
-</body>
-</html>
+      <div clas
