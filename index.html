@@ -6,34 +6,90 @@
 <title>EVR:RDY — Coming Soon</title>
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon.">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body {
+    margin:0;
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background: radial-gradient(1000px 600px at 20% 20%, #1f2530 0%, #0e1012 40%, #1a1f24 100%);
+    color:#e5e4d8;
+  }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 3rem 1rem 4rem;
+    text-align:center;
+  }
+  h1.logo {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800;
+    margin-bottom:.5rem;
+    letter-spacing:2px;
+  }
+  .motto {
+    font-size: 1.25rem;
+    color:#848c6a;
+    margin-bottom:2rem;
+  }
+  .content {
+    max-width:700px;
+    margin:0 auto 2.5rem;
+    font-size:1.15rem;
+    line-height:1.6;
+    color:#cfd0c6;
+  }
+  .cta {
+    display:inline-block;
+    margin-top:1.5rem;
+    padding:.9rem 1.4rem;
+    background:#848c6a;
+    color:#e5e4d8;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+  }
+  .patch {
+    margin-top:3rem;
+    width:300px;
+    max-width:80%;
+    border-radius:16px;
+    border:1px solid rgba(229,228,216,.18);
+    box-shadow:0 8px 40px rgba(0,0,0,.4);
+  }
+  .footer {
+    margin-top:3rem;
+    padding-top:1rem;
+    border-top:1px solid rgba(229,228,216,.18);
+    font-size:.95rem;
+    color:#a9aa9f;
+  }
+</style>
 </head>
 <body>
   <div class="wrap">
-    <div class="top">
-      <div class="logo">
-        <div style="width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#0e1012,#2a313a);border:1px solid rgba(229,228,216,.2)">⚔️</div>
-        <strong>EVR:RDY</strong>
-        <span class="badge">Defend Forward · Advance Always</span>
-      </div>
-      <div>OPS@EVRRDY.com</div>
+    <h1 class="logo">EVR:RDY</h1>
+    <div class="motto">Defend Forward · Advance Always</div>
+
+    <div class="content">
+      <p><strong>EVR:RDY </strong> is a veteran-led initiative focused on 
+      bringing affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
+
+      <p>Our mission is to solve three major challenges:</p>
+      <ul style="text-align:left;max-width:640px;margin:1rem auto;line-height:1.6;">
+        <li><strong>High Cost</strong> — Providing affordable sensing and monitoring solutions where traditional tools are priced out of reach.</li>
+        <li><strong>Workforce Gaps</strong> — Leveraging automation and veteran expertise to strengthen understaffed teams.</li>
+        <li><strong>Scalability</strong> — Designing modular solutions that can adapt to utilities, SMBs, and critical infrastructure alike.</li>
+      </ul>
+
+      <p>We are building a platform that combines <em>low-cost OT/ICS sensors</em>, 
+      <em>unidirectional data diodes</em>, and <em>AI-enabled SOC automation</em> to empower organizations 
+      to defend forward and advance always.</p>
+
+      <a class="cta" href="mailto:OPS@EVRRDY.com">Contact Us — OPS@EVRRDY.com</a>
     </div>
 
-    <div class="grid">
-      <section>
-        <span class="badge">OT/ICS Cyber Defense</span>
-        <h1>Coming&nbsp;Soon</h1>
-        <p>A veteran‑led security outfit focused on affordable visibility, resilient operations, and AI‑assisted response for critical infrastructure.</p>
-        <div class="card">
-          <div>Questions or partnerships?</div>
-          <a class="cta" href="mailto:OPS@EVRRDY.com">Email: OPS@EVRRDY.com</a>
-        </div>
-      </section>
-      <aside>
-        <img src="assets/img/patch.png" class="patch" alt="EVR:RDY patch logo">
-      </aside>
-    </div>
+    <img src="assets/img/patch.png" alt="EVR:RDY patch logo" class="patch">
 
-    <div class="footer">© <span id="y"></span> EVR:RDY </div>
+    <div class="footer">© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</div>
   </div>
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
