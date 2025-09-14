@@ -16,25 +16,15 @@
     --panel: rgba(14,16,18,.58);
   }
 
-  body {
-    margin: 0;
+  body{
+    margin:0;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--bone);
+    color:var(--bone);
     background: var(--ink) url("assets/img/background.png") center center / cover no-repeat;
     background-attachment: fixed;
   }
 
-
   .container{ max-width: 1120px; margin: 0 auto; padding: 0 18px; }
-
-  header.hero{ padding-top: 12px; }
-  .hero img{
-    width: 100%; height: auto; display: block;
-    border-radius: 14px;
-    box-shadow: 0 18px 60px rgba(0,0,0,.45);
-    border: 1px solid rgba(229,228,216,.12);
-  }
-
   .content-wrap{ margin: 32px auto 56px; }
   section.card{
     background: var(--panel);
@@ -45,38 +35,62 @@
     margin-bottom: 26px;
   }
 
+  /* Headings */
   h2{
     font-size: clamp(26px, 2.6vw, 36px);
     font-weight: 900;
-    background: linear-gradient(90deg, var(--bone), var(--bright));
+    background: linear-gradient(90deg, var(--bone), var(--bright), var(--bone));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-shadow: 0 2px 24px rgba(169,214,138,.25);
-    margin-bottom: 1rem;
+    background-size: 200% 100%;
+    animation: sweep 4s ease-in-out infinite;
   }
-  h3{
-    font-size: clamp(20px, 1.8vw, 26px);
-    font-weight: 800;
-    color:#fff;
-    margin-top: 1rem;
-    margin-bottom: .4rem;
+  @keyframes sweep {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
+  h3{font-size:clamp(20px,1.8vw,26px);font-weight:800;color:#fff;position:relative;margin-top:1rem;margin-bottom:.4rem;}
+  h3::after{content:"";position:absolute;left:0;bottom:-6px;width:64px;height:2px;background:linear-gradient(90deg,var(--olive),transparent);opacity:.9;}
+
   p{ color:#d9dacd; font-size: clamp(16px, 1.15vw, 18px); line-height: 1.7; margin:.5rem 0; }
-  strong{ color:#ffffff; font-weight: 850; }
+  strong{ color:#fff; font-weight:850; }
   em{ color:#ececec }
   blockquote{ margin: 1rem 0; padding-left: 1rem; border-left: 3px solid var(--bright); color:#ececec }
 
-  .indent { margin-left: 1.25rem; }
+  .indent { margin-left:1.25rem; border-left:2px solid rgba(169,214,138,.45); padding-left:1rem; }
 
+  /* CTA buttons */
   .cta{
-    display:inline-block; margin-top: 1rem; padding:.6rem .9rem;
-    background: var(--olive); color: var(--bone); text-decoration:none; font-weight:750; border-radius: 12px;
-    border: 1px solid rgba(229,228,216,.22); box-shadow: 0 8px 22px rgba(0,0,0,.35);
-    transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
-    font-size: .95rem;
+    display:inline-block; margin-top:.8rem; padding:.58rem .9rem;
+    background: linear-gradient(180deg,var(--olive),#6f765c);
+    color:var(--bone); text-decoration:none; font-weight:750; border-radius:12px;
+    border:1px solid rgba(229,228,216,.22);
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
+    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    font-size:.95rem; letter-spacing:.2px;
   }
-  .cta:hover{ background:#98a485; transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.45); }
+  .cta:hover{ transform:translateY(-2px); box-shadow:0 14px 28px rgba(0,0,0,.45); filter:brightness(1.05); }
 
-  footer{ text-align:center; color:var(--muted); font-size:.95rem; margin: 16px 0 30px; }
+  /* Reveal on scroll */
+  .reveal { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.is-visible { opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal, h2 { animation:none !important; transform:none !important; }
+  }
+
+  /* Hero banner parallax prep */
+  header.hero { overflow:hidden; }
+  header.hero img{ will-change:transform; transform:translateY(0); transition:transform .08s linear; }
+
+  /* Mobile-safe fixed bg */
+  .bg-fixed::before{
+    content:""; position:fixed; inset:0; z-index:-1;
+    background: var(--ink) url("assets/img/background.png") center center / cover no-repeat;
+    transform: translateZ(0);
+  }
+
+  /* Footer */
+  footer{ text-align:center; color:var(--muted); font-size:.95rem; margin:16px 0 30px; }
 </style>
 </head>
 <body>
@@ -87,104 +101,105 @@
   </div>
 </header>
 
-<main class="content-wrap">
-  <div class="container">
+<!-- Progress bar -->
+<div id="progress" style="position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--bright),#fff);z-index:9999;box-shadow:0 0 10px rgba(169,214,138,.8);"></div>
 
-    <section class="card">
-      <h2>Our Mission</h2>
-      <p>Our mission is to provide low‑cost alternative solutions to defending critical infrastructure by leveraging both the veteran and civilian community. Put simply: we give critical infrastructure and defense partners a practical, affordable way to protect the systems that matter most.</p>
-      <blockquote>
-        “We have done so much, for so long, with so little, we are now qualified to do anything with nothing.”<br>
-        <span style="color:#aaa; font-size:.9em;">– often attributed to Frank Sinatra</span>
-      </blockquote>
-      <p>This isn’t about buzzwords or bloated security stacks. EVR:RDY applies the same grit, discipline, and resourcefulness forged in uniform and brings it to cyber defense.</p>
-      <p><strong>Call to Action:</strong> Reach out. Become a part of the work.<br>
-      📧 Contact: <a href="mailto:info@evrrdy.com" style="color:var(--bright);text-decoration:none;">info@evrrdy.com</a></p>
-    </section>
+<div class="bg-fixed">
+  <main class="content-wrap">
+    <div class="container">
 
-    <section class="card">
-      <h2>Problem Statement</h2>
-      <p>Critical infrastructure and defense networks are facing unprecedented threats. Yet, three challenges make it nearly impossible for small utilities, municipalities, and DoD‑critical infrastructure organizations to defend themselves:</p>
-      <p><strong>Underfunding:</strong> Most organizations allocate only 0–10% of their security budgets to ICS/OT, leaving critical areas under‑resourced. Even as global OT security spending is projected to double by 2030, smaller entities remain priced out.</p>
-      <p><strong>High Cost of Solutions:</strong> Leading OT/ICS cybersecurity platforms often start in the six‑to‑seven figure range, with ongoing licensing, integration, and maintenance fees that smaller utilities cannot sustain.</p>
-      <p><strong>Workforce Shortage:</strong> The U.S. faces a cybersecurity workforce gap of 500,000+ unfilled jobs, while 67% of organizations report shortages and 58% say the gap puts them at significant risk.</p>
-    </section>
+      <!-- Mission -->
+      <section class="card">
+        <h2>Our Mission</h2>
+        <p>Our mission is to provide low-cost alternative solutions … (your mission text here)</p>
+        <blockquote>“We have done so much …”</blockquote>
+        <p><strong>Call to Action:</strong> Reach out. Become a part of the work.<br>
+        📧 Contact: <a href="mailto:info@evrrdy.com" style="color:var(--bright);text-decoration:none;">info@evrrdy.com</a></p>
+      </section>
 
-    <section class="card">
-      <h2>Our Projects</h2>
-      <p><strong>T.A.P.S. (Telemetry Acquisition Platform Solution)</strong><br>
-      The first major initiative of EVR:RDY. T.A.P.S. is a suite of open‑source tools being developed to create low‑cost, practical solutions that move critical telemetry from the OT environment into the IT environment for safe ingestion into a SIEM. All T.A.P.S. components are currently under development and will be openly available on our GitHub as they mature.</p>
+      <!-- Problem Statement -->
+      <section class="card">
+        <h2>Problem Statement</h2>
+        <p>… your problem text here …</p>
+      </section>
 
-      <div class="indent">
-        <p><strong>SEER Sensor (Scalable Endpoint & Environmental Reconnaissance)</strong><br>
-        Currently in Proof of Concept (POC). SEER provides low‑cost visibility for OT/ICS and IT networks by capturing mirrored traffic, generating Zeek‑style logs, ingesting JSON from endpoints, and storing forensic data locally.<br>
-        <em>Why it matters:</em> Smaller utilities and DoD‑critical infrastructure sites gain OT visibility without enterprise‑level licensing costs.<br>
-        🔗 SEER Sensor Repository</p>
+      <!-- Projects -->
+      <section class="card">
+        <h2>Our Projects</h2>
+        <p><strong>T.A.P.S. …</strong></p>
+        <div class="indent">
+          <p><strong>SEER Sensor …</strong></p>
+          <p><strong>GHOST Node …</strong></p>
+          <p><strong>RAMPART …</strong></p>
+        </div>
+        <p><strong>TacSOC …</strong></p>
+        <div class="indent">
+          <p><strong>Smarter Defense …</strong></p>
+          <p><strong>Resource Pooling …</strong></p>
+          <p><strong>Hunter-Killer Teams …</strong></p>
+          <p><strong>RAID Methodology …</strong></p>
+        </div>
+      </section>
 
-        <p><strong>GHOST Node / Diode</strong><br>
-        Currently in Proof of Concept (POC). A hardware‑enforced data diode for unidirectional UDP flow, built from inexpensive media converters, switches, and fiber.<br>
-        <em>Why it matters:</em> Provides a physical security guarantee that data flows only one way — safeguarding OT environments while enabling centralized monitoring.<br>
-        🔗 GHOST Node Repository</p>
+      <!-- Solutions -->
+      <section class="card">
+        <h2>How Our Projects Solve the Challenge</h2>
+        <p>… solution text …</p>
+      </section>
 
-        <p><strong>RAMPART (Resilient Architecture for Monitoring & Proactive Advanced Response Teams)</strong><br>
-        Currently in active development. RAMPART bridges the GHOST Diode and the SIEM of choice (currently Google Chronicle). Packages data for SIEM and allows remote PCAP analysis from SEER without breaking OT isolation.<br>
-        <em>Why it matters:</em> Ensures telemetry can be safely centralized, normalized, and analyzed for proactive monitoring and forensics.<br>
-        🔗 RAMPART Repository</p>
-      </div>
+      <!-- Structure -->
+      <section class="card">
+        <h2>Our Structure</h2>
+        <p>… structure text …</p>
+      </section>
 
-      <p><strong>TacSOC (Tactical Security Operations Center)</strong><br>
-      A service offering currently in development. Built on top of T.A.P.S., TacSOC reimagines the SOC with a tactical mindset — lean, efficient, and mission‑focused. Its doctrine and methodology, including the RAID framework, will remain publicly available.</p>
+      <!-- Join -->
+      <section class="card">
+        <h2>Become Part of the Work</h2>
+        <p>… board & contributor text …</p>
+      </section>
 
-      <div class="indent">
-        <p><strong>Smarter Defense Through AI Integration</strong><br>
-        Uses advanced AI models to deduplicate and enrich telemetry, map events to MITRE ATT&CK, and automatically dismiss noise.<br>
-        <em>Why it matters:</em> Analysts focus on true threats, enabling faster detection and resilient defenses.</p>
-
-        <p><strong>Resource Pooling for Affordability</strong><br>
-        Leverages cloud‑native SIEMs — currently Google Chronicle — to enable license sharing across customers.<br>
-        <em>Why it matters:</em> Provides enterprise‑grade monitoring without enterprise‑grade costs.</p>
-
-        <p><strong>Hunter‑Killer Teams</strong><br>
-        Small, skilled groups blending Tier‑2 and Tier‑3 analysts under a Team Leader. Tier‑1 triage automated, accelerating progression and scaling defense to many sites.<br>
-        <em>Why it matters:</em> Accelerates talent growth and creates a force‑multiplying defense structure.</p>
-
-        <p><strong>RAID Methodology (Reconnaissance · Acquire · Investigate · Disrupt/Defend)</strong><br>
-        <strong>R — Reconnaissance & Advisory:</strong> Establish visibility, analyze flows, identify choke points, map to ATT&CK, and conduct precision hunting.<br>
-        <strong>A — Acquire:</strong> Deploy sensors, implement one‑way flows, and close visibility gaps.<br>
-        <strong>I — Investigate:</strong> AI‑assisted Tier‑2/3 hunts; enrich, deduplicate, and map to ATT&CK.<br>
-        <strong>D — Disrupt / Defend:</strong> Contain, remediate, harden, automate repeatable responses, and document improvements.<br>
-        <em>Why it matters:</em> Enables small, distributed teams to operate with autonomy and accountability without massive centralized SOCs.</p>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>How Our Projects Solve the Challenge</h2>
-      <p><strong>Underfunding:</strong> T.A.P.S. provides open‑source tools for enterprise‑grade visibility. TacSOC pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
-      <p><strong>High Cost of Solutions:</strong> GHOST and RAMPART replace expensive OT appliances with affordable, commodity‑based alternatives.</p>
-      <p><strong>Workforce Shortage:</strong> TacSOC automates Tier‑1, accelerates analysts from Tier‑2 to Tier‑3, and spins up new HK Teams — multiplying skilled defenders faster than traditional pipelines.</p>
-    </section>
-
-    <section class="card">
-      <h2>Our Structure</h2>
-      <p>EVR:RDY is built on a dual‑track model — one nonprofit, one service arm — working together to solve the toughest challenges in critical infrastructure defense.</p>
-      <p><strong>Nonprofit Arm:</strong> Pursues grants, partnerships, and collaborations to fund open‑source development and training pipelines for veterans and civilians.</p>
-      <p><strong>For‑Profit Arm:</strong> Delivers TacSOC and vendor support. Revenue fuels safeguarding more networks and enables higher pay with employee equity — an “everyone eats” ethos.</p>
-      <p><em>The vision:</em> Mission and market reinforce each other — open collaboration drives innovation while sustainable services scale protection.</p>
-    </section>
-
-    <section class="card">
-      <h2>Become Part of the Work</h2>
-      <p>EVR:RDY is entering its next phase — building the nonprofit arm that will fund open‑source development and create training pipelines for veterans and civilians. To do this right, we need leaders and collaborators who share our mission.</p>
-      <p><strong>Board Members:</strong> Guide the launch of our nonprofit, shape governance, and secure partnerships and grants.<br>
-      <strong>Contributors:</strong> Developers, researchers, trainers, and operators to help build T.A.P.S. and refine TacSOC doctrine.</p>
-      <p>If you’re ready to help us safeguard the systems that matter most, we’d like to hear from you.<br>
-      📧 Contact: <a href="mailto:info@evrrdy.com" style="color:var(--bright);text-decoration:none;">info@evrrdy.com</a></p>
-    </section>
-
-  </div>
-</main>
+    </div>
+  </main>
+</div>
 
 <footer>© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</footer>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.card, h2, h3, .cta');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); } });
+  }, {threshold:.12});
+  revealEls.forEach(el=>{ el.classList.add('reveal'); io.observe(el); });
+
+  // Parallax hero
+  const heroImg = document.querySelector('header.hero img');
+  let ticking = false;
+  function onScroll(){
+    if(!ticking){
+      requestAnimationFrame(()=>{
+        const y = window.scrollY * 0.18;
+        heroImg.style.transform = `translateY(${y}px)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Scroll progress bar
+  const progress = document.getElementById('progress');
+  function progressTick(){
+    const h = document.documentElement;
+    const p = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    progress.style.width = p + '%';
+  }
+  window.addEventListener('scroll', progressTick, {passive:true});
+  progressTick();
+
+  // Year in footer
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
