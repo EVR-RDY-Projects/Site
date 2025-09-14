@@ -1,118 +1,135 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>EVR:RDY — Coming Soon</title>
-<meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon.">
-<style>
-  :root{ --bone:#e5e4d8; --olive:#848c6a; --blue:#2b5faa; }
+<meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Coming soon." />
 
-  body {
+<style>
+  /* ===== Brand palette ===== */
+  :root{
+    --bone:#e5e4d8;         /* main text */
+    --olive:#848c6a;        /* secondary / buttons */
+    --blue:#2b5faa;         /* accent */
+    --ink:#0e1012;          /* deep background */
+    --ink2:#1a1f24;         /* gradient partner */
+    --bright:#a9d68a;       /* brighter green for COMING SOON */
+  }
+
+  /* ===== Page base ===== */
+  html,body{height:100%}
+  body{
     margin:0;
-    font-family: Inter, system-ui, Arial, sans-serif;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:var(--bone);
-    /* Full-screen, fixed background */
-    background: #0e1012 url("assets/img/background.png") no-repeat center center fixed;
+    background: var(--ink) url("assets/img/background.png") no-repeat center center fixed;
     background-size: cover;
   }
 
-  /* Overlay scrim for readability */
-  .scrim {
-    position: fixed;
-    inset: 0;
-    background: rgba(14,16,18,0.65);
+  /* Soft global scrim improves legibility over busy bg */
+  .scrim{ position:fixed; inset:0; background:linear-gradient(180deg, rgba(14,16,18,.55), rgba(14,16,18,.75)); }
+
+  /* ===== Layout ===== */
+  .wrap{
+    position:relative; z-index:1;
+    max-width:1200px; margin:0 auto; padding: clamp(24px, 3vw, 40px);
+    display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(20px, 4vw, 56px); align-items:center;
+    min-height:100dvh;
+  }
+  @media (max-width: 980px){ .wrap{grid-template-columns:1fr} }
+
+  /* Left column card for contrast & depth */
+  .text-card{
+    background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.25));
+    border:1px solid rgba(229,228,216,.16);
+    border-radius: 18px;
+    padding: clamp(18px, 2.4vw, 28px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    backdrop-filter: blur(2px) saturate(115%);
   }
 
-  .hero {
-    position: relative;
-    z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 1rem 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
+  /* ===== Typography ===== */
+  h1.logo{
+    font-size: clamp(42px, 8vw, 84px);
+    line-height: .95;
+    margin: 0 0 .35rem 0;
+    letter-spacing: 2px;
+    font-weight: 900;
+    text-shadow: 0 6px 20px rgba(0,0,0,.55);
   }
-
-  @media (max-width: 850px){
-    .hero { grid-template-columns: 1fr; text-align: center; }
-  }
-
-  h1.logo {
-    font-size: clamp(3rem, 8vw, 5rem);
-    font-weight: 800;
-    margin:0 0 .5rem;
-    letter-spacing:2px;
-    text-shadow: 0 3px 6px rgba(0,0,0,0.7);
-  }
-  .motto {
-    font-size: 1.35rem;
+  .motto{
+    font-size: clamp(18px, 2.2vw, 22px);
     color: var(--olive);
-    margin-bottom: .75rem;
+    margin: 0 0 .75rem 0;
   }
-  .coming-soon {
-    font-size: clamp(2rem, 6vw, 3rem);
-    font-weight:700;
-    color: var(--blue);
-    margin-bottom: 2rem;
-    text-shadow: 0 2px 6px rgba(0,0,0,.6);
+  .soon{
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    color: var(--bright);                 /* brighter green request */
+    margin: .15rem 0 1.25rem 0;
+    text-shadow: 0 0 12px rgba(169,214,138,.45), 0 4px 18px rgba(0,0,0,.55);
+    letter-spacing: .5px;
   }
-  .content {
-    font-size:1.1rem;
-    line-height:1.6;
-    color:#cfd0c6;
+  .content{
+    color:#d7d8cf;
+    font-size: clamp(15.5px, 1.25vw, 18px);
+    line-height:1.65;
+    max-width: 62ch;
   }
-  .content ul {
-    text-align:left;
-    margin:1rem 0 1.5rem;
-    padding-left:1.2rem;
+  .content strong{color:#fff}
+  .content ul{margin: .75rem 0 1.25rem 1.1rem}
+  .content li{margin:.35rem 0}
+  .content em{color:#e6e6e6}
+
+  /* ===== CTA ===== */
+  .cta{
+    display:inline-flex; align-items:center; gap:.55rem;
+    margin-top: 1rem; padding: .9rem 1.15rem;
+    background: var(--olive); color: var(--bone);
+    border:1px solid rgba(229,228,216,.25);
+    border-radius: 999px; text-decoration:none; font-weight:700;
+    box-shadow: 0 6px 20px rgba(0,0,0,.35);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
   }
-  .cta {
-    display:inline-block;
-    margin-top:1.2rem;
-    padding:.9rem 1.4rem;
-    background: var(--olive);
-    color: var(--bone);
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:600;
-  }
-  .patch {
-    width:100%;
-    max-width:400px;
-    border-radius:16px;
+  .cta:hover{ transform: translateY(-1px); box-shadow: 0 10px 30px rgba(0,0,0,.45); background:#94a07d; }
+
+  /* ===== Patch card ===== */
+  .patch-card{
+    border-radius: 22px;
     border:1px solid rgba(229,228,216,.18);
-    box-shadow:0 8px 40px rgba(0,0,0,.5);
+    background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.12));
+    box-shadow: 0 18px 60px rgba(0,0,0,.45), 0 0 0 6px rgba(14,16,18,.25) inset;
+    padding: clamp(8px, 1.2vw, 14px);
+    max-width: 520px;
     justify-self:center;
+    transition: transform .25s ease, box-shadow .25s ease;
+    will-change: transform;
   }
-  .footer {
-    position: relative;
-    z-index: 1;
-    max-width:1100px;
-    margin:3rem auto 0;
-    padding:1rem;
-    border-top:1px solid rgba(229,228,216,.18);
-    font-size:.95rem;
-    color:#a9aa9f;
-    text-align:center;
+  .patch-card:hover{ transform: translateY(-4px); box-shadow: 0 24px 80px rgba(0,0,0,.55), 0 0 0 8px rgba(14,16,18,.28) inset; }
+  .patch{ width: 100%; display:block; border-radius: 16px; }
+
+  /* ===== Footer ===== */
+  .footer{
+    position:relative; z-index:1;
+    max-width:1200px; margin: 0 auto; padding: 0 clamp(24px, 3vw, 40px) 24px;
+    color:#b9baaf; text-align:center;
   }
 </style>
 </head>
 <body>
-  <div class="scrim"></div>
+  <div class="scrim" aria-hidden="true"></div>
 
-  <main class="hero">
-    <!-- LEFT SIDE (TEXT) -->
-    <section>
+  <main class="wrap">
+    <!-- LEFT: Text -->
+    <section class="text-card">
       <h1 class="logo">EVR:RDY</h1>
       <div class="motto">Defend Forward · Advance Always</div>
-      <div class="coming-soon">COMING SOON</div>
+      <div class="soon">COMING SOON</div>
 
       <div class="content">
-        <p><strong>EVR:RDY Cyber Defense & Consulting</strong> is a veteran-led initiative focused on 
-        bringing affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
+        <p><strong>EVR:RDY Cyber Defense & Consulting</strong> is a veteran-led initiative focused on bringing
+        affordable and effective cybersecurity to critical infrastructure and DoD-adjacent organizations.</p>
 
         <p>We are addressing three major challenges:</p>
         <ul>
@@ -121,23 +138,22 @@
           <li><strong>Scalability</strong> — Creating modular solutions that adapt from utilities to SMBs.</li>
         </ul>
 
-        <p>Our goal: to combine <em>low-cost OT/ICS sensors</em>, <em>unidirectional data diodes</em>, 
-        and <em>AI-enabled SOC automation</em> so every organization can defend forward and advance always.</p>
+        <p>Our goal: to combine <em>low-cost OT/ICS sensors</em>, <em>unidirectional data diodes</em>, and
+        <em>AI-enabled SOC automation</em> so every organization can defend forward and advance always.</p>
 
-        <a class="cta" href="mailto:OPS@EVRRDY.com">Contact Us — OPS@EVRRDY.com</a>
+        <a class="cta" href="mailto:OPS@EVRRDY.com" aria-label="Email OPS at EVR RDY">
+          <span>📧</span> Contact — OPS@EVRRDY.com
+        </a>
       </div>
     </section>
 
-    <!-- RIGHT SIDE (PATCH) -->
-    <aside>
-      <img src="assets/img/patch.png" alt="EVR:RDY patch logo" class="patch">
+    <!-- RIGHT: Patch image -->
+    <aside class="patch-card" aria-label="EVR:RDY patch">
+      <img class="patch" src="assets/img/patch.png" alt="EVR:RDY patch logo">
     </aside>
   </main>
 
-  <footer class="footer">
-    © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
-  </footer>
-
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <div class="footer">© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</div>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
