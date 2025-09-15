@@ -279,6 +279,7 @@ blockquote {
   font-size: 1rem;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -355,6 +356,16 @@ blockquote {
   .indent {
     margin-left: var(--space-md);
   }
+  
+  .cta {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.9rem;
+    margin: var(--space-lg) 0 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -368,7 +379,12 @@ blockquote {
   
   .cta {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     justify-content: center;
+    padding: var(--space-sm) var(--space-sm);
+    font-size: 0.85rem;
+    margin: var(--space-md) 0 0;
   }
 }
 
