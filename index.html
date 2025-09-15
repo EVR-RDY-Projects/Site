@@ -327,7 +327,7 @@ async function loadResources() {
       try {
         // Use absolute path for GitHub Pages compatibility
         const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-        const response = await fetch(`${baseUrl}resources/markdown/${resourceId}`);
+        const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
         
         if (!response.ok) {
           console.warn(`Failed to fetch ${resourceId}: ${response.status}`);
@@ -336,6 +336,12 @@ async function loadResources() {
         
         const markdownContent = await response.text();
         console.log(`📄 Fetched content for ${resourceId}:`, markdownContent.substring(0, 200) + '...');
+        
+        // Check if we got HTML instead of markdown
+        if (markdownContent.includes('<!DOCTYPE html>')) {
+          console.error(`❌ Got HTML instead of markdown for ${resourceId}.md - this suggests a 404 page`);
+          continue;
+        }
         
         const resource = parseMarkdownMetadata(markdownContent, resourceId);
         console.log(`🔍 Parsed resource for ${resourceId}:`, resource);
@@ -462,7 +468,7 @@ async function loadMarkdownContent(resourceId, contentElement) {
   try {
     // Use absolute path for GitHub Pages compatibility
     const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-    const response = await fetch(`${baseUrl}resources/markdown/${resourceId}`);
+    const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
     
     if (!response.ok) {
       contentElement.innerHTML = '<p>Content not found.</p>';
