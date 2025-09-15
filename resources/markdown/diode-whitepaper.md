@@ -1,4 +1,3 @@
-
 ---
 title: "Hardware-Enforced Data Diodes for Critical Infrastructure Security"
 description: "A strategic approach to developing affordable, certifiable unidirectional gateways, including an off-the-shelf proof-of-concept design"
