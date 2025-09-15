@@ -829,6 +829,53 @@ body.loaded .card {
   box-shadow: var(--shadow-lg);
 }
 
+/* Expand Button Styling */
+.expand-btn {
+  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
+  border: 2px solid var(--bright);
+  color: var(--bright);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: var(--space-md);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.expand-btn:hover {
+  background: linear-gradient(135deg, var(--bright), var(--muted));
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted);
+}
+
+.expand-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+/* Product Details Animation */
+.product-details {
+  margin-top: var(--space-lg);
+  animation: fadeInDown 0.3s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .product-header {
   text-align: center;
   margin-bottom: var(--space-lg);

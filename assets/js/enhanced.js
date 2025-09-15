@@ -11,9 +11,13 @@
 	function initScrollAnimations() {
 		if (!window.IntersectionObserver) {
 			// Fallback: show all animations immediately
-			document.querySelectorAll('.animate-slide-up, .animate-slide-left, .animate-slide-right, .animate-fade-scale').forEach(element => {
-				element.classList.add('animate-triggered');
-			});
+			document
+				.querySelectorAll(
+					".animate-slide-up, .animate-slide-left, .animate-slide-right, .animate-fade-scale"
+				)
+				.forEach((element) => {
+					element.classList.add("animate-triggered");
+				});
 			return;
 		}
 
@@ -53,10 +57,10 @@
 	// Animated counters
 	function initAnimatedCounters() {
 		const counters = document.querySelectorAll(".counter");
-		
+
 		if (!window.IntersectionObserver) {
 			// Fallback: animate counters immediately
-			counters.forEach(counter => {
+			counters.forEach((counter) => {
 				const target = parseInt(counter.dataset.target);
 				counter.textContent = target;
 			});
@@ -118,17 +122,27 @@
 	// Particle background effects
 	function initParticleEffects() {
 		// Only add particle effects if backdrop-filter is supported
-		if (window.CSS && window.CSS.supports && window.CSS.supports('backdrop-filter', 'blur(10px)')) {
-			document.querySelectorAll(".hero, .mission-enhanced").forEach((element) => {
-				element.classList.add("particle-bg");
-			});
+		if (
+			window.CSS &&
+			window.CSS.supports &&
+			window.CSS.supports("backdrop-filter", "blur(10px)")
+		) {
+			document
+				.querySelectorAll(".hero, .mission-enhanced")
+				.forEach((element) => {
+					element.classList.add("particle-bg");
+				});
 		}
 	}
 
 	// Parallax scrolling effect
 	function initParallaxScrolling() {
 		// Only add parallax if transform is well supported
-		if (window.CSS && window.CSS.supports && window.CSS.supports('transform', 'translateY(10px)')) {
+		if (
+			window.CSS &&
+			window.CSS.supports &&
+			window.CSS.supports("transform", "translateY(10px)")
+		) {
 			window.addEventListener("scroll", () => {
 				const scrolled = window.pageYOffset;
 				const parallaxElements = document.querySelectorAll(".parallax");
@@ -527,16 +541,16 @@
 		initRAIDDiagram();
 
 		// Check for reduced motion preference
-		const prefersReducedMotion = window.matchMedia && window.matchMedia(
-			"(prefers-reduced-motion: reduce)"
-		).matches;
+		const prefersReducedMotion =
+			window.matchMedia &&
+			window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 		// Initialize enhanced features progressively
 		if (!prefersReducedMotion) {
 			// Basic animations that work on most browsers
 			initEnhancedHoverEffects();
 			initDynamicColors();
-			
+
 			// Advanced features with fallbacks
 			if (window.IntersectionObserver) {
 				try {
@@ -547,9 +561,13 @@
 					console.warn("Some animation features failed:", error);
 				}
 			}
-			
+
 			// Modern features with graceful degradation
-			if (window.CSS && window.CSS.supports && window.CSS.supports('backdrop-filter', 'blur(10px)')) {
+			if (
+				window.CSS &&
+				window.CSS.supports &&
+				window.CSS.supports("backdrop-filter", "blur(10px)")
+			) {
 				try {
 					initParticleEffects();
 					initParallaxScrolling();
