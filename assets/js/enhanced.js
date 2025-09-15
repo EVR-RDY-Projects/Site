@@ -4,6 +4,14 @@
 (function () {
 	"use strict";
 
+	// Check for browser compatibility
+	if (!window.IntersectionObserver) {
+		console.warn(
+			"IntersectionObserver not supported, falling back to basic functionality"
+		);
+		return;
+	}
+
 	// Enhanced Intersection Observer for scroll-triggered animations
 	function initScrollAnimations() {
 		const observerOptions = {
@@ -495,32 +503,40 @@
 			"(prefers-reduced-motion: reduce)"
 		).matches;
 
-		if (!prefersReducedMotion) {
-			initScrollAnimations();
-			initAnimatedCounters();
-			initParticleEffects();
-			initParallaxScrolling();
-			initTypewriterEffect();
-		}
-
+		// Always initialize core features first
 		initSmoothScrolling();
 		initFocusManagement();
 		initThemeDetection();
-		initPerformanceOptimizations();
-		initAccessibilityFeatures();
-		initErrorHandling();
-		initAnalytics();
-
-		// Modal and interaction features
 		initModal();
 		initAccordion();
 		initModalSectionScrolling();
-
-		// Enhanced features (always initialize)
-		initEnhancedHoverEffects();
-		initDynamicColors();
-		initEnhancedModal();
 		initRAIDDiagram();
+
+		// Initialize enhanced features if supported
+		if (!prefersReducedMotion && window.IntersectionObserver) {
+			try {
+				initScrollAnimations();
+				initAnimatedCounters();
+				initParticleEffects();
+				initParallaxScrolling();
+				initTypewriterEffect();
+				initEnhancedHoverEffects();
+				initDynamicColors();
+				initEnhancedModal();
+			} catch (error) {
+				console.warn("Some enhanced features failed to load:", error);
+			}
+		}
+
+		// Initialize performance and accessibility features
+		try {
+			initPerformanceOptimizations();
+			initAccessibilityFeatures();
+			initErrorHandling();
+			initAnalytics();
+		} catch (error) {
+			console.warn("Some utility features failed to load:", error);
+		}
 
 		// Add loaded class to body for CSS transitions
 		document.body.classList.add("loaded");
