@@ -2139,3 +2139,51 @@ footer:hover {
   color: var(--muted);
   font-style: normal;
 }
+/* testing */
+/* ---- Right-align Mission section (only this block) ---- */
+.hero-summary.mission-enhanced { 
+  text-align: right;
+}
+
+/* Push header row to the right */
+.hero-summary.mission-enhanced .mission-header {
+  justify-content: flex-end;  /* was center */
+}
+
+/* Right-align text inside Mission */
+.hero-summary.mission-enhanced .mission-content,
+.hero-summary.mission-enhanced .mission-intro,
+.hero-summary.mission-enhanced .mission-conclusion,
+.hero-summary.mission-enhanced .quote-text {
+  text-align: right;
+}
+
+/* Stop auto-centering constrained paragraphs; push them to the right */
+.hero-summary.mission-enhanced p {
+  margin: 0 0 var(--space-lg) auto;  /* was 0 auto ... */
+  max-width: 600px;                  /* keep your readable width */
+}
+
+/* Keep the blockquote on the right side too */
+.hero-summary.mission-enhanced .mission-quote {
+  margin: var(--space-xl) 0 var(--space-xl) auto; /* was centered */
+  text-align: right;
+}
+
+/* Optional: move the decorative underline on the H1 to the right edge */
+.hero-summary.mission-enhanced .mission-header h1::after {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+/* Optional: if you want the quote’s accent line on the right instead of left
+   (comment these two lines out if you prefer it on the left) */
+.hero-summary.mission-enhanced .mission-quote {
+  border-left: 0;
+  border-right: 4px solid var(--bright);
+  padding-right: var(--space-xl);
+  padding-left: var(--space-lg);
+}
+
+
