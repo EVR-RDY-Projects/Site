@@ -1607,6 +1607,17 @@ body.loaded .card {
   transition: all 0.6s ease-out;
 }
 
+/* Fallback for browsers without transform support */
+@supports not (transform: translateY(30px)) {
+  .animate-slide-up,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-fade-scale {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -1664,6 +1675,29 @@ body.loaded .card {
 @supports (transform: scale(1.02)) {
   .enhanced-hover:hover {
     transform: translateY(-2px) scale(1.02);
+  }
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+  .card,
+  .challenge-card,
+  .solution-card,
+  .structure-card,
+  .hero-summary,
+  .mission-quote,
+  .modal-content,
+  .modal-header,
+  .product-section,
+  .component-card,
+  .feature-card,
+  .raid-framework,
+  .timeline-content {
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+  
+  .particle-bg::before {
+    display: none;
   }
 }
 

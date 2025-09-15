@@ -4,16 +4,19 @@
 (function () {
 	"use strict";
 
-	// Check for browser compatibility
-	if (!window.IntersectionObserver) {
-		console.warn(
-			"IntersectionObserver not supported, falling back to basic functionality"
-		);
-		return;
-	}
+	// Progressive enhancement - always initialize core features
+	// Enhanced features will be added if supported
 
 	// Enhanced Intersection Observer for scroll-triggered animations
 	function initScrollAnimations() {
+		if (!window.IntersectionObserver) {
+			// Fallback: show all animations immediately
+			document.querySelectorAll('.animate-slide-up, .animate-slide-left, .animate-slide-right, .animate-fade-scale').forEach(element => {
+				element.classList.add('animate-triggered');
+			});
+			return;
+		}
+
 		const observerOptions = {
 			threshold: 0.1,
 			rootMargin: "0px 0px -50px 0px",
@@ -50,6 +53,16 @@
 	// Animated counters
 	function initAnimatedCounters() {
 		const counters = document.querySelectorAll(".counter");
+		
+		if (!window.IntersectionObserver) {
+			// Fallback: animate counters immediately
+			counters.forEach(counter => {
+				const target = parseInt(counter.dataset.target);
+				counter.textContent = target;
+			});
+			return;
+		}
+
 		const counterObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -104,23 +117,29 @@
 
 	// Particle background effects
 	function initParticleEffects() {
-		document.querySelectorAll(".hero, .mission-enhanced").forEach((element) => {
-			element.classList.add("particle-bg");
-		});
+		// Only add particle effects if backdrop-filter is supported
+		if (window.CSS && window.CSS.supports && window.CSS.supports('backdrop-filter', 'blur(10px)')) {
+			document.querySelectorAll(".hero, .mission-enhanced").forEach((element) => {
+				element.classList.add("particle-bg");
+			});
+		}
 	}
 
 	// Parallax scrolling effect
 	function initParallaxScrolling() {
-		window.addEventListener("scroll", () => {
-			const scrolled = window.pageYOffset;
-			const parallaxElements = document.querySelectorAll(".parallax");
+		// Only add parallax if transform is well supported
+		if (window.CSS && window.CSS.supports && window.CSS.supports('transform', 'translateY(10px)')) {
+			window.addEventListener("scroll", () => {
+				const scrolled = window.pageYOffset;
+				const parallaxElements = document.querySelectorAll(".parallax");
 
-			parallaxElements.forEach((element) => {
-				const speed = element.dataset.speed || 0.5;
-				const yPos = -(scrolled * speed);
-				element.style.transform = `translateY(${yPos}px)`;
+				parallaxElements.forEach((element) => {
+					const speed = element.dataset.speed || 0.5;
+					const yPos = -(scrolled * speed);
+					element.style.transform = `translateY(${yPos}px)`;
+				});
 			});
-		});
+		}
 	}
 
 	// Dynamic color schemes
@@ -498,12 +517,7 @@
 
 	// Initialize all features when DOM is ready
 	function init() {
-		// Check if we're in a reduced motion environment
-		const prefersReducedMotion = window.matchMedia(
-			"(prefers-reduced-motion: reduce)"
-		).matches;
-
-		// Always initialize core features first
+		// Always initialize core features first (works on all browsers)
 		initSmoothScrolling();
 		initFocusManagement();
 		initThemeDetection();
@@ -512,30 +526,48 @@
 		initModalSectionScrolling();
 		initRAIDDiagram();
 
-		// Initialize enhanced features if supported
-		if (!prefersReducedMotion && window.IntersectionObserver) {
-			try {
-				initScrollAnimations();
-				initAnimatedCounters();
-				initParticleEffects();
-				initParallaxScrolling();
-				initTypewriterEffect();
-				initEnhancedHoverEffects();
-				initDynamicColors();
-				initEnhancedModal();
-			} catch (error) {
-				console.warn("Some enhanced features failed to load:", error);
+		// Check for reduced motion preference
+		const prefersReducedMotion = window.matchMedia && window.matchMedia(
+			"(prefers-reduced-motion: reduce)"
+		).matches;
+
+		// Initialize enhanced features progressively
+		if (!prefersReducedMotion) {
+			// Basic animations that work on most browsers
+			initEnhancedHoverEffects();
+			initDynamicColors();
+			
+			// Advanced features with fallbacks
+			if (window.IntersectionObserver) {
+				try {
+					initScrollAnimations();
+					initAnimatedCounters();
+					initTypewriterEffect();
+				} catch (error) {
+					console.warn("Some animation features failed:", error);
+				}
+			}
+			
+			// Modern features with graceful degradation
+			if (window.CSS && window.CSS.supports && window.CSS.supports('backdrop-filter', 'blur(10px)')) {
+				try {
+					initParticleEffects();
+					initParallaxScrolling();
+					initEnhancedModal();
+				} catch (error) {
+					console.warn("Some modern features failed:", error);
+				}
 			}
 		}
 
-		// Initialize performance and accessibility features
+		// Initialize utility features
 		try {
 			initPerformanceOptimizations();
 			initAccessibilityFeatures();
 			initErrorHandling();
 			initAnalytics();
 		} catch (error) {
-			console.warn("Some utility features failed to load:", error);
+			console.warn("Some utility features failed:", error);
 		}
 
 		// Add loaded class to body for CSS transitions
