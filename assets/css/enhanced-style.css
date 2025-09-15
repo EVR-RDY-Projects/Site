@@ -2142,7 +2142,7 @@ footer:hover {
 /* testing */
 /* ---- Right-align Mission section (only this block) ---- */
 .hero-summary.mission-enhanced { 
-  text-align: right;
+  text-align: left;
 }
 
 /* Push header row to the right */
@@ -2155,7 +2155,7 @@ footer:hover {
 .hero-summary.mission-enhanced .mission-intro,
 .hero-summary.mission-enhanced .mission-conclusion,
 .hero-summary.mission-enhanced .quote-text {
-  text-align: right;
+  text-align: left;
 }
 
 /* Stop auto-centering constrained paragraphs; push them to the right */
@@ -2167,7 +2167,7 @@ footer:hover {
 /* Keep the blockquote on the right side too */
 .hero-summary.mission-enhanced .mission-quote {
   margin: var(--space-xl) 0 var(--space-xl) auto; /* was centered */
-  text-align: right;
+  text-align: left;
 }
 
 /* Optional: move the decorative underline on the H1 to the right edge */
