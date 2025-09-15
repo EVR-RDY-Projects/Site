@@ -321,22 +321,34 @@ async function loadResources() {
       try {
         // Use absolute path for GitHub Pages compatibility
         const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-        const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
+        const fullUrl = `${baseUrl}resources/markdown/${resourceId}.md`;
+        
+        console.log(`🔍 Attempting to fetch: ${fullUrl}`);
+        
+        const response = await fetch(fullUrl);
         
         if (!response.ok) {
-          console.warn(`Failed to fetch ${resourceId}.md: ${response.status}`);
+          console.warn(`❌ Failed to fetch ${resourceId}.md: ${response.status} ${response.statusText}`);
+          // Create a fallback tile if loading fails
+          const fallbackTile = createFallbackResourceTile(resourceId);
+          resourcesContainer.appendChild(fallbackTile);
           continue;
         }
         
+        console.log(`✅ Successfully fetched ${resourceId}.md`);
         const markdownContent = await response.text();
         const resource = parseMarkdownMetadata(markdownContent, resourceId);
         
         if (resource) {
           const resourceTile = createResourceTile(resource);
           resourcesContainer.appendChild(resourceTile);
+        } else {
+          console.warn(`❌ Failed to parse metadata for ${resourceId}`);
+          const fallbackTile = createFallbackResourceTile(resourceId);
+          resourcesContainer.appendChild(fallbackTile);
         }
       } catch (error) {
-        console.warn(`Failed to load resource ${resourceId}:`, error);
+        console.error(`❌ Failed to load resource ${resourceId}:`, error);
         // Create a fallback tile if loading fails
         const fallbackTile = createFallbackResourceTile(resourceId);
         resourcesContainer.appendChild(fallbackTile);
@@ -354,13 +366,22 @@ async function getResourceManifest() {
   try {
     // Use absolute path for GitHub Pages compatibility
     const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-    const response = await fetch(`${baseUrl}resources/manifest.json`);
-    if (!response.ok) return null;
+    const manifestUrl = `${baseUrl}resources/manifest.json`;
     
+    console.log(`🔍 Attempting to fetch manifest: ${manifestUrl}`);
+    
+    const response = await fetch(manifestUrl);
+    if (!response.ok) {
+      console.warn(`❌ Failed to fetch manifest: ${response.status} ${response.statusText}`);
+      return null;
+    }
+    
+    console.log(`✅ Successfully fetched manifest`);
     const manifest = await response.json();
+    console.log(`📋 Manifest files:`, manifest.files);
     return manifest.files || null;
   } catch (error) {
-    console.log('No manifest file found, using fallback list');
+    console.warn('❌ No manifest file found, using fallback list:', error);
     return null;
   }
 }
@@ -760,6 +781,27 @@ document.getElementById('y').textContent = new Date().getFullYear();
 console.log('🚀 Loading resources...');
 console.log('📍 Current URL:', window.location.href);
 console.log('📍 Base URL:', window.location.origin + window.location.pathname.replace('index.html', ''));
+
+// Test if we can access the resources directory
+async function testResourceAccess() {
+  const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+  const testUrls = [
+    `${baseUrl}resources/manifest.json`,
+    `${baseUrl}resources/markdown/sample-whitepaper.md`
+  ];
+  
+  for (const url of testUrls) {
+    try {
+      console.log(`🧪 Testing access to: ${url}`);
+      const response = await fetch(url, { method: 'HEAD' });
+      console.log(`📊 ${url}: ${response.status} ${response.statusText}`);
+    } catch (error) {
+      console.error(`❌ ${url}:`, error);
+    }
+  }
+}
+
+testResourceAccess();
 loadResources();
 </script>
 
