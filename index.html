@@ -120,6 +120,16 @@
   </div>
 </main>
 
+<!-- Resources Section -->
+<section class="card animate-slide-up">
+  <h2 class="typewriter">Resources & Documentation</h2>
+  <p>Access our latest white papers, company updates, and technical documentation.</p>
+  
+  <div class="resources-grid" id="resources-grid">
+    <!-- Resources will be dynamically loaded here -->
+  </div>
+</section>
+
 <footer class="text-center" style="color:var(--muted); font-size:.95rem; margin: var(--space-lg) 0 var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(229,228,216,.12);">
   © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
 </footer>
@@ -239,6 +249,21 @@
   </div>
 </div>
 
+<!-- Resources Modal -->
+<div id="resources-modal" class="modal" onclick="closeResourceModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2 id="resource-title">Document Title</h2>
+      <button class="close-btn" onclick="closeResourceModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="resource-content" class="markdown-content">
+        <!-- Markdown content will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="assets/js/enhanced.js"></script>
 <script>
 // Product Details Toggle Function (Accordion behavior)
@@ -269,6 +294,203 @@ function toggleProductDetails(detailsId) {
     details.style.display = 'block';
     button.textContent = button.textContent.replace('Learn More', 'Show Less');
   }
+}
+
+// Dynamic Resources Loading
+async function loadResources() {
+  try {
+    const resourcesContainer = document.getElementById('resources-grid');
+    if (!resourcesContainer) return;
+    
+    // Clear existing content
+    resourcesContainer.innerHTML = '';
+    
+    // Try to get resource list from a manifest file first
+    let resourceFiles = await getResourceManifest();
+    
+    // If no manifest, fall back to known files
+    if (!resourceFiles || resourceFiles.length === 0) {
+      resourceFiles = [
+        'sample-whitepaper'
+      ];
+    }
+    
+    // Load each resource
+    for (const resourceId of resourceFiles) {
+      try {
+        const response = await fetch(`resources/markdown/${resourceId}.md`);
+        if (!response.ok) continue;
+        
+        const markdownContent = await response.text();
+        const resource = parseMarkdownMetadata(markdownContent, resourceId);
+        
+        if (resource) {
+          const resourceTile = createResourceTile(resource);
+          resourcesContainer.appendChild(resourceTile);
+        }
+      } catch (error) {
+        console.warn(`Failed to load resource ${resourceId}:`, error);
+      }
+    }
+  } catch (error) {
+    console.error('Failed to load resources:', error);
+  }
+}
+
+// Try to load resource manifest file
+async function getResourceManifest() {
+  try {
+    const response = await fetch('resources/manifest.json');
+    if (!response.ok) return null;
+    
+    const manifest = await response.json();
+    return manifest.files || null;
+  } catch (error) {
+    console.log('No manifest file found, using fallback list');
+    return null;
+  }
+}
+
+function parseMarkdownMetadata(markdownContent, resourceId) {
+  // Parse frontmatter
+  const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---/);
+  if (!frontmatterMatch) return null;
+  
+  const frontmatter = frontmatterMatch[1];
+  const metadata = {};
+  
+  // Parse YAML-like frontmatter
+  frontmatter.split('\n').forEach(line => {
+    const match = line.match(/^(\w+):\s*["']?([^"']*)["']?$/);
+    if (match) {
+      metadata[match[1]] = match[2];
+    }
+  });
+  
+  return {
+    id: resourceId,
+    title: metadata.title || 'Document',
+    description: metadata.description || 'No description available',
+    type: metadata.type || 'Document',
+    date: metadata.date || 'Unknown',
+    icon: metadata.icon || '📄',
+    content: markdownContent
+  };
+}
+
+function createResourceTile(resource) {
+  const tile = document.createElement('div');
+  tile.className = 'resource-tile';
+  tile.onclick = () => openResourceModal(resource.id);
+  
+  tile.innerHTML = `
+    <div class="resource-icon">${resource.icon}</div>
+    <h3>${resource.title}</h3>
+    <p>${resource.description}</p>
+    <div class="resource-meta">
+      <span class="resource-type">${resource.type}</span>
+      <span class="resource-date">${resource.date}</span>
+    </div>
+  `;
+  
+  return tile;
+}
+
+// Resources Modal Functionality
+function openResourceModal(resourceId) {
+  const modal = document.getElementById('resources-modal');
+  const titleElement = document.getElementById('resource-title');
+  const contentElement = document.getElementById('resource-content');
+  
+  if (modal && titleElement && contentElement) {
+    // Set title based on resource ID
+    const titles = {
+      'sample-whitepaper': 'Cybersecurity Framework',
+      'company-update': 'Company Update - Q4 2024'
+    };
+    
+    titleElement.textContent = titles[resourceId] || 'Document';
+    
+    // Load markdown content
+    loadMarkdownContent(resourceId, contentElement);
+    
+    // Show modal
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeResourceModal() {
+  const modal = document.getElementById('resources-modal');
+  if (modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+
+
+async function loadMarkdownContent(resourceId, contentElement) {
+  try {
+    const response = await fetch(`resources/markdown/${resourceId}.md`);
+    if (!response.ok) {
+      contentElement.innerHTML = '<p>Content not found.</p>';
+      return;
+    }
+    
+    const markdownContent = await response.text();
+    const resource = parseMarkdownMetadata(markdownContent, resourceId);
+    
+    if (resource) {
+      // Remove frontmatter and convert markdown to HTML
+      const contentWithoutFrontmatter = markdownContent.replace(/^---\n[\s\S]*?\n---\n/, '');
+      const htmlContent = convertMarkdownToHtml(contentWithoutFrontmatter);
+      contentElement.innerHTML = htmlContent;
+    } else {
+      contentElement.innerHTML = '<p>Failed to parse content.</p>';
+    }
+  } catch (error) {
+    console.error('Failed to load markdown content:', error);
+    contentElement.innerHTML = '<p>Error loading content.</p>';
+  }
+}
+
+function convertMarkdownToHtml(markdown) {
+  // Simple markdown to HTML conversion
+  let html = markdown
+    // Headers
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Lists
+    .replace(/^\* (.*$)/gim, '<li>$1</li>')
+    .replace(/^- (.*$)/gim, '<li>$1</li>')
+    // Numbered lists
+    .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+    // Line breaks
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    // Horizontal rule
+    .replace(/^---$/gim, '<hr>');
+  
+  // Wrap list items in ul/ol tags
+  html = html.replace(/(<li>.*<\/li>)/gs, (match) => {
+    const lines = match.split('<br>');
+    const listItems = lines.filter(line => line.includes('<li>'));
+    if (listItems.length > 0) {
+      return '<ul>' + listItems.join('') + '</ul>';
+    }
+    return match;
+  });
+  
+  // Wrap paragraphs
+  html = '<p>' + html + '</p>';
+  
+  return html;
 }
 
 // Modal Functionality
@@ -335,20 +557,28 @@ function closeProductsModal() {
 }
 
 
-// Close modal when clicking outside of it
+// Close modals when clicking outside of them (fallback for products modal)
 window.onclick = function(event) {
-  const modal = document.getElementById('products-modal');
-  if (event.target === modal) {
+  const productsModal = document.getElementById('products-modal');
+  
+  // Check if products modal is open and click is on the modal background
+  if (productsModal && productsModal.classList.contains('show') && event.target === productsModal) {
     closeProductsModal();
   }
 }
 
-// Close modal with Escape key
+// Close modals with Escape key
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
-    const modal = document.getElementById('products-modal');
-    if (modal && modal.classList.contains('show')) {
+    const productsModal = document.getElementById('products-modal');
+    const resourcesModal = document.getElementById('resources-modal');
+    
+    if (productsModal && productsModal.classList.contains('show')) {
       closeProductsModal();
+    }
+    
+    if (resourcesModal && resourcesModal.classList.contains('show')) {
+      closeResourceModal();
     }
   }
 });
@@ -396,6 +626,9 @@ function toggleDetails(detailsId) {
 
 // Update year
 document.getElementById('y').textContent = new Date().getFullYear();
+
+// Load dynamic resources
+loadResources();
 </script>
 
 </body>
