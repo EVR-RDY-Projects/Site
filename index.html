@@ -319,8 +319,14 @@ async function loadResources() {
     // Load each resource
     for (const resourceId of resourceFiles) {
       try {
-        const response = await fetch(`resources/markdown/${resourceId}.md`);
-        if (!response.ok) continue;
+        // Use absolute path for GitHub Pages compatibility
+        const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+        const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
+        
+        if (!response.ok) {
+          console.warn(`Failed to fetch ${resourceId}.md: ${response.status}`);
+          continue;
+        }
         
         const markdownContent = await response.text();
         const resource = parseMarkdownMetadata(markdownContent, resourceId);
@@ -331,17 +337,24 @@ async function loadResources() {
         }
       } catch (error) {
         console.warn(`Failed to load resource ${resourceId}:`, error);
+        // Create a fallback tile if loading fails
+        const fallbackTile = createFallbackResourceTile(resourceId);
+        resourcesContainer.appendChild(fallbackTile);
       }
     }
   } catch (error) {
     console.error('Failed to load resources:', error);
+    // Show fallback content if everything fails
+    showFallbackResources();
   }
 }
 
 // Try to load resource manifest file
 async function getResourceManifest() {
   try {
-    const response = await fetch('resources/manifest.json');
+    // Use absolute path for GitHub Pages compatibility
+    const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+    const response = await fetch(`${baseUrl}resources/manifest.json`);
     if (!response.ok) return null;
     
     const manifest = await response.json();
@@ -382,7 +395,7 @@ function parseMarkdownMetadata(markdownContent, resourceId) {
 function createResourceTile(resource) {
   const tile = document.createElement('div');
   tile.className = 'resource-tile';
-  tile.onclick = () => openResourceModal(resource.id);
+  tile.onclick = () => openResourceModal(resource);
   
   tile.innerHTML = `
     <div class="resource-icon">${resource.icon}</div>
@@ -397,23 +410,132 @@ function createResourceTile(resource) {
   return tile;
 }
 
+// Create fallback tile when markdown loading fails
+function createFallbackResourceTile(resourceId) {
+  const tile = document.createElement('div');
+  tile.className = 'resource-tile';
+  
+  // Default content for cybersecurity framework
+  if (resourceId === 'sample-whitepaper') {
+    tile.innerHTML = `
+      <div class="resource-icon">📄</div>
+      <h3>Cybersecurity Framework</h3>
+      <p>Our comprehensive approach to OT security and the R.A.I.D. methodology</p>
+      <div class="resource-meta">
+        <span class="resource-type">White Paper</span>
+        <span class="resource-date">Dec 2024</span>
+      </div>
+    `;
+    tile.onclick = () => openResourceModal({
+      title: 'Cybersecurity Framework',
+      content: getFallbackContent(),
+      icon: '📄',
+      type: 'White Paper',
+      date: 'Dec 2024'
+    });
+  }
+  
+  return tile;
+}
+
+// Show fallback content if all loading fails
+function showFallbackResources() {
+  const resourcesContainer = document.getElementById('resources-grid');
+  if (!resourcesContainer) return;
+  
+  resourcesContainer.innerHTML = `
+    <div class="resource-tile" onclick="openResourceModal({
+      title: 'Cybersecurity Framework',
+      content: getFallbackContent(),
+      icon: '📄',
+      type: 'White Paper',
+      date: 'Dec 2024'
+    })">
+      <div class="resource-icon">📄</div>
+      <h3>Cybersecurity Framework</h3>
+      <p>Our comprehensive approach to OT security and the R.A.I.D. methodology</p>
+      <div class="resource-meta">
+        <span class="resource-type">White Paper</span>
+        <span class="resource-date">Dec 2024</span>
+      </div>
+    </div>
+  `;
+}
+
+// Fallback content for cybersecurity framework
+function getFallbackContent() {
+  return `
+    <h1>Cybersecurity Framework</h1>
+    <p><strong>Our comprehensive approach to OT security and the R.A.I.D. methodology</strong></p>
+    
+    <h2>Executive Summary</h2>
+    <p>EVR:RDY's cybersecurity framework provides a structured approach to Operational Technology (OT) security, focusing on the unique challenges and requirements of industrial control systems and critical infrastructure.</p>
+    
+    <h2>R.A.I.D. Methodology</h2>
+    <p>Our framework is built around the R.A.I.D. (Risk Assessment, Implementation, Detection, Defense) methodology:</p>
+    
+    <h3>Risk Assessment</h3>
+    <ul>
+      <li>Comprehensive vulnerability analysis</li>
+      <li>Threat modeling for OT environments</li>
+      <li>Asset inventory and classification</li>
+    </ul>
+    
+    <h3>Implementation</h3>
+    <ul>
+      <li>Security controls deployment</li>
+      <li>Network segmentation strategies</li>
+      <li>Access management protocols</li>
+    </ul>
+    
+    <h3>Detection</h3>
+    <ul>
+      <li>Continuous monitoring systems</li>
+      <li>Anomaly detection algorithms</li>
+      <li>Incident response procedures</li>
+    </ul>
+    
+    <h3>Defense</h3>
+    <ul>
+      <li>Multi-layered security architecture</li>
+      <li>Regular security assessments</li>
+      <li>Staff training and awareness programs</li>
+    </ul>
+    
+    <h2>Contact Information</h2>
+    <p>For more information about our cybersecurity framework and services, please contact us at <strong>info@evrrdy.com</strong></p>
+  `;
+}
+
 // Resources Modal Functionality
-function openResourceModal(resourceId) {
+function openResourceModal(resource) {
   const modal = document.getElementById('resources-modal');
   const titleElement = document.getElementById('resource-title');
   const contentElement = document.getElementById('resource-content');
   
   if (modal && titleElement && contentElement) {
-    // Set title based on resource ID
-    const titles = {
-      'sample-whitepaper': 'Cybersecurity Framework',
-      'company-update': 'Company Update - Q4 2024'
-    };
-    
-    titleElement.textContent = titles[resourceId] || 'Document';
-    
-    // Load markdown content
-    loadMarkdownContent(resourceId, contentElement);
+    // Handle both resource objects and resource IDs
+    if (typeof resource === 'string') {
+      // Legacy support for resource ID strings
+      const titles = {
+        'sample-whitepaper': 'Cybersecurity Framework',
+        'company-update': 'Company Update - Q4 2024'
+      };
+      
+      titleElement.textContent = titles[resource] || 'Document';
+      loadMarkdownContent(resource, contentElement);
+    } else if (typeof resource === 'object' && resource.title) {
+      // New resource object with content
+      titleElement.textContent = resource.title;
+      
+      if (resource.content) {
+        // Use provided content (for fallback)
+        contentElement.innerHTML = convertMarkdownToHtml(resource.content);
+      } else if (resource.id) {
+        // Load markdown content
+        loadMarkdownContent(resource.id, contentElement);
+      }
+    }
     
     // Show modal
     modal.classList.add('show');
@@ -433,9 +555,14 @@ function closeResourceModal() {
 
 async function loadMarkdownContent(resourceId, contentElement) {
   try {
-    const response = await fetch(`resources/markdown/${resourceId}.md`);
+    // Use absolute path for GitHub Pages compatibility
+    const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+    const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
+    
     if (!response.ok) {
-      contentElement.innerHTML = '<p>Content not found.</p>';
+      console.warn(`Failed to fetch ${resourceId}.md: ${response.status}`);
+      // Show fallback content instead of error message
+      contentElement.innerHTML = convertMarkdownToHtml(getFallbackContent());
       return;
     }
     
@@ -448,11 +575,12 @@ async function loadMarkdownContent(resourceId, contentElement) {
       const htmlContent = convertMarkdownToHtml(contentWithoutFrontmatter);
       contentElement.innerHTML = htmlContent;
     } else {
-      contentElement.innerHTML = '<p>Failed to parse content.</p>';
+      contentElement.innerHTML = convertMarkdownToHtml(getFallbackContent());
     }
   } catch (error) {
     console.error('Failed to load markdown content:', error);
-    contentElement.innerHTML = '<p>Error loading content.</p>';
+    // Show fallback content instead of error message
+    contentElement.innerHTML = convertMarkdownToHtml(getFallbackContent());
   }
 }
 
@@ -629,6 +757,9 @@ function toggleDetails(detailsId) {
 document.getElementById('y').textContent = new Date().getFullYear();
 
 // Load dynamic resources
+console.log('🚀 Loading resources...');
+console.log('📍 Current URL:', window.location.href);
+console.log('📍 Base URL:', window.location.origin + window.location.pathname.replace('index.html', ''));
 loadResources();
 </script>
 
