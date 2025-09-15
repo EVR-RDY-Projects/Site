@@ -301,7 +301,12 @@ function toggleProductDetails(detailsId) {
 async function loadResources() {
   try {
     const resourcesContainer = document.getElementById('resources-grid');
-    if (!resourcesContainer) return;
+    if (!resourcesContainer) {
+      console.error('❌ Resources container not found!');
+      return;
+    }
+    
+    console.log('✅ Found resources container:', resourcesContainer);
     
     // Clear existing content
     resourcesContainer.innerHTML = '';
@@ -330,11 +335,17 @@ async function loadResources() {
         }
         
         const markdownContent = await response.text();
+        console.log(`📄 Fetched content for ${resourceId}:`, markdownContent.substring(0, 200) + '...');
+        
         const resource = parseMarkdownMetadata(markdownContent, resourceId);
+        console.log(`🔍 Parsed resource for ${resourceId}:`, resource);
         
         if (resource) {
           const resourceTile = createResourceTile(resource);
           resourcesContainer.appendChild(resourceTile);
+          console.log(`✅ Created tile for ${resourceId}`);
+        } else {
+          console.warn(`❌ Failed to parse resource for ${resourceId}`);
         }
       } catch (error) {
         console.warn(`Failed to load resource ${resourceId}:`, error);
@@ -362,9 +373,16 @@ async function getResourceManifest() {
 }
 
 function parseMarkdownMetadata(markdownContent, resourceId) {
+  console.log(`🔍 Parsing metadata for ${resourceId}`);
+  
   // Parse frontmatter
   const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---/);
-  if (!frontmatterMatch) return null;
+  if (!frontmatterMatch) {
+    console.warn(`❌ No frontmatter found for ${resourceId}`);
+    return null;
+  }
+  
+  console.log(`✅ Found frontmatter for ${resourceId}:`, frontmatterMatch[1]);
   
   const frontmatter = frontmatterMatch[1];
   const metadata = {};
@@ -374,10 +392,11 @@ function parseMarkdownMetadata(markdownContent, resourceId) {
     const match = line.match(/^(\w+):\s*["']?([^"']*)["']?$/);
     if (match) {
       metadata[match[1]] = match[2];
+      console.log(`📝 Parsed metadata: ${match[1]} = ${match[2]}`);
     }
   });
   
-  return {
+  const result = {
     id: resourceId,
     title: metadata.title || 'Document',
     description: metadata.description || 'No description available',
@@ -386,9 +405,14 @@ function parseMarkdownMetadata(markdownContent, resourceId) {
     icon: metadata.icon || '📄',
     content: markdownContent
   };
+  
+  console.log(`📋 Final parsed resource:`, result);
+  return result;
 }
 
 function createResourceTile(resource) {
+  console.log(`🏗️ Creating tile for resource:`, resource);
+  
   const tile = document.createElement('div');
   tile.className = 'resource-tile';
   tile.onclick = () => openResourceModal(resource);
@@ -403,6 +427,7 @@ function createResourceTile(resource) {
     </div>
   `;
   
+  console.log(`🎨 Created tile HTML:`, tile.innerHTML);
   return tile;
 }
 
