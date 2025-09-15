@@ -118,18 +118,31 @@
       </blockquote>
     </section>
 
+    <!-- Resources Section -->
+    <section class="card animate-slide-up">
+      <h2 class="typewriter">Resources & Documentation</h2>
+      <p>Access our latest white papers, company updates, and technical documentation.</p>
+      
+      <div class="challenge-grid">
+        <div class="solution-card animate-slide-left animate-stagger-1">
+          <h3>Technical Documentation</h3>
+          <p>Comprehensive guides and specifications for our open-source tools and platforms.</p>
+        </div>
+        <div class="solution-card animate-slide-up animate-stagger-2">
+          <h3>White Papers</h3>
+          <p>In-depth analysis and research on critical infrastructure cybersecurity challenges and solutions.</p>
+        </div>
+        <div class="solution-card animate-slide-right animate-stagger-3">
+          <h3>Company Updates</h3>
+          <p>Latest news, product releases, and strategic developments from EVR:RDY.</p>
+        </div>
+      </div>
+      
+      <button class="learn-more-btn animate-glow" onclick="openResourcesModal()">View Available Resources</button>
+    </section>
+
   </div>
 </main>
-
-<!-- Resources Section -->
-<section class="card animate-slide-up">
-  <h2 class="typewriter">Resources & Documentation</h2>
-  <p>Access our latest white papers, company updates, and technical documentation.</p>
-  
-  <div class="resources-grid" id="resources-grid">
-    <!-- Resources will be dynamically loaded here -->
-  </div>
-</section>
 
 <footer class="text-center" style="color:var(--muted); font-size:.95rem; margin: var(--space-lg) 0 var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(229,228,216,.12);">
   © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
@@ -251,15 +264,28 @@
 </div>
 
 <!-- Resources Modal -->
-<div id="resources-modal" class="modal" onclick="closeResourceModal()">
+<div id="resources-modal" class="modal" onclick="closeResourcesModal()">
   <div class="modal-content" onclick="event.stopPropagation()">
     <div class="modal-header">
-      <h2 id="resource-title">Document Title</h2>
-      <button class="close-btn" onclick="closeResourceModal()">&times;</button>
+      <h2>Available Resources</h2>
+      <button class="close-btn" onclick="closeResourcesModal()">&times;</button>
     </div>
     <div class="modal-body">
-      <div id="resource-content" class="markdown-content">
-        <!-- Markdown content will be loaded here -->
+      <div class="resources-grid" id="resources-grid">
+        <!-- Resources will be dynamically loaded here -->
+      </div>
+      
+      <!-- Expanded Resource Content -->
+      <div id="expanded-resource" class="expanded-resource">
+        <div class="expanded-resource-content">
+          <div class="expanded-resource-header">
+            <h3 id="expanded-resource-title">Resource Title</h3>
+            <button class="close-expanded-btn" onclick="closeExpandedResource()">&times;</button>
+          </div>
+          <div id="expanded-resource-content" class="markdown-content">
+            <!-- Expanded resource content will be loaded here -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -420,7 +446,7 @@ function parseMarkdownMetadata(markdownContent, resourceId) {
 function createResourceTile(resource) {
   const tile = document.createElement('div');
   tile.className = 'resource-tile';
-  tile.onclick = () => openResourceModal(resource);
+  tile.onclick = () => expandResource(resource);
   
   tile.innerHTML = `
     <div class="resource-icon">${resource.icon}</div>
@@ -437,25 +463,46 @@ function createResourceTile(resource) {
 
 
 // Resources Modal Functionality
-function openResourceModal(resource) {
+function openResourcesModal() {
   const modal = document.getElementById('resources-modal');
-  const titleElement = document.getElementById('resource-title');
-  const contentElement = document.getElementById('resource-content');
+  if (modal) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    // Load resources when modal opens
+    loadResources();
+  }
+}
+
+function closeResourcesModal() {
+  const modal = document.getElementById('resources-modal');
+  const expandedResource = document.getElementById('expanded-resource');
+  if (modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+    // Close any expanded resource when closing modal
+    if (expandedResource) {
+      expandedResource.classList.remove('show');
+    }
+  }
+}
+
+function expandResource(resource) {
+  const expandedResource = document.getElementById('expanded-resource');
+  const titleElement = document.getElementById('expanded-resource-title');
+  const contentElement = document.getElementById('expanded-resource-content');
   
-  if (modal && titleElement && contentElement) {
+  if (expandedResource && titleElement && contentElement) {
     titleElement.textContent = resource.title;
     loadMarkdownContent(resource.id, contentElement);
-    
-    // Show modal
-    modal.classList.add('show');
+    expandedResource.classList.add('show');
     document.body.style.overflow = 'hidden';
   }
 }
 
-function closeResourceModal() {
-  const modal = document.getElementById('resources-modal');
-  if (modal) {
-    modal.classList.remove('show');
+function closeExpandedResource() {
+  const expandedResource = document.getElementById('expanded-resource');
+  if (expandedResource) {
+    expandedResource.classList.remove('show');
     document.body.style.overflow = 'auto';
   }
 }
@@ -592,28 +639,48 @@ function closeProductsModal() {
 }
 
 
-// Close modals when clicking outside of them (fallback for products modal)
+// Close modals when clicking outside of them
 window.onclick = function(event) {
   const productsModal = document.getElementById('products-modal');
+  const resourcesModal = document.getElementById('resources-modal');
+  const expandedResource = document.getElementById('expanded-resource');
   
   // Check if products modal is open and click is on the modal background
   if (productsModal && productsModal.classList.contains('show') && event.target === productsModal) {
     closeProductsModal();
   }
-}
+  
+  // Check if resources modal is open and click is on the modal background
+  if (resourcesModal && resourcesModal.classList.contains('show') && event.target === resourcesModal) {
+    closeResourcesModal();
+  }
+  
+  // Check if expanded resource is open and click is outside of it
+  if (expandedResource && expandedResource.classList.contains('show') && 
+      !expandedResource.contains(event.target) && 
+      !event.target.closest('.resource-tile')) {
+    closeExpandedResource();
+  }
+};
 
 // Close modals with Escape key
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
     const productsModal = document.getElementById('products-modal');
     const resourcesModal = document.getElementById('resources-modal');
+    const expandedResource = document.getElementById('expanded-resource');
     
-    if (productsModal && productsModal.classList.contains('show')) {
-      closeProductsModal();
+    // First close expanded resource if open
+    if (expandedResource && expandedResource.classList.contains('show')) {
+      closeExpandedResource();
     }
-    
-    if (resourcesModal && resourcesModal.classList.contains('show')) {
-      closeResourceModal();
+    // Then close resources modal if open
+    else if (resourcesModal && resourcesModal.classList.contains('show')) {
+      closeResourcesModal();
+    }
+    // Finally close products modal if open
+    else if (productsModal && productsModal.classList.contains('show')) {
+      closeProductsModal();
     }
   }
 });
@@ -662,8 +729,7 @@ function toggleDetails(detailsId) {
 // Update year
 document.getElementById('y').textContent = new Date().getFullYear();
 
-// Load dynamic resources
-loadResources();
+// Resources will be loaded when the modal opens
 </script>
 
 </body>

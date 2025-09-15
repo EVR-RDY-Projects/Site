@@ -995,6 +995,93 @@ body.loaded .card {
   font-weight: 500;
 }
 
+
+/* Expanded Resource */
+.expanded-resource {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  animation: fadeIn 0.3s ease-out;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.expanded-resource.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.expanded-resource-content {
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(229, 228, 216, 0.3);
+  border-radius: var(--radius-lg);
+  margin: 2% auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  animation: slideIn 0.3s ease-out;
+}
+
+.expanded-resource-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg);
+  border-bottom: 1px solid rgba(229, 228, 216, 0.15);
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.expanded-resource-header h3 {
+  margin: 0;
+  color: var(--bone);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-expanded-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-normal);
+}
+
+.close-expanded-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--bone);
+}
+
+.expanded-resource .markdown-content {
+  padding: var(--space-lg);
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+
 /* Markdown Content Styling */
 .markdown-content {
   line-height: 1.7;
@@ -1287,6 +1374,25 @@ body.loaded .card {
   }
   
   .modal-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .expanded-resource-content {
+    width: 95%;
+    margin: 5% auto;
+    max-height: 85vh;
+  }
+  
+  .expanded-resource-header {
+    padding: var(--space-md);
+  }
+  
+  .expanded-resource .markdown-content {
+    padding: var(--space-md);
+    max-height: calc(85vh - 100px);
+  }
+  
+  .expanded-resource-header h3 {
     font-size: 1.25rem;
   }
   
