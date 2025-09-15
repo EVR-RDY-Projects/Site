@@ -1,10 +1,10 @@
-// Once UI Enhanced JavaScript for EVR:RDY
-// Adds modern interactions and accessibility features
+// Enhanced JavaScript for EVR:RDY
+// Adds modern interactions, animations, and accessibility features
 
 (function () {
 	"use strict";
 
-	// Once UI Intersection Observer for animations
+	// Enhanced Intersection Observer for scroll-triggered animations
 	function initScrollAnimations() {
 		const observerOptions = {
 			threshold: 0.1,
@@ -14,19 +14,297 @@
 		const observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
-					entry.target.style.opacity = "1";
-					entry.target.style.transform = "translateY(0)";
+					entry.target.classList.add("animate-triggered");
+
+					// Add staggered animations for grid items
+					const gridItems = entry.target.querySelectorAll(
+						".challenge-grid > div, .structure-card, .solution-card"
+					);
+					gridItems.forEach((item, index) => {
+						setTimeout(() => {
+							item.classList.add("animate-triggered");
+						}, index * 100);
+					});
 				}
 			});
 		}, observerOptions);
 
-		// Observe all cards for scroll animations
-		document.querySelectorAll(".card").forEach((card) => {
-			card.style.opacity = "0";
-			card.style.transform = "translateY(20px)";
-			card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-			observer.observe(card);
+		// Observe all animated elements
+		document
+			.querySelectorAll(
+				".animate-slide-up, .animate-slide-left, .animate-slide-right, .animate-fade-scale"
+			)
+			.forEach((element) => {
+				observer.observe(element);
+			});
+	}
+
+	// Animated counters
+	function initAnimatedCounters() {
+		const counters = document.querySelectorAll(".counter");
+		const counterObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const counter = entry.target;
+						const target = parseInt(counter.dataset.target);
+						const duration = 2000;
+						const increment = target / (duration / 16);
+						let current = 0;
+
+						const updateCounter = () => {
+							current += increment;
+							if (current < target) {
+								counter.textContent = Math.floor(current);
+								requestAnimationFrame(updateCounter);
+							} else {
+								counter.textContent = target;
+							}
+						};
+
+						updateCounter();
+						counterObserver.unobserve(counter);
+					}
+				});
+			},
+			{ threshold: 0.5 }
+		);
+
+		counters.forEach((counter) => counterObserver.observe(counter));
+	}
+
+	// Enhanced hover effects
+	function initEnhancedHoverEffects() {
+		// Add enhanced hover to all interactive elements
+		document
+			.querySelectorAll(
+				".card, .challenge-card, .solution-card, .structure-card, .cta, .learn-more-btn"
+			)
+			.forEach((element) => {
+				element.classList.add("enhanced-hover");
+			});
+
+		// Add 3D transforms to cards
+		document
+			.querySelectorAll(
+				".card, .challenge-card, .solution-card, .structure-card"
+			)
+			.forEach((element) => {
+				element.classList.add("transform-3d");
+			});
+	}
+
+	// Particle background effects
+	function initParticleEffects() {
+		document.querySelectorAll(".hero, .mission-enhanced").forEach((element) => {
+			element.classList.add("particle-bg");
 		});
+	}
+
+	// Parallax scrolling effect
+	function initParallaxScrolling() {
+		window.addEventListener("scroll", () => {
+			const scrolled = window.pageYOffset;
+			const parallaxElements = document.querySelectorAll(".parallax");
+
+			parallaxElements.forEach((element) => {
+				const speed = element.dataset.speed || 0.5;
+				const yPos = -(scrolled * speed);
+				element.style.transform = `translateY(${yPos}px)`;
+			});
+		});
+	}
+
+	// Dynamic color schemes
+	function initDynamicColors() {
+		const sections = document.querySelectorAll("section");
+		const colorSchemes = [
+			{ primary: "#a9d68a", secondary: "#b9baaf", accent: "#e5e4d8" },
+			{ primary: "#3b82f6", secondary: "#1e40af", accent: "#dbeafe" },
+			{ primary: "#10b981", secondary: "#047857", accent: "#d1fae5" },
+			{ primary: "#f59e0b", secondary: "#d97706", accent: "#fef3c7" },
+		];
+
+		sections.forEach((section, index) => {
+			const colorScheme = colorSchemes[index % colorSchemes.length];
+			section.style.setProperty("--section-primary", colorScheme.primary);
+			section.style.setProperty("--section-secondary", colorScheme.secondary);
+			section.style.setProperty("--section-accent", colorScheme.accent);
+		});
+	}
+
+	// Enhanced modal with better transitions
+	function initEnhancedModal() {
+		const modal = document.getElementById("products-modal");
+		const modalContent = document.querySelector(".modal-content");
+
+		if (modal && modalContent) {
+			// Enhanced modal opening
+			window.openProductsModal = function () {
+				modal.style.display = "block";
+				document.body.style.overflow = "hidden";
+
+				// Animate modal in
+				setTimeout(() => {
+					modal.classList.add("show");
+					modalContent.style.transform = "scale(1)";
+					modalContent.style.opacity = "1";
+				}, 10);
+			};
+
+			// Enhanced modal closing
+			window.closeProductsModal = function () {
+				modal.classList.remove("show");
+				modalContent.style.transform = "scale(0.9)";
+				modalContent.style.opacity = "0";
+
+				setTimeout(() => {
+					modal.style.display = "none";
+					document.body.style.overflow = "auto";
+				}, 300);
+			};
+		}
+	}
+
+	// Interactive R.A.I.D. framework diagram
+	function initRAIDDiagram() {
+		const raidSteps = document.querySelectorAll(".raid-step");
+		const timelineContents = document.querySelectorAll(".timeline-content");
+
+		raidSteps.forEach((step, index) => {
+			step.addEventListener("click", () => {
+				// Add active state
+				raidSteps.forEach((s) => s.classList.remove("active"));
+				step.classList.add("active");
+
+				// Animate connection lines
+				const connections = document.querySelectorAll(".raid-connection");
+				connections.forEach((conn, i) => {
+					if (i <= index) {
+						conn.classList.add("active");
+					} else {
+						conn.classList.remove("active");
+					}
+				});
+
+				// Show corresponding timeline content
+				timelineContents.forEach((content) =>
+					content.classList.remove("active")
+				);
+				const targetTimeline = document.getElementById(`timeline-${index + 1}`);
+				if (targetTimeline) {
+					targetTimeline.classList.add("active");
+				}
+			});
+		});
+
+		// Show first timeline by default
+		if (timelineContents.length > 0) {
+			timelineContents[0].classList.add("active");
+		}
+	}
+
+	// Typewriter effect for key phrases
+	function initTypewriterEffect() {
+		const typewriterElements = document.querySelectorAll(".typewriter");
+		typewriterElements.forEach((element) => {
+			const text = element.textContent;
+			element.textContent = "";
+			element.style.borderRight = "2px solid var(--bright)";
+
+			let i = 0;
+			const typeWriter = () => {
+				if (i < text.length) {
+					element.textContent += text.charAt(i);
+					i++;
+					setTimeout(typeWriter, 100);
+				} else {
+					element.style.borderRight = "none";
+				}
+			};
+
+			// Start typewriter when element is visible
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						typeWriter();
+						observer.unobserve(entry.target);
+					}
+				});
+			});
+			observer.observe(element);
+		});
+	}
+
+	// Original modal functions
+	function initModal() {
+		const modal = document.getElementById("products-modal");
+		const modalContent = document.querySelector(".modal-content");
+
+		if (modal && modalContent) {
+			// Basic modal opening
+			window.openProductsModal = function () {
+				modal.style.display = "block";
+				document.body.style.overflow = "hidden";
+			};
+
+			// Basic modal closing
+			window.closeProductsModal = function () {
+				modal.style.display = "none";
+				document.body.style.overflow = "auto";
+			};
+
+			// Close modal when clicking outside
+			window.onclick = function (event) {
+				if (event.target === modal) {
+					closeProductsModal();
+				}
+			};
+
+			// Close modal with Escape key
+			document.addEventListener("keydown", function (event) {
+				if (event.key === "Escape" && modal.style.display === "block") {
+					closeProductsModal();
+				}
+			});
+		}
+	}
+
+	function initAccordion() {
+		// Accordion behavior for product sections
+		const productSections = document.querySelectorAll(".product-section");
+		productSections.forEach((section) => {
+			const header = section.querySelector(".product-header");
+			if (header) {
+				header.addEventListener("click", () => {
+					// Close other sections
+					productSections.forEach((otherSection) => {
+						if (otherSection !== section) {
+							otherSection.classList.remove("expanded");
+						}
+					});
+					// Toggle current section
+					section.classList.toggle("expanded");
+				});
+			}
+		});
+	}
+
+	function initModalSectionScrolling() {
+		// Modal section scrolling functionality
+		window.openModalToSection = function (sectionId) {
+			openProductsModal();
+			setTimeout(() => {
+				const section = document.getElementById(sectionId);
+				if (section) {
+					section.scrollIntoView({ behavior: "smooth", block: "center" });
+					section.style.background = "rgba(169, 214, 138, 0.1)";
+					setTimeout(() => {
+						section.style.background = "";
+					}, 2000);
+				}
+			}, 300);
+		};
 	}
 
 	// Once UI Smooth scrolling for anchor links
@@ -219,6 +497,10 @@
 
 		if (!prefersReducedMotion) {
 			initScrollAnimations();
+			initAnimatedCounters();
+			initParticleEffects();
+			initParallaxScrolling();
+			initTypewriterEffect();
 		}
 
 		initSmoothScrolling();
@@ -228,6 +510,17 @@
 		initAccessibilityFeatures();
 		initErrorHandling();
 		initAnalytics();
+
+		// Modal and interaction features
+		initModal();
+		initAccordion();
+		initModalSectionScrolling();
+
+		// Enhanced features (always initialize)
+		initEnhancedHoverEffects();
+		initDynamicColors();
+		initEnhancedModal();
+		initRAIDDiagram();
 
 		// Add loaded class to body for CSS transitions
 		document.body.classList.add("loaded");
