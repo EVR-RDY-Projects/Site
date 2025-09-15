@@ -297,16 +297,36 @@ function toggleProductDetails(detailsId) {
   }
 }
 
+// Helper function to convert GitHub Pages URL to raw GitHub URL
+function getRawGitHubUrl(path) {
+  // For EVR-RDY site, use the specific branch format
+  if (window.location.hostname === 'evrrdy.com') {
+    return `https://raw.githubusercontent.com/EVR-RDY/Site/refs/heads/feature/ui${path}`;
+  }
+  
+  const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+  
+  // Handle different GitHub Pages URL patterns
+  if (baseUrl.includes('.github.io/')) {
+    // User/organization pages: username.github.io/repo -> raw.githubusercontent.com/username/repo/main
+    const parts = baseUrl.replace('https://', '').split('/');
+    const username = parts[0].replace('.github.io', '');
+    const repo = parts[1] || '';
+    return `https://raw.githubusercontent.com/${username}/${repo}/main${path}`;
+  } else {
+    // Project pages: username.github.io/repo -> raw.githubusercontent.com/username/repo/gh-pages
+    const parts = baseUrl.replace('https://', '').split('/');
+    const username = parts[0].replace('.github.io', '');
+    const repo = parts[1] || '';
+    return `https://raw.githubusercontent.com/${username}/${repo}/gh-pages${path}`;
+  }
+}
+
 // Dynamic Resources Loading
 async function loadResources() {
   try {
     const resourcesContainer = document.getElementById('resources-grid');
-    if (!resourcesContainer) {
-      console.error('❌ Resources container not found!');
-      return;
-    }
-    
-    console.log('✅ Found resources container:', resourcesContainer);
+    if (!resourcesContainer) return;
     
     // Clear existing content
     resourcesContainer.innerHTML = '';
@@ -325,9 +345,11 @@ async function loadResources() {
     // Load each resource
     for (const resourceId of resourceFiles) {
       try {
-        // Use absolute path for GitHub Pages compatibility
-        const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-        const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
+        // Use GitHub raw content URL for reliable markdown serving
+        const rawUrl = getRawGitHubUrl(`/resources/markdown/${resourceId}.md`);
+        console.log(`🔍 Fetching raw content from: ${rawUrl}`);
+        
+        const response = await fetch(rawUrl);
         
         if (!response.ok) {
           console.warn(`Failed to fetch ${resourceId}: ${response.status}`);
@@ -335,23 +357,13 @@ async function loadResources() {
         }
         
         const markdownContent = await response.text();
-        console.log(`📄 Fetched content for ${resourceId}:`, markdownContent.substring(0, 200) + '...');
-        
-        // Check if we got HTML instead of markdown
-        if (markdownContent.includes('<!DOCTYPE html>')) {
-          console.error(`❌ Got HTML instead of markdown for ${resourceId}.md - this suggests a 404 page`);
-          continue;
-        }
+        console.log(`✅ Fetched ${resourceId}.md successfully from raw GitHub`);
         
         const resource = parseMarkdownMetadata(markdownContent, resourceId);
-        console.log(`🔍 Parsed resource for ${resourceId}:`, resource);
         
         if (resource) {
           const resourceTile = createResourceTile(resource);
           resourcesContainer.appendChild(resourceTile);
-          console.log(`✅ Created tile for ${resourceId}`);
-        } else {
-          console.warn(`❌ Failed to parse resource for ${resourceId}`);
         }
       } catch (error) {
         console.warn(`Failed to load resource ${resourceId}:`, error);
@@ -365,9 +377,9 @@ async function loadResources() {
 // Try to load resource manifest file
 async function getResourceManifest() {
   try {
-    // Use absolute path for GitHub Pages compatibility
-    const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-    const response = await fetch(`${baseUrl}resources/manifest.json`);
+    // Use GitHub raw content URL for reliable manifest serving
+    const rawUrl = getRawGitHubUrl('/resources/manifest.json');
+    const response = await fetch(rawUrl);
     if (!response.ok) return null;
     
     const manifest = await response.json();
@@ -379,16 +391,9 @@ async function getResourceManifest() {
 }
 
 function parseMarkdownMetadata(markdownContent, resourceId) {
-  console.log(`🔍 Parsing metadata for ${resourceId}`);
-  
   // Parse frontmatter
   const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---/);
-  if (!frontmatterMatch) {
-    console.warn(`❌ No frontmatter found for ${resourceId}`);
-    return null;
-  }
-  
-  console.log(`✅ Found frontmatter for ${resourceId}:`, frontmatterMatch[1]);
+  if (!frontmatterMatch) return null;
   
   const frontmatter = frontmatterMatch[1];
   const metadata = {};
@@ -398,11 +403,10 @@ function parseMarkdownMetadata(markdownContent, resourceId) {
     const match = line.match(/^(\w+):\s*["']?([^"']*)["']?$/);
     if (match) {
       metadata[match[1]] = match[2];
-      console.log(`📝 Parsed metadata: ${match[1]} = ${match[2]}`);
     }
   });
   
-  const result = {
+  return {
     id: resourceId,
     title: metadata.title || 'Document',
     description: metadata.description || 'No description available',
@@ -411,14 +415,9 @@ function parseMarkdownMetadata(markdownContent, resourceId) {
     icon: metadata.icon || '📄',
     content: markdownContent
   };
-  
-  console.log(`📋 Final parsed resource:`, result);
-  return result;
 }
 
 function createResourceTile(resource) {
-  console.log(`🏗️ Creating tile for resource:`, resource);
-  
   const tile = document.createElement('div');
   tile.className = 'resource-tile';
   tile.onclick = () => openResourceModal(resource);
@@ -433,7 +432,6 @@ function createResourceTile(resource) {
     </div>
   `;
   
-  console.log(`🎨 Created tile HTML:`, tile.innerHTML);
   return tile;
 }
 
@@ -466,9 +464,9 @@ function closeResourceModal() {
 
 async function loadMarkdownContent(resourceId, contentElement) {
   try {
-    // Use absolute path for GitHub Pages compatibility
-    const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-    const response = await fetch(`${baseUrl}resources/markdown/${resourceId}.md`);
+    // Use GitHub raw content URL for reliable markdown serving
+    const rawUrl = getRawGitHubUrl(`/resources/markdown/${resourceId}.md`);
+    const response = await fetch(rawUrl);
     
     if (!response.ok) {
       contentElement.innerHTML = '<p>Content not found.</p>';
