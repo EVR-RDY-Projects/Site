@@ -1,6 +1,6 @@
 {
-  "files": ["sample-whitepaper"],
-  "lastUpdated": "2025-09-14",
+  "files": ["sample-whitepaper", "ghost-node-whitepaper"],
+  "lastUpdated": "2025-01-15",
   "description": "List of available markdown resources",
-  "count":        1
+  "count": 2
 }
