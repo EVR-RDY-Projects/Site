@@ -2186,4 +2186,9 @@ footer:hover {
   padding-left: var(--space-lg);
 }
 
+/* Disable particle spin globally */
+.particle-bg::before {
+  animation: none !important;
+  transform: none !important;
+}
 
