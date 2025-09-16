@@ -274,24 +274,22 @@
       <div class="resources-grid" id="resources-grid">
         <!-- Resources will be dynamically loaded here -->
       </div>
-      
-      <!-- Expanded Resource Content -->
-      <div id="expanded-resource" class="expanded-resource">
-        <div class="expanded-resource-content">
-          <div class="expanded-resource-header">
-            <h3 id="expanded-resource-title">Resource Title</h3>
-            <button class="close-expanded-btn" onclick="closeExpandedResource()">&times;</button>
-          </div>
-          <div id="expanded-resource-content" class="markdown-content">
-            <!-- Expanded resource content will be loaded here -->
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
 
+           <!-- Expanded Resource Content -->
+           <div id="expanded-resource" class="expanded-resource" onclick="closeExpandedResource()">
+             <div class="expanded-resource-content" onclick="event.stopPropagation()">
+               <button class="close-expanded-btn" onclick="closeExpandedResource()">&times;</button>
+               <div id="expanded-resource-content" class="markdown-content">
+                 <!-- Expanded resource content will be loaded here -->
+               </div>
+             </div>
+           </div>
+
 <script src="assets/js/enhanced.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 <script>
 // Product Details Toggle Function (Accordion behavior)
 function toggleProductDetails(detailsId) {
@@ -325,9 +323,22 @@ function toggleProductDetails(detailsId) {
 
 // Helper function to convert GitHub Pages URL to raw GitHub URL
 function getRawGitHubUrl(path) {
+  console.log(`🌐 Current hostname: ${window.location.hostname}`);
+  
   // For EVR-RDY site, use the specific branch format
   if (window.location.hostname === 'evrrdy.com') {
     return `https://raw.githubusercontent.com/EVR-RDY/Site/refs/heads/feature/ui${path}`;
+  }
+  
+  // For local development (127.0.0.1, localhost, etc.)
+  if (window.location.hostname === '127.0.0.1' || 
+      window.location.hostname === 'localhost' || 
+      window.location.hostname.startsWith('192.168.') ||
+      window.location.hostname.startsWith('10.') ||
+      window.location.hostname.endsWith('.local')) {
+    const localUrl = window.location.origin + path;
+    console.log(`🏠 Using local development URL: ${localUrl}`);
+    return localUrl;
   }
   
   const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
@@ -488,11 +499,9 @@ function closeResourcesModal() {
 
 function expandResource(resource) {
   const expandedResource = document.getElementById('expanded-resource');
-  const titleElement = document.getElementById('expanded-resource-title');
   const contentElement = document.getElementById('expanded-resource-content');
   
-  if (expandedResource && titleElement && contentElement) {
-    titleElement.textContent = resource.title;
+  if (expandedResource && contentElement) {
     loadMarkdownContent(resource.id, contentElement);
     expandedResource.classList.add('show');
     document.body.style.overflow = 'hidden';
@@ -538,41 +547,43 @@ async function loadMarkdownContent(resourceId, contentElement) {
 }
 
 function convertMarkdownToHtml(markdown) {
-  // Simple markdown to HTML conversion
-  let html = markdown
-    // Headers
-    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-    // Bold
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Italic
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Lists
-    .replace(/^\* (.*$)/gim, '<li>$1</li>')
-    .replace(/^- (.*$)/gim, '<li>$1</li>')
-    // Numbered lists
-    .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-    // Line breaks
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>')
-    // Horizontal rule
-    .replace(/^---$/gim, '<hr>');
-  
-  // Wrap list items in ul/ol tags
-  html = html.replace(/(<li>.*<\/li>)/gs, (match) => {
-    const lines = match.split('<br>');
-    const listItems = lines.filter(line => line.includes('<li>'));
-    if (listItems.length > 0) {
-      return '<ul>' + listItems.join('') + '</ul>';
-    }
-    return match;
-  });
-  
-  // Wrap paragraphs
-  html = '<p>' + html + '</p>';
-  
-  return html;
+  // Use marked.js library for proper markdown parsing
+  if (typeof marked !== 'undefined') {
+    // Configure marked options
+    marked.setOptions({
+      breaks: true, // Convert \n to <br>
+      gfm: true, // GitHub Flavored Markdown
+      sanitize: false, // Allow HTML (we trust our content)
+      smartLists: true,
+      smartypants: true
+    });
+    
+    // Add target="_blank" to external links
+    const renderer = new marked.Renderer();
+    renderer.link = function(href, title, text) {
+      const isExternal = href.startsWith('http') && !href.includes(window.location.hostname);
+      const target = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+      const titleAttr = title ? ` title="${title}"` : '';
+      return `<a href="${href}"${titleAttr}${target}>${text}</a>`;
+    };
+    
+    marked.setOptions({ renderer });
+    
+    return marked.parse(markdown);
+  } else {
+    // Fallback to simple conversion if marked.js isn't loaded
+    console.warn('marked.js not loaded, using fallback markdown parser');
+    return markdown
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>');
+  }
 }
 
 // Modal Functionality
@@ -655,12 +666,7 @@ window.onclick = function(event) {
     closeResourcesModal();
   }
   
-  // Check if expanded resource is open and click is outside of it
-  if (expandedResource && expandedResource.classList.contains('show') && 
-      !expandedResource.contains(event.target) && 
-      !event.target.closest('.resource-tile')) {
-    closeExpandedResource();
-  }
+  // Note: Expanded resource click-outside is handled by direct onclick on the element
 };
 
 // Close modals with Escape key
