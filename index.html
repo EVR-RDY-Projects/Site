@@ -4,187 +4,793 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>EVR:RDY — Defend Forward · Advance Always</title>
-<meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Low-cost solutions for critical infrastructure. T.A.P.S., TacSOC, RAID doctrine." />
+<meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Low-cost solutions for critical infrastructure. T.A.P.S., TacSOC, R.A.I.D. framework, Hunter/Killer teams." />
 
-<style>
-  :root{
-    --bone:#e5e4d8;
-    --olive:#848c6a;
-    --bright:#a9d68a;
-    --ink:#0e1012;
-    --muted:#b9baaf;
-    --panel: rgba(14,16,18,.58);
-  }
-
-  body {
-    margin: 0;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color: var(--bone);
-    background: var(--ink) url("assets/img/background.png") center center / cover no-repeat;
-    background-attachment: fixed;
-  }
-
-
-  .container{ max-width: 1120px; margin: 0 auto; padding: 0 18px; }
-
-  header.hero{ padding-top: 12px; }
-  .hero img{
-    width: 100%; height: auto; display: block;
-    border-radius: 14px;
-    box-shadow: 0 18px 60px rgba(0,0,0,.45);
-    border: 1px solid rgba(229,228,216,.12);
-  }
-
-  .content-wrap{ margin: 32px auto 56px; }
-  section.card{
-    background: var(--panel);
-    border-radius: 16px;
-    box-shadow: 0 24px 70px rgba(0,0,0,.46);
-    backdrop-filter: blur(2px) saturate(112%);
-    padding: clamp(22px, 3vw, 38px);
-    margin-bottom: 26px;
-  }
-
-  h2{
-    font-size: clamp(26px, 2.6vw, 36px);
-    font-weight: 900;
-    background: linear-gradient(90deg, var(--bone), var(--bright));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    text-shadow: 0 2px 24px rgba(169,214,138,.25);
-    margin-bottom: 1rem;
-  }
-  h3{
-    font-size: clamp(20px, 1.8vw, 26px);
-    font-weight: 800;
-    color:#fff;
-    margin-top: 1rem;
-    margin-bottom: .4rem;
-  }
-  p{ color:#d9dacd; font-size: clamp(16px, 1.15vw, 18px); line-height: 1.7; margin:.5rem 0; }
-  strong{ color:#ffffff; font-weight: 850; }
-  em{ color:#ececec }
-  blockquote{ margin: 1rem 0; padding-left: 1rem; border-left: 3px solid var(--bright); color:#ececec }
-
-  .indent { margin-left: 1.25rem; }
-
-  .cta{
-    display:inline-block; margin-top: 1rem; padding:.6rem .9rem;
-    background: var(--olive); color: var(--bone); text-decoration:none; font-weight:750; border-radius: 12px;
-    border: 1px solid rgba(229,228,216,.22); box-shadow: 0 8px 22px rgba(0,0,0,.35);
-    transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
-    font-size: .95rem;
-  }
-  .cta:hover{ background:#98a485; transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.45); }
-
-  footer{ text-align:center; color:var(--muted); font-size:.95rem; margin: 16px 0 30px; }
-</style>
+<link rel="stylesheet" href="assets/css/enhanced-style.css">
 </head>
 <body>
 
-<header class="hero">
+<header class="hero parallax" data-speed="0.5">
   <div class="container">
+    <div class="hero-content animate-fade-in-up parallax" data-speed="0.3">
     <img src="assets/img/banner.png" alt="EVR:RDY — Defend Forward · Advance Always">
+    </div>
   </div>
 </header>
 
 <main class="content-wrap">
   <div class="container">
 
-    <section class="card">
-      <h2>Our Mission</h2>
-      <p>Our mission is to provide low‑cost alternative solutions to defending critical infrastructure by leveraging both the veteran and civilian community. Put simply: we give critical infrastructure and defense partners a practical, affordable way to protect the systems that matter most.</p>
-      <blockquote>
-        “We have done so much, for so long, with so little, we are now qualified to do anything with nothing.”<br>
-        <span style="color:#aaa; font-size:.9em;">– often attributed to Frank Sinatra</span>
+    <!-- Hero Summary -->
+    <section class="hero-summary mission-enhanced">
+      <div class="mission-header">
+        <h1>Our Mission</h1>
+        <div class="mission-icon">🛡️</div>
+      </div>
+      <div class="mission-content">
+        <p class="mission-intro">EVR:RDY is a veteran-led defensive cyber initiative focused on OT/ICS. Our mission is to provide low‑cost alternative solutions to defending critical infrastructure by leveraging veteran and civilian communities.</p>
+        <blockquote class="mission-quote">
+          <div class="quote-text">
+            We have done so much, for so long, with so little, we are now qualified to do anything with nothing.
+          </div>
+          <div class="quote-attribution">– Frank Sinatra</div>
       </blockquote>
-      <p>This isn’t about buzzwords or bloated security stacks. EVR:RDY applies the same grit, discipline, and resourcefulness forged in uniform and brings it to cyber defense.</p>
-      <p><strong>Call to Action:</strong> Reach out. Become a part of the work.<br>
-      📧 Contact: <a href="mailto:info@evrrdy.com" style="color:var(--bright);text-decoration:none;">info@evrrdy.com</a></p>
-    </section>
-
-    <section class="card">
-      <h2>Problem Statement</h2>
-      <p>Critical infrastructure and defense networks are facing unprecedented threats. Yet, three challenges make it nearly impossible for small utilities, municipalities, and DoD‑critical infrastructure organizations to defend themselves:</p>
-      <p><strong>Underfunding:</strong> Most organizations allocate only 0–10% of their security budgets to ICS/OT, leaving critical areas under‑resourced. Even as global OT security spending is projected to double by 2030, smaller entities remain priced out.</p>
-      <p><strong>High Cost of Solutions:</strong> Leading OT/ICS cybersecurity platforms often start in the six‑to‑seven figure range, with ongoing licensing, integration, and maintenance fees that smaller utilities cannot sustain.</p>
-      <p><strong>Workforce Shortage:</strong> The U.S. faces a cybersecurity workforce gap of 500,000+ unfilled jobs, while 67% of organizations report shortages and 58% say the gap puts them at significant risk.</p>
-    </section>
-
-    <section class="card">
-      <h2>Our Projects</h2>
-      <p><strong>T.A.P.S. (Telemetry Acquisition Platform Solution)</strong><br>
-      The first major initiative of EVR:RDY. T.A.P.S. is a suite of open‑source tools being developed to create low‑cost, practical solutions that move critical telemetry from the OT environment into the IT environment for safe ingestion into a SIEM. All T.A.P.S. components are currently under development and will be openly available on our GitHub as they mature.</p>
-
-      <div class="indent">
-        <p><strong>SEER Sensor (Scalable Endpoint & Environmental Reconnaissance)</strong><br>
-        Currently in Proof of Concept (POC). SEER provides low‑cost visibility for OT/ICS and IT networks by capturing mirrored traffic, generating Zeek‑style logs, ingesting JSON from endpoints, and storing forensic data locally.<br>
-        <em>Why it matters:</em> Smaller utilities and DoD‑critical infrastructure sites gain OT visibility without enterprise‑level licensing costs.<br>
-        🔗 SEER Sensor Repository</p>
-
-        <p><strong>GHOST Node / Diode</strong><br>
-        Currently in Proof of Concept (POC). A hardware‑enforced data diode for unidirectional UDP flow, built from inexpensive media converters, switches, and fiber.<br>
-        <em>Why it matters:</em> Provides a physical security guarantee that data flows only one way — safeguarding OT environments while enabling centralized monitoring.<br>
-        🔗 GHOST Node Repository</p>
-
-        <p><strong>RAMPART (Resilient Architecture for Monitoring & Proactive Advanced Response Teams)</strong><br>
-        Currently in active development. RAMPART bridges the GHOST Diode and the SIEM of choice (currently Google Chronicle). Packages data for SIEM and allows remote PCAP analysis from SEER without breaking OT isolation.<br>
-        <em>Why it matters:</em> Ensures telemetry can be safely centralized, normalized, and analyzed for proactive monitoring and forensics.<br>
-        🔗 RAMPART Repository</p>
-      </div>
-
-      <p><strong>TacSOC (Tactical Security Operations Center)</strong><br>
-      A service offering currently in development. Built on top of T.A.P.S., TacSOC reimagines the SOC with a tactical mindset — lean, efficient, and mission‑focused. Its doctrine and methodology, including the RAID framework, will remain publicly available.</p>
-
-      <div class="indent">
-        <p><strong>Smarter Defense Through AI Integration</strong><br>
-        Uses advanced AI models to deduplicate and enrich telemetry, map events to MITRE ATT&CK, and automatically dismiss noise.<br>
-        <em>Why it matters:</em> Analysts focus on true threats, enabling faster detection and resilient defenses.</p>
-
-        <p><strong>Resource Pooling for Affordability</strong><br>
-        Leverages cloud‑native SIEMs — currently Google Chronicle — to enable license sharing across customers.<br>
-        <em>Why it matters:</em> Provides enterprise‑grade monitoring without enterprise‑grade costs.</p>
-
-        <p><strong>Hunter‑Killer Teams</strong><br>
-        Small, skilled groups blending Tier‑2 and Tier‑3 analysts under a Team Leader. Tier‑1 triage automated, accelerating progression and scaling defense to many sites.<br>
-        <em>Why it matters:</em> Accelerates talent growth and creates a force‑multiplying defense structure.</p>
-
-        <p><strong>RAID Methodology (Reconnaissance · Acquire · Investigate · Disrupt/Defend)</strong><br>
-        <strong>R — Reconnaissance & Advisory:</strong> Establish visibility, analyze flows, identify choke points, map to ATT&CK, and conduct precision hunting.<br>
-        <strong>A — Acquire:</strong> Deploy sensors, implement one‑way flows, and close visibility gaps.<br>
-        <strong>I — Investigate:</strong> AI‑assisted Tier‑2/3 hunts; enrich, deduplicate, and map to ATT&CK.<br>
-        <strong>D — Disrupt / Defend:</strong> Contain, remediate, harden, automate repeatable responses, and document improvements.<br>
-        <em>Why it matters:</em> Enables small, distributed teams to operate with autonomy and accountability without massive centralized SOCs.</p>
+        <p class="mission-conclusion">This isn't about buzzwords or bloated security stacks; it's built on the mindset of doing more with less. EVR:RDY applies the same grit, discipline, and resourcefulness  leveraged to find innovative solutions while in uniform and brings them to the defense of critical infrastructure.</p>
+        <p class="text-center"><a href="mailto:ops@evrrdy.com" class="cta">Get in Touch</a></p>   
       </div>
     </section>
 
-    <section class="card">
-      <h2>How Our Projects Solve the Challenge</h2>
-      <p><strong>Underfunding:</strong> T.A.P.S. provides open‑source tools for enterprise‑grade visibility. TacSOC pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
-      <p><strong>High Cost of Solutions:</strong> GHOST and RAMPART replace expensive OT appliances with affordable, commodity‑based alternatives.</p>
-      <p><strong>Workforce Shortage:</strong> TacSOC automates Tier‑1, accelerates analysts from Tier‑2 to Tier‑3, and spins up new HK Teams — multiplying skilled defenders faster than traditional pipelines.</p>
+    <!-- Team Section -->
+    <section class="card animate-slide-up">
+      <div class="team-header">
+        <h2 class="typewriter">The Task Force</h2>
+      </div>
+      <p class="team-intro">Veteran-led defensive cyber professionals with real-world operational experience in critical infrastructure protection.</p>
+      
+      <div class="team-grid team-grid-two">
+        <div class="team-member">
+          <div class="veteran-badge">Veteran</div>
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <img src="assets/img/erin-burns.jpeg" alt="Erin Burns" class="member-photo-img erin-photo">
+            </div>
+            <div class="member-badge">Chief Executive Officer</div>
+            <div class="member-badge">Founding Engineer</div>
+          </div>
+          <div class="member-info">
+            <h3>Erin Burns</h3>
+            <div class="member-credentials">
+              <span class="credential">Leadership</span>
+              <span class="credential">Operations</span>
+              <span class="credential">Strategy</span>
+              <span class="credential">Architecture</span>
+              <span class="credential">Systems</span>
+              <span class="credential">Cybersecurity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="veteran-badge">Veteran</div>
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <img src="assets/img/timothy-deberry.jpeg" alt="Timothy DeBerry" class="member-photo-img timothy-photo">
+            </div>
+            <div class="member-badge">Principal Developer</div>
+            <div class="member-badge">Founding Engineer</div>
+          </div>
+          <div class="member-info">
+            <h3>Timothy DeBerry</h3>
+            <div class="member-credentials">
+              <span class="credential">Leadership</span>
+              <span class="credential">Development</span>
+              <span class="credential">Integration</span>
+              <span class="credential">Automation</span>
+              <span class="credential">Systems</span>
+              <span class="credential">Cybersecurity</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="card">
-      <h2>Our Structure</h2>
-      <p>EVR:RDY is built on a dual‑track model — one nonprofit, one service arm — working together to solve the toughest challenges in critical infrastructure defense.</p>
-      <p><strong>Nonprofit Arm:</strong> Pursues grants, partnerships, and collaborations to fund open‑source development and training pipelines for veterans and civilians.</p>
-      <p><strong>For‑Profit Arm:</strong> Delivers TacSOC and vendor support. Revenue fuels safeguarding more networks and enables higher pay with employee equity — an “everyone eats” ethos.</p>
+    <!-- Challenge Overview -->
+    <section class="card animate-slide-up">
+      <h2 class="typewriter">The Challenge</h2>
+      <p>Critical infrastructure faces three major cybersecurity challenges that traditional solutions fail to address effectively.</p>
+      <div class="challenge-grid">
+        <div class="challenge-card animate-slide-left animate-stagger-1">
+          <h3>Underfunding</h3>
+          <p>Most organizations allocate only 0–10% of their security budgets to ICS/OT, leaving critical areas under‑resourced.</p>
+        </div>
+        <div class="challenge-card animate-slide-up animate-stagger-2">
+          <h3>High Cost Solutions</h3>
+          <p>Leading OT/ICS cybersecurity platforms often start in the six‑to‑seven figure range with ongoing licensing fees.</p>
+        </div>
+        <div class="challenge-card animate-slide-right animate-stagger-3">
+          <h3>Workforce Shortage</h3>
+          <p>The U.S. faces a cybersecurity workforce gap of <span class="counter" data-target="500000">0</span>+ unfilled jobs, with 67% of organizations reporting shortages.</p>
+      </div>
+      </div>
+    </section>
+
+    <!-- Solution Overview -->
+    <section class="card animate-slide-up">
+      <h2 class="typewriter">Our Solutions</h2>
+      <p>We address the critical infrastructure cybersecurity challenges through two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
+      
+      <!-- How We Solve the Challenge -->
+      <div class="challenge-grid">
+        <div class="solution-card animate-slide-left animate-stagger-1">
+          <h3>Affordable Protection</h3>
+          <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
+        </div>
+        <div class="solution-card animate-slide-up animate-stagger-2">
+          <h3>Low-Cost Infrastructure</h3>
+          <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
+        </div>
+        <div class="solution-card animate-slide-right animate-stagger-3">
+          <h3>Scalable Talent Pipeline</h3>
+          <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier‑1, accelerates analysts from Tier‑2 to Tier‑3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
+        </div>
+      </div>
+
+      <button class="learn-more-btn animate-glow" onclick="openProductsModal()">Learn More About Our Projects</button>
+    </section>
+
+
+    <!-- Structure Overview -->
+    <section class="card animate-slide-up">
+      <h2 class="typewriter">Our Structure</h2>
+      <p>EVR:RDY is built on a dual‑track model working together to solve the toughest challenges in critical infrastructure defense.</p>
+      <div class="challenge-grid">
+        <div class="structure-card nonprofit animate-slide-left animate-stagger-1">
+          <h3>Nonprofit Arm</h3>
+          <p>Pursues grants, partnerships, and collaborations to fund open‑source development and training pipelines for veterans and civilians. This includes our future SBIR/STTR grant strategy with universities.</p>
+        </div>
+        <div class="structure-card forprofit animate-slide-right animate-stagger-2">
+          <h3>For‑Profit Arm</h3>
+          <p>Delivers TacSOC and vendor support. Revenue fuels safeguarding more networks and enables higher pay with employee equity.</p>
+        </div>
+      </div>
       <p><em>The vision:</em> Mission and market reinforce each other — open collaboration drives innovation while sustainable services scale protection.</p>
     </section>
 
-    <section class="card">
+
+    <!-- Contact -->
+    <section class="card animate-fade-in-up">
       <h2>Become Part of the Work</h2>
-      <p>EVR:RDY is entering its next phase — building the nonprofit arm that will fund open‑source development and create training pipelines for veterans and civilians. To do this right, we need leaders and collaborators who share our mission.</p>
-      <p><strong>Board Members:</strong> Guide the launch of our nonprofit, shape governance, and secure partnerships and grants.<br>
-      <strong>Contributors:</strong> Developers, researchers, trainers, and operators to help build T.A.P.S. and refine TacSOC doctrine.</p>
-      <p>If you’re ready to help us safeguard the systems that matter most, we’d like to hear from you.<br>
-      📧 Contact: <a href="mailto:info@evrrdy.com" style="color:var(--bright);text-decoration:none;">info@evrrdy.com</a></p>
+      <p>Ready to defend forward? Let's discuss how EVR:RDY can help protect your critical infrastructure.</p>
+      <p class="text-center"><a href="mailto:ops@evrrdy.com" class="cta">Get in Touch</a></p>
+    </section>
+
+    <!-- Closing Quote -->
+    <section class="card animate-fade-in-up">
+      <blockquote class="closing-quote" style="text-align: center; font-size: 1.2rem; margin: var(--space-xl) 0;">
+        The strongest steel is forged in the hottest dumpster fire.<br>
+        <span style="color:#aaa; font-size:.9em;">– Unknown</span>
+      </blockquote>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="card animate-slide-up">
+      <h2 class="typewriter">Resources & Documentation</h2>
+      <p>Access our latest white papers, company updates, and technical documentation.</p>
+      
+      <div class="challenge-grid">
+        <div class="solution-card animate-slide-left animate-stagger-1">
+          <h3>Technical Documentation</h3>
+          <p>Comprehensive guides and specifications for our open-source tools and platforms.</p>
+        </div>
+        <div class="solution-card animate-slide-up animate-stagger-2">
+          <h3>White Papers</h3>
+          <p>In-depth analysis and research on critical infrastructure cybersecurity challenges and solutions.</p>
+        </div>
+        <div class="solution-card animate-slide-right animate-stagger-3">
+          <h3>Company Updates</h3>
+          <p>Latest news, product releases, and strategic developments from EVR:RDY.</p>
+        </div>
+      </div>
+      
+      <button class="learn-more-btn animate-glow" onclick="openResourcesModal()">View Available Resources</button>
     </section>
 
   </div>
 </main>
 
-<footer>© <span id="y"></span> EVR:RDY Cyber Defense & Consulting</footer>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<footer class="text-center" style="color:var(--muted); font-size:.95rem; margin: var(--space-lg) 0 var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(229,228,216,.12);">
+  © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
+</footer>
+
+<!-- Products Modal -->
+<div id="products-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Our Products</h2>
+      <button class="modal-close" onclick="closeProductsModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Products Grid -->
+      <div class="products-grid">
+        
+        <!-- T.A.P.S. Section -->
+        <div class="product-section" id="taps-section">
+          <div class="product-header">
+            <h3>T.A.P.S.</h3>
+            <p class="product-subtitle">Telemetry Acquisition Platform Solution</p>
+            <p class="product-description">A suite of open‑source tools being developed to create low‑cost, practical solutions that move critical telemetry from the OT environment into the IT environment for safe ingestion into a SIEM.</p>
+            <button class="expand-btn" onclick="toggleProductDetails('taps-details')">Learn More About T.A.P.S. Components</button>
+          </div>
+          
+          <div class="product-details" id="taps-details" style="display: none;">
+            <div class="components-grid">
+              <div class="component-card">
+                <div class="component-header">
+                  <h4>SEER Sensor</h4>
+                  <span class="status-indicator poc">POC</span>
+                </div>
+                <p class="component-subtitle">Scalable Endpoint & Environmental Reconnaissance</p>
+                <p class="component-description">Provides low‑cost visibility for OT/ICS and IT networks by capturing mirrored traffic, generating Zeek‑style logs, ingesting JSON from endpoints, and storing forensic data locally.</p>
+                <div class="component-benefit">
+                  <strong>Why it matters:</strong> Smaller utilities and DoD‑critical infrastructure sites gain OT visibility without enterprise‑level licensing costs.
+                </div>
+              </div>
+
+              <div class="component-card">
+                <div class="component-header">
+                  <h4>GHOST Node</h4>
+                  <span class="status-indicator poc">POC</span>
+                </div>
+                <p class="component-subtitle">Hardware‑Enforced Data Diode</p>
+                <p class="component-description">A hardware‑enforced data diode for unidirectional UDP flow, built from inexpensive media converters, switches, and fiber.</p>
+                <div class="component-benefit">
+                  <strong>Why it matters:</strong> Provides a physical security guarantee that data flows only one way — safeguarding OT environments while enabling centralized monitoring.
+                </div>
+              </div>
+
+              <div class="component-card">
+                <div class="component-header">
+                  <h4>RAMPART</h4>
+                  <span class="status-indicator development">Active Development</span>
+                </div>
+                <p class="component-subtitle">Resilient Architecture for Monitoring & Proactive Advanced Response Teams</p>
+                <p class="component-description">Bridges the GHOST Diode and the SIEM of choice (currently Google Chronicle). Packages data for SIEM and allows remote PCAP analysis from SEER without breaking OT isolation.</p>
+                <div class="component-benefit">
+                  <strong>Why it matters:</strong> Ensures telemetry can be safely centralized, normalized, and analyzed for proactive monitoring and forensics.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TacSOC Section -->
+        <div class="product-section" id="tacsoc-section">
+          <div class="product-header">
+            <h3>TacSOC</h3>
+            <p class="product-subtitle">Tactical Security Operations Center</p>
+            <p class="product-description">EVR:RDY's first flagship product: an AI-enforced, OT-focused SOC built for precision threat hunting, incident response, and real defense. Where traditional SOCs drown in alerts, TacSOC runs lean.</p>
+            <button class="expand-btn" onclick="toggleProductDetails('tacsoc-details')">Learn More About TacSOC Features</button>
+          </div>
+          
+          <div class="product-details" id="tacsoc-details" style="display: none;">
+            <div class="features-grid">
+              <div class="feature-card">
+                <h4>AI Integration</h4>
+                <p class="feature-description">Uses advanced AI models to deduplicate and enrich telemetry, map events to MITRE ATT&CK, and automatically dismiss noise.</p>
+                <div class="feature-benefit">
+                  <strong>Result:</strong> Analysts focus on true threats, enabling faster detection and resilient defenses.
+                </div>
+              </div>
+
+              <div class="feature-card">
+                <h4>Resource Pooling</h4>
+                <p class="feature-description">Leverages cloud‑native SIEMs — currently Google Chronicle — to enable license sharing across customers.</p>
+                <div class="feature-benefit">
+                  <strong>Result:</strong> Provides enterprise‑grade monitoring without enterprise‑grade costs.
+                </div>
+              </div>
+
+              <div class="feature-card">
+                <h4>Hunter/Killer Teams</h4>
+                <p class="feature-description">Small, skilled groups blending Tier‑2 and Tier‑3 analysts under a Team Leader. AI takes Tier-1 work off the table, accelerating progression and scaling defense to many sites.</p>
+                <div class="feature-benefit">
+                  <strong>Result:</strong> TacSOC is both a defense platform and a training engine.
+                </div>
+              </div>
+
+              <div class="feature-card">
+                <h4>R.A.I.D. Framework</h4>
+                <p class="feature-description">Recon, Acquire, Interpret, Defend — a systematic approach to threat hunting and defense operations.</p>
+                <div class="feature-benefit">
+                  <strong>Result:</strong> Enables small, distributed teams to operate with autonomy and accountability without massive centralized SOCs.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Resources Modal -->
+<div id="resources-modal" class="modal" onclick="closeResourcesModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Available Resources</h2>
+      <button class="close-btn" onclick="closeResourcesModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="resources-grid" id="resources-grid">
+        <!-- Resources will be dynamically loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+           <!-- Expanded Resource Content -->
+           <div id="expanded-resource" class="expanded-resource" onclick="closeExpandedResource()">
+             <div class="expanded-resource-content" onclick="event.stopPropagation()">
+               <button class="close-expanded-btn" onclick="closeExpandedResource()">&times;</button>
+               <div id="expanded-resource-content" class="markdown-content">
+                 <!-- Expanded resource content will be loaded here -->
+               </div>
+             </div>
+           </div>
+
+<script src="assets/js/enhanced.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+<script>
+// Product Details Toggle Function (Accordion behavior)
+function toggleProductDetails(detailsId) {
+  const details = document.getElementById(detailsId);
+  const button = event.target;
+  
+  // Get all product detail sections and their buttons
+  const allDetails = document.querySelectorAll('.product-details');
+  const allButtons = document.querySelectorAll('.expand-btn');
+  
+  // If the clicked section is already open, close it
+  if (details.style.display === 'block') {
+    details.style.display = 'none';
+    button.textContent = button.textContent.replace('Show Less', 'Learn More');
+  } else {
+    // Close all other sections first
+    allDetails.forEach(section => {
+      section.style.display = 'none';
+    });
+    
+    // Reset all button text
+    allButtons.forEach(btn => {
+      btn.textContent = btn.textContent.replace('Show Less', 'Learn More');
+    });
+    
+    // Open the clicked section
+    details.style.display = 'block';
+    button.textContent = button.textContent.replace('Learn More', 'Show Less');
+  }
+}
+
+// Helper function to convert GitHub Pages URL to raw GitHub URL
+function getRawGitHubUrl(path) {
+  console.log(`🌐 Current hostname: ${window.location.hostname}`);
+  
+  // For EVR-RDY site, use the specific branch format
+  if (window.location.hostname === 'evrrdy.com') {
+    return `https://raw.githubusercontent.com/EVR-RDY/Site/refs/heads/feature/ui${path}`;
+  }
+  
+  // For local development (127.0.0.1, localhost, etc.)
+  if (window.location.hostname === '127.0.0.1' || 
+      window.location.hostname === 'localhost' || 
+      window.location.hostname.startsWith('192.168.') ||
+      window.location.hostname.startsWith('10.') ||
+      window.location.hostname.endsWith('.local')) {
+    const localUrl = window.location.origin + path;
+    console.log(`🏠 Using local development URL: ${localUrl}`);
+    return localUrl;
+  }
+  
+  const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+  
+  // Handle different GitHub Pages URL patterns
+  if (baseUrl.includes('.github.io/')) {
+    // User/organization pages: username.github.io/repo -> raw.githubusercontent.com/username/repo/main
+    const parts = baseUrl.replace('https://', '').split('/');
+    const username = parts[0].replace('.github.io', '');
+    const repo = parts[1] || '';
+    return `https://raw.githubusercontent.com/${username}/${repo}/main${path}`;
+  } else {
+    // Project pages: username.github.io/repo -> raw.githubusercontent.com/username/repo/gh-pages
+    const parts = baseUrl.replace('https://', '').split('/');
+    const username = parts[0].replace('.github.io', '');
+    const repo = parts[1] || '';
+    return `https://raw.githubusercontent.com/${username}/${repo}/gh-pages${path}`;
+  }
+}
+
+// Dynamic Resources Loading
+async function loadResources() {
+  try {
+    const resourcesContainer = document.getElementById('resources-grid');
+    if (!resourcesContainer) return;
+    
+    // Clear existing content
+    resourcesContainer.innerHTML = '';
+    
+    // Try to get resource list from a manifest file first
+    let resourceFiles = await getResourceManifest();
+    
+    // If no manifest, fall back to known files
+    if (!resourceFiles || resourceFiles.length === 0) {
+      resourceFiles = [
+        'sample-whitepaper',
+        'ghost-node-whitepaper'
+      ];
+    }
+    
+    // Load each resource
+    for (const resourceId of resourceFiles) {
+      try {
+        // Use GitHub raw content URL for reliable markdown serving
+        const rawUrl = getRawGitHubUrl(`/resources/markdown/${resourceId}.md`);
+        console.log(`🔍 Fetching raw content from: ${rawUrl}`);
+        
+        const response = await fetch(rawUrl);
+        
+        if (!response.ok) {
+          console.warn(`Failed to fetch ${resourceId}: ${response.status}`);
+          continue;
+        }
+        
+        const markdownContent = await response.text();
+        console.log(`✅ Fetched ${resourceId}.md successfully from raw GitHub`);
+        
+        const resource = parseMarkdownMetadata(markdownContent, resourceId);
+        
+        if (resource) {
+          const resourceTile = createResourceTile(resource);
+          resourcesContainer.appendChild(resourceTile);
+        }
+      } catch (error) {
+        console.warn(`Failed to load resource ${resourceId}:`, error);
+      }
+    }
+  } catch (error) {
+    console.error('Failed to load resources:', error);
+  }
+}
+
+// Try to load resource manifest file
+async function getResourceManifest() {
+  try {
+    // Use GitHub raw content URL for reliable manifest serving
+    const rawUrl = getRawGitHubUrl('/resources/manifest.json');
+    const response = await fetch(rawUrl);
+    if (!response.ok) return null;
+    
+    const manifest = await response.json();
+    return manifest.files || null;
+  } catch (error) {
+    console.log('No manifest file found, using fallback list');
+    return null;
+  }
+}
+
+function parseMarkdownMetadata(markdownContent, resourceId) {
+  // Parse frontmatter
+  const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---/);
+  if (!frontmatterMatch) return null;
+  
+  const frontmatter = frontmatterMatch[1];
+  const metadata = {};
+  
+  // Parse YAML-like frontmatter
+  frontmatter.split('\n').forEach(line => {
+    const match = line.match(/^(\w+):\s*["']?([^"']*)["']?$/);
+    if (match) {
+      metadata[match[1]] = match[2];
+    }
+  });
+  
+  return {
+    id: resourceId,
+    title: metadata.title || 'Document',
+    description: metadata.description || 'No description available',
+    type: metadata.type || 'Document',
+    date: metadata.date || 'Unknown',
+    icon: metadata.icon || '📄',
+    content: markdownContent
+  };
+}
+
+function createResourceTile(resource) {
+  const tile = document.createElement('div');
+  tile.className = 'resource-tile';
+  tile.onclick = () => expandResource(resource);
+  
+  tile.innerHTML = `
+    <div class="resource-icon">${resource.icon}</div>
+    <h3>${resource.title}</h3>
+    <p>${resource.description}</p>
+    <div class="resource-meta">
+      <span class="resource-type">${resource.type}</span>
+      <span class="resource-date">${resource.date}</span>
+    </div>
+  `;
+  
+  return tile;
+}
+
+
+// Resources Modal Functionality
+function openResourcesModal() {
+  const modal = document.getElementById('resources-modal');
+  if (modal) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    // Load resources when modal opens
+    loadResources();
+  }
+}
+
+function closeResourcesModal() {
+  const modal = document.getElementById('resources-modal');
+  const expandedResource = document.getElementById('expanded-resource');
+  if (modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+    // Close any expanded resource when closing modal
+    if (expandedResource) {
+      expandedResource.classList.remove('show');
+    }
+  }
+}
+
+function expandResource(resource) {
+  const expandedResource = document.getElementById('expanded-resource');
+  const contentElement = document.getElementById('expanded-resource-content');
+  
+  if (expandedResource && contentElement) {
+    loadMarkdownContent(resource.id, contentElement);
+    expandedResource.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeExpandedResource() {
+  const expandedResource = document.getElementById('expanded-resource');
+  if (expandedResource) {
+    expandedResource.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+
+
+async function loadMarkdownContent(resourceId, contentElement) {
+  try {
+    // Use GitHub raw content URL for reliable markdown serving
+    const rawUrl = getRawGitHubUrl(`/resources/markdown/${resourceId}.md`);
+    const response = await fetch(rawUrl);
+    
+    if (!response.ok) {
+      contentElement.innerHTML = '<p>Content not found.</p>';
+      return;
+    }
+    
+    const markdownContent = await response.text();
+    const resource = parseMarkdownMetadata(markdownContent, resourceId);
+    
+    if (resource) {
+      // Remove frontmatter and convert markdown to HTML
+      const contentWithoutFrontmatter = markdownContent.replace(/^---\n[\s\S]*?\n---\n/, '');
+      const htmlContent = convertMarkdownToHtml(contentWithoutFrontmatter);
+      contentElement.innerHTML = htmlContent;
+    } else {
+      contentElement.innerHTML = '<p>Failed to parse content.</p>';
+    }
+  } catch (error) {
+    console.error('Failed to load markdown content:', error);
+    contentElement.innerHTML = '<p>Error loading content.</p>';
+  }
+}
+
+function convertMarkdownToHtml(markdown) {
+  // Use marked.js library for proper markdown parsing
+  if (typeof marked !== 'undefined') {
+    // Configure marked options
+    marked.setOptions({
+      breaks: true, // Convert \n to <br>
+      gfm: true, // GitHub Flavored Markdown
+      sanitize: false, // Allow HTML (we trust our content)
+      smartLists: true,
+      smartypants: true
+    });
+    
+    // Add target="_blank" to external links
+    const renderer = new marked.Renderer();
+    renderer.link = function(href, title, text) {
+      const isExternal = href.startsWith('http') && !href.includes(window.location.hostname);
+      const target = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+      const titleAttr = title ? ` title="${title}"` : '';
+      return `<a href="${href}"${titleAttr}${target}>${text}</a>`;
+    };
+    
+    marked.setOptions({ renderer });
+    
+    return marked.parse(markdown);
+  } else {
+    // Fallback to simple conversion if marked.js isn't loaded
+    console.warn('marked.js not loaded, using fallback markdown parser');
+    return markdown
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>');
+  }
+}
+
+// Modal Functionality
+function openProductsModal() {
+  const modal = document.getElementById('products-modal');
+  console.log('Opening modal:', modal); // Debug log
+  if (modal) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  } else {
+    console.error('Modal element not found');
+  }
+}
+
+function openModalToSection(sectionId) {
+  const modal = document.getElementById('products-modal');
+  const targetSection = document.getElementById(sectionId);
+  
+  if (modal && targetSection) {
+    // Open the modal
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    
+    // Wait for modal to be visible, then scroll to section
+    setTimeout(() => {
+      const modalContent = modal.querySelector('.modal-content');
+      const modalBody = modal.querySelector('.modal-body');
+      
+      // Calculate the position of the target section relative to the modal body
+      const sectionTop = targetSection.offsetTop;
+      const modalBodyTop = modalBody.offsetTop;
+      const scrollPosition = sectionTop - modalBodyTop - 20; // 20px offset for better visibility
+      
+      // Scroll the modal content to the target section
+      modalContent.scrollTo({
+        top: scrollPosition,
+        behavior: 'smooth'
+      });
+      
+      // Add a temporary highlight effect to the target section
+      targetSection.style.transition = 'all 0.3s ease';
+      targetSection.style.background = 'rgba(169, 214, 138, 0.2)';
+      targetSection.style.border = '2px solid var(--bright)';
+      
+      // Remove highlight after 3 seconds
+      setTimeout(() => {
+        targetSection.style.background = '';
+        targetSection.style.border = '';
+      }, 3000);
+      
+    }, 100); // Small delay to ensure modal is fully visible
+  } else {
+    console.error('Modal or target section not found');
+  }
+}
+
+function closeProductsModal() {
+  const modal = document.getElementById('products-modal');
+  console.log('Closing modal:', modal); // Debug log
+  if (modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+  }
+}
+
+
+// Close modals when clicking outside of them
+window.onclick = function(event) {
+  const productsModal = document.getElementById('products-modal');
+  const resourcesModal = document.getElementById('resources-modal');
+  const expandedResource = document.getElementById('expanded-resource');
+  
+  // Check if products modal is open and click is on the modal background
+  if (productsModal && productsModal.classList.contains('show') && event.target === productsModal) {
+    closeProductsModal();
+  }
+  
+  // Check if resources modal is open and click is on the modal background
+  if (resourcesModal && resourcesModal.classList.contains('show') && event.target === resourcesModal) {
+    closeResourcesModal();
+  }
+  
+  // Note: Expanded resource click-outside is handled by direct onclick on the element
+};
+
+// Close modals with Escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    const productsModal = document.getElementById('products-modal');
+    const resourcesModal = document.getElementById('resources-modal');
+    const expandedResource = document.getElementById('expanded-resource');
+    
+    // First close expanded resource if open
+    if (expandedResource && expandedResource.classList.contains('show')) {
+      closeExpandedResource();
+    }
+    // Then close resources modal if open
+    else if (resourcesModal && resourcesModal.classList.contains('show')) {
+      closeResourcesModal();
+    }
+    // Finally close products modal if open
+    else if (productsModal && productsModal.classList.contains('show')) {
+      closeProductsModal();
+    }
+  }
+});
+
+// Progressive Disclosure Functionality for main page (non-modal)
+function toggleDetails(detailsId) {
+  const details = document.getElementById(detailsId);
+  const button = event.target;
+  
+  if (details.classList.contains('expanded')) {
+    details.classList.remove('expanded');
+    if (button.textContent.includes('Hide')) {
+      if (button.textContent.includes('Timeline')) {
+        button.textContent = 'View Full Timeline';
+      }
+    }
+  } else {
+    // Close all other expanded sections first (accordion behavior)
+    const allExpandableDetails = document.querySelectorAll('.expandable-details.expanded');
+    allExpandableDetails.forEach(expandedDetail => {
+      if (expandedDetail.id !== detailsId) {
+        expandedDetail.classList.remove('expanded');
+        const closedButton = document.querySelector(`[onclick="toggleDetails('${expandedDetail.id}')"]`);
+        if (closedButton) {
+          if (closedButton.textContent.includes('Hide Timeline')) {
+            closedButton.textContent = 'View Full Timeline';
+          }
+        }
+      }
+    });
+    
+    details.classList.add('expanded');
+    if (button.textContent.includes('View Full Timeline')) {
+      button.textContent = 'Hide Timeline';
+    }
+    
+    setTimeout(() => {
+      details.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }, 100);
+  }
+}
+
+// Update year
+document.getElementById('y').textContent = new Date().getFullYear();
+
+// Resources will be loaded when the modal opens
+</script>
+
 </body>
 </html>
