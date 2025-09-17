@@ -12,6 +12,12 @@ icon: "⚡"
 
 ## September 2025
 
+**Sept 16 — GHOST Diode POC progress**  
+I validated the GHOST Diode POC: after a quick full-duplex baseline (static IPs, ping + ncat both ways), I built a one-way fiber link from Host B (10.0.0.2) → Host A (10.0.0.1) using three media converters and the dead-TX keepalive method—Media C (no copper) feeds C.TX → B.RX to satisfy LFP while the actual data path is B.TX → A.RX only, with no reverse fiber connected. Streaming UDP from B showed up in Wireshark on A, while ping/TCP from A→B failed exactly as designed, confirming hardware-enforced unidirectionality. This successfully proves the diode concept with commodity gear and provides a repeatable setup for future hardening and throughput testing.
+– Burns
+
+---
+
 **Sept 15 — Finished the OT Agent White Paper**  
 I wrapped the OT Agent white paper. It lays out lightweight, low-impact agents built for fragile OT networks that can normalize telemetry and feed SEER or flow straight into Chronicle/SIEM without risking process stability. This pairs with the diode work so operators can get visibility without violating one-way constraints. Felt good to publish something practical that ops teams can actually deploy.  
 – Burns
