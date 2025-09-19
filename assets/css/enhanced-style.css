@@ -128,7 +128,7 @@ em {
 
 blockquote {
   margin: var(--space-lg) 0;
-  padding-left: var(--space-lg);
+  padding-left: var(--space-xs);
   border-left: 3px solid var(--bright);
   color: #ececec;
   font-style: italic;
@@ -273,7 +273,8 @@ blockquote {
   text-decoration: none;
   font-weight: 600;
   border-radius: var(--radius-lg);
-  border: 2px solid var(--bright);
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
   box-shadow: var(--shadow-md);
   transition: all var(--transition-fast);
   font-size: 1rem;
@@ -433,7 +434,6 @@ code {
 a:not(.cta) {
   color: var(--bright);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
   transition: border-color var(--transition-fast);
 }
 
@@ -546,20 +546,28 @@ body.loaded .card {
 }
 
 .summary-card .expand-btn {
-  background: transparent;
+  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
   border: 1px solid var(--bright);
+  box-sizing: border-box;
   color: var(--bright);
-  padding: var(--space-xs) var(--space-md);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  padding: var(--space-xs) var(--space-xs);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
   margin-top: var(--space-sm);
+  text-transform: uppercase;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .summary-card .expand-btn:hover {
-  background: var(--bright);
+  background: linear-gradient(135deg, var(--bright), var(--muted));
   color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted);
 }
 
 
@@ -618,37 +626,66 @@ body.loaded .card {
   color: var(--bone);
 }
 
-.hero-summary blockquote {
+.card blockquote {
   background: rgba(169, 214, 138, 0.1);
   border-left: 4px solid var(--bright);
-  padding: var(--space-lg);
-  margin: var(--space-lg) auto;
+  padding: var(--space-md);
+  margin: var(--space-md) auto;
   border-radius: var(--radius-md);
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: .8rem;
+  line-height: .5rem;
   color: var(--bone);
   position: relative;
-  max-width: 500px;
+  max-width: 600px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.hero-summary blockquote::before {
+.card blockquote::before {
   content: '"';
   position: absolute;
-  top: -10px;
-  left: var(--space-md);
-  font-size: 3rem;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: .3rem;
   color: var(--bright);
   opacity: 0.3;
   font-family: serif;
+}
+
+.card blockquote span {
+  display: block;
+  margin-top: var(--space-);
+  font-size: 0.5rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Center-justified blockquotes */
+.center-justify {
+  text-align: justify !important;
+  text-align-last: center !important;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+.card blockquote.center-justify span {
+  text-align: center !important;
+  display: block !important;
+  margin-top: var(--space-md) !important;
 }
 
 
 /* Modern Progressive Disclosure */
 .learn-more-btn {
   background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
-  border: 2px solid var(--bright);
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
   color: var(--bright);
-  padding: var(--space-md) var(--space-xl);
+  padding: var(--space-xs) var(--space-xs);
   border-radius: var(--radius-lg);
   font-size: 1rem;
   font-weight: 600;
@@ -657,14 +694,16 @@ body.loaded .card {
   margin: var(--space-xl) auto;
   display: block;
   width: 100%;
-  max-width: 400px;
+  max-width: 200px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: relative;
-  overflow: hidden;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+  /* Ensure consistent behavior for all button elements */
+  text-decoration: none;
+  outline: none;
 }
 
 .learn-more-btn:hover {
@@ -736,7 +775,7 @@ body.loaded .card {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   animation: fadeIn 0.3s ease-out;
@@ -755,15 +794,18 @@ body.loaded .card {
   background: rgba(0, 0, 0, 0.4);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid rgba(229, 228, 216, 0.3);
-  border-radius: var(--radius-lg);
+  border: 1px solid rgba(120,120,120,.2);
+  border-radius: var(--radius-xl);
   margin: 2% auto;
   padding: 0;
   width: 90%;
   max-width: 1200px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: var(--shadow-xl);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 10px 10px -5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   animation: slideIn 0.3s ease-out;
   /* Hide scroll bars */
   scrollbar-width: none; /* Firefox */
@@ -779,9 +821,9 @@ body.loaded .card {
   justify-content: space-between;
   align-items: center;
   padding: var(--space-lg);
-  border-bottom: 1px solid rgba(229, 228, 216, 0.15);
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  border-bottom: 1px solid rgba(120,120,120,.2);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .modal-header h2 {
@@ -791,25 +833,77 @@ body.loaded .card {
   font-weight: 600;
 }
 
+/* Resource modals keep their original styling */
+#resources-modal .modal-content,
+#expanded-resource .expanded-resource-content {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(229, 228, 216, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+}
+
+#resources-modal .modal-header,
+#expanded-resource .expanded-resource-header {
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(229, 228, 216, 0.15);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
 .modal-close {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: var(--muted);
+  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  color: var(--bright);
   cursor: pointer;
-  padding: 0;
-  width: 2rem;
-  height: 2rem;
+  padding: var(--space-xs);
+  width: 2.5rem;
+  height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-normal);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  font-weight: 600;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .modal-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--bone);
+  background: linear-gradient(135deg, var(--bright), var(--muted));
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted);
+}
+
+/* Close button styling - standardized */
+.close-btn {
+  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
+  font-size: 1.5rem;
+  color: var(--bright);
+  cursor: pointer;
+  padding: var(--space-xs);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  font-weight: 600;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.close-btn:hover {
+  background: linear-gradient(135deg, var(--bright), var(--muted));
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted);
 }
 
 .modal-body {
@@ -859,14 +953,15 @@ body.loaded .card {
   box-shadow: var(--shadow-lg);
 }
 
-/* Expand Button Styling */
+/* Expand Button Styling - Standardized */
 .expand-btn {
   background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
-  border: 2px solid var(--bright);
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
   color: var(--bright);
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  padding: var(--space-xs) var(--space-xs);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -874,6 +969,8 @@ body.loaded .card {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .expand-btn:hover {
@@ -1017,7 +1114,7 @@ body.loaded .card {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.1);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   z-index: 10000;
@@ -1089,27 +1186,32 @@ body.loaded .card {
   position: absolute;
   top: var(--space-md);
   right: var(--space-md);
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
   font-size: 1.5rem;
-  color: var(--ink);
+  color: var(--bright);
   cursor: pointer;
-  padding: 0;
+  padding: var(--space-xs);
   width: 2.5rem;
   height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: all var(--transition-normal);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .close-expanded-btn:hover {
-  background: rgba(0, 0, 0, 0.1);
-  color: var(--muted);
-  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--bright), var(--muted));
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted);
 }
 
 .expanded-resource .markdown-content {
@@ -1543,11 +1645,26 @@ body.loaded .card {
 }
 
 /* Modern Challenge Grid */
+
+/* Pin/overlay behavior */
+
+.challenge-section { 
+  position: relative; 
+  overflow: visible; 
+}
+
+
+
+/* Dim challenge when mostly covered */
+.pin-spacer { width: 100%; pointer-events: none; }
+
+
 .challenge-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-lg);
   margin: var(--space-lg) 0;
+  position: relative;
 }
 
 
@@ -1612,7 +1729,7 @@ body.loaded .card {
 
 .challenge-card:hover h3::before {
   transform: scale(1.2);
-  transition: transform var(--transition-fast);
+  transition: transform var(--transition-normal);
   color: #ef4444;
 }
 
@@ -1643,8 +1760,139 @@ body.loaded .card {
   color: var(--bone);
 }
 
+
+/* Ensure identical box sizing while fixed */
+.challenge-section,
+.challenge-section * {
+  box-sizing: border-box;
+}
+
+
+
+/* 2) Keep size stable when pinned (no hover scaling or transitions) */
+.challenge-section.pinned,
+.challenge-section.pinned:hover {
+  transform: none !important;
+}
+.challenge-section.pinned * {
+  transition: none !important;
+}
+
+
+/* Removed - handled by new overlay positioning */ 
+
+
+
+/* 3) Overlay must be interactive/clickable and scrollable */
+
+
+
+
+.solution-hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--bone);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.solutions-overlay h2 {
+  color: var(--bone);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  margin-bottom: var(--space-lg);
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.solutions-overlay h2::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(180deg, var(--bright), var(--muted));
+  border-radius: 2px;
+  margin-right: var(--space-sm);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.solutions-overlay h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--bright), transparent);
+  border-radius: 1px;
+}
+
+.solutions-overlay > p {
+  color: var(--bone);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+  font-size: 1.05rem;
+}
+
+
+/* .solutions-overlay .solution-card {
+  background: rgba(34, 197, 94, 0.1) !important;
+  border: 1px solid rgba(34, 197, 94, 0.3) !important;
+  transition: all var(--transition-normal);
+}
+
+.solutions-overlay .solution-card:hover {
+  background: rgba(34, 197, 94, 0.15) !important;
+  border-color: rgba(34, 197, 94, 0.5) !important;
+  transform: translateY(-2px);
+}
+
+.solutions-overlay .learn-more-btn {
+  margin-top: var(--space-lg);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: white;
+  font-weight: 600;
+}
+
+.solutions-overlay .learn-more-btn:hover {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+} */
+
+Hover effect for challenge cards
+.challenge-card {
+  transition: all var(--transition-normal);
+}
+
+/* Ensure solutions overlay content is visible */
+/* .solutions-overlay h2,
+.solutions-overlay p,
+.solutions-overlay .challenge-grid,
+.solutions-overlay .solution-card,
+.solutions-overlay .learn-more-btn {
+  opacity: 1 !important;
+  visibility: visible !important;
+} */
+
+/* Ensure solutions overlay content is visible when overlay is active */
+/* .challenge-section:hover .solutions-overlay h2,
+.challenge-section:hover .solutions-overlay p,
+.challenge-section:hover .solutions-overlay .challenge-grid,
+.challenge-section:hover .solutions-overlay .solution-card,
+.challenge-section:hover .solutions-overlay .learn-more-btn {
+  opacity: 1 !important;
+  visibility: visible !important;
+} */
+
+
+
 /* Solution Cards - Positive Styling (Higher Specificity) */
-.challenge-grid .solution-card {
+.solution-card {
   background: rgba(0, 0, 0, 0.4) !important;
   border: 1px solid rgba(120,120,120,.2) !important;
   border-radius: var(--radius-lg) !important;
@@ -1660,7 +1908,7 @@ body.loaded .card {
   overflow: hidden !important;
 }
 
-.challenge-grid .solution-card::after {
+.solution-card::after {
   content: '' !important;
   position: absolute !important;
   top: 0 !important;
@@ -1672,12 +1920,12 @@ body.loaded .card {
     transparent 50%, 
     rgba(22, 163, 74, 0.03) 100%) !important;
   border-radius: var(--radius-lg) !important;
-  pointer-events: none !important;
+  pointer-events: auto !important;
   opacity: 0 !important;
   transition: opacity var(--transition-normal) !important;
 }
 
-.challenge-grid .solution-card::before {
+.solution-card::before {
   content: '' !important;
   position: absolute !important;
   top: 0 !important;
@@ -1688,7 +1936,7 @@ body.loaded .card {
   opacity: 0.8 !important;
 }
 
-.challenge-grid .solution-card:hover {
+.solution-card:hover {
   background: rgba(0, 0, 0, 0.5) !important;
   border-color: rgba(34, 197, 94, 0.4) !important;
   transform: translateY(-3px) scale(1.02) !important;
@@ -1698,11 +1946,11 @@ body.loaded .card {
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
-.challenge-grid .solution-card:hover::after {
+.solution-card:hover::after {
   opacity: 1 !important;
 }
 
-.challenge-grid .solution-card h3 {
+.solution-card h3 {
   margin: 0 0 var(--space-sm) 0 !important;
   font-size: 1.25rem !important;
   color: var(--bone) !important;
@@ -1715,7 +1963,7 @@ body.loaded .card {
   gap: var(--space-sm) !important;
 }
 
-.challenge-grid .solution-card h3::before {
+.solution-card h3::before {
   content: '✓' !important;
   color: #22c55e !important;
   font-size: 1rem !important;
@@ -1723,18 +1971,128 @@ body.loaded .card {
   font-weight: bold !important;
 }
 
-.challenge-grid .solution-card:hover h3::before {
+.solution-card:hover h3::before {
   transform: scale(1.2) !important;
   transition: transform var(--transition-fast) !important;
   color: #16a34a !important;
 }
 
-.challenge-grid .solution-card p {
+.solution-card p {
   margin: 0 !important;
   font-size: 0.95rem !important;
   line-height: 1.6 !important;
   color: var(--bone) !important;
 }
+
+
+
+/* ---------- PIN & FADE CORE ---------- */
+
+/* Never let the section resize when pinned */
+.challenge-section,
+.challenge-section * { box-sizing: border-box; }
+
+/* Solutions overlay positioning and visibility */
+.solutions-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(var(--overlay-translate-y, 100%));
+  transition: transform 280ms ease;
+  z-index: 10;
+}
+
+/* Solutions Learn More button positioned in top right with standard formatting */
+.solutions-learn-more {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 20;
+  margin: 0;
+  padding: var(--space-xs) var(--space-xs);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
+  border: 1px solid var(--bright);
+  box-sizing: border-box;
+  color: var(--bright);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: block;
+  text-align: center;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  min-width: 120px;
+  /* Hide button when overlay is not visible */
+  opacity: var(--solutions-opacity, 0);
+  visibility: var(--solutions-visibility, hidden);
+  pointer-events: var(--solutions-pointer-events, none);
+}
+
+.solutions-learn-more:hover {
+  background: linear-gradient(135deg, var(--bright), var(--muted));
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--muted);
+}
+
+/* Overlay visibility is now controlled by CSS custom properties in setProgress() */
+
+/* fade wrapper driven by CSS var */
+.challenge-fade {
+  opacity: var(--challenge-opacity, 1);
+  transition: opacity 280ms ease;
+}
+
+/* solutions fade wrapper - opposite of challenge fade */
+.solutions-fade {
+  opacity: var(--solutions-opacity, 0);
+  transition: opacity 280ms ease;
+  /* background: rgba(0, 0, 0, 0.4); */
+  border-radius: var(--radius-xl);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 10px 10px -5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  /* -webkit-backdrop-filter: blur(12px) saturate(120%); */
+  /* backdrop-filter: blur(12px) saturate(120%); */
+  border: 1px solid rgba(229,228,216,.2);
+  padding: var(--space-xl);
+  height: 100%;
+  width: 100%;
+}
+
+
+
+/* give overlay a little inner bottom room so buttons can't clip */
+/* .solutions-overlay {
+  padding-bottom: calc(var(--space-2xl) + 24px);
+} */
+
+
+/* No longer need pinned state CSS since we removed pinning */
+
+/* Spacer removed - using natural height approach instead */
+
+/* No longer need scroll locking since we removed pinning */
+
+/* Solutions overlay is always positioned and controlled by JavaScript */
+.solutions-overlay {
+  z-index: 10;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
+
 
 /* Enhanced Structure Cards */
 .structure-card {
@@ -1944,25 +2302,6 @@ body.loaded .card {
   content: '' !important;
 }
 
-
-.quote-text {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: var(--bone);
-  font-style: italic;
-  margin: var(--space-md) 0;
-  text-align: center;
-  font-weight: 500;
-}
-
-.quote-attribution {
-  text-align: right;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-style: normal;
-  margin-top: var(--space-sm);
-}
-
 .mission-conclusion {
   font-size: 1.1rem;
   line-height: 1.7;
@@ -2119,7 +2458,6 @@ body.loaded .card {
 /* Enhanced hover effects */
 .enhanced-hover {
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .enhanced-hover:hover {
@@ -2127,33 +2465,6 @@ body.loaded .card {
   box-shadow: 
     0 10px 25px rgba(0, 0, 0, 0.15),
     0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Fallback for browsers that don't support transform scale */
-@supports (transform: scale(1.02)) {
-  .enhanced-hover:hover {
-    transform: translateY(-2px) scale(1.02);
-  }
-}
-
-/* Fallback for browsers without backdrop-filter */
-@supports not (backdrop-filter: blur(10px)) {
-  .card,
-  .challenge-card,
-  .solution-card,
-  .structure-card,
-  .hero-summary,
-  .mission-quote,
-  .modal-content,
-  .modal-header,
-  .product-section,
-  .component-card,
-  .feature-card,
-  .raid-framework,
-  .timeline-content {
-    background: rgba(0, 0, 0, 0.8) !important;
-  }
-  
 }
 
 .enhanced-hover:active {
@@ -2173,128 +2484,6 @@ body.loaded .card {
 
 
 
-/* Interactive R.A.I.D. Framework */
-.raid-framework {
-  margin-bottom: var(--space-xl);
-  padding: var(--space-lg);
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(169, 214, 138, 0.2);
-}
-
-.raid-framework h3 {
-  text-align: center;
-  color: var(--bone);
-  margin-bottom: var(--space-sm);
-  font-size: 1.5rem;
-}
-
-.raid-description {
-  text-align: center;
-  color: var(--muted);
-  margin-bottom: var(--space-lg);
-  font-style: italic;
-}
-
-.raid-container {
-  display: flex;
-  gap: var(--space-xl);
-  align-items: flex-start;
-}
-
-.raid-diagram {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-md);
-  position: relative;
-  flex: 1;
-  max-width: 400px;
-}
-
-.raid-step {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(169, 214, 138, 0.3);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  min-width: 200px;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-.raid-step:hover {
-  transform: translateY(-5px) scale(1.05);
-  border-color: rgba(169, 214, 138, 0.6);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.raid-step.active {
-  background: rgba(169, 214, 138, 0.1);
-  border-color: var(--bright);
-  box-shadow: 0 0 20px rgba(169, 214, 138, 0.3);
-}
-
-.raid-icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.raid-step h4 {
-  color: var(--bright);
-  margin-bottom: var(--space-sm);
-  font-size: 1.2rem;
-}
-
-.raid-step p {
-  color: var(--bone);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.raid-connection {
-  width: 2px;
-  height: 30px;
-  background: linear-gradient(to bottom, var(--bright), var(--muted));
-  opacity: 0.3;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.raid-connection::before {
-  content: '↓';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--bright);
-  font-size: 1.2rem;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.raid-connection.active {
-  opacity: 1;
-  background: linear-gradient(to bottom, var(--bright), var(--bright));
-  box-shadow: 0 0 10px rgba(169, 214, 138, 0.5);
-}
-
-/* R.A.I.D. Timeline */
-.raid-timeline {
-  flex: 1;
-  min-height: 400px;
-  position: relative;
-}
 
 .timeline-content {
   display: none;
@@ -2385,22 +2574,6 @@ body.loaded .card {
   font-size: 0.8rem;
   font-weight: 500;
   border: 1px solid rgba(169, 214, 138, 0.3);
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-  .raid-container {
-    flex-direction: column;
-    gap: var(--space-lg);
-  }
-  
-  .raid-diagram {
-    max-width: none;
-  }
-  
-  .raid-timeline {
-    min-height: auto;
-  }
 }
 
 /* Modern Solution Details */
@@ -2498,38 +2671,26 @@ footer:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-/* Enhanced Blockquote Styling */
-.card blockquote {
-  background: rgba(169, 214, 138, 0.1);
-  border-left: 4px solid var(--bright);
-  padding: var(--space-lg);
-  margin: var(--space-lg) 0;
-  border-radius: var(--radius-md);
-  font-style: italic;
-  font-size: 1.2rem;
-  color: var(--bone);
+/* Enhanced Blockquote Styling - Consolidated */
+
+/* Closing quote styling to match mission quote */
+.closing-quote {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(169, 214, 138, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  margin: var(--space-xl) 0;
   position: relative;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--bone);
   text-align: center;
-}
-
-.card blockquote::before {
-  content: '"';
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 3rem;
-  color: var(--bright);
-  opacity: 0.3;
-  font-family: serif;
-}
-
-.card blockquote span {
-  display: block;
-  margin-top: var(--space-sm);
-  font-size: 0.9rem;
-  color: var(--muted);
-  font-style: normal;
+  font-style: italic;
 }
 
 /* Override quote marks for specific blockquotes */
@@ -2569,8 +2730,8 @@ footer:hover {
 }
 
 .team-grid-two {
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  max-width: 800px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -2731,6 +2892,10 @@ footer:hover {
 
 .timothy-photo {
   object-position: center 0%;
+}
+
+.shayla-photo {
+  object-position: center 20%;
 }
 
 .member-badge {

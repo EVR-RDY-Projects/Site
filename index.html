@@ -21,75 +21,75 @@
 <main class="content-wrap">
   <div class="container">
 
-    <!-- Hero Summary -->
-    <section class="hero-summary mission-enhanced">
-      <div class="mission-header">
-        <h1>Our Mission</h1>
-        <div class="mission-icon">🛡️</div>
-      </div>
-      <div class="mission-content">
-        <p class="mission-intro">EVR:RDY is a veteran-led defensive cyber initiative focused on OT/ICS. Our mission is to provide low‑cost alternative solutions to defending critical infrastructure by leveraging veteran and civilian communities.</p>
-        <blockquote class="mission-quote">
-          <div class="quote-text">
-            We have done so much, for so long, with so little, we are now qualified to do anything with nothing.
-          </div>
-          <div class="quote-attribution">– Frank Sinatra</div>
+    <!-- Mission Section -->
+    <section class="card animate-slide-up">
+      <h2>Our Mission</h2>
+      <p>EVR:RDY is a veteran-led defensive cyber initiative focused on OT/ICS. Our mission is to provide low‑cost alternative solutions to defending critical infrastructure by leveraging veteran and civilian communities.</p>
+      <blockquote class="mission-quote center-justify">
+        We have done so much, for so long, with so little, we are now qualified to do anything with nothing.<br>
+        <span style="color:#aaa; font-size:1em;">– Frank Sinatra</span>
       </blockquote>
-        <p class="mission-conclusion">This isn't about buzzwords or bloated security stacks; it's built on the mindset of doing more with less. EVR:RDY applies the same grit, discipline, and resourcefulness  leveraged to find innovative solutions while in uniform and brings them to the defense of critical infrastructure.</p>
-        <p class="text-center"><a href="mailto:ops@evrrdy.com" class="cta">Get in Touch</a></p>   
-      </div>
+      <p>This isn't about buzzwords or bloated security stacks; it's built on the mindset of doing more with less. EVR:RDY applies the same grit, discipline, and resourcefulness leveraged to find innovative solutions while in uniform and brings them to the defense of critical infrastructure.</p>
+      <p class="text-center">
+        <button class="learn-more-btn animate-glow" onclick="openTeamModal()">Meet Our Team</button>
+      </p>   
     </section>
 
     
 
-    <!-- Challenge Overview -->
-    <section class="card animate-slide-up">
-      <h2 class="typewriter">The Challenge</h2>
-      <p>Critical infrastructure faces three major cybersecurity challenges that traditional solutions fail to address effectively.</p>
-      <div class="challenge-grid">
-        <div class="challenge-card animate-slide-left animate-stagger-1">
-          <h3>Underfunding</h3>
-          <p>Most organizations allocate only 0–10% of their security budgets to ICS/OT, leaving critical areas under‑resourced.</p>
-        </div>
-        <div class="challenge-card animate-slide-up animate-stagger-2">
-          <h3>High Cost Solutions</h3>
-          <p>Leading OT/ICS cybersecurity platforms often start in the six‑to‑seven figure range with ongoing licensing fees.</p>
-        </div>
-        <div class="challenge-card animate-slide-right animate-stagger-3">
-          <h3>Workforce Shortage</h3>
-          <p>The U.S. faces a cybersecurity workforce gap of <span class="counter" data-target="500000">0</span>+ unfilled jobs, with 67% of organizations reporting shortages.</p>
-      </div>
-      </div>
-    </section>
+    <section class="card animate-slide-up challenge-section" id="challenge">
+      <!-- 👇 new wrapper -->
+      <div class="challenge-fade">
+        <h2>The Challenge</h2>
+        <p>Critical infrastructure faces three major cybersecurity challenges that traditional solutions fail to address effectively.</p>
 
-    <!-- Solution Overview -->
-    <section class="card animate-slide-up">
-      <h2 class="typewriter">Our Solutions</h2>
-      <p>We address the critical infrastructure cybersecurity challenges through two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
-      
-      <!-- How We Solve the Challenge -->
-      <div class="challenge-grid">
-        <div class="solution-card animate-slide-left animate-stagger-1">
-          <h3>Affordable Protection</h3>
-          <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
-        </div>
-        <div class="solution-card animate-slide-up animate-stagger-2">
-          <h3>Low-Cost Infrastructure</h3>
-          <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
-        </div>
-        <div class="solution-card animate-slide-right animate-stagger-3">
-          <h3>Scalable Talent Pipeline</h3>
-          <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier‑1, accelerates analysts from Tier‑2 to Tier‑3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
+        <div class="challenge-grid">
+          <div class="challenge-card animate-slide-left animate-stagger-1">
+            <h3>Underfunding</h3>
+            <p>Most organizations allocate only 0–10% of their security budgets to ICS/OT, leaving critical areas under-resourced.</p>
+          </div>
+          <div class="challenge-card animate-slide-up animate-stagger-2">
+            <h3>High Cost Solutions</h3>
+            <p>Leading OT/ICS cybersecurity platforms often start in the six-to-seven figure range with ongoing licensing fees.</p>
+          </div>
+          <div class="challenge-card animate-slide-right animate-stagger-3">
+            <h3>Workforce Shortage</h3>
+            <p>The U.S. faces a cybersecurity workforce gap of <span class="counter" data-target="500000">0</span>+ unfilled jobs, with 67% of organizations reporting shortages.</p>
+          </div>
         </div>
       </div>
+      <!-- /challenge-fade -->
 
-      <button class="learn-more-btn animate-glow" onclick="openProductsModal()">Learn More About Our Projects</button>
+      <!-- Solutions Overlay -->
+      <div class="solutions-overlay">
+        <div class="solutions-fade">
+          <button class="learn-more-btn solutions-learn-more animate-glow" onclick="openProductsModal()">Learn More</button>
+          
+          <h2>Our Solution</h2>
+          <p>Two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
+
+          <div class="challenge-grid">
+            <div class="solution-card animate-slide-left animate-stagger-1">
+              <h3>Affordable Protection</h3>
+              <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
+            </div>
+            <div class="solution-card animate-slide-up animate-stagger-2">
+              <h3>Low-Cost Infrastructure</h3>
+              <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
+            </div>
+            <div class="solution-card animate-slide-right animate-stagger-3">
+              <h3>Scalable Talent Pipeline</h3>
+              <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier-1, accelerates analysts from Tier-2 to Tier-3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
 
     <!-- Structure Overview -->
     <section class="card animate-slide-up">
-      <h2 class="typewriter">Our Structure</h2>
+      <h2>Our Structure</h2>
       <p>EVR:RDY is built on a dual‑track model working together to solve the toughest challenges in critical infrastructure defense.</p>
       <div class="challenge-grid">
         <div class="structure-card nonprofit animate-slide-left animate-stagger-1">
@@ -109,12 +109,12 @@
     <section class="card animate-fade-in-up">
       <h2>Become Part of the Work</h2>
       <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of the EVR:RDY Foundation. This includes opportunities to serve as board members, guide our open-source OT security projects, and help shape training pipelines for both veterans and civilians.</p>
-      <p class="text-center"><a href="mailto:ops@evrrdy.com" class="cta">Get in Touch</a></p>
+      <p class="text-center"><button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">Get in Touch</button></p>
     </section>
 
     <!-- Resources Section -->
     <section class="card animate-slide-up">
-      <h2 class="typewriter">Resources & Documentation</h2>
+      <h2>Resources & Documentation</h2>
       <p>Access our latest white papers, company updates, and technical documentation.</p>
       
       <div class="challenge-grid">
@@ -132,66 +132,12 @@
         </div>
       </div>
       
-      <button class="learn-more-btn animate-glow" onclick="openResourcesModal()">View Available Resources</button>
-    </section>
-
-    <!-- Team Section -->
-    <section class="card animate-slide-up">
-      <div class="team-header">
-        <h2 class="typewriter">The Team</h2>
-      </div>
-      <p class="team-intro">Defensive cyber professionals with real-world operational experience in critical infrastructure protection.</p>
-      
-      <div class="team-grid team-grid-two">
-        <div class="team-member">
-          <div class="veteran-badge">Veteran</div>
-          <div class="member-photo">
-            <div class="photo-placeholder">
-              <img src="assets/img/erin-burns.jpeg" alt="Erin Burns" class="member-photo-img erin-photo">
-            </div>
-            <div class="member-badge">Founder</div>
-            <div class="member-badge">Chief Executive Officer</div>
-          </div>
-          <div class="member-info">
-            <h3>Erin Burns</h3>
-            <div class="member-credentials">
-              <span class="credential">Leadership</span>
-              <span class="credential">Operations</span>
-              <span class="credential">Strategy</span>
-              <span class="credential">Architecture</span>
-              <span class="credential">Systems</span>
-              <span class="credential">Cybersecurity</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-member">
-          <div class="veteran-badge">Veteran</div>
-          <div class="member-photo">
-            <div class="photo-placeholder">
-              <img src="assets/img/timothy-deberry.jpeg" alt="Timothy DeBerry" class="member-photo-img timothy-photo">
-            </div>
-            <div class="member-badge">Principal Developer</div>
-            <div class="member-badge">Founding Engineer</div>
-          </div>
-          <div class="member-info">
-            <h3>Timothy DeBerry</h3>
-            <div class="member-credentials">
-              <span class="credential">Leadership</span>
-              <span class="credential">Development</span>
-              <span class="credential">Integration</span>
-              <span class="credential">Automation</span>
-              <span class="credential">Systems</span>
-              <span class="credential">Cybersecurity</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <button class="learn-more-btn animate-glow" onclick="openResourcesModal()">View Resources</button>
     </section>
 
         <!-- Closing Quote -->
     <section class="card animate-fade-in-up">
-      <blockquote class="closing-quote" style="text-align: center; font-size: 1.2rem; margin: var(--space-xl) 0;">
+      <blockquote class="closing-quote center-justify">
         The strongest steel is forged in the hottest dumpster fire.<br>
         <span style="color:#aaa; font-size:.9em;">– Unknown</span>
       </blockquote>
@@ -230,7 +176,7 @@
               <div class="component-card">
                 <div class="component-header">
                   <h4>SEER Sensor</h4>
-                  <span class="status-indicator poc">POC</span>
+                  <span class="status-indicator poc">PoC</span>
                 </div>
                 <p class="component-subtitle">Scalable Endpoint & Environmental Reconnaissance</p>
                 <p class="component-description">Provides low‑cost visibility for OT/ICS and IT networks by capturing mirrored traffic, generating Zeek‑style logs, ingesting JSON from endpoints, and storing forensic data locally.</p>
@@ -242,7 +188,7 @@
               <div class="component-card">
                 <div class="component-header">
                   <h4>GHOST Node</h4>
-                  <span class="status-indicator poc">POC</span>
+                  <span class="status-indicator poc">PoC</span>
                 </div>
                 <p class="component-subtitle">Hardware‑Enforced Data Diode</p>
                 <p class="component-description">A hardware‑enforced data diode for unidirectional UDP flow, built from inexpensive media converters, switches, and fiber.</p>
@@ -343,6 +289,90 @@
                </div>
              </div>
            </div>
+
+<!-- Team Modal -->
+<div id="team-modal" class="modal" onclick="closeTeamModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h2>The Team</h2>
+      <button class="modal-close" onclick="closeTeamModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="team-intro">Defensive cyber professionals with real-world operational experience in critical infrastructure protection.</p>
+      
+      <div class="team-grid team-grid-two">
+        <div class="team-member">
+          <div class="veteran-badge">Veteran</div>
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <img src="assets/img/erin-burns.jpeg" alt="Erin Burns" class="member-photo-img erin-photo">
+            </div>
+            <div class="member-badge">Founder</div>
+            <div class="member-badge">Chief Executive Officer</div>
+          </div>
+          <div class="member-info">
+            <h3>Erin Burns</h3>
+            <div class="member-credentials">
+              <span class="credential">Leadership</span>
+              <span class="credential">Operations</span>
+              <span class="credential">Strategy</span>
+              <span class="credential">Architecture</span>
+              <span class="credential">Systems</span>
+              <span class="credential">Cybersecurity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="veteran-badge">Veteran</div>
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <img src="assets/img/timothy-deberry.jpeg" alt="Timothy DeBerry" class="member-photo-img timothy-photo">
+            </div>
+            <div class="member-badge">Principal Developer</div>
+            <div class="member-badge">Founding Engineer</div>
+          </div>
+          <div class="member-info">
+            <h3>Timothy DeBerry</h3>
+            <div class="member-credentials">
+              <span class="credential">Leadership</span>
+              <span class="credential">Development</span>
+              <span class="credential">Integration</span>
+              <span class="credential">Automation</span>
+              <span class="credential">Secure Coding</span>
+              <span class="credential">Secure Design</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="veteran-badge">Veteran</div>
+          <div class="member-photo">
+            <div class="photo-placeholder">
+              <img src="assets/img/shayla-lapoint.jpeg" alt="Shayla LaPoint" class="member-photo-img shayla-photo">
+            </div>
+            <div class="member-badge">Lead Security Engineer</div>
+            <div class="member-badge">Master Network Analyst</div>
+          </div>
+          <div class="member-info">
+            <h3>Shayla LaPoint</h3>
+            <div class="member-credentials">
+              <span class="credential">Leadership</span>
+              <span class="credential">Secure Architecture</span>
+              <span class="credential">Network Analysis</span>
+              <span class="credential">Threat Modeling</span>
+              <span class="credential">Incident Response</span>
+              <span class="credential">Digital Forensics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="text-center" style="margin-top: var(--space-xs);">
+        <button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">Get in Touch</button>
+      </p>
+    </div>
+  </div>
+</div>
 
 <script src="assets/js/enhanced.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
@@ -553,6 +583,24 @@ function closeResourcesModal() {
   }
 }
 
+// Team Modal Functionality
+function openTeamModal() {
+  const modal = document.getElementById('team-modal');
+  if (modal) {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeTeamModal() {
+  const modal = document.getElementById('team-modal');
+  if (modal) {
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+
 function expandResource(resource) {
   const expandedResource = document.getElementById('expanded-resource');
   const contentElement = document.getElementById('expanded-resource-content');
@@ -710,6 +758,7 @@ function closeProductsModal() {
 window.onclick = function(event) {
   const productsModal = document.getElementById('products-modal');
   const resourcesModal = document.getElementById('resources-modal');
+  const teamModal = document.getElementById('team-modal');
   const expandedResource = document.getElementById('expanded-resource');
   
   // Check if products modal is open and click is on the modal background
@@ -722,6 +771,11 @@ window.onclick = function(event) {
     closeResourcesModal();
   }
   
+  // Check if team modal is open and click is on the modal background
+  if (teamModal && teamModal.classList.contains('show') && event.target === teamModal) {
+    closeTeamModal();
+  }
+  
   // Note: Expanded resource click-outside is handled by direct onclick on the element
 };
 
@@ -730,6 +784,7 @@ document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
     const productsModal = document.getElementById('products-modal');
     const resourcesModal = document.getElementById('resources-modal');
+    const teamModal = document.getElementById('team-modal');
     const expandedResource = document.getElementById('expanded-resource');
     
     // First close expanded resource if open
@@ -739,6 +794,10 @@ document.addEventListener('keydown', function(event) {
     // Then close resources modal if open
     else if (resourcesModal && resourcesModal.classList.contains('show')) {
       closeResourcesModal();
+    }
+    // Then close team modal if open
+    else if (teamModal && teamModal.classList.contains('show')) {
+      closeTeamModal();
     }
     // Finally close products modal if open
     else if (productsModal && productsModal.classList.contains('show')) {
@@ -793,6 +852,92 @@ document.getElementById('y').textContent = new Date().getFullYear();
 
 // Resources will be loaded when the modal opens
 </script>
+
+<script>
+(() => {
+  const section = document.querySelector('#challenge');
+  if (!section) return;
+
+  const overlay = section.querySelector('.solutions-overlay');
+  const fadeWrap = section.querySelector('.challenge-fade');
+
+  // State
+  let progress = 0;              // 0 → 1
+  let lastScrollY = window.scrollY;
+
+  // Helpers
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  
+  const setProgress = (p) => {
+    progress = clamp(p, 0, 1);
+
+    // Simultaneous animation: overlay slides in as challenges fade out
+    const fadeProgress = progress; // Challenges fade from 0 to 1
+    const slideProgress = progress; // Overlay slides from 0 to 1
+    
+    const translateY = (100 - slideProgress * 100);
+    section.style.setProperty('--overlay-translate-y', translateY + '%');
+    
+    // Challenge fade decreases as progress increases
+    section.style.setProperty('--challenge-opacity', (1 - fadeProgress).toFixed(2));
+    // Solutions fade increases as progress increases (opposite of challenges)
+    section.style.setProperty('--solutions-opacity', fadeProgress.toFixed(2));
+    
+    // Control button visibility based on solutions opacity
+    const solutionsOpacity = parseFloat(fadeProgress.toFixed(2));
+    section.style.setProperty('--solutions-visibility', solutionsOpacity > 0 ? 'visible' : 'hidden');
+    section.style.setProperty('--solutions-pointer-events', solutionsOpacity > 0 ? 'auto' : 'none');
+  };
+
+  // Calculate progress based on section position relative to viewport center
+  const calculateProgress = () => {
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const viewportCenter = viewportHeight / 2;
+    
+    // Calculate how much of the section has passed through the viewport center
+    const sectionTop = rect.top;
+    const sectionBottom = rect.bottom;
+    const sectionHeight = rect.height;
+    
+    // When section top crosses above viewport center, start showing overlay
+    // When section bottom crosses below viewport center, hide overlay
+    if (sectionTop > viewportCenter) {
+      // Section hasn't reached center yet
+      return 0;
+    } else if (sectionBottom < viewportCenter) {
+      // Section has completely passed center
+      return 1;
+    } else {
+      // Section is crossing through center - calculate progress
+      const distanceFromTop = viewportCenter - sectionTop;
+      const progress = distanceFromTop / sectionHeight;
+      return clamp(progress, 0, 1);
+    }
+  };
+
+  // Scroll-based overlay management
+  const onScroll = () => {
+    const newProgress = calculateProgress();
+    setProgress(newProgress);
+  };
+
+  // Handle resize events
+  const onResize = () => {
+    // Recalculate progress on resize
+    const newProgress = calculateProgress();
+    setProgress(newProgress);
+  };
+
+  // Events
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+
+  // Init CSS vars
+  setProgress(0);
+})();
+</script>
+
 
 </body>
 </html>
