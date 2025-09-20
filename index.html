@@ -7,6 +7,7 @@
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Low-cost solutions for critical infrastructure. T.A.P.S., TacSOC, R.A.I.D. framework, Hunter/Killer teams." />
 
 <link rel="stylesheet" href="assets/css/enhanced-style.css">
+<link rel="stylesheet" href="assets/css/overlay-reveal.css">
 </head>
 <body>
 
@@ -29,7 +30,6 @@
         We have done so much, for so long, with so little, we are now qualified to do anything with nothing.<br>
         <span style="color:#aaa; font-size:1em;">– Frank Sinatra</span>
       </blockquote>
-      <p>This isn't about buzzwords or bloated security stacks; it's built on the mindset of doing more with less. EVR:RDY applies the same grit, discipline, and resourcefulness leveraged to find innovative solutions while in uniform and brings them to the defense of critical infrastructure.</p>
       <p class="text-center">
         <button class="learn-more-btn animate-glow" onclick="openTeamModal()">Meet Our Team</button>
       </p>   
@@ -38,12 +38,11 @@
     
 
     <section class="card animate-slide-up challenge-section" id="challenge">
-      <!-- 👇 new wrapper -->
-      <div class="challenge-fade">
+      <overlay-reveal fit="fit" css="assets/css/overlay-reveal.css">
+        <div slot="primary">
         <h2>The Challenge</h2>
         <p>Critical infrastructure faces three major cybersecurity challenges that traditional solutions fail to address effectively.</p>
-
-        <div class="challenge-grid">
+          <div class="challenge-grid" data-or-grid>
           <div class="challenge-card animate-slide-left animate-stagger-1">
             <h3>Underfunding</h3>
             <p>Most organizations allocate only 0–10% of their security budgets to ICS/OT, leaving critical areas under-resourced.</p>
@@ -58,40 +57,38 @@
           </div>
         </div>
       </div>
-      <!-- /challenge-fade -->
-
-      <!-- Solutions Overlay -->
-      <div class="solutions-overlay">
-        <div class="solutions-fade">
-          <button class="learn-more-btn solutions-learn-more animate-glow" onclick="openProductsModal()">Learn More</button>
-          
-          <h2>Our Solution</h2>
+        <div slot="overlay">
+        <h2>Our Solution</h2>
           <p>Two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
-
-          <div class="challenge-grid">
-            <div class="solution-card animate-slide-left animate-stagger-1">
-              <h3>Affordable Protection</h3>
-              <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
-            </div>
-            <div class="solution-card animate-slide-up animate-stagger-2">
-              <h3>Low-Cost Infrastructure</h3>
-              <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
-            </div>
-            <div class="solution-card animate-slide-right animate-stagger-3">
-              <h3>Scalable Talent Pipeline</h3>
-              <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier-1, accelerates analysts from Tier-2 to Tier-3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
-            </div>
+          <div class="challenge-grid" data-or-grid>
+          <div class="solution-card animate-slide-left animate-stagger-1">
+            <h3>Affordable Protection</h3>
+            <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
           </div>
+          <div class="solution-card animate-slide-up animate-stagger-2">
+            <h3>Low-Cost Infrastructure</h3>
+            <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
+          </div>
+          <div class="solution-card animate-slide-right animate-stagger-3">
+            <h3>Scalable Talent Pipeline</h3>
+            <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier-1, accelerates analysts from Tier-2 to Tier-3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
         </div>
       </div>
+      <p class="text-center" >
+        <button class="learn-more-btn animate-glow" onclick="openProductsModal()">Learn More</button>
+      </p>
+      </div>
+    </overlay-reveal>
     </section>
 
 
     <!-- Structure Overview -->
     <section class="card animate-slide-up">
+      <overlay-reveal fit="fit" css="assets/css/overlay-reveal.css">
+        <div slot="primary">
       <h2>Our Structure</h2>
       <p>EVR:RDY is built on a dual‑track model working together to solve the toughest challenges in critical infrastructure defense.</p>
-      <div class="challenge-grid">
+            <div class="challenge-grid" data-or-grid>
         <div class="structure-card nonprofit animate-slide-left animate-stagger-1">
           <h3>Foundation for Critical Infrastructure Defense</h3>
           <p>Non-profit arm that pursues grants, partnerships, and collaborations to sustain open-source OT security projects and build training pipelines for veterans and civilians. This includes outreach to the veteran community, creating pathways into cyber careers, and advancing our SBIR/STTR grant strategy with universities. Together, these efforts expand workforce development and strengthen critical infrastructure defense.</p>
@@ -102,15 +99,25 @@
         </div>
       </div>
       <p><em>The vision:</em> Mission and market reinforce each other — open collaboration drives innovation while sustainable services scale protection.</p>
-    </section>
+          </div>
+          <div slot="overlay">
 
-
-    <!-- Contact -->
-    <section class="card animate-fade-in-up">
       <h2>Become Part of the Work</h2>
       <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of the EVR:RDY Foundation. This includes opportunities to serve as board members, guide our open-source OT security projects, and help shape training pipelines for both veterans and civilians.</p>
-      <p class="text-center"><button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">Get in Touch</button></p>
+            
+            <!-- Closing Quote -->
+              <blockquote class="closing-quote center-justify">
+                The strongest steel is forged in the hottest dumpster fire.<br>
+                <span style="color:#aaa; font-size:.9em;">– Unknown</span>
+              </blockquote>
+            
+            <p>This isn't about buzzwords or bloated security stacks; The EVR:RDY culture is built on the mindset of doing more with less. We apply the same grit, discipline, and resourcefulness leveraged to find innovative solutions while in uniform and bring them to the defense of critical infrastructure.</p>
+            
+            <p class="text-center"><button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">Get in Touch</button></p>
+          </div>
+      </overlay-reveal>
     </section>
+
 
     <!-- Resources Section -->
     <section class="card animate-slide-up">
@@ -135,16 +142,11 @@
       <button class="learn-more-btn animate-glow" onclick="openResourcesModal()">View Resources</button>
     </section>
 
-        <!-- Closing Quote -->
-    <section class="card animate-fade-in-up">
-      <blockquote class="closing-quote center-justify">
-        The strongest steel is forged in the hottest dumpster fire.<br>
-        <span style="color:#aaa; font-size:.9em;">– Unknown</span>
-      </blockquote>
-    </section>
 
   </div>
 </main>
+
+
 
 <footer class="text-center" style="color:var(--muted); font-size:.95rem; margin: var(--space-lg) 0 var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(229,228,216,.12);">
   © <span id="y"></span> EVR:RDY Cyber Defense & Consulting
@@ -374,6 +376,7 @@
   </div>
 </div>
 
+<script src="assets/js/overlay-reveal.js" defer></script>
 <script src="assets/js/enhanced.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 <script>
@@ -413,7 +416,7 @@ function getRawGitHubUrl(path) {
   
   // For EVR-RDY site, use the specific branch format
   if (window.location.hostname === 'evrrdy.com') {
-    return `https://raw.githubusercontent.com/EVR-RDY/Site/refs/heads/feature/ui${path}`;
+    return `https://raw.githubusercontent.com/EVR-RDY/Site/main${path}`;
   }
   
   // For local development (127.0.0.1, localhost, etc.)
@@ -430,19 +433,11 @@ function getRawGitHubUrl(path) {
   const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
   
   // Handle different GitHub Pages URL patterns
-  if (baseUrl.includes('.github.io/')) {
-    // User/organization pages: username.github.io/repo -> raw.githubusercontent.com/username/repo/main
-    const parts = baseUrl.replace('https://', '').split('/');
-    const username = parts[0].replace('.github.io', '');
-    const repo = parts[1] || '';
-    return `https://raw.githubusercontent.com/${username}/${repo}/main${path}`;
-  } else {
-    // Project pages: username.github.io/repo -> raw.githubusercontent.com/username/repo/gh-pages
-    const parts = baseUrl.replace('https://', '').split('/');
-    const username = parts[0].replace('.github.io', '');
-    const repo = parts[1] || '';
-    return `https://raw.githubusercontent.com/${username}/${repo}/gh-pages${path}`;
-  }
+  // Always use main for GitHub Pages scenarios as well
+  const parts = baseUrl.replace('https://', '').split('/');
+  const username = parts[0].replace('.github.io', '');
+  const repo = parts[1] || '';
+  return `https://raw.githubusercontent.com/${username}/${repo}/main${path}`;
 }
 
 // Dynamic Resources Loading
@@ -779,6 +774,14 @@ window.onclick = function(event) {
   // Note: Expanded resource click-outside is handled by direct onclick on the element
 };
 
+// Prevent default navigation on solution links so '#' doesn't jump page
+document.addEventListener('click', function(e) {
+  const link = e.target && e.target.closest && e.target.closest('a.solution-link');
+  if (link) {
+    e.preventDefault();
+  }
+});
+
 // Close modals with Escape key
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
@@ -852,92 +855,6 @@ document.getElementById('y').textContent = new Date().getFullYear();
 
 // Resources will be loaded when the modal opens
 </script>
-
-<script>
-(() => {
-  const section = document.querySelector('#challenge');
-  if (!section) return;
-
-  const overlay = section.querySelector('.solutions-overlay');
-  const fadeWrap = section.querySelector('.challenge-fade');
-
-  // State
-  let progress = 0;              // 0 → 1
-  let lastScrollY = window.scrollY;
-
-  // Helpers
-  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-  
-  const setProgress = (p) => {
-    progress = clamp(p, 0, 1);
-
-    // Simultaneous animation: overlay slides in as challenges fade out
-    const fadeProgress = progress; // Challenges fade from 0 to 1
-    const slideProgress = progress; // Overlay slides from 0 to 1
-    
-    const translateY = (100 - slideProgress * 100);
-    section.style.setProperty('--overlay-translate-y', translateY + '%');
-    
-    // Challenge fade decreases as progress increases
-    section.style.setProperty('--challenge-opacity', (1 - fadeProgress).toFixed(2));
-    // Solutions fade increases as progress increases (opposite of challenges)
-    section.style.setProperty('--solutions-opacity', fadeProgress.toFixed(2));
-    
-    // Control button visibility based on solutions opacity
-    const solutionsOpacity = parseFloat(fadeProgress.toFixed(2));
-    section.style.setProperty('--solutions-visibility', solutionsOpacity > 0 ? 'visible' : 'hidden');
-    section.style.setProperty('--solutions-pointer-events', solutionsOpacity > 0 ? 'auto' : 'none');
-  };
-
-  // Calculate progress based on section position relative to viewport center
-  const calculateProgress = () => {
-    const rect = section.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const viewportCenter = viewportHeight / 2;
-    
-    // Calculate how much of the section has passed through the viewport center
-    const sectionTop = rect.top;
-    const sectionBottom = rect.bottom;
-    const sectionHeight = rect.height;
-    
-    // When section top crosses above viewport center, start showing overlay
-    // When section bottom crosses below viewport center, hide overlay
-    if (sectionTop > viewportCenter) {
-      // Section hasn't reached center yet
-      return 0;
-    } else if (sectionBottom < viewportCenter) {
-      // Section has completely passed center
-      return 1;
-    } else {
-      // Section is crossing through center - calculate progress
-      const distanceFromTop = viewportCenter - sectionTop;
-      const progress = distanceFromTop / sectionHeight;
-      return clamp(progress, 0, 1);
-    }
-  };
-
-  // Scroll-based overlay management
-  const onScroll = () => {
-    const newProgress = calculateProgress();
-    setProgress(newProgress);
-  };
-
-  // Handle resize events
-  const onResize = () => {
-    // Recalculate progress on resize
-    const newProgress = calculateProgress();
-    setProgress(newProgress);
-  };
-
-  // Events
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onResize);
-
-  // Init CSS vars
-  setProgress(0);
-})();
-</script>
-
 
 </body>
 </html>
