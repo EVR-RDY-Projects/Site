@@ -1,10 +1,10 @@
-/* Enhanced Styles for EVR:RDY */
 
 /* Import Google Fonts - Modern Typography */
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-/* Modern Design Tokens - Adapted for EVR:RDY */
+/* Enhanced Styles for EVR:RDY */
+
 :root {
   /* Brand Colors - Military/Cyber Theme */
   --bone: #e5e4d8;
@@ -70,11 +70,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Modern Container System */
+/* Modern Container System - Dynamic Sizing */
 .container {
-  max-width: 1120px;
+  max-width: min(1120px, 95vw);
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 clamp(var(--space-sm), 2vw, var(--space-lg));
+  width: 100%;
 }
 
 /* Modern Typography Scale */
@@ -157,7 +158,7 @@ blockquote {
   margin: var(--space-xl) auto var(--space-3xl);
 }
 
-/* Modern Card Component */
+/* Modern Card Component - Dynamic Sizing */
 .card {
   background: rgba(0, 0, 0, 0.4);
   border-radius: var(--radius-xl);
@@ -167,12 +168,15 @@ blockquote {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   backdrop-filter: blur(12px) saturate(120%);
-  padding: clamp(var(--space-lg), 3vw, var(--space-2xl));
-  margin-bottom: var(--space-xl);
+  padding: clamp(var(--space-md), 4vw, var(--space-2xl));
+  margin-bottom: clamp(var(--space-lg), 3vw, var(--space-xl));
   border: 1px solid rgba(229,228,216,.2);
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
+  width: 100%;
+  min-height: fit-content;
+  box-sizing: border-box;
 }
 
 .card::after {
@@ -343,15 +347,16 @@ blockquote {
 .p-lg { padding: var(--space-lg); }
 .p-xl { padding: var(--space-xl); }
 
-/* Modern Responsive Design */
+/* Modern Responsive Design - Dynamic Breakpoints */
 @media (max-width: 768px) {
   .container {
-    padding: 0 var(--space-md);
+    padding: 0 clamp(var(--space-sm), 3vw, var(--space-md));
+    max-width: 98vw;
   }
   
   .card {
-    padding: var(--space-lg);
-    margin-bottom: var(--space-lg);
+    padding: clamp(var(--space-sm), 5vw, var(--space-lg));
+    margin-bottom: clamp(var(--space-sm), 4vw, var(--space-lg));
   }
   
   .indent {
@@ -371,11 +376,13 @@ blockquote {
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 var(--space-sm);
+    padding: 0 clamp(var(--space-xs), 4vw, var(--space-sm));
+    max-width: 99vw;
   }
   
   .card {
-    padding: var(--space-md);
+    padding: clamp(var(--space-xs), 6vw, var(--space-md));
+    margin-bottom: clamp(var(--space-xs), 5vw, var(--space-md));
   }
   
   .cta {
@@ -634,7 +641,6 @@ body.loaded .card {
   border-radius: var(--radius-md);
   font-style: italic;
   font-size: .8rem;
-  line-height: .5rem;
   color: var(--bone);
   position: relative;
   max-width: 600px;
@@ -682,13 +688,13 @@ body.loaded .card {
 /* Modern Progressive Disclosure */
 .learn-more-btn {
   background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
-  border: 1px solid var(--bright);
+  /* border: 1px solid var(--bright); */
   box-sizing: border-box;
   color: var(--bright);
   padding: var(--space-xs) var(--space-xs);
   border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 600;
+  /* font-weight: 600; */
   cursor: pointer;
   transition: all var(--transition-fast);
   margin: var(--space-xl) auto;
@@ -696,7 +702,7 @@ body.loaded .card {
   width: 100%;
   max-width: 200px;
   text-align: center;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: 0.5px;
   position: relative;
   -webkit-backdrop-filter: blur(8px);
@@ -1644,39 +1650,26 @@ body.loaded .card {
   }
 }
 
-/* Modern Challenge Grid */
-
-/* Pin/overlay behavior */
-
-.challenge-section { 
-  position: relative; 
-  overflow: visible; 
-}
-
-
-
-/* Dim challenge when mostly covered */
-.pin-spacer { width: 100%; pointer-events: none; }
-
-
 .challenge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-lg);
-  margin: var(--space-lg) 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 90vw), 1fr));
+  gap: clamp(var(--space-sm), 3vw, var(--space-lg));
+  margin: clamp(var(--space-sm), 3vw, var(--space-lg)) 0;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 
 .challenge-card {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(129, 36, 36, 0.082);
   border: 1px solid rgba(120,120,120,.2);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   text-align: center;
   transition: all var(--transition-fast);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  backdrop-filter: blur(12px) saturate(120%);
+  /* -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%); */
   box-shadow: 
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05),
@@ -1714,7 +1707,7 @@ body.loaded .card {
 }
 
 .challenge-card:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(129, 36, 36, 0.2);
   border-color: rgba(220, 38, 38, 0.4);
   transform: translateY(-3px) scale(1.02);
   box-shadow: 
@@ -1760,184 +1753,60 @@ body.loaded .card {
   color: var(--bone);
 }
 
-
-/* Ensure identical box sizing while fixed */
-.challenge-section,
-.challenge-section * {
-  box-sizing: border-box;
-}
-
-
-
-/* 2) Keep size stable when pinned (no hover scaling or transitions) */
-.challenge-section.pinned,
-.challenge-section.pinned:hover {
-  transform: none !important;
-}
-.challenge-section.pinned * {
-  transition: none !important;
-}
-
-
-/* Removed - handled by new overlay positioning */ 
-
-
-
-/* 3) Overlay must be interactive/clickable and scrollable */
-
-
-
-
-.solution-hint {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--bone);
-  opacity: 0.7;
-  font-style: italic;
-}
-
-.solutions-overlay h2 {
-  color: var(--bone);
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  margin-bottom: var(--space-lg);
-  font-weight: 600;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  position: relative;
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-
-.solutions-overlay h2::before {
-  content: '';
-  width: 4px;
-  height: 24px;
-  background: linear-gradient(180deg, var(--bright), var(--muted));
-  border-radius: 2px;
-  margin-right: var(--space-sm);
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.solutions-overlay h2::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--bright), transparent);
-  border-radius: 1px;
-}
-
-.solutions-overlay > p {
-  color: var(--bone);
-  line-height: 1.7;
-  margin-bottom: var(--space-lg);
-  font-size: 1.05rem;
-}
-
-
-/* .solutions-overlay .solution-card {
-  background: rgba(34, 197, 94, 0.1) !important;
-  border: 1px solid rgba(34, 197, 94, 0.3) !important;
-  transition: all var(--transition-normal);
-}
-
-.solutions-overlay .solution-card:hover {
-  background: rgba(34, 197, 94, 0.15) !important;
-  border-color: rgba(34, 197, 94, 0.5) !important;
-  transform: translateY(-2px);
-}
-
-.solutions-overlay .learn-more-btn {
-  margin-top: var(--space-lg);
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: white;
-  font-weight: 600;
-}
-
-.solutions-overlay .learn-more-btn:hover {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
-} */
-
 Hover effect for challenge cards
 .challenge-card {
   transition: all var(--transition-normal);
 }
 
-/* Ensure solutions overlay content is visible */
-/* .solutions-overlay h2,
-.solutions-overlay p,
-.solutions-overlay .challenge-grid,
-.solutions-overlay .solution-card,
-.solutions-overlay .learn-more-btn {
-  opacity: 1 !important;
-  visibility: visible !important;
-} */
-
-/* Ensure solutions overlay content is visible when overlay is active */
-/* .challenge-section:hover .solutions-overlay h2,
-.challenge-section:hover .solutions-overlay p,
-.challenge-section:hover .solutions-overlay .challenge-grid,
-.challenge-section:hover .solutions-overlay .solution-card,
-.challenge-section:hover .solutions-overlay .learn-more-btn {
-  opacity: 1 !important;
-  visibility: visible !important;
-} */
-
-
 
 /* Solution Cards - Positive Styling (Higher Specificity) */
 .solution-card {
-  background: rgba(0, 0, 0, 0.4) !important;
-  border: 1px solid rgba(120,120,120,.2) !important;
-  border-radius: var(--radius-lg) !important;
-  padding: var(--space-lg) !important;
-  text-align: center !important;
-  transition: all var(--transition-fast) !important;
-  backdrop-filter: blur(12px) saturate(120%) !important;
+  background: rgba(36, 129, 45, 0.082);
+  border: 1px solid rgba(120,120,120,.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+  transition: all var(--transition-fast);
+  /* -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%); */
   box-shadow: 
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-  position: relative !important;
-  overflow: hidden !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
 .solution-card::after {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(135deg, 
-    rgba(34, 197, 94, 0.03) 0%, 
+    rgba(220, 38, 38, 0.03) 0%, 
     transparent 50%, 
-    rgba(22, 163, 74, 0.03) 100%) !important;
-  border-radius: var(--radius-lg) !important;
-  pointer-events: auto !important;
-  opacity: 0 !important;
-  transition: opacity var(--transition-normal) !important;
+    rgba(153, 27, 27, 0.03) 100%);
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
 }
 
 .solution-card::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 2px !important;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
   background: linear-gradient(90deg, #22c55e, #16a34a) !important;
   opacity: 0.8 !important;
 }
 
 .solution-card:hover {
-  background: rgba(0, 0, 0, 0.5) !important;
+  background: rgba(36, 129, 45, 0.197);
   border-color: rgba(34, 197, 94, 0.4) !important;
   transform: translateY(-3px) scale(1.02) !important;
   box-shadow: 
@@ -1951,148 +1820,37 @@ Hover effect for challenge cards
 }
 
 .solution-card h3 {
-  margin: 0 0 var(--space-sm) 0 !important;
-  font-size: 1.25rem !important;
-  color: var(--bone) !important;
-  font-weight: 600 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: var(--space-sm) !important;
+  margin: 0 0 var(--space-sm) 0;
+  font-size: 1.25rem;
+  color: var(--bone);
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
 }
 
 .solution-card h3::before {
-  content: '✓' !important;
-  color: #22c55e !important;
-  font-size: 1rem !important;
+  content: '✓';
+  color: #22c55e;
+  font-size: 0.9rem;
   opacity: 0.9 !important;
-  font-weight: bold !important;
 }
 
 .solution-card:hover h3::before {
-  transform: scale(1.2) !important;
-  transition: transform var(--transition-fast) !important;
-  color: #16a34a !important;
+  transform: scale(1.2);
+  transition: transform var(--transition-normal);
+  color: #16a34a;
 }
 
 .solution-card p {
-  margin: 0 !important;
-  font-size: 0.95rem !important;
-  line-height: 1.6 !important;
-  color: var(--bone) !important;
-}
-
-
-
-/* ---------- PIN & FADE CORE ---------- */
-
-/* Never let the section resize when pinned */
-.challenge-section,
-.challenge-section * { box-sizing: border-box; }
-
-/* Solutions overlay positioning and visibility */
-.solutions-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transform: translateY(var(--overlay-translate-y, 100%));
-  transition: transform 280ms ease;
-  z-index: 10;
-}
-
-/* Solutions Learn More button positioned in top right with standard formatting */
-.solutions-learn-more {
-  position: absolute;
-  top: var(--space-lg);
-  right: var(--space-lg);
-  z-index: 20;
   margin: 0;
-  padding: var(--space-xs) var(--space-xs);
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(185, 186, 175, 0.1));
-  border: 1px solid var(--bright);
-  box-sizing: border-box;
-  color: var(--bright);
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  display: block;
-  text-align: center;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  min-width: 120px;
-  /* Hide button when overlay is not visible */
-  opacity: var(--solutions-opacity, 0);
-  visibility: var(--solutions-visibility, hidden);
-  pointer-events: var(--solutions-pointer-events, none);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--bone);
 }
-
-.solutions-learn-more:hover {
-  background: linear-gradient(135deg, var(--bright), var(--muted));
-  color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--muted);
-}
-
-/* Overlay visibility is now controlled by CSS custom properties in setProgress() */
-
-/* fade wrapper driven by CSS var */
-.challenge-fade {
-  opacity: var(--challenge-opacity, 1);
-  transition: opacity 280ms ease;
-}
-
-/* solutions fade wrapper - opposite of challenge fade */
-.solutions-fade {
-  opacity: var(--solutions-opacity, 0);
-  transition: opacity 280ms ease;
-  /* background: rgba(0, 0, 0, 0.4); */
-  border-radius: var(--radius-xl);
-  box-shadow: 
-    0 20px 25px -5px rgba(0, 0, 0, 0.15),
-    0 10px 10px -5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  /* -webkit-backdrop-filter: blur(12px) saturate(120%); */
-  /* backdrop-filter: blur(12px) saturate(120%); */
-  border: 1px solid rgba(229,228,216,.2);
-  padding: var(--space-xl);
-  height: 100%;
-  width: 100%;
-}
-
-
-
-/* give overlay a little inner bottom room so buttons can't clip */
-/* .solutions-overlay {
-  padding-bottom: calc(var(--space-2xl) + 24px);
-} */
-
-
-/* No longer need pinned state CSS since we removed pinning */
-
-/* Spacer removed - using natural height approach instead */
-
-/* No longer need scroll locking since we removed pinning */
-
-/* Solutions overlay is always positioned and controlled by JavaScript */
-.solutions-overlay {
-  z-index: 10;
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
-
-
 
 /* Enhanced Structure Cards */
 .structure-card {
@@ -2102,8 +1860,8 @@ Hover effect for challenge cards
   padding: var(--space-lg);
   text-align: center;
   transition: all var(--transition-fast);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  backdrop-filter: blur(12px) saturate(120%);
+  /* -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%); */
   box-shadow: 
     0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05),
@@ -2161,7 +1919,8 @@ Hover effect for challenge cards
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   position: relative;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
@@ -2172,6 +1931,8 @@ Hover effect for challenge cards
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  display: inline-block;
+  flex: 0 0 auto;
   opacity: 0.9;
   font-weight: bold;
 }
@@ -2375,8 +2136,8 @@ Hover effect for challenge cards
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(169, 214, 138, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(169, 214, 138, 0.6), 0 0 30px rgba(169, 214, 138, 0.4); }
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 18px rgba(255, 255, 255, 0.8), 0 0 28px rgba(255, 255, 255, 0.6); }
 }
 
 /* Animation classes */
@@ -2597,10 +2358,11 @@ Hover effect for challenge cards
   line-height: 1.6;
 }
 
-/* Modern Responsive Adjustments */
+/* Modern Responsive Adjustments - Enhanced for Dynamic Sizing */
 @media (max-width: 768px) {
   .challenge-grid {
     grid-template-columns: 1fr;
+    gap: clamp(var(--space-xs), 4vw, var(--space-md));
   }
   
   .resources-grid {
