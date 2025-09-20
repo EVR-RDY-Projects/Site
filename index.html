@@ -38,7 +38,7 @@
     
 
     <section class="card animate-slide-up challenge-section" id="challenge">
-      <overlay-reveal fit="fit" css="assets/css/overlay-reveal.css">
+      <overlay-reveal fit="fit" mode="primary-only" css="assets/css/overlay-reveal.css">
         <div slot="primary">
         <h2>The Challenge</h2>
         <p>Critical infrastructure faces three major cybersecurity challenges that traditional solutions fail to address effectively.</p>
@@ -57,34 +57,40 @@
           </div>
         </div>
       </div>
-        <div slot="overlay">
-        <h2>Our Solution</h2>
-          <p>Two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
-          <div class="challenge-grid" data-or-grid>
-          <div class="solution-card animate-slide-left animate-stagger-1">
-            <h3>Affordable Protection</h3>
-            <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
+      </overlay-reveal>
+    </section>
+
+      <section class="card animate-slide-up challenge-section" id="challenge">
+            
+        <overlay-reveal fit="fit" mode="primary-only" css="assets/css/overlay-reveal.css">
+          <div slot="primary">
+            <h2>Our Solution</h2>
+            <p>Two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
+            <div class="challenge-grid" data-or-grid>
+              <div class="solution-card animate-slide-left animate-stagger-1">
+                <h3>Affordable Protection</h3>
+                <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> pools customers, leveraging Chronicle to share licenses and undercut costs.</p>
+              </div>
+              <div class="solution-card animate-slide-up animate-stagger-2">
+                <h3>Low-Cost Infrastructure</h3>
+                <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
+              </div>
+              <div class="solution-card animate-slide-right animate-stagger-3">
+                <h3>Scalable Talent Pipeline</h3>
+                <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier-1, accelerates analysts from Tier-2 to Tier-3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
+              </div>
+            </div>
+              <p class="text-center" >
+                <button class="learn-more-btn animate-glow" onclick="openProductsModal()">Learn More</button>
+              </p>
           </div>
-          <div class="solution-card animate-slide-up animate-stagger-2">
-            <h3>Low-Cost Infrastructure</h3>
-            <p><a href="#" onclick="openModalToSection('taps-section')" class="solution-link">SEER, GHOST and RAMPART</a> replace expensive OT appliances with affordable with opensourced alternatives. <a href="#" onclick="openModalToSection('taps-section')" class="solution-link">T.A.P.S</a> avoids expensive OT sensing solutions .</p>
-          </div>
-          <div class="solution-card animate-slide-right animate-stagger-3">
-            <h3>Scalable Talent Pipeline</h3>
-            <p><a href="#" onclick="openModalToSection('tacsoc-section')" class="solution-link">TacSOC</a> automates Tier-1, accelerates analysts from Tier-2 to Tier-3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
-        </div>
-      </div>
-      <p class="text-center" >
-        <button class="learn-more-btn animate-glow" onclick="openProductsModal()">Learn More</button>
-      </p>
-      </div>
-    </overlay-reveal>
+        </overlay-reveal>
     </section>
 
 
     <!-- Structure Overview -->
-    <section class="card animate-slide-up">
-      <overlay-reveal fit="fit" css="assets/css/overlay-reveal.css">
+    <section class="card animate-slide-up challenge-section" id="challenge">
+      <overlay-reveal fit="fit" mode="primary-only" css="assets/css/overlay-reveal.css">
         <div slot="primary">
       <h2>Our Structure</h2>
       <p>EVR:RDY is built on a dual‑track model working together to solve the toughest challenges in critical infrastructure defense.</p>
@@ -100,8 +106,12 @@
       </div>
       <p><em>The vision:</em> Mission and market reinforce each other — open collaboration drives innovation while sustainable services scale protection.</p>
           </div>
-          <div slot="overlay">
+        </overlay-reveal>
+      </section>
 
+    <section class="card animate-slide-up challenge-section" id="challenge">
+      <overlay-reveal fit="fit" mode="primary-only" css="assets/css/overlay-reveal.css">
+        <div slot="primary">
       <h2>Become Part of the Work</h2>
       <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of the EVR:RDY Foundation. This includes opportunities to serve as board members, guide our open-source OT security projects, and help shape training pipelines for both veterans and civilians.</p>
             
@@ -170,7 +180,7 @@
             <h3>T.A.P.S.</h3>
             <p class="product-subtitle">Telemetry Acquisition Platform Solution</p>
             <p class="product-description">A suite of open‑source tools being developed to create low‑cost, practical solutions that move critical telemetry from the OT environment into the IT environment for safe ingestion into a SIEM.</p>
-            <button class="expand-btn" onclick="toggleProductDetails('taps-details')">Learn More About T.A.P.S. Components</button>
+            <button class="learn-more-btn animate-glow" onclick="toggleProductDetails('taps-details')">Learn More</button>
           </div>
           
           <div class="product-details" id="taps-details" style="display: none;">
@@ -220,7 +230,7 @@
             <h3>TacSOC</h3>
             <p class="product-subtitle">Tactical Security Operations Center</p>
             <p class="product-description">EVR:RDY's first flagship product: an AI-enforced, OT-focused SOC built for precision threat hunting, incident response, and real defense. Where traditional SOCs drown in alerts, TacSOC runs lean.</p>
-            <button class="expand-btn" onclick="toggleProductDetails('tacsoc-details')">Learn More About TacSOC Features</button>
+            <button class="learn-more-btn animate-glow" onclick="toggleProductDetails('tacsoc-details')">Learn More</button>
           </div>
           
           <div class="product-details" id="tacsoc-details" style="display: none;">
@@ -387,12 +397,17 @@ function toggleProductDetails(detailsId) {
   
   // Get all product detail sections and their buttons
   const allDetails = document.querySelectorAll('.product-details');
-  const allButtons = document.querySelectorAll('.expand-btn');
+  const allButtons = document.querySelectorAll('.learn-more-btn');
   
   // If the clicked section is already open, close it
   if (details.style.display === 'block') {
     details.style.display = 'none';
-    button.textContent = button.textContent.replace('Show Less', 'Learn More');
+    // Restore original label if available
+    if (button && button.dataset && button.dataset.originalText) {
+      button.textContent = button.dataset.originalText;
+    } else {
+      button.textContent = button.textContent.replace('Show Less', 'Learn More');
+    }
   } else {
     // Close all other sections first
     allDetails.forEach(section => {
@@ -401,13 +416,31 @@ function toggleProductDetails(detailsId) {
     
     // Reset all button text
     allButtons.forEach(btn => {
-      btn.textContent = btn.textContent.replace('Show Less', 'Learn More');
+      if (btn && btn.dataset && btn.dataset.originalText) {
+        btn.textContent = btn.dataset.originalText;
+      } else {
+        btn.textContent = btn.textContent.replace('Show Less', 'Learn More');
+      }
     });
     
     // Open the clicked section
     details.style.display = 'block';
     button.textContent = button.textContent.replace('Learn More', 'Show Less');
   }
+}
+
+// Collapse all product sections and reset toggle buttons
+function resetAllProductExpansions() {
+  const allDetails = document.querySelectorAll('.product-details');
+  const allButtons = document.querySelectorAll('.learn-more-btn');
+  allDetails.forEach(section => { section.style.display = 'none'; });
+  allButtons.forEach(btn => {
+    if (btn && btn.dataset && btn.dataset.originalText) {
+      btn.textContent = btn.dataset.originalText;
+    } else if (btn.textContent.includes('Show Less')) {
+      btn.textContent = btn.textContent.replace('Show Less', 'Learn More');
+    }
+  });
 }
 
 // Helper function to convert GitHub Pages URL to raw GitHub URL
@@ -745,8 +778,33 @@ function closeProductsModal() {
   if (modal) {
     modal.classList.remove('show');
     document.body.style.overflow = 'auto'; // Restore scrolling
+    // Reset expanded sections and button labels on any modal close
+    resetAllProductExpansions();
   }
 }
+
+// Ensure reset happens regardless of how the products modal is closed
+document.addEventListener('DOMContentLoaded', function() {
+  const productsModal = document.getElementById('products-modal');
+  // Capture original labels for expand buttons
+  document.querySelectorAll('.learn-more-btn').forEach(btn => {
+    if (!btn.dataset.originalText) {
+      btn.dataset.originalText = btn.textContent.trim();
+    }
+  });
+  if (productsModal) {
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === 'attributes' && m.attributeName === 'class') {
+          if (!productsModal.classList.contains('show')) {
+            resetAllProductExpansions();
+          }
+        }
+      }
+    });
+    observer.observe(productsModal, { attributes: true, attributeFilter: ['class'] });
+  }
+});
 
 
 // Close modals when clicking outside of them

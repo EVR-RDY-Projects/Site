@@ -1,6 +1,6 @@
 class OverlayReveal extends HTMLElement {
 	static get observedAttributes() {
-		return ["fit"];
+		return ["fit", "mode"];
 	}
 	constructor() {
 		super();
@@ -88,10 +88,38 @@ class OverlayReveal extends HTMLElement {
 		this._syncToPrimaryGrid();
 		this._setProgress(this._calculateProgress());
 		this._ensureFit();
+		this._applyPrimaryOnlyIfNeeded();
+	}
+	_isPrimaryOnly() {
+		const modeAttr = (this.getAttribute("mode") || "").toLowerCase();
+		return (
+			modeAttr === "primary" ||
+			modeAttr === "primary-only" ||
+			modeAttr === "off"
+		);
+	}
+	_applyPrimaryOnlyIfNeeded() {
+		if (!(this._isPrimaryOnly && this._isPrimaryOnly())) return;
+		this.style.setProperty("--or-overlay-translate-y", "100%");
+		this.style.setProperty("--or-primary-opacity", "1");
+		this.style.setProperty("--or-overlay-opacity", "0");
+		this.style.setProperty("--or-overlay-visibility", "hidden");
+		this.style.setProperty("--or-overlay-pe", "none");
+		this.classList.remove(
+			"or-inner-scroll",
+			"or-scrollable",
+			"or-hint-visible",
+			"or-dir-up",
+			"or-dir-down"
+		);
+		this._overlayApplied = false;
 	}
 	attributeChangedCallback(name, oldValue, newValue) {
 		if (name === "fit" && oldValue !== newValue) {
 			this._ensureFit();
+		}
+		if (name === "mode" && oldValue !== newValue) {
+			this._applyPrimaryOnlyIfNeeded();
 		}
 	}
 
@@ -114,6 +142,23 @@ class OverlayReveal extends HTMLElement {
 	}
 
 	_setProgress(p) {
+		if (this._isPrimaryOnly && this._isPrimaryOnly()) {
+			this._progress = 0;
+			this.style.setProperty("--or-overlay-translate-y", "100%");
+			this.style.setProperty("--or-primary-opacity", "1");
+			this.style.setProperty("--or-overlay-opacity", "0");
+			this.style.setProperty("--or-overlay-visibility", "hidden");
+			this.style.setProperty("--or-overlay-pe", "none");
+			this.classList.remove(
+				"or-inner-scroll",
+				"or-scrollable",
+				"or-hint-visible",
+				"or-dir-up",
+				"or-dir-down"
+			);
+			this._overlayApplied = false;
+			return;
+		}
 		this._progress = this._clamp(p, 0, 1);
 		const adjusted = Math.min(1, this._progress * this._animationSpeed);
 		// Ease to front-load completion before borders reach edges
@@ -257,6 +302,7 @@ class OverlayReveal extends HTMLElement {
 	}
 
 	_onScroll() {
+		if (this._isPrimaryOnly && this._isPrimaryOnly()) return;
 		const currentY = window.scrollY;
 		const newDir = currentY > this._lastScrollY ? "down" : "up";
 		if (newDir !== this._scrollDirection) this._scrollDirection = newDir;
@@ -300,6 +346,7 @@ class OverlayReveal extends HTMLElement {
 
 	_onInnerWheel(e) {
 		if (!this._overlayApplied) return;
+		if (this._isPrimaryOnly && this._isPrimaryOnly()) return;
 		if (this._isFitMode()) return; // in fit mode, let the page handle scroll entirely
 		const deltaY = e.deltaY;
 		const target = this._getScrollableTargetFromEvent(e);
@@ -334,6 +381,7 @@ class OverlayReveal extends HTMLElement {
 
 	_onTouchMove(e) {
 		if (!this._overlayApplied) return;
+		if (this._isPrimaryOnly && this._isPrimaryOnly()) return;
 		if (this._isFitMode()) return; // in fit mode, let the page handle scroll entirely
 		const target = this._getScrollableTargetFromEvent(e);
 		if (!target) return;
@@ -423,8 +471,8 @@ class OverlayReveal extends HTMLElement {
 	}
 
 	_updateScrollableHint() {
-		// In fit mode, never show the scroll hint
-		if (this._isFitMode()) {
+		// In fit or primary-only mode, never show the scroll hint
+		if (this._isFitMode() || (this._isPrimaryOnly && this._isPrimaryOnly())) {
 			this.classList.remove(
 				"or-scrollable",
 				"or-hint-visible",
@@ -446,8 +494,8 @@ class OverlayReveal extends HTMLElement {
 	}
 
 	_updateHintState() {
-		// In fit mode, hint is always hidden
-		if (this._isFitMode()) {
+		// In fit or primary-only mode, hint is always hidden
+		if (this._isFitMode() || (this._isPrimaryOnly && this._isPrimaryOnly())) {
 			this.classList.remove("or-hint-visible", "or-dir-up", "or-dir-down");
 			return;
 		}
