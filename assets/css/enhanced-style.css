@@ -2828,3 +2828,9 @@ footer:hover {
     font-size: 1.2rem;
   }
 }
+
+/* Smaller name just for specific members */
+.member-info h3.member-name--sm {
+  font-size: 1.2rem;   /* smaller than the default 1.6rem */
+  line-height: 1.2;
+}
