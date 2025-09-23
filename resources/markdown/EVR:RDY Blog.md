@@ -11,6 +11,33 @@ icon: "⚡"
 ---
 
 ## September 2025
+**Sept 23 — SEER Sensor Hardening & Image Progress**  
+Advanced the SEER base build by creating a hardened deployment image and refining the `zeek.service` integration. Each iteration makes SEER more reliable and field-ready, moving toward a production-grade sensor that can be deployed repeatably without extra overhead. This is a major step toward making SEER a tool operators can trust.  
+– Burns  
+
+---
+
+**Sept 22 — Suricata Integration Pathfinding**  
+Explored Suricata’s strengths — multi-threaded packet inspection, IDS/IPS capabilities, and OT rule integration — and mapped how it can complement Zeek within the T.A.P.S. pipeline. Documented where Suricata adds value for signature-driven context while Zeek continues as the backbone for telemetry. This creates a layered detection strategy, tailored for OT environments.  
+– Burns  
+
+---
+
+**Sept 21 — Charter Polish & Ghost Diode White Paper**  
+Strengthened EVR:RDY’s foundation by tightening the **Charter** into a crisp, one-page executive summary and drafting the **Ghost Diode white paper**. The write-up outlines a clear roadmap: start with reproducible off-the-shelf builds, then evolve into certifiable, low-cost production units. These deliverables give EVR:RDY a professional, partner-ready story while keeping the technical playbook accessible for practitioners. Also clarified the nonprofit/for-profit structure — grants and workforce development under a foundation, productization and services under TacSOC Solutions, Inc. This hybrid design sets EVR:RDY up for both impact and sustainability.  
+– Burns  
+
+---
+
+**Sept 20 — TacSOC Hunter-Killer Team Differentiators**  
+Sharpened the Hunter-Killer (HK) Team pillar: selective recruiting, AI-enabled workflows, and force-multiplier impact. Added standout elements like **culture, heraldry, and identity**, positioning HK teams as elite strike units that compress the output of a 50+ analyst SOC into a 5–10 person powerhouse. This pillar is now battle-ready and distinct — the human edge of TacSOC.  
+– Burns  
+
+---
+
+**Sept 16 — Governance & Ghost Hardware Evolution**  
+Mapped clear pathways for **active-duty compliance**: off-duty work guardrails, blind-trust/proxy models, and open-source contributions that keep EVR:RDY both compliant and moving forward. On the technical front, advanced Ghost hardware design beyond prototype: studied how to reduce costs, eliminate excess converters, and explore custom PCB options to fake link integrity (LFP) without any real return channel. This dual effort — governance + hardware R&D — strengthens both the business foundation and the technical roadmap.  
+– Burns  
 
 **Sept 16 — GHOST Diode POC progress**  
 I validated the GHOST Diode POC: after a quick full-duplex baseline (static IPs, ping + ncat both ways), I built a one-way fiber link from Host B (10.0.0.2) → Host A (10.0.0.1) using three media converters and the dead-TX keepalive method—Media C (no copper) feeds C.TX → B.RX to satisfy LFP while the actual data path is B.TX → A.RX only, with no reverse fiber connected. Streaming UDP from B showed up in Wireshark on A, while ping/TCP from A→B failed exactly as designed, confirming hardware-enforced unidirectionality. This successfully proves the diode concept with commodity gear and provides a repeatable setup for future hardening and throughput testing.
