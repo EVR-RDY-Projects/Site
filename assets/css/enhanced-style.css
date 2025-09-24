@@ -2850,12 +2850,14 @@ footer:hover {
 /* Force mission buttons to sit close together */
 .card .btn-row {
   display: flex;
-  justify-content: center !important;
+  justify-content: center;
   align-items: center;
-  column-gap: 0.375rem !important; /* ~6px */
-  row-gap: 0.375rem !important;
+  column-gap: 0.75rem;  /* ~12px ≈ 1/2 inch at 96dpi */
+  row-gap: 0.75rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
+
 
 /* Neutralize the base button rule inside the row */
 .card .btn-row .learn-more-btn {
