@@ -2184,9 +2184,9 @@ Hover effect for challenge cards
   animation: pulse 2s ease-in-out infinite;
 } */
 
-.animate-glow {
+/*.animate-glow {
   animation: glow 2s ease-in-out infinite;
-}
+}*/
 
 /* Triggered animations */
 .animate-slide-up.animate-triggered {
