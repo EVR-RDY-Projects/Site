@@ -2834,3 +2834,18 @@ footer:hover {
   font-size: 1.2rem;   /* smaller than the default 1.6rem */
   line-height: 1.2;
 }
+.btn-row {
+  display: flex;
+  gap: var(--space-sm, 12px);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;          /* stacks on very narrow screens */
+  margin-top: var(--space-sm, 12px);
+}
+
+.btn-row .learn-more-btn {
+  display: inline-flex;     /* keeps button sizing tidy */
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;         /* optional: consistent width */
+}
