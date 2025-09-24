@@ -2846,3 +2846,30 @@ footer:hover {
 .btn-row .learn-more-btn {
   min-width: 160px;          /* optional: keeps sizes consistent */
 }
+
+/* === OVERRIDE BUTTON GLOW === */
+.learn-more-btn.animate-glow {
+  background: var(--bright, #4caf50); /* theme color */
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  animation: none !important;   /* disable glow animation */
+  box-shadow: none !important;  /* remove glowing shadow */
+  text-shadow: none !important; /* remove glowing text */
+}
+
+/* Hover state */
+.learn-more-btn.animate-glow:hover {
+  background: var(--bright-hover, #43a047); /* slightly darker */
+  transform: translateY(-2px);
+}
+
+/* Active (pressed) state */
+.learn-more-btn.animate-glow:active {
+  transform: translateY(0);
+  background: var(--bright-active, #388e3c);
+}
