@@ -2873,3 +2873,28 @@ footer:hover {
   transform: translateY(0);
   background: var(--bright-active, #388e3c);
 }
+/* === HARD KILL: disable any glow/pulse everywhere === */
+.animate-glow,
+.animate-glow:hover,
+.animate-glow:focus,
+.animate-glow:active,
+.learn-more-btn,
+.learn-more-btn:hover,
+.learn-more-btn:focus,
+.learn-more-btn:active {
+  animation: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+/* If the glow uses pseudo-elements, stop those too */
+.animate-glow::before,
+.animate-glow::after,
+.learn-more-btn::before,
+.learn-more-btn::after {
+  animation: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  content: none !important; /* in case the effect is drawn with pseudo elements */
+}
