@@ -2180,9 +2180,9 @@ Hover effect for challenge cards
   animation: float 3s ease-in-out infinite;
 }
 
-.animate-pulse {
+/*.animate-pulse {
   animation: pulse 2s ease-in-out infinite;
-}
+} */
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
@@ -2847,54 +2847,3 @@ footer:hover {
   min-width: 160px;          /* optional: keeps sizes consistent */
 }
 
-/* === OVERRIDE BUTTON GLOW === */
-.learn-more-btn.animate-glow {
-  background: var(--bright, #4caf50); /* theme color */
-  color: #fff;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  animation: none !important;   /* disable glow animation */
-  box-shadow: none !important;  /* remove glowing shadow */
-  text-shadow: none !important; /* remove glowing text */
-}
-
-/* Hover state */
-.learn-more-btn.animate-glow:hover {
-  background: var(--bright-hover, #43a047); /* slightly darker */
-  transform: translateY(-2px);
-}
-
-/* Active (pressed) state */
-.learn-more-btn.animate-glow:active {
-  transform: translateY(0);
-  background: var(--bright-active, #388e3c);
-}
-/* === HARD KILL: disable any glow/pulse everywhere === */
-.animate-glow,
-.animate-glow:hover,
-.animate-glow:focus,
-.animate-glow:active,
-.learn-more-btn,
-.learn-more-btn:hover,
-.learn-more-btn:focus,
-.learn-more-btn:active {
-  animation: none !important;
-  box-shadow: none !important;
-  filter: none !important;
-  text-shadow: none !important;
-}
-
-/* If the glow uses pseudo-elements, stop those too */
-.animate-glow::before,
-.animate-glow::after,
-.learn-more-btn::before,
-.learn-more-btn::after {
-  animation: none !important;
-  box-shadow: none !important;
-  filter: none !important;
-  content: none !important; /* in case the effect is drawn with pseudo elements */
-}
