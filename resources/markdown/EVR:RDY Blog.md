@@ -13,6 +13,152 @@ icon: "⚡"
 ## September 2025
 **Sept 23 — SEER Sensor Hardening & Image Progress**  
 Advanced the SEER base build by creating a hardened deployment image and refining the `zeek.service` integration. Each iteration makes SEER more reliable and field-ready, moving toward a production-grade sensor that can be deployed repeatably without extra overhead. This is a major step toward making SEER a tool operators can trust.  
+
+Today I took the first two milestones of the SEER Sensor project from concept to working prototype inside a Google Cloud VM. The goal was to build a lean Ubuntu-based image with Zeek installed, hardened, and tested (**M1**), then bring online full packet capture and log rotation with <1% packet loss (**M2**).
+
+---
+
+## Milestone 1 — Base Image Ready
+
+### 1. VM Setup (Google Cloud)
+- Created a new GCP project (`seer-473020`).
+- Enabled the **Compute Engine API**.
+- Deployed a minimal **Ubuntu 24.04 LTS** VM.
+- Connected via SSH through the GCP console.
+
+### 2. Hardening the Base Image
+- Increased journald retention limits to ensure logs survive reboots.
+- Confirmed basic services were enabled and persistent logging was working.
+- Set up a dedicated `/etc/seer/seer.env` for environment variables.
+
+### 3. Zeek Installation
+- Added the official Zeek repository.
+- Installed Zeek 8.0.1 and supporting tools (`zeekctl`, `zkg`, etc.).
+- Confirmed the binary was placed in `/opt/zeek/bin`.
+
+### 4. PATH + sudo Fix
+- Learned that minimal Ubuntu locks down `sudo` with a restrictive `secure_path`.
+- Fixed this by adding `/opt/zeek/bin` and `/usr/sbin` to `sudo`’s secure_path so Zeek and tcpdump would run correctly as root.
+
+### 5. Zeek Testing
+- Verified Zeek version:
+  ```bash
+  zeek --version
+  ```
+- Started capture manually:
+  ```bash
+  sudo /opt/zeek/bin/zeek -C -i ens4
+  ```
+- Confirmed logs appeared in `/var/log/zeek/current/`:
+  - `conn.log`
+  - `dns.log`
+  - `ssl.log`
+  - `weird.log`
+
+### 6. Zeek as a Service
+- Built a custom `zeek.service` unit for systemd.
+- Learned the difference between `${VAR}` expansion (bash) and `%%` escaping (systemd).
+- Fixed by hardcoding absolute paths and setting environment variables inside the unit.
+- Result: Zeek now runs as a persistent systemd service and survives reboots.
+
+✅ **M1 Complete:** Base image hardened, Zeek service running, logs confirmed.
+
+---
+
+## Milestone 2 — Capture Online
+
+### 1. Adding tcpdump for PCAP Capture
+- Installed tcpdump (was missing initially).
+- Discovered again that `sudo`’s `secure_path` blocked execution, fixed by editing `/etc/sudoers.d/secure-path`.
+- Verified tcpdump worked manually:
+  ```bash
+  sudo tcpdump -i ens4 -c 100 -w /var/log/pcap/test.pcap
+  ```
+
+### 2. Building PCAP Rotation
+- Created `/var/log/pcap` directory for packet captures.
+- Tested tcpdump’s built-in rotation flags:
+  ```bash
+  sudo tcpdump -i ens4 -n -U -s 0 -B 4096 \
+    -w /var/log/pcap/seer-%Y%m%d-%H%M%S.pcap \
+    -G 15 -W 3
+  ```
+- Confirmed timestamped PCAP files were generated.
+
+### 3. Lessons Learned with systemd
+- `%` in systemd units must be escaped as `%%`.
+- Hardcoding `/usr/sbin/tcpdump` failed because binary lived in `/usr/bin` on Ubuntu 24.04.
+- Solved this by switching to `/usr/bin/env tcpdump` in the `ExecStart` line so PATH is respected.
+
+### 4. Final `pcap-capture.service`
+```ini
+[Unit]
+Description=SEER PCAP capture with rotation
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStartPre=/usr/bin/mkdir -p /var/log/pcap
+Environment=PATH=/usr/bin:/usr/sbin:/bin:/sbin
+ExecStart=/usr/bin/env tcpdump -i ens4 -n -U -s 0 -B 4096 \
+ -G 300 -W 288 -w /var/log/pcap/seer-%%Y%%m%%d-%%H%%M%%S.pcap
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- Rotates every 5 minutes.
+- Keeps 24 hours of PCAPs (~288 files).
+- Runs under systemd, restarts automatically if killed.
+
+### 5. Pruning Excess Files
+- Noticed tcpdump wasn’t deleting old timestamped files despite `-W`.
+- Wrote a `pcap-prune.sh` script + systemd timer to enforce retention:
+  ```bash
+  ls -1t /var/log/pcap/*.pcap | tail -n +289 | xargs rm -f
+  ```
+- Timer runs every minute, guaranteeing no disk bloat.
+
+### 6. Verifying Packet Loss
+- Generated traffic with `curl` and `ping`.
+- Restarted Zeek to dump capture stats:
+  ```
+  310422 packets received on interface ens4, 0 (0.00%) dropped
+  ```
+- Packet loss well under the 1% target (0.00% in all tests).
+
+✅ **M2 Complete:** Zeek logs flowing, PCAPs rotating every 5 minutes, prune guard working, packet loss <1%.
+
+---
+
+## Key Lessons Learned
+
+- **systemd is strict**: `%` must be escaped as `%%`. Environment expansion isn’t the same as Bash.
+- **Minimal Ubuntu is lean**: root’s `secure_path` omits `/usr/sbin` and custom bins like `/opt/zeek/bin`.
+- **tcpdump + systemd quirk**: `-W` doesn’t prune when using timestamped filenames; need a prune script.
+- **Validation matters**: Always run the capture manually first, then wrap in systemd.
+
+---
+
+## Next Steps (Milestone 3)
+
+- Add hot-swap support:
+  - Attach/detach removable disk for PCAP export.
+  - Auto-mount, write PCAPs when present.
+  - On eject: stop capture, flush, write manifest with hashes, unmount cleanly.
+- Test repeated insert/eject cycles to confirm zero data loss.
+
+---
+
+*End of Day Status: M1 + M2 achieved in VM. Zeek online, logs rotating, packet capture pipeline reliable. Ready to simulate hot-swap workflow for M3.*
+
 – Burns  
 
 ---
