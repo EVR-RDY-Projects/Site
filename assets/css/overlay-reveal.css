@@ -1,4 +1,4 @@
-:host { display:block; position:relative; width:100%; border-radius: var(--radius-xl, 1rem); overflow-y:hidden; overflow-x:visible; contain: content; }
+:host { display:block; position:relative; width:100%; border-radius: var(--radius-xl, 1rem); contain: content; }
 .or-root { position: relative; display: block; box-sizing: border-box; }
 .or-primary { position: relative; opacity: var(--or-primary-opacity, 1); transition: opacity 280ms ease; box-sizing: border-box; }
 .or-overlay { position: absolute; inset: 0; transform: translateY(var(--or-overlay-translate-y, 100%)); transition: transform 280ms ease; z-index: 1; box-sizing: border-box; pointer-events: var(--or-overlay-pe, none); }
@@ -69,7 +69,7 @@
 
 /* Normalize slotted content to respect overlay borders */
 ::slotted([slot="primary"]),
-::slotted([slot="overlay"]) { display:block; box-sizing:border-box; max-width:100%; padding-left: 4px; }
+::slotted([slot="overlay"]) { display:block; box-sizing:border-box; max-width:100%; padding-left: 4px; padding-right: 4px; }
 ::slotted([slot="overlay"] .learn-more-btn) { margin-left: auto; margin-right: auto; }
 ::slotted(img) { max-width:100%; height:auto; display:block; }
 

@@ -2862,7 +2862,6 @@ footer:hover {
 /* Neutralize the base button rule inside the row */
 .card .btn-row .learn-more-btn {
   margin: 0 !important;          /* kill the auto margins */
-  display: inline-flex !important;
   width: auto !important;        /* don't take full width */
   max-width: none !important;
   flex: 0 0 auto !important;     /* don't stretch */
