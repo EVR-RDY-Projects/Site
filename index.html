@@ -7,7 +7,7 @@
 <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Low-cost solutions for critical infrastructure. T.A.P.S., TacSOC, R.A.I.D. framework, Hunter/Killer teams." />
 
 <!-- Favicon / App Icons -->
-<link rel="icon" href="assets/img/logo.png" type="image/png" sizes="48x48" />
+<link rel="icon" href="assets/img/logo.png" type="image/png"/>
 <link rel="shortcut icon" href="assets/img/logo.png" type="image/png" />
 <link rel="apple-touch-icon" href="assets/img/logo.png" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -449,6 +449,24 @@
 <script src="assets/js/enhanced.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 <script>
+// ===== Resources configuration (Google Drive) =====
+// Provide a public Drive FOLDER URL containing manifest.json and a readonly API key
+// Example: https://drive.google.com/drive/folders/1MTD10gAxWg_DXd02A9Sa76YNVMZfCCkO
+const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1A1KgRijSWJ6n2aebcU9PLUNYwIFX2Z7L?usp=sharing';
+const DRIVE_API_KEY = 'AIzaSyAddfzyxbHim8oV10AmZNgXFTjSrcfbWLo';
+
+// Simple in-memory cache and prefetch helper
+let DRIVE_DOCS_CACHE = null;
+let DRIVE_DOCS_PROMISE = null;
+function prefetchDriveResources() {
+  if (!DRIVE_DOCS_PROMISE) {
+    DRIVE_DOCS_PROMISE = getDriveManifestDocuments()
+      .then(docs => { DRIVE_DOCS_CACHE = docs || []; return DRIVE_DOCS_CACHE; })
+      .catch(() => { DRIVE_DOCS_CACHE = []; return DRIVE_DOCS_CACHE; });
+  }
+  return DRIVE_DOCS_PROMISE;
+}
+
 // Product Details Toggle Function (Accordion behavior)
 function toggleProductDetails(detailsId) {
   const details = document.getElementById(detailsId);
@@ -532,52 +550,38 @@ function getRawGitHubUrl(path) {
   return `https://raw.githubusercontent.com/${username}/${repo}/main${path}`;
 }
 
-// Dynamic Resources Loading
+// Dynamic Resources Loading (prefers Drive manifest when configured)
 async function loadResources() {
   try {
     const resourcesContainer = document.getElementById('resources-grid');
     if (!resourcesContainer) return;
     
     // Clear existing content
-    resourcesContainer.innerHTML = '';
-    
-    // Try to get resource list from a manifest file first
-    let resourceFiles = await getResourceManifest();
-    
-    // If no manifest, fall back to known files
-    if (!resourceFiles || resourceFiles.length === 0) {
-      resourceFiles = [
-        'sample-whitepaper',
-        'ghost-node-whitepaper'
-      ];
-    }
-    
-    // Load each resource
-    for (const resourceId of resourceFiles) {
-      try {
-        // Use GitHub raw content URL for reliable markdown serving
-        const rawUrl = getRawGitHubUrl(`/resources/markdown/${resourceId}.md`);
-        console.log(`🔍 Fetching raw content from: ${rawUrl}`);
-        
-        const response = await fetch(rawUrl);
-        
-        if (!response.ok) {
-          console.warn(`Failed to fetch ${resourceId}: ${response.status}`);
-          continue;
-        }
-        
-        const markdownContent = await response.text();
-        console.log(`✅ Fetched ${resourceId}.md successfully from raw GitHub`);
-        
-        const resource = parseMarkdownMetadata(markdownContent, resourceId);
-        
-        if (resource) {
-          const resourceTile = createResourceTile(resource);
-          resourcesContainer.appendChild(resourceTile);
-        }
-      } catch (error) {
-        console.warn(`Failed to load resource ${resourceId}:`, error);
+    resourcesContainer.innerHTML = '<p>Loading resources…</p>';
+
+    // Use cache/prefetch if available; otherwise fetch and cache
+    let driveDocs = DRIVE_DOCS_CACHE;
+    if (!driveDocs) {
+      if (DRIVE_DOCS_PROMISE) {
+        await DRIVE_DOCS_PROMISE;
+        driveDocs = DRIVE_DOCS_CACHE;
+      } else {
+        await prefetchDriveResources();
+        driveDocs = DRIVE_DOCS_CACHE;
       }
+    }
+    if (driveDocs && driveDocs.length) {
+      // Replace loading state
+      resourcesContainer.innerHTML = '';
+      driveDocs.forEach(doc => {
+        const tile = createDriveResourceTile(doc);
+        resourcesContainer.appendChild(tile);
+      });
+    } else {
+      const empty = document.createElement('p');
+      empty.textContent = 'No resources available.';
+      resourcesContainer.innerHTML = '';
+      resourcesContainer.appendChild(empty);
     }
   } catch (error) {
     console.error('Failed to load resources:', error);
@@ -596,6 +600,48 @@ async function getResourceManifest() {
     return manifest.files || null;
   } catch (error) {
     console.log('No manifest file found, using fallback list');
+    return null;
+  }
+}
+
+// Fetch Drive manifest.json and return documents[] or null.
+// If DRIVE_FOLDER_URL + DRIVE_API_KEY are set, list files in the folder and find manifest.json.
+// Else if DRIVE_MANIFEST_FILE_URL is set, extract file ID and fetch it via uc?export=download.
+async function getDriveManifestDocuments() {
+  try {
+    // Option A: Folder listing via Drive v3 (requires public folder + API key with no auth)
+    if (DRIVE_FOLDER_URL && DRIVE_API_KEY) {
+      const folderIdMatch = DRIVE_FOLDER_URL.match(/folders\/([A-Za-z0-9_-]+)/);
+      const folderId = folderIdMatch ? folderIdMatch[1] : '';
+      if (!folderId) return null;
+      // List everything in the folder (filter client-side) and support Shared Drives
+      const q = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
+      const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
+      const listRes = await fetch(listUrl, { cache: 'no-store' });
+      if (!listRes.ok) return null;
+      const list = await listRes.json();
+      const files = (list && list.files) || [];
+      if (!files.length) {
+        console.warn('Drive folder listing returned zero files. Check sharing, folder ID, and API key referrer restrictions.');
+        return null;
+      }
+      // Prefer exact match, then case-insensitive, then any JSON named manifest*
+      let file = files.find(f => f.name === 'manifest.json');
+      if (!file) file = files.find(f => (f.name || '').toLowerCase() === 'manifest.json');
+      if (!file) file = files.find(f => (f.name || '').toLowerCase().startsWith('manifest') && (f.mimeType || '').includes('json'));
+      if (!file || !file.id) return null;
+      const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
+      const res = await fetch(downloadUrl, { cache: 'no-store' });
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json && Array.isArray(json.documents)) return json.documents;
+      return null;
+    }
+    // Option B: Direct manifest file URL (no API key) using uc?export=download&id=FILE_ID
+
+    return null;
+  } catch (e) {
+    console.warn('Drive manifest fetch failed:', e);
     return null;
   }
 }
@@ -643,6 +689,30 @@ function createResourceTile(resource) {
   `;
   
   return tile;
+}
+
+// Create a tile for a Google Drive document from manifest.documents[]
+function createDriveResourceTile(doc) {
+  const tile = document.createElement('div');
+  tile.className = 'resource-tile';
+  tile.onclick = () => expandDriveResource(doc);
+  const icon = '📄';
+  const date = doc.lastEdited || doc.creationDate || '';
+  const type = doc.type || 'Document';
+  tile.innerHTML = `
+    <div class="resource-icon">${icon}</div>
+    <h3>${escapeHtml(doc.title || 'Document')}</h3>
+    <p>${escapeHtml(doc.description || '')}</p>
+    <div class="resource-meta">
+      <span class="resource-type">${escapeHtml(type)}</span>
+      <span class="resource-date">${escapeHtml(date)}</span>
+    </div>
+  `;
+  return tile;
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[s]));
 }
 
 
@@ -697,6 +767,25 @@ function expandResource(resource) {
     expandedResource.classList.add('show');
     document.body.style.overflow = 'hidden';
   }
+}
+
+function expandDriveResource(doc) {
+  const expandedResource = document.getElementById('expanded-resource');
+  const contentElement = document.getElementById('expanded-resource-content');
+  if (!doc || !doc.id || !expandedResource || !contentElement) return;
+  // Default: embed Drive preview (may emit harmless unauthorized PUT in console)
+  const previewUrl = `https://drive.google.com/file/d/${doc.id}/preview`;
+  const viewUrl = `https://drive.google.com/file/d/${doc.id}/view`;
+  contentElement.innerHTML = `
+    <div style="position:relative;padding-top:56.25%;">
+      <iframe src="${previewUrl}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+    </div>
+    <div style="margin-top:8px;text-align:right;">
+      <a href="${viewUrl}" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+    </div>
+  `;
+  expandedResource.classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
 function closeExpandedResource() {
@@ -845,6 +934,8 @@ function closeProductsModal() {
 // Ensure reset happens regardless of how the products modal is closed
 document.addEventListener('DOMContentLoaded', function() {
   const productsModal = document.getElementById('products-modal');
+  // Warm up Drive resources once at page load
+  prefetchDriveResources();
   // Capture original labels for expand buttons
   document.querySelectorAll('.learn-more-btn').forEach(btn => {
     if (!btn.dataset.originalText) {
