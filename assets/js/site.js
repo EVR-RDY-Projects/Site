@@ -310,11 +310,11 @@
 		const expandedResource = document.getElementById("expanded-resource");
 		const contentElement = document.getElementById("expanded-resource-content");
 		if (expandedResource && contentElement) {
-			// Remove any previously injected direct iframe and show content wrapper
-			const directIframe = expandedResource.querySelector(
-				":scope > .glass-embed-iframe"
+			// Remove any previously injected direct embed and show content wrapper
+			const directEmbedCard = expandedResource.querySelector(
+				":scope > .glass-embed-card"
 			);
-			if (directIframe) directIframe.remove();
+			if (directEmbedCard) directEmbedCard.remove();
 			const wrapper = expandedResource.querySelector(
 				":scope > .expanded-resource-content"
 			);
@@ -334,20 +334,51 @@
 			":scope > .expanded-resource-content"
 		);
 		if (wrapper) wrapper.style.display = "none";
-		const directShareUrl = doc.shareUrl || doc.shareURL;
-		if (directShareUrl) {
-			const previewUrl = directShareUrl.replace("/view", "/preview");
-			// Replace any existing direct embed
+
+		// Security helpers
+		const isAllowedEmbedUrl = (urlString) => {
+			try {
+				if (!urlString) return false;
+				if (urlString.startsWith("blob:")) return true;
+				const u = new URL(urlString);
+				const allowedHosts = new Set(["drive.google.com", "docs.google.com"]);
+				return allowedHosts.has((u.hostname || "").toLowerCase());
+			} catch (_) {
+				return false;
+			}
+		};
+
+		const buildEmbedShell = (src, kind) => {
 			const old = expandedResource.querySelector(":scope > .glass-embed-card");
 			if (old) old.remove();
 			const shell = document.createElement("div");
 			shell.className = "glass-embed-card";
 			const iframe = document.createElement("iframe");
 			iframe.className = "glass-embed-iframe";
-			iframe.setAttribute("allowfullscreen", "");
-			iframe.src = previewUrl;
+			iframe.setAttribute("allow", "fullscreen");
+			iframe.setAttribute("referrerpolicy", "no-referrer");
+			if (kind === "drive") {
+				iframe.setAttribute(
+					"sandbox",
+					"allow-scripts allow-same-origin allow-popups allow-downloads"
+				);
+			} else {
+				iframe.setAttribute("sandbox", "allow-downloads");
+			}
+			iframe.src = src;
 			shell.appendChild(iframe);
-			expandedResource.appendChild(shell);
+			return shell;
+		};
+		const directShareUrl = doc.shareUrl || doc.shareURL;
+		if (directShareUrl) {
+			const previewUrl = directShareUrl.replace("/view", "/preview");
+			if (!isAllowedEmbedUrl(previewUrl)) {
+				if (wrapper) wrapper.style.display = "";
+				contentElement.innerHTML = "<p>Blocked non-allowed embed URL.</p>";
+			} else {
+				const shell = buildEmbedShell(previewUrl, "drive");
+				expandedResource.appendChild(shell);
+			}
 			expandedResource.classList.add("show");
 			document.body.style.overflow = "hidden";
 			return;
@@ -408,16 +439,7 @@
 			const blob = await res.blob();
 			const blobUrl = URL.createObjectURL(blob);
 			const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
-			// Replace any existing direct embed
-			const old2 = expandedResource.querySelector(":scope > .glass-embed-card");
-			if (old2) old2.remove();
-			const shell2 = document.createElement("div");
-			shell2.className = "glass-embed-card";
-			const iframe2 = document.createElement("iframe");
-			iframe2.className = "glass-embed-iframe";
-			iframe2.setAttribute("allowfullscreen", "");
-			iframe2.src = blobUrl;
-			shell2.appendChild(iframe2);
+			const shell2 = buildEmbedShell(blobUrl, "blob");
 			expandedResource.appendChild(shell2);
 		} catch (e) {
 			contentElement.innerHTML = "<p>Failed to load document.</p>";
