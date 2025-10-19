@@ -597,6 +597,30 @@
 				attributeFilter: ["class"],
 			});
 		}
+
+		// Enhanced functionality initialization
+		// Back to top button
+		window.addEventListener('scroll', handleBackToTopVisibility);
+		
+		// Keyboard navigation improvements
+		document.addEventListener('keydown', function(e) {
+			// Alt + T for back to top
+			if (e.altKey && e.key === 't') {
+				e.preventDefault();
+				scrollToTop();
+			}
+		});
+
+		// Improve focus management for modals
+		const modals = document.querySelectorAll('.modal');
+		modals.forEach(modal => {
+			modal.addEventListener('show', function() {
+				const firstFocusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+				if (firstFocusable) {
+					setTimeout(() => firstFocusable.focus(), 100);
+				}
+			});
+		});
 	});
 
 	// Close modals when clicking outside of them
@@ -604,6 +628,7 @@
 		const productsModal = document.getElementById("products-modal");
 		const resourcesModal = document.getElementById("resources-modal");
 		const teamModal = document.getElementById("team-modal");
+		const architectureModal = document.getElementById("architecture-modal");
 		const expandedResource = document.getElementById("expanded-resource");
 		if (
 			productsModal &&
@@ -626,6 +651,13 @@
 		) {
 			closeTeamModal();
 		}
+		if (
+			architectureModal &&
+			architectureModal.classList.contains("show") &&
+			event.target === architectureModal
+		) {
+			closeArchitectureDiagram();
+		}
 	};
 
 	// Prevent default navigation on solution links so '#' doesn't jump page
@@ -643,9 +675,12 @@
 			const productsModal = document.getElementById("products-modal");
 			const resourcesModal = document.getElementById("resources-modal");
 			const teamModal = document.getElementById("team-modal");
+			const architectureModal = document.getElementById("architecture-modal");
 			const expandedResource = document.getElementById("expanded-resource");
 			if (expandedResource && expandedResource.classList.contains("show")) {
 				closeExpandedResource();
+			} else if (architectureModal && architectureModal.classList.contains("show")) {
+				closeArchitectureDiagram();
 			} else if (resourcesModal && resourcesModal.classList.contains("show")) {
 				closeResourcesModal();
 			} else if (teamModal && teamModal.classList.contains("show")) {
@@ -700,6 +735,23 @@
 		yearEl.textContent = new Date().getFullYear();
 	}
 
+	// Architecture Diagram Modal Functionality
+	function openArchitectureDiagram() {
+		const modal = document.getElementById("architecture-modal");
+		if (modal) {
+			modal.classList.add("show");
+			document.body.style.overflow = "hidden";
+		}
+	}
+
+	function closeArchitectureDiagram() {
+		const modal = document.getElementById("architecture-modal");
+		if (modal) {
+			modal.classList.remove("show");
+			document.body.style.overflow = "auto";
+		}
+	}
+
 	// Expose functions globally to support inline attribute handlers in HTML
 	window.openResourcesModal = openResourcesModal;
 	window.closeResourcesModal = closeResourcesModal;
@@ -716,4 +768,95 @@
 	window.prefetchDriveResources = prefetchDriveResources;
 	window.loadResources = loadResources;
 	window.toggleDetails = toggleDetails;
+	window.openArchitectureDiagram = openArchitectureDiagram;
+	window.closeArchitectureDiagram = closeArchitectureDiagram;
 })();
+	// Back to Top Button Functionality
+	function scrollToTop() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	}
+
+	function handleBackToTopVisibility() {
+		const backToTopBtn = document.getElementById('back-to-top');
+		if (backToTopBtn) {
+			if (window.pageYOffset > 300) {
+				backToTopBtn.classList.add('visible');
+			} else {
+				backToTopBtn.classList.remove('visible');
+			}
+		}
+	}
+
+	// Loading States
+	function showLoadingOverlay() {
+		const overlay = document.getElementById('loading-overlay');
+		if (overlay) {
+			overlay.classList.add('show');
+		}
+	}
+
+	function hideLoadingOverlay() {
+		const overlay = document.getElementById('loading-overlay');
+		if (overlay) {
+			overlay.classList.remove('show');
+		}
+	}
+
+	// Enhanced Resources Loading with Loading State
+	async function loadResourcesWithLoading() {
+		try {
+			showLoadingOverlay();
+			await loadResources();
+		} finally {
+			setTimeout(hideLoadingOverlay, 500); // Small delay for better UX
+		}
+	}
+
+	// Collapsible Sections
+	function toggleCollapsible(sectionId) {
+		const section = document.getElementById(sectionId);
+		if (section) {
+			section.classList.toggle('expanded');
+		}
+	}
+
+	// Enhanced Modal Opening with Loading
+	function openResourcesModalEnhanced() {
+		const modal = document.getElementById('resources-modal');
+		if (modal) {
+			modal.classList.add('show');
+			document.body.style.overflow = 'hidden';
+			loadResourcesWithLoading();
+		}
+	}
+
+	// Smooth scroll to sections
+	function scrollToSection(sectionId) {
+		const section = document.getElementById(sectionId);
+		if (section) {
+			section.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			});
+		}
+	}
+
+
+
+	// Keyboard handler for collapsible sections
+	function handleCollapsibleKeydown(event, sectionId) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			toggleCollapsible(sectionId);
+		}
+	}
+
+	// Expose new functions globally
+	window.scrollToTop = scrollToTop;
+	window.toggleCollapsible = toggleCollapsible;
+	window.scrollToSection = scrollToSection;
+	window.openResourcesModalEnhanced = openResourcesModalEnhanced;
+	window.handleCollapsibleKeydown = handleCollapsibleKeydown;

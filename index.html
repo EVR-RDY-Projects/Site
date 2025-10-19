@@ -88,8 +88,8 @@
   </p>
 
   <div class="btn-row text-center">
-    <button class="learn-more-btn animate-glow" onclick="openTeamModal()">Meet Our Team</button>
-    <button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">Join the FIGHT</button>
+    <a href="#" class="learn-more-btn animate-glow" onclick="openTeamModal(); return false;">Meet Our Team</a>
+    <a href="mailto:ops@evrrdy.com" class="learn-more-btn animate-glow">Join the Fight</a>
   </div>
 </section>
 
@@ -152,18 +152,19 @@
       <overlay-reveal fit="fit" mode="primary-only" css="assets/css/overlay-reveal.css">
         <div slot="primary">
       <h2>Our Structure</h2>
-      <p>EVR:RDY is built on a dual‑track model working together to solve the toughest challenges in critical infrastructure defense.</p>
+      <p>EVR:RDY launches with a for-profit first model, followed by a nonprofit foundation to scale workforce development and community adoption.</p>
             <div class="challenge-grid" data-or-grid>
-        <div class="structure-card nonprofit animate-slide-left animate-stagger-1">
-          <h3>Defensive Operations Group</h3>
-          <p>This is our current effort to develop opensource and affordable infrastructure. While open source is powerful, most businesses need a trusted partner like EVR:RDY TacSOC and vendor-backed support. Revenue fuels the ability to safeguard more networks, provide competitive pay, and share equity with employees. Many organizations won’t adopt open source alone because they don’t have the resources or workforce to maintain it — that’s where we step in..</p>
+        <div class="structure-card forprofit animate-slide-left animate-stagger-1">
+          <h3>EVR:RDY Defensive Operations Group</h3>
+          <p>Our for-profit entity and current prime performer for T.A.P.S. development. Focuses on turning open innovation into production-quality solutions through T.A.P.S. R&D and fielding, TacSOC development and manning, shared services and resource pooling, and talent investment. Revenue enables competitive compensation and sustainable growth while delivering vendor-backed support that organizations need.</p>
         </div>
-        <div class="structure-card forprofit animate-slide-right animate-stagger-2">
-          <h3>Foundation for Critical Infrastructure Defense</h3>
-          <p>Future non-profit arm will pursues grants, partnerships, and collaborations to build training pipelines for veterans and civilians. This includes outreach to the veteran community, creating pathways into cyber careers. Together, these efforts expand workforce development and strengthen critical infrastructure defense.</p>
+        <div class="structure-card nonprofit animate-slide-right animate-stagger-2">
+          <h3>EVR:RDY Foundation for Critical Infrastructure Defense</h3>
+          <p>Future nonprofit entity focused on scaling workforce, safety, and community adoption. Will pursue veteran outreach and workforce development, community validation and safety programs, and open ecosystem stewardship. Funded through donations, sponsorships, training revenue, and fee-for-service community programs with coordinated roadmaps via joint release reviews.</p>
         </div>
       </div>
-      <p><em>The vision:</em> Mission and market reinforce each other — open collaboration drives innovation while sustainable services scale protection.</p>
+      <p><em>The vision:</em> For-profit innovation drives production-quality solutions while nonprofit foundation scales workforce development and community safety — coordinated through shared standards and joint release reviews. Most organizations won’t adopt open source alone because they don’t have the resources or workforce to maintain it — that’s where we step in. </p>
+
           </div>
         </overlay-reveal>
       </section>
@@ -172,7 +173,7 @@
       <overlay-reveal fit="fit" mode="primary-only" css="assets/css/overlay-reveal.css">
         <div slot="primary">
       <h2>Become Part of the Work</h2>
-      <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of the EVR:RDY Foundation. This includes opportunities to serve as board members, guide our open-source OT security projects, and help shape training pipelines for both veterans and civilians.</p>
+      <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of EVR:RDY. This includes opportunities with our Defensive Operations Group for production-quality solutions and future involvement with the EVR:RDY Foundation to guide open-source OT security projects and help shape training pipelines for both veterans and civilians.</p>
             
             <!-- Closing Quote -->
               <blockquote class="closing-quote center-justify">
@@ -182,7 +183,7 @@
             
             <p>This isn't about buzzwords or bloated security stacks; The EVR:RDY culture is built on the mindset of doing more with less. We apply the same grit, discipline, and resourcefulness leveraged to find innovative solutions while in uniform and bring them to the defense of critical infrastructure.</p>
             
-            <p class="text-center"><button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">ops@evrrdy.com</button></p>
+            <p class="text-center"><a href="mailto:ops@evrrdy.com" class="learn-more-btn animate-glow">Join the Fight</a></p>
           </div>
       </overlay-reveal>
     </section>
@@ -208,7 +209,7 @@
         </div>
       </div> -->
       
-      <button class="learn-more-btn animate-glow" onclick="openResourcesModal()">View Resources</button>
+      <button class="learn-more-btn animate-glow" onclick="openResourcesModalEnhanced()">View Resources</button>
     </section>
 
 
@@ -243,40 +244,117 @@
           </div>
           
           <div class="product-details" id="taps-details" style="display: none;">
-            <div class="components-grid">
+            
+            <!-- Quick Overview -->
+            <div class="quick-overview">
+              <h4>Quick Overview</h4>
+              <div class="overview-grid">
+                <div class="overview-item">
+                  <span class="overview-icon">🔍</span>
+                  <div class="overview-content">
+                    <h5>Network Visibility</h5>
+                    <p>Complete packet capture and protocol analysis for OT/ICS networks</p>
+                  </div>
+                </div>
+                <div class="overview-item">
+                  <span class="overview-icon">🔒</span>
+                  <div class="overview-content">
+                    <h5>Air-Gap Security</h5>
+                    <p>Hardware-enforced unidirectional data flow protects OT environments</p>
+                  </div>
+                </div>
+                <div class="overview-item">
+                  <span class="overview-icon">💰</span>
+                  <div class="overview-content">
+                    <h5>Cost-Effective</h5>
+                    <p>Open-source solution built on commodity hardware components</p>
+                  </div>
+                </div>
+                <div class="overview-item">
+                  <span class="overview-icon">⚡</span>
+                  <div class="overview-content">
+                    <h5>Real-Time Analysis</h5>
+                    <p>Immediate threat detection and forensic data collection</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collapsible Components Section -->
+            <div class="collapsible-section" id="taps-components">
+              <div class="collapsible-header" onclick="toggleCollapsible('taps-components')" tabindex="0" onkeydown="handleCollapsibleKeydown(event, 'taps-components')">
+                <h5>System Components</h5>
+                <span class="collapsible-toggle">▼</span>
+              </div>
+              <div class="collapsible-content">
+                <div class="components-grid">
+              <!-- OT Side: Host Agent -->
               <div class="component-card">
                 <div class="component-header">
-                  <h4>SEER Sensor</h4>
+                  <h4>SCOUT</h4>
+                  <span class="status-indicator development">Active Development</span>
+                </div>
+                <p class="component-subtitle">Lightweight Host Telemetry Agent</p>
+                <p class="component-description">Production-ready "slow-and-low" monitoring agent with comprehensive state management, event collection, and system monitoring. Designed for minimal footprint on legacy OT/ICS systems.</p>
+                <div class="component-benefit">
+                  <strong>Status:</strong> 75% complete. Core infrastructure and data collection ready. Transport layer and sensor integration in progress.
+                </div>
+              </div>
+
+              <!-- OT Side: Network Sensor -->
+              <div class="component-card">
+                <div class="component-header">
+                  <h4>SEER</h4>
                   <span class="status-indicator poc">PoC</span>
                 </div>
                 <p class="component-subtitle">Scalable Endpoint & Environmental Reconnaissance</p>
-                <p class="component-description">Provides low‑cost visibility for OT/ICS and IT networks by capturing mirrored traffic, generating Zeek‑style logs, ingesting JSON from endpoints, and storing forensic data locally.</p>
+                <p class="component-description">Low-cost network sensor built on commodity hardware. Captures full packet data and generates Zeek-style logs for forensic analysis.</p>
                 <div class="component-benefit">
-                  <strong>Why it matters:</strong> Smaller utilities and DoD‑critical infrastructure sites gain OT visibility without enterprise‑level licensing costs.
+                  <strong>Status:</strong> Functional prototype with local storage and PCAP generation capabilities.
                 </div>
               </div>
 
+              <!-- Bridge: Data Diode -->
               <div class="component-card">
                 <div class="component-header">
-                  <h4>GHOST Node</h4>
+                  <h4>GHOST</h4>
                   <span class="status-indicator poc">PoC</span>
                 </div>
                 <p class="component-subtitle">Hardware‑Enforced Data Diode</p>
-                <p class="component-description">A hardware‑enforced data diode for unidirectional UDP flow, built from inexpensive media converters, switches, and fiber.</p>
+                <p class="component-description">Physical air-gap solution using modified media converters and fiber optics. Guarantees unidirectional data flow with no possibility of return communication.</p>
                 <div class="component-benefit">
-                  <strong>Why it matters:</strong> Provides a physical security guarantee that data flows only one way — safeguarding OT environments while enabling centralized monitoring.
+                  <strong>Status:</strong> Hardware prototypes tested and validated. Cost optimization in progress.
                 </div>
               </div>
 
+              <!-- IT/SOC Side: Processing Engine -->
               <div class="component-card">
                 <div class="component-header">
                   <h4>RAMPART</h4>
                   <span class="status-indicator development">Active Development</span>
                 </div>
                 <p class="component-subtitle">Resilient Architecture for Monitoring & Proactive Advanced Response Teams</p>
-                <p class="component-description">Bridges the GHOST Diode and the SIEM of choice (currently Google Chronicle). Packages data for SIEM and allows remote PCAP analysis from SEER without breaking OT isolation.</p>
+                <p class="component-description">Data processing and forwarding engine that normalizes telemetry for SIEM ingestion. Enables remote forensic analysis while maintaining OT isolation.</p>
                 <div class="component-benefit">
-                  <strong>Why it matters:</strong> Ensures telemetry can be safely centralized, normalized, and analyzed for proactive monitoring and forensics.
+                  <strong>Status:</strong> Core functionality implemented. Chronicle integration and workflow automation in development.
+                </div>
+              </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collapsible Architecture Section -->
+            <div class="collapsible-section" id="taps-architecture">
+              <div class="collapsible-header" onclick="toggleCollapsible('taps-architecture')" tabindex="0" onkeydown="handleCollapsibleKeydown(event, 'taps-architecture')">
+                <h5>System Architecture</h5>
+                <span class="collapsible-toggle">▼</span>
+              </div>
+              <div class="collapsible-content">
+                <div class="architecture-section">
+                  <p class="architecture-description">Complete T.A.P.S. telemetry pipeline showing how all components work together to move critical data from OT networks to SOC analysis.</p>
+                  <div class="architecture-diagram">
+                    <img src="assets/img/taps-architecture.png" alt="T.A.P.S. Architecture Diagram" class="architecture-image">
+                  </div>
                 </div>
               </div>
             </div>
@@ -293,7 +371,50 @@
           </div>
           
           <div class="product-details" id="tacsoc-details" style="display: none;">
-            <div class="features-grid">
+            
+            <!-- Quick Overview for TacSOC -->
+            <div class="quick-overview">
+              <h4>TacSOC at a Glance</h4>
+              <div class="overview-grid">
+                <div class="overview-item">
+                  <span class="overview-icon">🤖</span>
+                  <div class="overview-content">
+                    <h5>AI-Powered Analysis</h5>
+                    <p>Automated threat detection and noise reduction using advanced AI models</p>
+                  </div>
+                </div>
+                <div class="overview-item">
+                  <span class="overview-icon">👥</span>
+                  <div class="overview-content">
+                    <h5>Hunter/Killer Teams</h5>
+                    <p>Small, elite analyst teams focused on proactive threat hunting</p>
+                  </div>
+                </div>
+                <div class="overview-item">
+                  <span class="overview-icon">💡</span>
+                  <div class="overview-content">
+                    <h5>Shared Resources</h5>
+                    <p>Cost-effective enterprise-grade monitoring through resource pooling</p>
+                  </div>
+                </div>
+                <div class="overview-item">
+                  <span class="overview-icon">🎯</span>
+                  <div class="overview-content">
+                    <h5>R.A.I.D. Framework</h5>
+                    <p>Systematic approach to reconnaissance, acquisition, interpretation, and defense</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collapsible Technical Details -->
+            <div class="collapsible-section" id="tacsoc-technical">
+              <div class="collapsible-header" onclick="toggleCollapsible('tacsoc-technical')" tabindex="0" onkeydown="handleCollapsibleKeydown(event, 'tacsoc-technical')">
+                <h5>Technical Capabilities</h5>
+                <span class="collapsible-toggle">▼</span>
+              </div>
+              <div class="collapsible-content">
+                <div class="features-grid">
               <div class="feature-card">
                 <h4>AI Integration</h4>
                 <p class="feature-description">Uses advanced AI models to deduplicate and enrich telemetry, map events to MITRE ATT&CK, and automatically dismiss noise.</p>
@@ -323,6 +444,8 @@
                 <p class="feature-description">Recon, Acquire, Interpret, Defend — a systematic approach to threat hunting and defense operations.</p>
                 <div class="feature-benefit">
                   <strong>Result:</strong> Enables small, distributed teams to operate with autonomy and accountability without massive centralized SOCs.
+                </div>
+              </div>
                 </div>
               </div>
             </div>
@@ -461,10 +584,21 @@
         </div>
       </div>
       <p class="text-center" style="margin-top: var(--space-xs);">
-        <button class="learn-more-btn animate-glow" onclick="window.location.href='mailto:ops@evrrdy.com'">Get in Touch</button>
+        <a href="mailto:ops@evrrdy.com" class="learn-more-btn animate-glow">Get in Touch</a>
       </p>
     </div>
   </div>
+</div>
+
+<!-- Back to Top Button -->
+<button id="back-to-top" class="back-to-top" onclick="scrollToTop()" title="Back to top">
+  <span class="back-to-top-icon">↑</span>
+</button>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" class="loading-overlay">
+  <div class="loading-spinner"></div>
+  <p class="loading-text">Loading resources...</p>
 </div>
 
 <script src="assets/js/overlay-reveal.js" defer></script>
