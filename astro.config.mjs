@@ -5,6 +5,7 @@ export default defineConfig({
   site: 'https://evrrdy.com',
   base: '/',
   output: 'static',
+  adapter: undefined, // Static output, no adapter needed
   build: {
     assets: 'assets'
   },
