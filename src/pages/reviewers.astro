@@ -1,0 +1,421 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProductCard from '../components/ProductCard.astro';
+
+const products = [
+  {
+    name: 'SCOUT',
+    oneLiner: 'Lightweight host telemetry agent for legacy OT/ICS.',
+    bullets: [
+      'Process/Service events with throttles',
+      'Back-pressure aware transport',
+      'Chronicle-ready via RAMPART'
+    ],
+    status: 'active-dev' as const,
+    href: '/products/scout',
+    demoUrl: '',
+    docsUrl: ''
+  },
+  {
+    name: 'SEER',
+    oneLiner: 'Low-cost network sensor (PCAP + Zeek-style logs).',
+    bullets: [
+      'Full PCAP ring buffer',
+      'Zeek-style protocol logs',
+      'Low-cost NIC targets'
+    ],
+    status: 'poc' as const,
+    href: '/products/seer',
+    demoUrl: '',
+    docsUrl: ''
+  },
+  {
+    name: 'GHOST',
+    oneLiner: 'Hardware-enforced unidirectional data diode.',
+    bullets: [
+      'One-way data movement',
+      'Physical air-gap enforcement',
+      'Fiber-optic safe transfer'
+    ],
+    status: 'poc' as const,
+    href: '/products/ghost',
+    demoUrl: '',
+    docsUrl: ''
+  },
+  {
+    name: 'RAMPART',
+    oneLiner: 'Processing/forwarding for SIEM ingestion (Chronicle-ready).',
+    bullets: [
+      'Normalize and enrich telemetry',
+      'Chronicle mappings',
+      'Queue and retry logic'
+    ],
+    status: 'active-dev' as const,
+    href: '/products/rampart',
+    demoUrl: '',
+    docsUrl: ''
+  },
+  {
+    name: 'TacSOC',
+    oneLiner: 'AI-assisted SOC model for OT.',
+    bullets: [
+      'AI-powered threat detection',
+      'Hunter/Killer teams',
+      'R.A.I.D. framework'
+    ],
+    status: 'active-dev' as const,
+    href: '/products/tacsoc',
+    demoUrl: '',
+    docsUrl: ''
+  }
+];
+
+const team = [
+  {
+    name: 'Erin Burns',
+    role: 'Founder, Master Host Analyst',
+    valueLine: '10+ years DFIR expertise across enterprise and ICS',
+    highlights: [
+      'Led OT incident containment playbooks',
+      'Authored host triage standards',
+      'Veteran cybersecurity leadership'
+    ],
+    linkedin: 'https://www.linkedin.com/in/erinburns757/',
+    github: '',
+    photoSrc: '/img/erin-burns.jpeg'
+  },
+  {
+    name: 'Timothy DeBerry',
+    role: 'Principal Developer, Founding Engineer',
+    valueLine: 'Production-quality systems architect and secure coder',
+    highlights: [
+      'Led T.A.P.S. core development',
+      'Security-first design patterns',
+      'DevOps and automation expertise'
+    ],
+    linkedin: 'https://www.linkedin.com/in/timothy-deberry-35425b75/',
+    github: 'https://github.com/nybblez0x42697A',
+    photoSrc: '/img/timothy-deberry.jpeg'
+  },
+  {
+    name: 'Shayla LaPoint',
+    role: 'Lead Security Engineer',
+    valueLine: 'Network analysis and threat modeling specialist',
+    highlights: [
+      'Digital forensics expertise',
+      'Incident response leadership',
+      'Secure architecture design'
+    ],
+    linkedin: '',
+    github: '',
+    photoSrc: '/img/shayla-lapoint.jpeg'
+  },
+  {
+    name: 'Dylan Knox',
+    role: 'Lead Hardware Engineer',
+    valueLine: 'Hardware design and prototyping innovator',
+    highlights: [
+      'Custom electronics design',
+      'R&D and validation',
+      'Prototype fabrication'
+    ],
+    linkedin: 'https://www.linkedin.com/in/dylan-knox-356887132/',
+    github: '',
+    photoSrc: '/img/knox.png'
+  }
+];
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>Reviewer Summary — EVR:RDY</title>
+    <meta name="description" content="Quick reference for reviewers: business description, products & stages, team bios, and company facts for EVR:RDY Defensive Operations Group LLC." />
+    <link rel="canonical" href="https://evrrdy.com/reviewers" />
+  </Fragment>
+
+  <Header currentPath="/reviewers" pageTitle="Reviewer Summary" />
+
+  <main class="content-wrap">
+    <div class="container">
+
+      <!-- Reviewer Introduction -->
+      <section class="card">
+        <p class="intro-text">EVR:RDY builds an open-source OT/ICS telemetry pipeline (T.A.P.S.) and a lean, AI-assisted TacSOC to protect critical infrastructure at a fraction of traditional costs.</p>
+        <nav class="quicklinks">
+          <a href="#products">Products</a>
+          <a href="#team">Team</a>
+          <a href="#facts">Company Facts</a>
+          <a href="#trust">Trust</a>
+        </nav>
+      </section>
+
+      <!-- What We Do -->
+      <section class="card" id="what-we-do">
+        <h2>What We Do</h2>
+        <p>
+          EVR:RDY builds an open‑source OT/ICS telemetry pipeline (<strong>T.A.P.S.</strong>) and a lean, AI‑assisted <strong>TacSOC</strong> so small and mid‑size operators can defend critical infrastructure at a fraction of traditional costs. Our stack emphasizes OT‑safe footprint, commodity hardware, and Chronicle‑ready outputs.
+        </p>
+      </section>
+
+      <!-- Who We Serve -->
+      <section class="card">
+        <h2>Who We Serve & The Problem</h2>
+        <p>
+          OT/ICS operators who need packet‑level visibility, safe IT‑side analytics, and practical incident response without "big‑box" costs. Most small and mid‑size operators struggle with underfunding, expensive proprietary solutions, and workforce shortages.
+        </p>
+      </section>
+
+      <!-- Products Grid -->
+      <section class="card" id="products">
+        <h2>Products & Stage</h2>
+        <div class="products-grid-reviewer">
+          {products.map((product) => (
+            <ProductCard {...product} />
+          ))}
+        </div>
+      </section>
+
+      <!-- Team -->
+      <section class="card" id="team">
+        <h2>Team</h2>
+        <div class="team-grid">
+          {team.map((member, index) => (
+            <div class="team-member-reviewer">
+              <a href={`/team?member=${index}`} class="team-photo-link">
+                <img src={member.photoSrc} alt={member.name} class="team-photo" />
+              </a>
+              <h3>{member.name}</h3>
+              <p class="role">{member.role}</p>
+              <p class="value-line">{member.valueLine}</p>
+              <ul class="highlights">
+                {member.highlights.map((highlight) => <li>{highlight}</li>)}
+              </ul>
+              <div class="social-links">
+                {member.linkedin && (
+                  <a href={member.linkedin} class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                )}
+                {member.github && (
+                  <a href={member.github} class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Company Facts -->
+      <section class="card" id="facts">
+        <h2>Company Facts</h2>
+        <div class="company-facts">
+          <p><strong>Legal Name:</strong> EVR:RDY Defensive Operations Group LLC</p>
+          <p><strong>Website:</strong> <a href="https://evrrdy.com">https://evrrdy.com</a></p>
+          <p><strong>Contact:</strong> <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a></p>
+          <p><strong>Location:</strong> United States</p>
+        </div>
+      </section>
+
+      <!-- Trust -->
+      <section class="card" id="trust">
+        <h2>Trust</h2>
+        <p>We maintain transparency and security standards for our customers and partners.</p>
+        <div class="btn-row text-center">
+          <a href="/privacy" class="learn-more-btn animate-glow">Privacy Policy</a>
+          <a href="/security" class="learn-more-btn animate-glow">Security Statement</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .intro-text {
+    text-align: center;
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+    max-width: 800px;
+    margin: 0 auto var(--space-lg);
+    line-height: 1.7;
+    color: var(--bone);
+  }
+
+  .quicklinks {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .quicklinks a {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-md);
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .quicklinks a:hover {
+    border-bottom-color: var(--bright);
+  }
+
+  .products-grid-reviewer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-lg);
+  }
+
+  .team-member-reviewer {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-align: center;
+    transition: all var(--transition-normal);
+  }
+
+  .team-member-reviewer:hover {
+    transform: translateY(-4px);
+    border-color: rgba(169, 214, 138, 0.4);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .team-photo-link {
+    display: inline-block;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+  }
+
+  .team-photo-link:hover {
+    transform: scale(1.05);
+  }
+
+  .team-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--space-md);
+    border: 3px solid rgba(169, 214, 138, 0.4);
+    transition: all var(--transition-normal);
+    display: block;
+  }
+
+  .team-photo-link:hover .team-photo {
+    border-color: rgba(169, 214, 138, 0.7);
+    box-shadow: 0 4px 12px rgba(169, 214, 138, 0.3);
+  }
+
+  .team-member-reviewer h3 {
+    color: var(--bone);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .role {
+    color: var(--bright);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .value-line {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+  }
+
+  .highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-md) 0;
+    text-align: left;
+  }
+
+  .highlights li {
+    color: var(--bone);
+    padding: var(--space-xs) 0;
+    padding-left: var(--space-lg);
+    position: relative;
+  }
+
+  .highlights li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+  }
+
+  .social-links {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(169, 214, 138, 0.1);
+    border: 2px solid rgba(169, 214, 138, 0.3);
+    color: var(--bright);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .social-link:hover {
+    background: rgba(169, 214, 138, 0.2);
+    border-color: rgba(169, 214, 138, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--bright);
+  }
+
+  .social-link svg {
+    fill: currentColor;
+  }
+
+  .company-facts p {
+    margin: var(--space-sm) 0;
+    color: var(--bone);
+  }
+
+  .company-facts a {
+    color: var(--bright);
+    text-decoration: none;
+  }
+
+  .company-facts a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .products-grid-reviewer,
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

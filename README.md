@@ -1,137 +1,61 @@
-# EVR:RDY Enhanced Website
+# EVR:RDY Website
 
-This GitHub Pages site has been enhanced with Modern design system principles and modern web development practices.
+Modern, static website built with Astro for the EVR:RDY Defensive Operations Group.
 
-## Enhancements Applied
+## 🚀 Tech Stack
 
-### 🎨 Design System Integration
+- **Astro** - Static Site Generator
+- **GitHub Pages** - Static hosting
+- **GitHub Actions** - CI/CD deployment
 
-- **Modern Typography**: Implemented Geist font family with proper font loading
-- **Design Tokens**: Applied consistent spacing, colors, and sizing scales
-- **Component Styling**: Enhanced cards, buttons, and interactive elements
-- **Visual Effects**: Added modern shadows, gradients, and animations
-
-### 🚀 Performance Optimizations
-
-- **Font Loading**: Optimized Google Fonts loading with display: swap
-- **Image Preloading**: Critical images are preloaded for faster rendering
-- **Lazy Loading**: Images load only when needed (if implemented)
-- **Reduced Motion**: Respects user's motion preferences
-
-### ♿ Accessibility Features
-
-- **Keyboard Navigation**: Enhanced focus management and skip links
-- **Screen Reader Support**: Proper semantic HTML and ARIA labels
-- **Focus Indicators**: Clear visual focus states for keyboard users
-- **Color Contrast**: Maintained high contrast ratios for readability
-
-### 📱 Responsive Design
-
-- **Mobile-First**: Optimized for all screen sizes
-- **Flexible Layouts**: Uses CSS Grid and Flexbox for modern layouts
-- **Touch-Friendly**: Appropriate touch targets for mobile devices
-- **Print Styles**: Optimized for printing
-
-### 🎭 Interactive Features
-
-- **Scroll Animations**: Cards animate into view as user scrolls
-- **Hover Effects**: Subtle animations on interactive elements
-- **Status Indicators**: Visual project status with animated indicators
-- **Smooth Scrolling**: Enhanced navigation experience
-
-## File Structure
+## 📁 Project Structure
 
 ```
-Site/
-├── index.html                 # Main HTML file with enhanced structure
-├── assets/
-│   ├── css/
-│   │   ├── style.css         # Original styles (kept for reference)
-│   │   └── enhanced-style.css # Modern enhanced styles
-│   ├── js/
-│   │   └── enhanced.js       # Interactive enhancements
-│   └── img/                  # Images and graphics
-└── README.md                 # This documentation
+/
+├── public/           # Static assets (images, JS, etc.)
+├── src/
+│   ├── assets/      # CSS and JavaScript source files
+│   ├── components/  # Reusable Astro components
+│   ├── layouts/     # Page layouts
+│   └── pages/       # Site pages (routes)
+├── resources/        # Resources content for dynamic loading
+└── astro.config.mjs  # Astro configuration
 ```
 
-## Key Features
+## 🧞 Commands
 
-### Modern Design Tokens
+| Command                | Action                                            |
+| :--------------------- | :------------------------------------------------ |
+| `npm install`          | Install dependencies                              |
+| `npm run dev`          | Start dev server at `localhost:4321`              |
+| `npm run build`        | Build production site to `./dist/`                |
+| `npm run preview`      | Preview production build locally                  |
+| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check`  |
 
-- Consistent spacing scale (xs, sm, md, lg, xl, 2xl, 3xl)
-- Typography scale with proper font weights
-- Color system with CSS custom properties
-- Border radius and shadow scales
-- Transition timing functions
+## 🚢 Deployment
 
-### Enhanced Components
+The site automatically deploys to GitHub Pages when changes are pushed to the `main` branch via GitHub Actions.
 
-- **Cards**: Glass-morphism effect with hover animations
-- **Buttons**: Modern styling with focus states and animations
-- **Status Indicators**: Color-coded project status with animations
-- **Typography**: Improved readability and hierarchy
+### Manual Deployment
 
-### Modern CSS Features
+1. Build the site: `npm run build`
+2. The built site is in `./dist/`
+3. Deploy `./dist/` to your hosting provider
 
-- CSS Custom Properties for theming
-- CSS Grid and Flexbox for layouts
-- CSS Animations with reduced motion support
-- Modern selectors and pseudo-elements
+## 📝 Key Features
 
-### JavaScript Enhancements
+- ✅ Fully static output (100% GitHub Pages compatible)
+- ✅ Modern UI/UX with glassmorphism effects
+- ✅ Responsive design (mobile-first)
+- ✅ Accessibility features (WCAG 2.1 AA)
+- ✅ Team member modals
+- ✅ Dynamic resources loading
+- ✅ Google Drive integration with repository fallback
 
-- Intersection Observer for scroll animations
-- Theme detection and system preference handling
-- Performance optimizations
-- Accessibility improvements
-- Error handling and analytics placeholders
+## 🌐 Custom Domain
 
-## Browser Support
+Configured for `evrrdy.com` via GitHub Pages settings.
 
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Progressive enhancement for older browsers
-- Graceful degradation for JavaScript features
+## 📄 License
 
-## Performance
-
-- Optimized font loading
-- Minimal JavaScript footprint
-- Efficient CSS with modern features
-- Image optimization ready
-
-## Accessibility
-
-- WCAG 2.1 AA compliant
-- Keyboard navigation support
-- Screen reader friendly
-- High contrast support
-- Reduced motion support
-
-## Deployment
-
-This site is configured for GitHub Pages deployment. Simply push changes to the main branch and GitHub Pages will automatically deploy the updates.
-
-## Customization
-
-The design system is built with CSS custom properties, making it easy to customize:
-
-```css
-:root {
-  --bone: #e5e4d8;      /* Primary text color */
-  --olive: #848c6a;     /* Accent color */
-  --bright: #a9d68a;    /* Highlight color */
-  --ink: #0e1012;       /* Background color */
-}
-```
-
-## Future Enhancements
-
-- Dark/light theme toggle
-- Additional interactive components
-- Performance monitoring
-- SEO optimizations
-- Progressive Web App features
-
----
-
-Built with Modern design system principles and modern web standards.
+© 2025 EVR:RDY Defensive Operations Group LLC

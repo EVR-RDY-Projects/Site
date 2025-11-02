@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const product = {
+  name: 'SEER',
+  descriptor: 'Scalable Endpoint & Environmental Reconnaissance',
+  oneLiner: 'Low-cost network sensor built on commodity hardware. Captures full packet data and generates Zeek-style logs for forensic analysis.',
+  who: 'OT/ICS operators who need network-level visibility and protocol analysis without expensive network appliances.',
+  features: [
+    'Full PCAP ring buffer for complete packet capture',
+    'Zeek-style protocol logs for analysis',
+    'Low-cost commodity NIC targets',
+    'Scalable deployment architecture',
+    'Local storage capabilities for air-gapped environments',
+    'Protocol analysis for OT/ICS-specific traffic'
+  ],
+  status: 'poc',
+  demoUrl: '',
+  docsUrl: '',
+  statusNote: 'Functional prototype with local storage and PCAP generation capabilities.'
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{product.name} — {product.descriptor} | EVR:RDY</title>
+    <meta name="description" content={product.oneLiner} />
+    <link rel="canonical" href="https://evrrdy.com/products/seer" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.oneLiner,
+      "brand": {
+        "@type": "Brand",
+        "name": "EVR:RDY"
+      }
+    })} />
+  </Fragment>
+
+  <Header currentPath="/products/seer" pageTitle="SEER" />
+
+  <main class="content-wrap">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Products</a>
+        <span class="separator">/</span>
+        <a href="/products/taps">T.A.P.S.</a>
+        <span class="separator">/</span>
+        <span class="current">{product.name}</span>
+      </nav>
+
+      <section class="product-header">
+        <h1>{product.name} — {product.descriptor}</h1>
+        <p class="one-liner">{product.oneLiner}</p>
+      </section>
+
+      <section class="card">
+        <h2>Who It's For</h2>
+        <p>{product.who}</p>
+      </section>
+
+      <!-- Quick Overview -->
+      <section class="card">
+        <h2>Quick Overview</h2>
+        <div class="quick-overview">
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span class="overview-icon">📡</span>
+              <div class="overview-content">
+                <h3>Full PCAP Capture</h3>
+                <p>Complete packet capture with ring buffer for comprehensive network analysis</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">📋</span>
+              <div class="overview-content">
+                <h3>Zeek-Style Logs</h3>
+                <p>Protocol analysis logs compatible with Zeek/Bro formats</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">💰</span>
+              <div class="overview-content">
+                <h3>Low-Cost Hardware</h3>
+                <p>Built on commodity NICs and standard x86 hardware</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">💾</span>
+              <div class="overview-content">
+                <h3>Local Storage</h3>
+                <p>Local storage capabilities for air-gapped environments</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Key Features</h2>
+        <ul class="features-list">
+          {product.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="product-meta">
+          <span class={`status-indicator ${product.status}`}>
+            PoC
+          </span>
+          {product.statusNote && <p class="status-note">{product.statusNote}</p>}
+          {product.demoUrl && (
+            <a href={product.demoUrl} class="btn-primary" target="_blank" rel="noopener">View Demo</a>
+          )}
+          {product.docsUrl && (
+            <a href={product.docsUrl} class="btn-secondary" target="_blank" rel="noopener">Documentation</a>
+          )}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  .product-header {
+    text-align: center;
+    margin: var(--space-xl) 0;
+    padding: var(--space-xl);
+  }
+
+  .product-header h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--space-md);
+    color: var(--bone);
+  }
+
+  .one-liner {
+    font-size: 1.25rem;
+    color: var(--muted);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .features-list li {
+    color: var(--bone);
+    padding: var(--space-sm) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .status-note {
+    color: var(--muted);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    color: var(--ink);
+    border: 2px solid transparent;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--bright);
+    border: 2px solid var(--bright);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bright);
+    color: var(--ink);
+  }
+
+  .quick-overview {
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .overview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(14, 16, 18, 0.3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+  }
+
+  .overview-item:hover {
+    background: rgba(14, 16, 18, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .overview-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .overview-content h3 {
+    color: var(--bright);
+    margin: 0 0 var(--space-xs) 0;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .overview-content p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separator {
+    color: var(--muted);
+    margin: 0 var(--space-xs);
+  }
+
+  .breadcrumb .current {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

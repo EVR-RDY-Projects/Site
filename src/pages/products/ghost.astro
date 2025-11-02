@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const product = {
+  name: 'GHOST',
+  descriptor: 'Hardware-Enforced Data Diode',
+  oneLiner: 'Physical air-gap solution using modified media converters and fiber optics. Guarantees unidirectional data flow with no possibility of return communication.',
+  who: 'OT/ICS operators who require absolute physical separation between OT and IT networks for air-gapped security.',
+  features: [
+    'Hardware-enforced unidirectional data movement',
+    'Physical fiber-optic enforcement prevents reverse communication',
+    'Air-gap friendly design',
+    'Modified media converters for cost-effective implementation',
+    'No possibility of return communication path',
+    'Fiber-optic safe transfer mechanism'
+  ],
+  status: 'poc',
+  demoUrl: '',
+  docsUrl: '',
+  statusNote: 'Hardware prototypes tested and validated. Cost optimization in progress.'
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{product.name} — {product.descriptor} | EVR:RDY</title>
+    <meta name="description" content={product.oneLiner} />
+    <link rel="canonical" href="https://evrrdy.com/products/ghost" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.oneLiner,
+      "brand": {
+        "@type": "Brand",
+        "name": "EVR:RDY"
+      }
+    })} />
+  </Fragment>
+
+  <Header currentPath="/products/ghost" pageTitle="GHOST" />
+
+  <main class="content-wrap">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Products</a>
+        <span class="separator">/</span>
+        <a href="/products/taps">T.A.P.S.</a>
+        <span class="separator">/</span>
+        <span class="current">{product.name}</span>
+      </nav>
+
+      <section class="product-header">
+        <h1>{product.name} — {product.descriptor}</h1>
+        <p class="one-liner">{product.oneLiner}</p>
+      </section>
+
+      <section class="card">
+        <h2>Who It's For</h2>
+        <p>{product.who}</p>
+      </section>
+
+      <!-- Quick Overview -->
+      <section class="card">
+        <h2>Quick Overview</h2>
+        <div class="quick-overview">
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span class="overview-icon">➡️</span>
+              <div class="overview-content">
+                <h3>Unidirectional Only</h3>
+                <p>Physical hardware enforcement guarantees one-way data flow</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🔒</span>
+              <div class="overview-content">
+                <h3>Air-Gap Friendly</h3>
+                <p>Perfect for environments requiring absolute physical separation</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🔌</span>
+              <div class="overview-content">
+                <h3>Fiber-Optic Design</h3>
+                <p>Uses modified media converters and fiber optics for secure transfer</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🛡️</span>
+              <div class="overview-content">
+                <h3>Physical Enforcement</h3>
+                <p>No possibility of return communication - hardware enforced</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Key Features</h2>
+        <ul class="features-list">
+          {product.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="product-meta">
+          <span class={`status-indicator ${product.status}`}>PoC</span>
+          {product.statusNote && <p class="status-note">{product.statusNote}</p>}
+          {product.demoUrl && (
+            <a href={product.demoUrl} class="btn-primary" target="_blank" rel="noopener">View Demo</a>
+          )}
+          {product.docsUrl && (
+            <a href={product.docsUrl} class="btn-secondary" target="_blank" rel="noopener">Documentation</a>
+          )}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .quick-overview {
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .overview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(14, 16, 18, 0.3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+  }
+
+  .overview-item:hover {
+    background: rgba(14, 16, 18, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .overview-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .overview-content h3 {
+    color: var(--bright);
+    margin: 0 0 var(--space-xs) 0;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .overview-content p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separator {
+    color: var(--muted);
+    margin: 0 var(--space-xs);
+  }
+
+  .breadcrumb .current {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

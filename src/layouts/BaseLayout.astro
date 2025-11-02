@@ -1,0 +1,23 @@
+---
+import '../assets/css/enhanced-style.css';
+import '../assets/css/overlay-reveal.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="canonical" href={`https://evrrdy.com${Astro.url.pathname}`} />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+    <script src="/js/enhanced.js" is:inline></script>
+    <script src="/js/overlay-reveal.js" is:inline></script>
+    <script src="/js/site.js" is:inline></script>
+  </body>
+</html>

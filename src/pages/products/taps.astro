@@ -1,0 +1,548 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const product = {
+  name: 'T.A.P.S.',
+  descriptor: 'Telemetry Acquisition Platform Solution',
+  oneLiner: 'A suite of open-source tools being developed to create low-cost, practical solutions that move critical telemetry from the OT environment into the IT environment for safe ingestion into a SIEM.',
+  who: 'OT/ICS operators who need to bridge the gap between OT networks and IT-side analytics platforms like Google Chronicle.',
+  features: [
+    'Complete telemetry pipeline from OT to IT',
+    'SCOUT host telemetry agent integration',
+    'SEER network sensor integration',
+    'GHOST hardware-enforced data diode integration',
+    'RAMPART processing and forwarding engine',
+    'Chronicle-ready outputs and mappings',
+    'OT-safe footprint with minimal impact on production systems'
+  ],
+  status: 'active-dev',
+  demoUrl: '',
+  docsUrl: '',
+  statusNote: 'Core components in active development. SCOUT at 75%, RAMPART in progress, SEER and GHOST in PoC phase.'
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{product.name} — {product.descriptor} | EVR:RDY</title>
+    <meta name="description" content={product.oneLiner} />
+    <link rel="canonical" href="https://evrrdy.com/products/taps" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.oneLiner,
+      "brand": {
+        "@type": "Brand",
+        "name": "EVR:RDY"
+      }
+    })} />
+  </Fragment>
+
+  <Header currentPath="/products/taps" pageTitle="T.A.P.S." />
+
+  <main class="content-wrap">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Products</a>
+        <span class="separator">/</span>
+        <span class="current">{product.name}</span>
+      </nav>
+
+      <section class="product-header">
+        <h1>{product.name} — {product.descriptor}</h1>
+        <p class="one-liner">{product.oneLiner}</p>
+      </section>
+
+      <section class="card">
+        <h2>Who It's For</h2>
+        <p>{product.who}</p>
+      </section>
+
+      <!-- Quick Overview -->
+      <section class="card">
+        <h2>Quick Overview</h2>
+        <div class="quick-overview">
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span class="overview-icon">🔍</span>
+              <div class="overview-content">
+                <h3>Network Visibility</h3>
+                <p>Complete packet capture and protocol analysis for OT/ICS networks</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🔒</span>
+              <div class="overview-content">
+                <h3>Air-Gap Security</h3>
+                <p>Hardware-enforced unidirectional data flow protects OT environments</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">💰</span>
+              <div class="overview-content">
+                <h3>Cost-Effective</h3>
+                <p>Open-source solution built on commodity hardware components</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">⚡</span>
+              <div class="overview-content">
+                <h3>Real-Time Analysis</h3>
+                <p>Immediate threat detection and forensic data collection</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- System Components -->
+      <section class="card">
+        <h2>System Components</h2>
+        <p>T.A.P.S. consists of four integrated components:</p>
+        <div class="components-grid">
+          <div class="component-card">
+            <div class="component-header">
+              <h3>SCOUT</h3>
+              <span class="status-indicator development">Active Development</span>
+            </div>
+            <p class="component-subtitle">Lightweight Host Telemetry Agent</p>
+            <p class="component-description">Production-ready "slow-and-low" monitoring agent with comprehensive state management, event collection, and system monitoring. Designed for minimal footprint on legacy OT/ICS systems.</p>
+            <div class="component-benefit">
+              <strong>Status:</strong> 75% complete. Core infrastructure and data collection ready. Transport layer and sensor integration in progress.
+            </div>
+            <div class="component-links">
+              <a href="/products/scout" class="component-link">Learn more about SCOUT →</a>
+              <a href="https://github.com/EVR-RDY-Projects/SCOUT" target="_blank" rel="noopener noreferrer" class="component-link-github">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <div class="component-card">
+            <div class="component-header">
+              <h3>SEER</h3>
+              <span class="status-indicator poc">PoC</span>
+            </div>
+            <p class="component-subtitle">Scalable Endpoint & Environmental Reconnaissance</p>
+            <p class="component-description">Low-cost network sensor built on commodity hardware. Captures full packet data and generates Zeek-style logs for forensic analysis.</p>
+            <div class="component-benefit">
+              <strong>Status:</strong> Functional prototype with local storage and PCAP generation capabilities.
+            </div>
+            <div class="component-links">
+              <a href="/products/seer" class="component-link">Learn more about SEER →</a>
+              <a href="https://github.com/EVR-RDY-Projects/SEER-Sensor" target="_blank" rel="noopener noreferrer" class="component-link-github">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <div class="component-card">
+            <div class="component-header">
+              <h3>GHOST</h3>
+              <span class="status-indicator poc">PoC</span>
+            </div>
+            <p class="component-subtitle">Hardware‑Enforced Data Diode</p>
+            <p class="component-description">Physical air-gap solution using modified media converters and fiber optics. Guarantees unidirectional data flow with no possibility of return communication.</p>
+            <div class="component-benefit">
+              <strong>Status:</strong> Hardware prototypes tested and validated. Cost optimization in progress.
+            </div>
+            <div class="component-links">
+              <a href="/products/ghost" class="component-link">Learn more about GHOST →</a>
+              <a href="https://github.com/EVR-RDY-Projects/GHOST-diode" target="_blank" rel="noopener noreferrer" class="component-link-github">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <div class="component-card">
+            <div class="component-header">
+              <h3>RAMPART</h3>
+              <span class="status-indicator development">Active Development</span>
+            </div>
+            <p class="component-subtitle">Resilient Architecture for Monitoring & Proactive Advanced Response Teams</p>
+            <p class="component-description">Data processing and forwarding engine that normalizes telemetry for SIEM ingestion. Enables remote forensic analysis while maintaining OT isolation.</p>
+            <div class="component-benefit">
+              <strong>Status:</strong> Core functionality implemented. Chronicle integration and workflow automation in development.
+            </div>
+            <div class="component-links">
+              <a href="/products/rampart" class="component-link">Learn more about RAMPART →</a>
+              <a href="https://github.com/EVR-RDY-Projects/Rampart" target="_blank" rel="noopener noreferrer" class="component-link-github">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Key Features</h2>
+        <ul class="features-list">
+          {product.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Architecture</h2>
+        <p>The complete T.A.P.S. telemetry pipeline shows how all components work together to move critical data from OT networks to SOC analysis:</p>
+        <div class="architecture-diagram">
+          <img src="/img/taps-architecture.png" alt="T.A.P.S. Architecture Diagram" class="architecture-image" id="arch-diagram" />
+        </div>
+      </section>
+
+      <!-- Lightbox Modal -->
+      <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-image" id="lightbox-img" src="" alt="" />
+      </div>
+
+      <section class="card">
+        <div class="product-meta">
+          <span class={`status-indicator ${product.status}`}>Active Development</span>
+          {product.statusNote && <p class="status-note">{product.statusNote}</p>}
+          {product.demoUrl && (
+            <a href={product.demoUrl} class="btn-primary" target="_blank" rel="noopener">View Demo</a>
+          )}
+          {product.docsUrl && (
+            <a href={product.docsUrl} class="btn-secondary" target="_blank" rel="noopener">Documentation</a>
+          )}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .quick-overview {
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .overview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(14, 16, 18, 0.3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+  }
+
+  .overview-item:hover {
+    background: rgba(14, 16, 18, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .overview-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .overview-content h3 {
+    color: var(--bright);
+    margin: 0 0 var(--space-xs) 0;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .overview-content p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .components-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .component-card {
+    background: rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    border: 1px solid rgba(229, 228, 216, 0.15);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .component-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--bright);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .component-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(169, 214, 138, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .component-card:hover::before {
+    opacity: 1;
+  }
+
+  .component-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-sm);
+  }
+
+  .component-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bone);
+    margin: 0;
+    flex: 1;
+  }
+
+  .component-subtitle {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 var(--space-sm) 0;
+    font-style: italic;
+  }
+
+  .component-description {
+    color: var(--bone);
+    line-height: 1.5;
+    margin: 0 0 var(--space-md) 0;
+  }
+
+  .component-benefit {
+    background: rgba(169, 214, 138, 0.1);
+    border-left: 3px solid var(--bright);
+    padding: var(--space-sm);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.9rem;
+    color: var(--bone);
+    margin-bottom: var(--space-md);
+  }
+
+  .component-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .component-link {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+  }
+
+  .component-link:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .component-link-github {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all var(--transition-fast);
+  }
+
+  .component-link-github:hover {
+    color: var(--bright);
+  }
+
+  .component-link-github svg {
+    fill: currentColor;
+    width: 16px;
+    height: 16px;
+  }
+
+  .architecture-diagram {
+    margin: var(--space-xl) 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--ink);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .architecture-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separator {
+    color: var(--muted);
+    margin: 0 var(--space-xs);
+  }
+
+  .breadcrumb .current {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  /* Lightbox Styles */
+  .architecture-image {
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+  }
+
+  .architecture-image:hover {
+    opacity: 0.9;
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    overflow: auto;
+    cursor: zoom-out;
+  }
+
+  .lightbox.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox-image {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    color: var(--bone);
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+    line-height: 1;
+    transition: all var(--transition-fast);
+  }
+
+  .lightbox-close:hover {
+    color: var(--bright);
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid,
+    .components-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .lightbox-close {
+      right: 20px;
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const archImg = document.getElementById('arch-diagram');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    
+    if (archImg) {
+      archImg.addEventListener('click', () => {
+        lightboxImg.src = archImg.src;
+        lightboxImg.alt = archImg.alt;
+        lightbox.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    window.closeLightbox = () => {
+      lightbox.classList.remove('show');
+      document.body.style.overflow = '';
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+        closeLightbox();
+      }
+    });
+  });
+</script>

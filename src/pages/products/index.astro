@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ProductCard from '../../components/ProductCard.astro';
+
+const tapsProduct = {
+  name: 'T.A.P.S.',
+  oneLiner: 'Telemetry Acquisition Platform Solution — complete pipeline for OT/ICS monitoring.',
+  bullets: [
+    'End-to-end telemetry pipeline',
+    'SCOUT, SEER, GHOST, RAMPART integration',
+    'Chronicle-ready outputs'
+  ],
+  status: 'active-dev' as const,
+  href: '/products/taps',
+  demoUrl: '',
+  docsUrl: ''
+};
+
+const tacSOCProduct = {
+  name: 'TacSOC',
+  oneLiner: 'AI-assisted SOC model reducing Tier-1 noise for small teams.',
+  bullets: [
+    'AI-powered threat detection',
+    'Hunter/Killer teams',
+    'R.A.I.D. framework'
+  ],
+  status: 'active-dev' as const,
+  href: '/products/tacsoc',
+  demoUrl: '',
+  docsUrl: ''
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>Products — EVR:RDY</title>
+    <meta name="description" content="EVR:RDY products: T.A.P.S. and TacSOC — open-source OT/ICS defense solutions." />
+    <link rel="canonical" href="https://evrrdy.com/products" />
+  </Fragment>
+
+  <Header currentPath="/products" pageTitle="Products" />
+
+  <main class="content-wrap">
+    <div class="container">
+      <!-- Hero Summary Section -->
+      <section class="hero-summary">
+        <h1>Open‑source OT/ICS defense you can actually afford.</h1>
+        <p>EVR:RDY builds a low‑cost telemetry pipeline (T.A.P.S.) and a lean, AI‑assisted TacSOC to protect critical infrastructure.</p>
+        
+        <!-- Proof Row -->
+        <div class="proof-row">
+          <div class="proof-item">
+            <span class="proof-icon">✅</span>
+            <span class="proof-text">Built for Chronicle ingestion</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-icon">💻</span>
+            <span class="proof-text">Runs on commodity x86/NICs</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-icon">🔒</span>
+            <span class="proof-text">OT‑safe footprint</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Products (T.A.P.S. and TacSOC) -->
+      <section class="card product-section featured-section">
+        <h2>Our Products</h2>
+        <p class="section-description">EVR:RDY's core solutions for OT/ICS defense:</p>
+        <div class="featured-products">
+          <ProductCard {...tapsProduct} />
+          <ProductCard {...tacSOCProduct} />
+        </div>
+        <p class="section-description" style="margin-top: var(--space-xl);">
+          <strong>T.A.P.S.</strong> is a complete telemetry acquisition platform with integrated components (SCOUT, SEER, GHOST, RAMPART). Visit the <a href="/products/taps" style="color: var(--bright); text-decoration: underline;">T.A.P.S. product page</a> to learn more about its components.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .hero-summary {
+    text-align: center;
+    margin: var(--space-xl) 0;
+    padding: var(--space-xl);
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(120,120,120,.2);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.15),
+      0 10px 10px -5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .hero-summary:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.2),
+      0 16px 32px -8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(169, 214, 138, 0.3);
+  }
+
+  .hero-summary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bright), var(--muted), var(--bright));
+    opacity: 0.8;
+  }
+
+  .hero-summary h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--space-md);
+    color: var(--bone);
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-summary p {
+    font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+    max-width: 600px;
+    margin: 0 auto var(--space-lg);
+    line-height: 1.7;
+    color: var(--bone);
+  }
+
+  .proof-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+    flex-wrap: wrap;
+    padding: var(--space-lg) 0;
+    border-top: 1px solid rgba(229, 228, 216, 0.2);
+    border-bottom: 1px solid rgba(229, 228, 216, 0.2);
+  }
+
+  .proof-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--bone);
+    font-size: 0.95rem;
+  }
+
+  .proof-icon {
+    font-size: 1.25rem;
+  }
+
+  .proof-text {
+    font-weight: 500;
+  }
+
+  .product-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .featured-section {
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    border: 1px solid rgba(120,120,120,.2);
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.15),
+      0 10px 10px -5px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .featured-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bright), var(--muted), var(--bright));
+    opacity: 0.8;
+  }
+
+  .featured-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.2),
+      0 16px 32px -8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(169, 214, 138, 0.3);
+  }
+
+  .product-section h2 {
+    margin-bottom: var(--space-md);
+    color: var(--bright);
+  }
+
+  .section-description {
+    color: var(--muted);
+    margin-bottom: var(--space-lg);
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .featured-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-lg);
+  }
+
+  @media (max-width: 768px) {
+    .proof-row {
+      flex-direction: column;
+      gap: var(--space-md);
+      text-align: center;
+    }
+
+    .featured-products {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+</style>

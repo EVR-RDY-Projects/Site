@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>EVR:RDY — Defend Forward · Advance Always</title>
+    <meta name="description" content="EVR:RDY — Veteran-led OT/ICS cyber defense. Low-cost solutions for critical infrastructure. T.A.P.S., TacSOC, R.A.I.D. framework, Hunter/Killer teams." />
+    <meta property="og:title" content="EVR:RDY — Defend Forward · Advance Always" />
+    <meta property="og:description" content="Veteran-led OT/ICS cyber defense. Low-cost, practical protection for critical infrastructure." />
+    <meta property="og:url" content="https://evrrdy.com/" />
+    <meta property="og:image" content="https://evrrdy.com/img/banner.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EVR:RDY — Defend Forward · Advance Always" />
+    <meta name="twitter:description" content="Veteran-led OT/ICS cyber defense. Low-cost, practical protection for critical infrastructure." />
+    <meta name="twitter:image" content="https://evrrdy.com/img/banner.png" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EVR:RDY Defensive Operations Group LLC",
+      "url": "https://evrrdy.com/",
+      "logo": "https://evrrdy.com/img/logo.png",
+      "description": "Veteran-led OT/ICS cyber defense. Low-cost, practical protection for critical infrastructure.",
+    })} />
+  </Fragment>
+
+  <Header currentPath="/" />
+
+  <main class="content-wrap">
+    <div class="container">
+      
+      <!-- Mission Section -->
+      <section class="card animate-slide-up">
+        <h2>Our Mission</h2>
+        <p>
+          EVR:RDY is a veteran-led, AI enabled open-source defensive cyber initiative focused on OT/ICS.  
+          Our mission is to deliver low-cost, practical solutions for defending critical infrastructure by uniting veteran expertise with civilian innovation.
+        </p>
+
+        <blockquote class="mission-quote center-justify">
+          We have done so much, for so long, with so little, we are now qualified to do anything with nothing.<br>
+          <span style="color:#aaa; font-size:1em;">– Frank Sinatra</span>
+        </blockquote>
+
+        <p>
+          If you have the desire to contribute to this mission and help protect critical infrastructure, then step forward and become a contributor.
+        </p>
+
+        <div class="btn-row text-center">
+          <a href="/team" class="learn-more-btn animate-glow">Meet Our Team</a>
+          <a href="mailto:ops@evrrdy.com" class="learn-more-btn animate-glow">Join the Fight</a>
+        </div>
+      </section>
+
+      <!-- The Challenge Section -->
+      <section class="card animate-slide-up challenge-section" id="challenge">
+        <h2>The Challenge</h2>
+        <p>Critical infrastructure faces three major cybersecurity challenges that traditional solutions fail to address effectively.</p>
+        <div class="challenge-grid">
+          <div class="challenge-card animate-slide-left animate-stagger-1">
+            <h3>Underfunding</h3>
+            <p>Most organizations do not allocate or have the funds to properly secure ICS/OT, leaving critical areas under-resourced.</p>
+          </div>
+          <div class="challenge-card animate-slide-up animate-stagger-2">
+            <h3>High Cost Solutions</h3>
+            <p>Leading OT/ICS cybersecurity platforms often start out of the range of small organization.</p>
+          </div>
+          <div class="challenge-card animate-slide-right animate-stagger-3">
+            <h3>Workforce Shortage</h3>
+            <p>The U.S. faces a cybersecurity workforce gap of 500,000+ unfilled jobs, with 67% of organizations reporting shortages.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Solution Section -->
+      <section class="card animate-slide-up challenge-section">
+        <h2>Our Solution</h2>
+        <p>Two lines of effort: T.A.P.S. (Telemetry Acquisition Platform Solution) and TacSOC (Tactical Security Operations Center).</p>
+        <div class="challenge-grid">
+          <div class="solution-card animate-slide-left animate-stagger-1">
+            <h3>Affordable Protection</h3>
+            <p><a href="/products/tacsoc" class="solution-link">TacSOC</a> pools customers to leverage shared resources while empowering analysts with AI enriched alerts and undercutting costs.</p>
+          </div>
+          <div class="solution-card animate-slide-up animate-stagger-2">
+            <h3>Low-Cost Infrastructure</h3>
+            <p><a href="/products/taps" class="solution-link">T.A.P.S.</a> components (SCOUT, SEER, GHOST, and RAMPART) replace expensive OT appliances with affordable open-source alternatives.</p>
+          </div>
+          <div class="solution-card animate-slide-right animate-stagger-3">
+            <h3>Scalable Talent Pipeline</h3>
+            <p><a href="/products/tacsoc" class="solution-link">TacSOC</a> automates Tier-1, accelerates analysts from Tier-2 to Tier-3 through mentorship, and spins up new Hunter/Killer Teams — multiplying skilled defenders faster than traditional pipelines.</p>
+          </div>
+        </div>
+        <p class="text-center">
+          <a href="/products" class="learn-more-btn animate-glow">Learn More</a>
+        </p>
+      </section>
+
+      <!-- Our Structure -->
+      <section class="card animate-slide-up challenge-section">
+        <h2>Our Structure</h2>
+        <p>EVR:RDY launches with a for-profit first model, followed by a nonprofit foundation to scale workforce development and community adoption.</p>
+        <div class="challenge-grid">
+          <div class="structure-card forprofit animate-slide-left animate-stagger-1">
+            <h3>EVR:RDY Defensive Operations Group</h3>
+            <p>Our for-profit entity and current prime performer for T.A.P.S. development. Focuses on turning open innovation into production-quality solutions through T.A.P.S. R&D and fielding, TacSOC development and manning, shared services and resource pooling, and talent investment. Revenue enables competitive compensation and sustainable growth while delivering vendor-backed support that organizations need.</p>
+          </div>
+          <div class="structure-card nonprofit animate-slide-right animate-stagger-2">
+            <h3>EVR:RDY Foundation for Critical Infrastructure Defense</h3>
+            <p>Future nonprofit entity focused on scaling workforce, safety, and community adoption. Will pursue veteran outreach and workforce development, community validation and safety programs, and open ecosystem stewardship. Funded through donations, sponsorships, training revenue, and fee-for-service community programs with coordinated roadmaps via joint release reviews.</p>
+          </div>
+        </div>
+        <p><em>The vision:</em> For-profit innovation drives production-quality solutions while nonprofit foundation scales workforce development and community safety — coordinated through shared standards and joint release reviews. Most organizations won't adopt open source alone because they don't have the resources or workforce to maintain it — that's where we step in.</p>
+      </section>
+
+      <!-- Become Part of the Work -->
+      <section class="card animate-slide-up challenge-section">
+        <h2>Become Part of the Work</h2>
+        <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of EVR:RDY. This includes opportunities with our Defensive Operations Group for production-quality solutions and future involvement with the EVR:RDY Foundation to guide open-source OT security projects and help shape training pipelines for both veterans and civilians.</p>
+        
+        <blockquote class="closing-quote center-justify">
+          The strongest steel is forged in the hottest dumpster fire.<br>
+          <span style="color:#aaa; font-size:.9em;">– Unknown</span>
+        </blockquote>
+        
+        <p>This isn't about buzzwords or bloated security stacks; The EVR:RDY culture is built on the mindset of doing more with less. We apply the same grit, discipline, and resourcefulness leveraged to find innovative solutions while in uniform and bring them to the defense of critical infrastructure.</p>
+        
+        <p class="text-center">
+          <a href="mailto:ops@evrrdy.com" class="learn-more-btn animate-glow">Join the Fight</a>
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

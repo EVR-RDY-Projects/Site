@@ -1,0 +1,68 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="text-center" style="color:var(--muted); font-size:.95rem; margin: var(--space-lg) 0 var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid rgba(229,228,216,.12);">
+  <div class="container">
+    <p>© {currentYear} EVR:RDY Defensive Operations Group LLC - Let us help keep the lights on!</p>
+    <nav class="footer-nav">
+      <a href="/privacy">Privacy</a>
+      <span>·</span>
+      <a href="/security">Security</a>
+      <span>·</span>
+      <a href="/contact">Contact</a>
+      <span>·</span>
+      <a href="https://github.com/EVR-RDY-Projects" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer {
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin: var(--space-xl) 0;
+    border: 1px solid rgba(229, 228, 216, 0.1);
+    text-align: center;
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all var(--transition-normal);
+  }
+
+  footer:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+      0 15px 20px -3px rgba(0, 0, 0, 0.12),
+      0 6px 8px -2px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .footer-nav {
+    margin-top: var(--space-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .footer-nav a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+
+  .footer-nav a:hover {
+    text-decoration: underline;
+    color: var(--bone);
+  }
+
+  .footer-nav span {
+    color: var(--muted);
+  }
+</style>

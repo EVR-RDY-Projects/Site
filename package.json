@@ -1,0 +1,16 @@
+{
+  "name": "intergalactic-iron",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "predev": "rm -rf public/resources && mkdir -p public && cp -r resources public/resources 2>/dev/null || true",
+    "dev": "astro dev --host",
+    "prebuild": "rm -rf public/resources && mkdir -p public && cp -r resources public/resources 2>/dev/null || true",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.15.3"
+  }
+}
