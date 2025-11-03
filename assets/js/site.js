@@ -296,42 +296,88 @@
 	async function getDriveManifestDocuments() {
 		try {
 			if (DRIVE_FOLDER_URL && DRIVE_API_KEY) {
+				// First, try to list folder using API (may fail due to CORS/referrer restrictions)
 				const folderIdMatch = DRIVE_FOLDER_URL.match(
 					/folders\/([A-Za-z0-9_-]+)/
 				);
 				const folderId = folderIdMatch ? folderIdMatch[1] : "";
 				if (!folderId) return null;
-				const q = encodeURIComponent(
-					`'${folderId}' in parents and trashed = false`
-				);
-				const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
-				const listRes = await fetch(listUrl, { cache: "no-store" });
-				if (!listRes.ok) return null;
-				const list = await listRes.json();
-				const files = (list && list.files) || [];
-				if (!files.length) {
+
+				let manifestFileId = null;
+				let allFiles = [];
+
+				try {
+					const q = encodeURIComponent(
+						`'${folderId}' in parents and trashed = false`
+					);
+					const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
+					const listRes = await fetch(listUrl, { cache: "no-store" });
+					if (listRes.ok) {
+						const list = await listRes.json();
+						allFiles = (list && list.files) || [];
+						let file = allFiles.find((f) => f.name === "manifest.json");
+						if (!file)
+							file = allFiles.find(
+								(f) => (f.name || "").toLowerCase() === "manifest.json"
+							);
+						if (!file)
+							file = allFiles.find(
+								(f) =>
+									(f.name || "").toLowerCase().startsWith("manifest") &&
+									(f.mimeType || "").includes("json")
+							);
+						if (file && file.id) manifestFileId = file.id;
+					}
+				} catch (listError) {
+					console.warn("Drive folder listing failed (likely CORS):", listError);
+					// Fall through to try direct download if we know the manifest ID
+				}
+
+				// If we didn't get the manifest ID from listing, use known ID
+				// (manifest.json file ID from the folder: 1OGvU_k5QmlGAvELnzgdikZO0g14JUBpG)
+				if (!manifestFileId) {
+					manifestFileId = "1OGvU_k5QmlGAvELnzgdikZO0g14JUBpG";
+				}
+
+				// Try public download URL first (bypasses API CORS issues for public files)
+				let downloadUrl = `https://drive.google.com/uc?export=download&id=${manifestFileId}`;
+				let res = await fetch(downloadUrl, {
+					cache: "no-store",
+					redirect: "follow",
+				});
+
+				// If public URL doesn't work or doesn't return JSON, try API download (may still hit CORS)
+				if (!res.ok) {
+					downloadUrl = `https://www.googleapis.com/drive/v3/files/${manifestFileId}?alt=media&key=${DRIVE_API_KEY}`;
+					res = await fetch(downloadUrl, { cache: "no-store" });
+				} else {
+					const contentType = res.headers.get("content-type");
+					if (
+						contentType &&
+						!contentType.includes("application/json") &&
+						!contentType.includes("text/plain")
+					) {
+						// Public URL may redirect or return HTML, try API version
+						downloadUrl = `https://www.googleapis.com/drive/v3/files/${manifestFileId}?alt=media&key=${DRIVE_API_KEY}`;
+						res = await fetch(downloadUrl, { cache: "no-store" });
+					}
+				}
+
+				if (!res.ok) {
 					console.warn(
-						"Drive folder listing returned zero files. Check sharing, folder ID, and API key referrer restrictions."
+						"Failed to download manifest.json from Drive:",
+						res.status,
+						res.statusText
 					);
 					return null;
 				}
-				let file = files.find((f) => f.name === "manifest.json");
-				if (!file)
-					file = files.find(
-						(f) => (f.name || "").toLowerCase() === "manifest.json"
-					);
-				if (!file)
-					file = files.find(
-						(f) =>
-							(f.name || "").toLowerCase().startsWith("manifest") &&
-							(f.mimeType || "").includes("json")
-					);
-				if (!file || !file.id) return null;
-				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
-				const res = await fetch(downloadUrl, { cache: "no-store" });
-				if (!res.ok) return null;
+
 				const json = await res.json();
 				if (json && Array.isArray(json.documents)) return json.documents;
+				if (json && json.files && Array.isArray(json.files)) {
+					// Handle case where manifest has "files" array instead of "documents"
+					return json.files.map((fileId) => ({ id: fileId }));
+				}
 				return null;
 			}
 			return null;
