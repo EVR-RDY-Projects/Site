@@ -86,7 +86,7 @@ const team = [
 
   <Header currentPath="/team" pageTitle="Our Team" />
 
-  <main class="content-wrap" id="top">
+  <main id="main-content" class="content-wrap">
     <div class="container">
       <!-- Team Photo Grid -->
       <section class="card team-photo-grid-section animate-slide-up">
@@ -95,7 +95,7 @@ const team = [
           {team.map((member, index) => (
             <button type="button" class="team-photo-link" data-member-index={index} aria-label={`View ${member.name}'s bio`}>
               <div class="team-photo-wrapper">
-                <img src={member.photoSrc} alt={member.name} class={`team-photo-thumb ${member.name.toLowerCase().replace(/\s+/g, '-')}-photo`} />
+                <img src={member.photoSrc} alt={member.name} class={`team-photo-thumb ${member.name.toLowerCase().replace(/\s+/g, '-')}-photo`} loading="lazy" />
                 {member.badge && <div class="photo-badge">{member.badge}</div>}
               </div>
             </button>

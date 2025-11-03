@@ -43,7 +43,7 @@ const product = {
 
   <Header currentPath="/products/taps" pageTitle="T.A.P.S." />
 
-  <main class="content-wrap">
+  <main id="main-content" class="content-wrap">
     <div class="container">
       <!-- Breadcrumb Navigation -->
       <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -201,7 +201,7 @@ const product = {
         <h2>Architecture</h2>
         <p>The complete T.A.P.S. telemetry pipeline shows how all components work together to move critical data from OT networks to SOC analysis:</p>
         <div class="architecture-diagram">
-          <img src="/img/taps-architecture.png" alt="T.A.P.S. Architecture Diagram" class="architecture-image" id="arch-diagram" />
+          <img src="/img/taps-architecture.png" alt="T.A.P.S. Architecture Diagram" class="architecture-image" id="arch-diagram" loading="lazy" />
         </div>
       </section>
 
@@ -530,13 +530,33 @@ const product = {
         lightboxImg.src = archImg.src;
         lightboxImg.alt = archImg.alt;
         lightbox.classList.add('show');
+        
+        // Enhanced scroll lock - same as team modal
+        const scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        
+        // Store scroll position for restoration
+        lightbox.dataset.scrollY = scrollY.toString();
       });
     }
 
     window.closeLightbox = () => {
       lightbox.classList.remove('show');
+      
+      // Restore scroll position
+      const scrollY = lightbox.dataset.scrollY ? parseInt(lightbox.dataset.scrollY, 10) : 0;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
     };
 
     document.addEventListener('keydown', (e) => {
@@ -544,5 +564,14 @@ const product = {
         closeLightbox();
       }
     });
+    
+    // Close lightbox when clicking outside the image
+    if (lightbox) {
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+          closeLightbox();
+        }
+      });
+    }
   });
 </script>

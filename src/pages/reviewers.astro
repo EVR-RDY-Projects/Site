@@ -137,7 +137,7 @@ const team = [
 
   <Header currentPath="/reviewers" pageTitle="Reviewer Summary" />
 
-  <main class="content-wrap">
+  <main id="main-content" class="content-wrap">
     <div class="container">
 
       <!-- Who we are -->
@@ -185,7 +185,7 @@ const team = [
           {team.map((member, index) => (
             <div class="team-member-reviewer">
               <a href={`/team?member=${index}`} class="team-photo-link">
-                <img src={member.photoSrc} alt={member.name} class="team-photo" />
+                <img src={member.photoSrc} alt={member.name} class={`team-photo ${member.name.toLowerCase().replace(/\s+/g, '-')}-photo`} loading="lazy" />
               </a>
               <h3>{member.name}</h3>
               <p class="role">{member.role}</p>
@@ -316,10 +316,27 @@ const team = [
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: center center;
     margin-bottom: var(--space-md);
     border: 3px solid rgba(169, 214, 138, 0.4);
     transition: all var(--transition-normal);
     display: block;
+  }
+
+  .team-photo.shayla-lapoint-photo {
+    object-position: top;
+  }
+
+  .team-photo.timothy-deberry-photo {
+    object-position: top;
+  }
+
+  .team-photo.erin-burns-photo {
+    object-position: center;
+  }
+
+  .team-photo.dylan-knox-photo {
+    object-position: top center;
   }
 
   .team-photo-link:hover .team-photo {

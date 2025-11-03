@@ -22,7 +22,7 @@ const isHome = currentPath === '/' || currentPath === '';
 <header>
   <nav class="main-nav">
     <div class="container">
-      <a href="/" class="logo" data-home-logo>
+      <a href="/" class="logo" data-home-logo aria-label="EVR:RDY Home">
         <img src="/img/logo.png" alt="EVR:RDY Logo" />
         <span>EVR:RDY</span>
       </a>
@@ -31,12 +31,15 @@ const isHome = currentPath === '/' || currentPath === '';
         <span></span>
         <span></span>
       </button>
-      <ul class="nav-links">
+      <ul class="nav-links" role="menubar" aria-label="Main navigation">
         {navItems.map((item) => (
-          <li>
+          <li role="none">
             <a 
               href={item.href} 
               class={isActive(item.href) ? 'active' : ''}
+              role="menuitem"
+              aria-label={`Navigate to ${item.name}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
             >
               {item.name}
             </a>

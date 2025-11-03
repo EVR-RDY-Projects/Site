@@ -110,7 +110,7 @@
 			const resourcesContainer = document.getElementById("resources-grid");
 			if (!resourcesContainer) return;
 
-			resourcesContainer.innerHTML = "<p>Loading resources…</p>";
+			// Skeleton loader is already shown in HTML, just wait for resources
 
 			let driveDocs = DRIVE_DOCS_CACHE;
 
@@ -138,6 +138,11 @@
 			}
 		} catch (error) {
 			console.error("Failed to load resources:", error);
+			const resourcesContainer = document.getElementById("resources-grid");
+			if (resourcesContainer) {
+				resourcesContainer.innerHTML =
+					"<p>Failed to load resources. Please try again later.</p>";
+			}
 		}
 	}
 

@@ -32,7 +32,7 @@ const { name, role, valueLine, highlights, linkedin, github, photoSrc, bio, resu
 
 <section class="team-member">
   <div class="member-photo">
-    <img src={photoSrc} alt={name} class="member-photo-img" />
+    <img src={photoSrc} alt={name} class="member-photo-img" loading="lazy" />
     {role.includes('Founder') && <div class="member-badge">Founder</div>}
   </div>
   <div class="member-info">
