@@ -361,10 +361,42 @@
 				}
 				console.log("Found manifest file:", file.name);
 
+				// Try direct public URL first (works if file is publicly shared)
+				const publicUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
+				console.log("Trying direct public URL:", publicUrl);
+				try {
+					const publicRes = await fetch(publicUrl, { cache: "no-store" });
+					if (publicRes.ok) {
+						const text = await publicRes.text();
+						// Check if it's JSON or if it redirected to a confirmation page
+						if (text.trim().startsWith('{')) {
+							try {
+								const json = JSON.parse(text);
+								if (json && Array.isArray(json.documents)) {
+									console.log("Successfully loaded via direct public URL");
+									return json.documents;
+								}
+							} catch (parseError) {
+								console.log("Public URL returned non-JSON, trying metadata approach...");
+							}
+						}
+					}
+				} catch (publicError) {
+					console.log("Direct public URL failed, trying metadata approach...");
+				}
+
 				// Get file metadata to access webContentLink (public share URL, no CORS)
 				const metaUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?fields=webContentLink&key=${DRIVE_API_KEY}`;
 				try {
 					const metaRes = await fetch(metaUrl, { cache: "no-store" });
+					if (!metaRes.ok) {
+						console.warn("Metadata fetch failed:", metaRes.status, metaRes.statusText);
+						// If CORS or permission error, fall back immediately
+						if (metaRes.status === 403 || metaRes.status === 0) {
+							console.warn("CORS or permission error detected, falling back to repository");
+							return null;
+						}
+					}
 					if (metaRes.ok) {
 						const meta = await metaRes.json();
 						console.log("File metadata:", meta);
@@ -388,9 +420,14 @@
 					}
 				} catch (metaError) {
 					console.error("Could not fetch metadata or webContentLink:", metaError);
+					// If metadata fetch fails due to CORS/network error, fall back immediately
+					if (metaError.name === 'TypeError' || metaError.message.includes('fetch')) {
+						console.warn("Network/CORS error detected, falling back to repository manifest");
+						return null;
+					}
 				}
 
-				// Fallback: if webContentLink failed, try API download
+				// Final fallback: API download (will likely hit CORS)
 				console.log("webContentLink not available or failed, trying API download...");
 				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
 				try {
