@@ -106,34 +106,59 @@
 
 	// Dynamic Resources Loading (prefers Drive manifest when configured)
 	async function loadResources() {
+		const resourcesContainer = document.getElementById("resources-grid");
+		if (!resourcesContainer) {
+			console.log("Resources container not found");
+			return;
+		}
+
 		try {
-			const resourcesContainer = document.getElementById("resources-grid");
-			if (!resourcesContainer) {
-				console.log("Resources container not found");
-				return;
-			}
 			console.log("Starting loadResources()");
 			resourcesContainer.innerHTML = "<p>Loading resources…</p>";
-			let driveDocs = DRIVE_DOCS_CACHE;
-			console.log("Initial cache check:", driveDocs);
-			if (!driveDocs) {
-				console.log("Cache empty, waiting for promise or prefetching...");
-				if (DRIVE_DOCS_PROMISE) {
-					console.log("Waiting for existing promise...");
-					await DRIVE_DOCS_PROMISE;
-					driveDocs = DRIVE_DOCS_CACHE;
-					console.log("Promise resolved, cache now:", driveDocs);
-				} else {
-					console.log("No promise, calling prefetchDriveResources()...");
-					await prefetchDriveResources();
-					driveDocs = DRIVE_DOCS_CACHE;
-					console.log("Prefetch completed, cache now:", driveDocs);
+
+			// Add timeout to prevent hanging forever
+			const timeoutPromise = new Promise((_, reject) => {
+				setTimeout(
+					() => reject(new Error("Resource loading timeout after 30 seconds")),
+					30000
+				);
+			});
+
+			const loadPromise = (async () => {
+				let driveDocs = DRIVE_DOCS_CACHE;
+				console.log("Initial cache check:", driveDocs);
+				if (!driveDocs) {
+					console.log("Cache empty, waiting for promise or prefetching...");
+					if (DRIVE_DOCS_PROMISE) {
+						console.log("Waiting for existing promise...");
+						try {
+							await DRIVE_DOCS_PROMISE;
+							driveDocs = DRIVE_DOCS_CACHE;
+							console.log("Promise resolved, cache now:", driveDocs);
+						} catch (error) {
+							console.error("Promise rejected:", error);
+							driveDocs = null;
+						}
+					} else {
+						console.log("No promise, calling prefetchDriveResources()...");
+						try {
+							await prefetchDriveResources();
+							driveDocs = DRIVE_DOCS_CACHE;
+							console.log("Prefetch completed, cache now:", driveDocs);
+						} catch (error) {
+							console.error("Prefetch failed:", error);
+							driveDocs = null;
+						}
+					}
 				}
-			}
-			console.log("Drive docs loaded:", driveDocs?.length || 0);
-			console.log("Drive docs data:", driveDocs);
-			console.log("driveDocs type:", typeof driveDocs);
-			console.log("Is driveDocs array?", Array.isArray(driveDocs));
+				console.log("Drive docs loaded:", driveDocs?.length || 0);
+				console.log("Drive docs data:", driveDocs);
+				console.log("driveDocs type:", typeof driveDocs);
+				console.log("Is driveDocs array?", Array.isArray(driveDocs));
+				return driveDocs;
+			})();
+
+			let driveDocs = await Promise.race([loadPromise, timeoutPromise]);
 
 			// Check if driveDocs is actually the full manifest object instead of just documents array
 			if (driveDocs && !Array.isArray(driveDocs) && driveDocs.documents) {
@@ -224,6 +249,7 @@
 				}
 			} else {
 				console.log("No resources to display. driveDocs:", driveDocs);
+				console.log("driveDocs is:", typeof driveDocs, driveDocs);
 				const empty = document.createElement("p");
 				empty.textContent = "No resources available.";
 				resourcesContainer.innerHTML = "";
@@ -231,10 +257,25 @@
 			}
 		} catch (error) {
 			console.error("Failed to load resources:", error);
+			console.error("Error stack:", error.stack);
 			const resourcesContainer = document.getElementById("resources-grid");
 			if (resourcesContainer) {
+				resourcesContainer.innerHTML = `<p style="color: var(--bright);">Failed to load resources. Error: ${
+					error.message || error
+				}. Check console for details.</p>`;
+			}
+		} finally {
+			// Ensure we always update the UI, even if there was an error
+			const resourcesContainer = document.getElementById("resources-grid");
+			if (
+				resourcesContainer &&
+				resourcesContainer.innerHTML === "<p>Loading resources…</p>"
+			) {
+				console.warn(
+					"loadResources completed but UI still shows loading. This indicates a logic error."
+				);
 				resourcesContainer.innerHTML =
-					"<p>Failed to load resources. Please try again later.</p>";
+					"<p style='color: var(--bright);'>No resources were loaded. Check console for errors.</p>";
 			}
 		}
 	}
@@ -395,6 +436,13 @@
 
 	function createDriveResourceTile(doc) {
 		console.log("createDriveResourceTile called with:", doc);
+		console.log("Document structure check:", {
+			id: doc?.id,
+			title: doc?.title,
+			shareURL: doc?.shareURL,
+			shareUrl: doc?.shareUrl,
+			hasShareUrl: !!(doc?.shareURL || doc?.shareUrl),
+		});
 		if (!doc) {
 			console.error("createDriveResourceTile: doc is null or undefined");
 			return null;
