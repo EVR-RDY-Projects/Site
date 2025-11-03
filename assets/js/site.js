@@ -360,17 +360,46 @@
 					return null;
 				}
 				console.log("Found manifest file:", file.name);
-				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
-				const res = await fetch(downloadUrl, { cache: "no-store" });
-				if (!res.ok) {
-					console.error(
-						"Manifest download failed:",
-						res.status,
-						res.statusText
-					);
-					return null;
+
+				// Get file metadata to access webContentLink (public share URL, no CORS)
+				const metaUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?fields=webContentLink&key=${DRIVE_API_KEY}`;
+				try {
+					const metaRes = await fetch(metaUrl, { cache: "no-store" });
+					if (metaRes.ok) {
+						const meta = await metaRes.json();
+						console.log("File metadata:", meta);
+
+						// Use webContentLink if available (works for publicly shared files, no CORS)
+						if (meta.webContentLink) {
+							console.log("Using webContentLink (public share URL) to avoid CORS");
+							const shareRes = await fetch(meta.webContentLink, {
+								cache: "no-store",
+							});
+							if (shareRes.ok) {
+								const json = await shareRes.json();
+								console.log("Manifest JSON:", json);
+								console.log("Manifest documents:", json?.documents);
+								if (json && Array.isArray(json.documents)) {
+									console.log("Found", json.documents.length, "documents");
+									return json.documents;
+								}
+							}
+						}
+					}
+				} catch (metaError) {
+					console.error("Could not fetch metadata or webContentLink:", metaError);
 				}
-				const json = await res.json();
+
+				// Fallback: if webContentLink failed, try API download
+				console.log("webContentLink not available or failed, trying API download...");
+				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
+				try {
+					const res = await fetch(downloadUrl, { cache: "no-store" });
+					if (!res.ok) {
+						console.error("Manifest download failed:", res.status, res.statusText);
+						return null;
+					}
+					const json = await res.json();
 				console.log("Manifest JSON:", json);
 				console.log("Manifest documents:", json?.documents);
 				console.log("Is documents array?", Array.isArray(json?.documents));
