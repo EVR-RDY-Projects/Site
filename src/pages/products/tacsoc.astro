@@ -57,13 +57,13 @@ const product = {
         <p class="one-liner">{product.oneLiner}</p>
       </section>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Who It's For</h2>
         <p>{product.who}</p>
       </section>
 
       <!-- Quick Overview -->
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>TacSOC at a Glance</h2>
         <div class="quick-overview">
           <div class="overview-grid">
@@ -100,7 +100,7 @@ const product = {
       </section>
 
       <!-- Technical Capabilities -->
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Technical Capabilities</h2>
         <div class="features-grid">
           <div class="feature-card">
@@ -137,14 +137,14 @@ const product = {
         </div>
       </section>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Key Features</h2>
         <ul class="features-list">
           {product.features.map((feature) => <li>{feature}</li>)}
         </ul>
       </section>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <div class="product-meta">
           <span class={`status-indicator ${product.status}`}>Active Development</span>
           {product.statusNote && <p class="status-note">{product.statusNote}</p>}

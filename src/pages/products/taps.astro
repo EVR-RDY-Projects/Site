@@ -57,13 +57,13 @@ const product = {
         <p class="one-liner">{product.oneLiner}</p>
       </section>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Who It's For</h2>
         <p>{product.who}</p>
       </section>
 
       <!-- Quick Overview -->
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Quick Overview</h2>
         <div class="quick-overview">
           <div class="overview-grid">
@@ -100,7 +100,7 @@ const product = {
       </section>
 
       <!-- System Components -->
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>System Components</h2>
         <p>T.A.P.S. consists of four integrated components:</p>
         <div class="components-grid">
@@ -190,14 +190,14 @@ const product = {
         </div>
       </section>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Key Features</h2>
         <ul class="features-list">
           {product.features.map((feature) => <li>{feature}</li>)}
         </ul>
       </section>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <h2>Architecture</h2>
         <p>The complete T.A.P.S. telemetry pipeline shows how all components work together to move critical data from OT networks to SOC analysis:</p>
         <div class="architecture-diagram">
@@ -211,7 +211,7 @@ const product = {
         <img class="lightbox-image" id="lightbox-img" src="" alt="" />
       </div>
 
-      <section class="card">
+      <section class="card animate-slide-up">
         <div class="product-meta">
           <span class={`status-indicator ${product.status}`}>Active Development</span>
           {product.statusNote && <p class="status-note">{product.statusNote}</p>}

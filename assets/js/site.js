@@ -106,150 +106,31 @@
 
 	// Dynamic Resources Loading (prefers Drive manifest when configured)
 	async function loadResources() {
-		const resourcesContainer = document.getElementById("resources-grid");
-		if (!resourcesContainer) {
-			console.log("Resources container not found");
-			return;
-		}
-
 		try {
-			console.log("Starting loadResources()");
+			const resourcesContainer = document.getElementById("resources-grid");
+			if (!resourcesContainer) return;
+
 			resourcesContainer.innerHTML = "<p>Loading resources…</p>";
 
-			// Add timeout to prevent hanging forever
-			const timeoutPromise = new Promise((_, reject) => {
-				setTimeout(
-					() => reject(new Error("Resource loading timeout after 30 seconds")),
-					30000
-				);
-			});
+			let driveDocs = DRIVE_DOCS_CACHE;
 
-			const loadPromise = (async () => {
-				let driveDocs = DRIVE_DOCS_CACHE;
-				console.log("Initial cache check:", driveDocs);
-				if (!driveDocs) {
-					console.log("Cache empty, waiting for promise or prefetching...");
-					if (DRIVE_DOCS_PROMISE) {
-						console.log("Waiting for existing promise...");
-						try {
-							await DRIVE_DOCS_PROMISE;
-							driveDocs = DRIVE_DOCS_CACHE;
-							console.log("Promise resolved, cache now:", driveDocs);
-						} catch (error) {
-							console.error("Promise rejected:", error);
-							driveDocs = null;
-						}
-					} else {
-						console.log("No promise, calling prefetchDriveResources()...");
-						try {
-							await prefetchDriveResources();
-							driveDocs = DRIVE_DOCS_CACHE;
-							console.log("Prefetch completed, cache now:", driveDocs);
-						} catch (error) {
-							console.error("Prefetch failed:", error);
-							driveDocs = null;
-						}
-					}
-				}
-				console.log("Drive docs loaded:", driveDocs?.length || 0);
-				console.log("Drive docs data:", driveDocs);
-				console.log("driveDocs type:", typeof driveDocs);
-				console.log("Is driveDocs array?", Array.isArray(driveDocs));
-				return driveDocs;
-			})();
-
-			let driveDocs = await Promise.race([loadPromise, timeoutPromise]);
-
-			// Check if driveDocs is actually the full manifest object instead of just documents array
-			if (driveDocs && !Array.isArray(driveDocs) && driveDocs.documents) {
-				console.log(
-					"driveDocs is full manifest object, extracting documents array"
-				);
-				driveDocs = driveDocs.documents;
-				console.log("After extraction, driveDocs:", driveDocs);
-				console.log("Is now array?", Array.isArray(driveDocs));
-			}
-
-			// If Drive failed, try loading from repository
-			if (!driveDocs || !Array.isArray(driveDocs) || driveDocs.length === 0) {
-				console.log("Drive failed or empty, trying repository fallback...");
-				console.log("driveDocs value:", driveDocs);
-				console.log("Is array?", Array.isArray(driveDocs));
-				if (driveDocs && !Array.isArray(driveDocs)) {
-					console.log(
-						"driveDocs is not an array:",
-						typeof driveDocs,
-						driveDocs
-					);
-				}
-				const files = await getResourceManifest();
-				if (files && files.length) {
-					console.log("Loading", files.length, "files from repository");
-					resourcesContainer.innerHTML = "";
-					for (const fileName of files) {
-						try {
-							const rawUrl = getRawGitHubUrl(
-								`/resources/markdown/${fileName}.md`
-							);
-							const response = await fetch(rawUrl);
-							if (!response.ok) continue;
-							const markdownContent = await response.text();
-							const resource = parseMarkdownMetadata(markdownContent, fileName);
-							if (resource) {
-								const tile = createResourceTile(resource);
-								resourcesContainer.appendChild(tile);
-							}
-						} catch (error) {
-							console.error("Failed to load", fileName, ":", error);
-						}
-					}
-					return;
+			if (!driveDocs) {
+				if (DRIVE_DOCS_PROMISE) {
+					await DRIVE_DOCS_PROMISE;
+					driveDocs = DRIVE_DOCS_CACHE;
+				} else {
+					await prefetchDriveResources();
+					driveDocs = DRIVE_DOCS_CACHE;
 				}
 			}
 
-			if (driveDocs && Array.isArray(driveDocs) && driveDocs.length > 0) {
-				console.log("Rendering", driveDocs.length, "Drive documents");
-				console.log("Documents data:", driveDocs);
+			if (driveDocs && driveDocs.length) {
 				resourcesContainer.innerHTML = "";
-				let tilesCreated = 0;
-				driveDocs.forEach((doc, index) => {
-					try {
-						console.log(
-							`Creating tile ${index + 1}/${driveDocs.length} for document:`,
-							doc
-						);
-						const tile = createDriveResourceTile(doc);
-						if (tile) {
-							resourcesContainer.appendChild(tile);
-							tilesCreated++;
-							console.log(
-								`Tile ${index + 1} created and appended successfully`
-							);
-						} else {
-							console.error(`Tile ${index + 1} was null or undefined`);
-						}
-					} catch (error) {
-						console.error(
-							`Error creating tile for document ${index + 1}:`,
-							error
-						);
-						console.error("Document data:", doc);
-					}
+				driveDocs.forEach((doc) => {
+					const tile = createDriveResourceTile(doc);
+					resourcesContainer.appendChild(tile);
 				});
-				console.log(
-					`Resources grid now has ${tilesCreated} tiles (expected ${driveDocs.length})`
-				);
-				if (tilesCreated === 0 && driveDocs.length > 0) {
-					console.error("No tiles were created even though documents exist!");
-					const errorMsg = document.createElement("p");
-					errorMsg.textContent =
-						"Failed to render resources. Check console for errors.";
-					errorMsg.style.color = "var(--bright)";
-					resourcesContainer.appendChild(errorMsg);
-				}
 			} else {
-				console.log("No resources to display. driveDocs:", driveDocs);
-				console.log("driveDocs is:", typeof driveDocs, driveDocs);
 				const empty = document.createElement("p");
 				empty.textContent = "No resources available.";
 				resourcesContainer.innerHTML = "";
@@ -257,26 +138,6 @@
 			}
 		} catch (error) {
 			console.error("Failed to load resources:", error);
-			console.error("Error stack:", error.stack);
-			const resourcesContainer = document.getElementById("resources-grid");
-			if (resourcesContainer) {
-				resourcesContainer.innerHTML = `<p style="color: var(--bright);">Failed to load resources. Error: ${
-					error.message || error
-				}. Check console for details.</p>`;
-			}
-		} finally {
-			// Ensure we always update the UI, even if there was an error
-			const resourcesContainer = document.getElementById("resources-grid");
-			if (
-				resourcesContainer &&
-				resourcesContainer.innerHTML === "<p>Loading resources…</p>"
-			) {
-				console.warn(
-					"loadResources completed but UI still shows loading. This indicates a logic error."
-				);
-				resourcesContainer.innerHTML =
-					"<p style='color: var(--bright);'>No resources were loaded. Check console for errors.</p>";
-			}
 		}
 	}
 
@@ -296,88 +157,45 @@
 	async function getDriveManifestDocuments() {
 		try {
 			if (DRIVE_FOLDER_URL && DRIVE_API_KEY) {
-				// First, try to list folder using API (may fail due to CORS/referrer restrictions)
 				const folderIdMatch = DRIVE_FOLDER_URL.match(
 					/folders\/([A-Za-z0-9_-]+)/
 				);
 				const folderId = folderIdMatch ? folderIdMatch[1] : "";
 				if (!folderId) return null;
 
-				let manifestFileId = null;
-				let allFiles = [];
-
-				try {
-					const q = encodeURIComponent(
-						`'${folderId}' in parents and trashed = false`
-					);
-					const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
-					const listRes = await fetch(listUrl, { cache: "no-store" });
-					if (listRes.ok) {
-						const list = await listRes.json();
-						allFiles = (list && list.files) || [];
-						let file = allFiles.find((f) => f.name === "manifest.json");
-						if (!file)
-							file = allFiles.find(
-								(f) => (f.name || "").toLowerCase() === "manifest.json"
-							);
-						if (!file)
-							file = allFiles.find(
-								(f) =>
-									(f.name || "").toLowerCase().startsWith("manifest") &&
-									(f.mimeType || "").includes("json")
-							);
-						if (file && file.id) manifestFileId = file.id;
-					}
-				} catch (listError) {
-					console.warn("Drive folder listing failed (likely CORS):", listError);
-					// Fall through to try direct download if we know the manifest ID
-				}
-
-				// If we didn't get the manifest ID from listing, use known ID
-				// (manifest.json file ID from the folder: 1OGvU_k5QmlGAvELnzgdikZO0g14JUBpG)
-				if (!manifestFileId) {
-					manifestFileId = "1OGvU_k5QmlGAvELnzgdikZO0g14JUBpG";
-				}
-
-				// Try public download URL first (bypasses API CORS issues for public files)
-				let downloadUrl = `https://drive.google.com/uc?export=download&id=${manifestFileId}`;
-				let res = await fetch(downloadUrl, {
-					cache: "no-store",
-					redirect: "follow",
-				});
-
-				// If public URL doesn't work or doesn't return JSON, try API download (may still hit CORS)
-				if (!res.ok) {
-					downloadUrl = `https://www.googleapis.com/drive/v3/files/${manifestFileId}?alt=media&key=${DRIVE_API_KEY}`;
-					res = await fetch(downloadUrl, { cache: "no-store" });
-				} else {
-					const contentType = res.headers.get("content-type");
-					if (
-						contentType &&
-						!contentType.includes("application/json") &&
-						!contentType.includes("text/plain")
-					) {
-						// Public URL may redirect or return HTML, try API version
-						downloadUrl = `https://www.googleapis.com/drive/v3/files/${manifestFileId}?alt=media&key=${DRIVE_API_KEY}`;
-						res = await fetch(downloadUrl, { cache: "no-store" });
-					}
-				}
-
-				if (!res.ok) {
+				const q = encodeURIComponent(
+					`'${folderId}' in parents and trashed = false`
+				);
+				const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
+				const listRes = await fetch(listUrl, { cache: "no-store" });
+				if (!listRes.ok) return null;
+				const list = await listRes.json();
+				const files = (list && list.files) || [];
+				if (!files.length) {
 					console.warn(
-						"Failed to download manifest.json from Drive:",
-						res.status,
-						res.statusText
+						"Drive folder listing returned zero files. Check sharing, folder ID, and API key referrer restrictions."
 					);
 					return null;
 				}
+				let file = files.find((f) => f.name === "manifest.json");
+				if (!file)
+					file = files.find(
+						(f) => (f.name || "").toLowerCase() === "manifest.json"
+					);
+				if (!file)
+					file = files.find(
+						(f) =>
+							(f.name || "").toLowerCase().startsWith("manifest") &&
+							(f.mimeType || "").includes("json")
+					);
+				if (!file || !file.id) return null;
+
+				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
+				const res = await fetch(downloadUrl, { cache: "no-store" });
+				if (!res.ok) return null;
 
 				const json = await res.json();
 				if (json && Array.isArray(json.documents)) return json.documents;
-				if (json && json.files && Array.isArray(json.files)) {
-					// Handle case where manifest has "files" array instead of "documents"
-					return json.files.map((fileId) => ({ id: fileId }));
-				}
 				return null;
 			}
 			return null;
@@ -426,65 +244,23 @@
 	}
 
 	function createDriveResourceTile(doc) {
-		console.log("createDriveResourceTile called with:", doc);
-		console.log("Document structure check:", {
-			id: doc?.id,
-			title: doc?.title,
-			shareURL: doc?.shareURL,
-			shareUrl: doc?.shareUrl,
-			hasShareUrl: !!(doc?.shareURL || doc?.shareUrl),
-		});
-		if (!doc) {
-			console.error("createDriveResourceTile: doc is null or undefined");
-			return null;
-		}
 		const tile = document.createElement("div");
 		tile.className = "resource-tile";
 		tile.onclick = () => expandDriveResource(doc);
+
 		const icon = "📄";
-
-		// Format date from ISO string to readable format
-		let date = "";
-		if (doc.lastEdited) {
-			try {
-				const dateObj = new Date(doc.lastEdited);
-				date = dateObj.toLocaleDateString("en-US", {
-					year: "numeric",
-					month: "short",
-					day: "numeric",
-				});
-			} catch (e) {
-				date = doc.lastEdited;
-			}
-		} else if (doc.creationDate) {
-			try {
-				const dateObj = new Date(doc.creationDate);
-				date = dateObj.toLocaleDateString("en-US", {
-					year: "numeric",
-					month: "short",
-					day: "numeric",
-				});
-			} catch (e) {
-				date = doc.creationDate;
-			}
-		}
-
+		const date = doc.lastEdited || doc.creationDate || "";
 		const type = doc.type || "Document";
-		const title = doc.title || "Document";
-		const description = doc.description || "";
-
-		console.log("Tile data - title:", title, "type:", type, "date:", date);
 
 		tile.innerHTML = `
 			<div class="resource-icon">${icon}</div>
-			<h3>${escapeHtml(title)}</h3>
-			<p>${escapeHtml(description)}</p>
+			<h3>${escapeHtml(doc.title || "Document")}</h3>
+			<p>${escapeHtml(doc.description || "")}</p>
 			<div class="resource-meta">
 				<span class="resource-type">${escapeHtml(type)}</span>
 				<span class="resource-date">${escapeHtml(date)}</span>
 			</div>
 		`;
-		console.log("Created tile HTML:", tile.innerHTML.substring(0, 100) + "...");
 		return tile;
 	}
 
@@ -548,10 +324,12 @@
 				":scope > .glass-embed-card"
 			);
 			if (directEmbedCard) directEmbedCard.remove();
+
 			const wrapper = expandedResource.querySelector(
 				":scope > .expanded-resource-content"
 			);
 			if (wrapper) wrapper.style.display = "";
+
 			loadMarkdownContent(resource.id, contentElement);
 			expandedResource.classList.add("show");
 			document.body.style.overflow = "hidden";
@@ -562,6 +340,7 @@
 		const expandedResource = document.getElementById("expanded-resource");
 		const contentElement = document.getElementById("expanded-resource-content");
 		if (!doc || !doc.id || !expandedResource || !contentElement) return;
+
 		// Hide the content wrapper; we'll render the iframe directly under overlay
 		const wrapper = expandedResource.querySelector(
 			":scope > .expanded-resource-content"
@@ -584,12 +363,15 @@
 		const buildEmbedShell = (src, kind) => {
 			const old = expandedResource.querySelector(":scope > .glass-embed-card");
 			if (old) old.remove();
+
 			const shell = document.createElement("div");
 			shell.className = "glass-embed-card";
+
 			const iframe = document.createElement("iframe");
 			iframe.className = "glass-embed-iframe";
 			iframe.setAttribute("allow", "fullscreen");
 			iframe.setAttribute("referrerpolicy", "no-referrer");
+
 			if (kind === "drive") {
 				iframe.setAttribute(
 					"sandbox",
@@ -598,10 +380,13 @@
 			} else {
 				iframe.setAttribute("sandbox", "allow-downloads");
 			}
+
 			iframe.src = src;
 			shell.appendChild(iframe);
+
 			return shell;
 		};
+
 		const directShareUrl = doc.shareUrl || doc.shareURL;
 		if (directShareUrl) {
 			const previewUrl = directShareUrl.replace("/view", "/preview");
@@ -616,29 +401,37 @@
 			document.body.style.overflow = "hidden";
 			return;
 		}
+
 		try {
 			contentElement.innerHTML = "<p>Loading document…</p>";
+
 			let fileId = doc.id;
 			let resourceKey = doc.resourceKey || "";
+
 			const shareUrlSeed = doc.shareUrl || doc.shareURL;
 			if (shareUrlSeed) {
 				try {
 					const idMatch = shareUrlSeed.match(/\/d\/([A-Za-z0-9_-]+)/);
 					if (idMatch && idMatch[1]) fileId = idMatch[1];
+
 					const rkMatch = shareUrlSeed.match(/[?&]resourcekey=([^&]+)/i);
 					if (rkMatch && rkMatch[1])
 						resourceKey = decodeURIComponent(rkMatch[1]);
 				} catch (_) {}
 			}
+
 			let metaUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?fields=mimeType,name,resourceKey,shortcutDetails/targetId,shortcutDetails/targetMimeType,shortcutDetails/targetResourceKey&supportsAllDrives=true&key=${DRIVE_API_KEY}`;
 			if (resourceKey)
 				metaUrl += `&resourceKey=${encodeURIComponent(resourceKey)}`;
+
 			const metaRes = await fetch(metaUrl, { cache: "no-store" });
 			if (!metaRes.ok) throw new Error("metadata-failed");
+
 			const meta = await metaRes.json();
 			let mime = (meta.mimeType || "").toLowerCase();
 			let name = meta.name || doc.title || "";
 			resourceKey = meta.resourceKey || resourceKey || "";
+
 			if (
 				mime === "application/vnd.google-apps.shortcut" &&
 				meta.shortcutDetails
@@ -647,12 +440,14 @@
 				mime = (meta.shortcutDetails.targetMimeType || "").toLowerCase();
 				resourceKey = meta.shortcutDetails.targetResourceKey || resourceKey;
 			}
+
 			const appendParams = (url) => {
 				const u = new URL(url);
 				u.searchParams.set("supportsAllDrives", "true");
 				if (resourceKey) u.searchParams.set("resourceKey", resourceKey);
 				return u.toString();
 			};
+
 			let downloadUrl = "";
 			if (mime === "application/pdf" || name.toLowerCase().endsWith(".pdf")) {
 				downloadUrl = appendParams(
@@ -667,16 +462,20 @@
 					`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${DRIVE_API_KEY}`
 				);
 			}
+
 			const res = await fetch(downloadUrl, { cache: "no-store" });
 			if (!res.ok) throw new Error("download-failed");
+
 			const blob = await res.blob();
 			const blobUrl = URL.createObjectURL(blob);
 			const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
+
 			const shell2 = buildEmbedShell(blobUrl, "blob");
 			expandedResource.appendChild(shell2);
 		} catch (e) {
 			contentElement.innerHTML = "<p>Failed to load document.</p>";
 		}
+
 		expandedResource.classList.add("show");
 		document.body.style.overflow = "hidden";
 	}
@@ -686,11 +485,13 @@
 		if (expandedResource) {
 			expandedResource.classList.remove("show");
 			document.body.style.overflow = "auto";
+
 			// Remove any injected direct embed and restore content wrapper
 			const directEmbed = expandedResource.querySelector(
 				":scope > .glass-embed-card"
 			);
 			if (directEmbed) directEmbed.remove();
+
 			const contentWrapper = expandedResource.querySelector(
 				":scope > .expanded-resource-content"
 			);
@@ -811,7 +612,7 @@
 		const productsModal = document.getElementById("products-modal");
 		prefetchDriveResources();
 
-		// Load resources if on resources page
+		// Load resources if we're on the resources page
 		if (document.getElementById("resources-grid")) {
 			loadResources();
 		}
@@ -821,6 +622,7 @@
 				btn.dataset.originalText = btn.textContent.trim();
 			}
 		});
+
 		if (productsModal) {
 			const observer = new MutationObserver((mutations) => {
 				for (const m of mutations) {
@@ -871,6 +673,7 @@
 		const teamModal = document.getElementById("team-modal");
 		const architectureModal = document.getElementById("architecture-modal");
 		const expandedResource = document.getElementById("expanded-resource");
+
 		if (
 			productsModal &&
 			productsModal.classList.contains("show") &&
@@ -918,6 +721,7 @@
 			const teamModal = document.getElementById("team-modal");
 			const architectureModal = document.getElementById("architecture-modal");
 			const expandedResource = document.getElementById("expanded-resource");
+
 			if (expandedResource && expandedResource.classList.contains("show")) {
 				closeExpandedResource();
 			} else if (
@@ -1015,6 +819,7 @@
 	window.openArchitectureDiagram = openArchitectureDiagram;
 	window.closeArchitectureDiagram = closeArchitectureDiagram;
 })();
+
 // Back to Top Button Functionality
 function scrollToTop() {
 	window.scrollTo({
