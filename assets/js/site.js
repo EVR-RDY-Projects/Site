@@ -395,22 +395,57 @@
 
 	function createDriveResourceTile(doc) {
 		console.log("createDriveResourceTile called with:", doc);
+		if (!doc) {
+			console.error("createDriveResourceTile: doc is null or undefined");
+			return null;
+		}
 		const tile = document.createElement("div");
 		tile.className = "resource-tile";
 		tile.onclick = () => expandDriveResource(doc);
 		const icon = "📄";
-		const date = doc.lastEdited || doc.creationDate || "";
+
+		// Format date from ISO string to readable format
+		let date = "";
+		if (doc.lastEdited) {
+			try {
+				const dateObj = new Date(doc.lastEdited);
+				date = dateObj.toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+				});
+			} catch (e) {
+				date = doc.lastEdited;
+			}
+		} else if (doc.creationDate) {
+			try {
+				const dateObj = new Date(doc.creationDate);
+				date = dateObj.toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+				});
+			} catch (e) {
+				date = doc.creationDate;
+			}
+		}
+
 		const type = doc.type || "Document";
+		const title = doc.title || "Document";
+		const description = doc.description || "";
+
+		console.log("Tile data - title:", title, "type:", type, "date:", date);
+
 		tile.innerHTML = `
 			<div class="resource-icon">${icon}</div>
-			<h3>${escapeHtml(doc.title || "Document")}</h3>
-			<p>${escapeHtml(doc.description || "")}</p>
+			<h3>${escapeHtml(title)}</h3>
+			<p>${escapeHtml(description)}</p>
 			<div class="resource-meta">
 				<span class="resource-type">${escapeHtml(type)}</span>
 				<span class="resource-date">${escapeHtml(date)}</span>
 			</div>
 		`;
-		console.log("Created tile:", tile);
+		console.log("Created tile HTML:", tile.innerHTML.substring(0, 100) + "...");
 		return tile;
 	}
 
