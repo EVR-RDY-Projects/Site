@@ -66,12 +66,31 @@ const isHome = currentPath === '/' || currentPath === '';
     position: sticky;
     top: 0;
     z-index: var(--z-sticky);
-    background: rgba(14, 16, 18, 0.85);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(169, 214, 138, 0.15);
+    background: linear-gradient(180deg, 
+      rgba(14, 16, 18, 0.95) 0%, 
+      rgba(14, 16, 18, 0.85) 100%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    backdrop-filter: blur(24px) saturate(200%);
+    border-bottom: 1px solid rgba(169, 214, 138, 0.2);
     padding: var(--space-md) 0;
-    box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(169, 214, 138, 0.05) inset,
+      0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    transition: all var(--transition-normal);
+  }
+
+  .main-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(169, 214, 138, 0.4) 50%, 
+      transparent 100%);
   }
 
   .main-nav .container {
@@ -89,8 +108,25 @@ const isHome = currentPath === '/' || currentPath === '';
     color: var(--bone);
     font-weight: 700;
     font-size: 1.25rem;
+    letter-spacing: -0.02em;
     transition: all var(--transition-normal);
     position: relative;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+  }
+
+  .logo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(169, 214, 138, 0.05));
+    opacity: 0;
+    border-radius: var(--radius-md);
+    transition: opacity var(--transition-normal);
+  }
+
+  .logo:hover::before {
+    opacity: 1;
   }
 
   .logo:hover {
@@ -99,14 +135,16 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .logo img {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     object-fit: contain;
-    transition: transform var(--transition-normal);
+    filter: drop-shadow(0 2px 4px rgba(169, 214, 138, 0.3));
+    transition: all var(--transition-normal);
   }
 
   .logo:hover img {
     transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 4px 8px rgba(169, 214, 138, 0.5));
   }
 
   .nav-links {
@@ -119,27 +157,29 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .nav-links a {
-    color: var(--bone);
+    color: rgba(229, 228, 216, 0.9);
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-md);
     transition: all var(--transition-normal);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .nav-links a::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(169, 214, 138, 0.05));
+    inset: 0;
+    background: linear-gradient(135deg, 
+      rgba(169, 214, 138, 0.12), 
+      rgba(169, 214, 138, 0.08));
     opacity: 0;
     transition: opacity var(--transition-normal);
     border-radius: var(--radius-md);
+    border: 1px solid rgba(169, 214, 138, 0.2);
   }
 
   .nav-links a:hover::before,
@@ -149,23 +189,30 @@ const isHome = currentPath === '/' || currentPath === '';
 
   .nav-links a:hover {
     color: var(--bright);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+    text-shadow: 0 0 8px rgba(169, 214, 138, 0.3);
   }
 
   .nav-links a.active {
     color: var(--bright);
+    text-shadow: 0 0 12px rgba(169, 214, 138, 0.4);
   }
 
   .nav-links a.active::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--bright), transparent);
-    border-radius: 3px;
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      var(--bright) 20%, 
+      var(--bright) 80%, 
+      transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(169, 214, 138, 0.6);
     animation: slideIn 0.3s ease-out;
   }
 
@@ -175,7 +222,7 @@ const isHome = currentPath === '/' || currentPath === '';
       opacity: 0;
     }
     to {
-      width: 60%;
+      width: 70%;
       opacity: 1;
     }
   }
@@ -199,10 +246,26 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .page-header {
-    padding: var(--space-xl) 0;
-    background: linear-gradient(135deg, rgba(14, 16, 18, 0.95), rgba(14, 16, 18, 0.85));
+    padding: var(--space-2xl) 0 var(--space-xl);
+    background: linear-gradient(135deg, 
+      rgba(14, 16, 18, 0.95), 
+      rgba(14, 16, 18, 0.85));
     border-bottom: 1px solid rgba(229, 228, 216, 0.15);
     margin-bottom: var(--space-lg);
+    position: relative;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(169, 214, 138, 0.3) 50%, 
+      transparent 100%);
   }
 
   .page-title {
@@ -215,11 +278,14 @@ const isHome = currentPath === '/' || currentPath === '';
     background-clip: text;
     color: transparent;
     text-align: center;
+    letter-spacing: -0.03em;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
 
   @media (max-width: 768px) {
     .main-nav {
       padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(169, 214, 138, 0.15);
     }
 
     .main-nav .container {
@@ -230,11 +296,13 @@ const isHome = currentPath === '/' || currentPath === '';
     .nav-links {
       gap: var(--space-xs);
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .nav-links a {
-      font-size: 0.85rem;
+      font-size: 0.875rem;
       padding: var(--space-xs) var(--space-sm);
+      font-weight: 600;
     }
 
     .logo {
@@ -242,8 +310,12 @@ const isHome = currentPath === '/' || currentPath === '';
     }
 
     .logo img {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .page-header {
+      padding: var(--space-xl) 0 var(--space-lg);
     }
   }
 </style>

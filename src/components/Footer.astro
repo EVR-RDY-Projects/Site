@@ -19,19 +19,35 @@ const currentYear = new Date().getFullYear();
 
 <style>
   footer {
-    background: rgba(0, 0, 0, 0.3);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    background: linear-gradient(180deg, 
+      rgba(0, 0, 0, 0.4) 0%, 
+      rgba(0, 0, 0, 0.3) 100%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    backdrop-filter: blur(12px) saturate(140%);
     border-radius: var(--radius-lg);
     padding: var(--space-lg);
     margin: var(--space-xl) 0;
-    border: 1px solid rgba(229, 228, 216, 0.1);
+    border: 1px solid rgba(229, 228, 216, 0.15);
     text-align: center;
     box-shadow: 
       0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -2px rgba(0, 0, 0, 0.05),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
     transition: all var(--transition-normal);
+    position: relative;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(169, 214, 138, 0.3) 50%, 
+      transparent 100%);
   }
 
   footer:hover {
@@ -40,6 +56,7 @@ const currentYear = new Date().getFullYear();
       0 15px 20px -3px rgba(0, 0, 0, 0.12),
       0 6px 8px -2px rgba(0, 0, 0, 0.06),
       inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    border-color: rgba(169, 214, 138, 0.25);
   }
 
   .footer-nav {
@@ -52,14 +69,31 @@ const currentYear = new Date().getFullYear();
   }
 
   .footer-nav a {
-    color: var(--bright);
+    color: rgba(229, 228, 216, 0.9);
     text-decoration: none;
     transition: all var(--transition-fast);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    position: relative;
+  }
+
+  .footer-nav a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(169, 214, 138, 0.1), rgba(169, 214, 138, 0.05));
+    opacity: 0;
+    border-radius: var(--radius-sm);
+    transition: opacity var(--transition-fast);
+  }
+
+  .footer-nav a:hover::before {
+    opacity: 1;
   }
 
   .footer-nav a:hover {
-    text-decoration: underline;
-    color: var(--bone);
+    color: var(--bright);
+    text-shadow: 0 0 8px rgba(169, 214, 138, 0.4);
   }
 
   .footer-nav span {

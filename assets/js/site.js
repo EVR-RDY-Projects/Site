@@ -108,25 +108,122 @@
 	async function loadResources() {
 		try {
 			const resourcesContainer = document.getElementById("resources-grid");
-			if (!resourcesContainer) return;
+			if (!resourcesContainer) {
+				console.log("Resources container not found");
+				return;
+			}
+			console.log("Starting loadResources()");
 			resourcesContainer.innerHTML = "<p>Loading resources…</p>";
 			let driveDocs = DRIVE_DOCS_CACHE;
+			console.log("Initial cache check:", driveDocs);
 			if (!driveDocs) {
+				console.log("Cache empty, waiting for promise or prefetching...");
 				if (DRIVE_DOCS_PROMISE) {
+					console.log("Waiting for existing promise...");
 					await DRIVE_DOCS_PROMISE;
 					driveDocs = DRIVE_DOCS_CACHE;
+					console.log("Promise resolved, cache now:", driveDocs);
 				} else {
+					console.log("No promise, calling prefetchDriveResources()...");
 					await prefetchDriveResources();
 					driveDocs = DRIVE_DOCS_CACHE;
+					console.log("Prefetch completed, cache now:", driveDocs);
 				}
 			}
-			if (driveDocs && driveDocs.length) {
+			console.log("Drive docs loaded:", driveDocs?.length || 0);
+			console.log("Drive docs data:", driveDocs);
+			console.log("driveDocs type:", typeof driveDocs);
+			console.log("Is driveDocs array?", Array.isArray(driveDocs));
+
+			// Check if driveDocs is actually the full manifest object instead of just documents array
+			if (driveDocs && !Array.isArray(driveDocs) && driveDocs.documents) {
+				console.log(
+					"driveDocs is full manifest object, extracting documents array"
+				);
+				driveDocs = driveDocs.documents;
+				console.log("After extraction, driveDocs:", driveDocs);
+				console.log("Is now array?", Array.isArray(driveDocs));
+			}
+
+			// If Drive failed, try loading from repository
+			if (!driveDocs || !Array.isArray(driveDocs) || driveDocs.length === 0) {
+				console.log("Drive failed or empty, trying repository fallback...");
+				console.log("driveDocs value:", driveDocs);
+				console.log("Is array?", Array.isArray(driveDocs));
+				if (driveDocs && !Array.isArray(driveDocs)) {
+					console.log(
+						"driveDocs is not an array:",
+						typeof driveDocs,
+						driveDocs
+					);
+				}
+				const files = await getResourceManifest();
+				if (files && files.length) {
+					console.log("Loading", files.length, "files from repository");
+					resourcesContainer.innerHTML = "";
+					for (const fileName of files) {
+						try {
+							const rawUrl = getRawGitHubUrl(
+								`/resources/markdown/${fileName}.md`
+							);
+							const response = await fetch(rawUrl);
+							if (!response.ok) continue;
+							const markdownContent = await response.text();
+							const resource = parseMarkdownMetadata(markdownContent, fileName);
+							if (resource) {
+								const tile = createResourceTile(resource);
+								resourcesContainer.appendChild(tile);
+							}
+						} catch (error) {
+							console.error("Failed to load", fileName, ":", error);
+						}
+					}
+					return;
+				}
+			}
+
+			if (driveDocs && Array.isArray(driveDocs) && driveDocs.length > 0) {
+				console.log("Rendering", driveDocs.length, "Drive documents");
+				console.log("Documents data:", driveDocs);
 				resourcesContainer.innerHTML = "";
-				driveDocs.forEach((doc) => {
-					const tile = createDriveResourceTile(doc);
-					resourcesContainer.appendChild(tile);
+				let tilesCreated = 0;
+				driveDocs.forEach((doc, index) => {
+					try {
+						console.log(
+							`Creating tile ${index + 1}/${driveDocs.length} for document:`,
+							doc
+						);
+						const tile = createDriveResourceTile(doc);
+						if (tile) {
+							resourcesContainer.appendChild(tile);
+							tilesCreated++;
+							console.log(
+								`Tile ${index + 1} created and appended successfully`
+							);
+						} else {
+							console.error(`Tile ${index + 1} was null or undefined`);
+						}
+					} catch (error) {
+						console.error(
+							`Error creating tile for document ${index + 1}:`,
+							error
+						);
+						console.error("Document data:", doc);
+					}
 				});
+				console.log(
+					`Resources grid now has ${tilesCreated} tiles (expected ${driveDocs.length})`
+				);
+				if (tilesCreated === 0 && driveDocs.length > 0) {
+					console.error("No tiles were created even though documents exist!");
+					const errorMsg = document.createElement("p");
+					errorMsg.textContent =
+						"Failed to render resources. Check console for errors.";
+					errorMsg.style.color = "var(--bright)";
+					resourcesContainer.appendChild(errorMsg);
+				}
 			} else {
+				console.log("No resources to display. driveDocs:", driveDocs);
 				const empty = document.createElement("p");
 				empty.textContent = "No resources available.";
 				resourcesContainer.innerHTML = "";
@@ -134,6 +231,11 @@
 			}
 		} catch (error) {
 			console.error("Failed to load resources:", error);
+			const resourcesContainer = document.getElementById("resources-grid");
+			if (resourcesContainer) {
+				resourcesContainer.innerHTML =
+					"<p>Failed to load resources. Please try again later.</p>";
+			}
 		}
 	}
 
@@ -152,19 +254,48 @@
 
 	async function getDriveManifestDocuments() {
 		try {
+			// Skip Drive API on localhost to avoid referrer blocking
+			const isLocalhost =
+				window.location.hostname === "localhost" ||
+				window.location.hostname === "127.0.0.1" ||
+				window.location.hostname.startsWith("192.168.") ||
+				window.location.hostname.startsWith("10.");
+			if (isLocalhost) {
+				console.log(
+					"Localhost detected, skipping Drive API to use repository fallback"
+				);
+				return null;
+			}
+
+			console.log("Starting Drive manifest fetch...");
 			if (DRIVE_FOLDER_URL && DRIVE_API_KEY) {
 				const folderIdMatch = DRIVE_FOLDER_URL.match(
 					/folders\/([A-Za-z0-9_-]+)/
 				);
 				const folderId = folderIdMatch ? folderIdMatch[1] : "";
-				if (!folderId) return null;
+				console.log("Folder ID:", folderId);
+				if (!folderId) {
+					console.warn("No folder ID found in URL");
+					return null;
+				}
 				const q = encodeURIComponent(
 					`'${folderId}' in parents and trashed = false`
 				);
 				const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
+				console.log("Fetching folder listing...");
 				const listRes = await fetch(listUrl, { cache: "no-store" });
-				if (!listRes.ok) return null;
+				if (!listRes.ok) {
+					console.error(
+						"Folder listing failed:",
+						listRes.status,
+						listRes.statusText
+					);
+					const errorText = await listRes.text();
+					console.error("Error response:", errorText);
+					return null;
+				}
 				const list = await listRes.json();
+				console.log("Files found:", list.files?.length || 0);
 				const files = (list && list.files) || [];
 				if (!files.length) {
 					console.warn(
@@ -183,17 +314,43 @@
 							(f.name || "").toLowerCase().startsWith("manifest") &&
 							(f.mimeType || "").includes("json")
 					);
-				if (!file || !file.id) return null;
+				if (!file || !file.id) {
+					console.warn("No manifest.json file found in folder");
+					return null;
+				}
+				console.log("Found manifest file:", file.name);
 				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
 				const res = await fetch(downloadUrl, { cache: "no-store" });
-				if (!res.ok) return null;
+				if (!res.ok) {
+					console.error(
+						"Manifest download failed:",
+						res.status,
+						res.statusText
+					);
+					return null;
+				}
 				const json = await res.json();
-				if (json && Array.isArray(json.documents)) return json.documents;
+				console.log("Manifest JSON:", json);
+				console.log("Manifest documents:", json?.documents);
+				console.log("Is documents array?", Array.isArray(json?.documents));
+				if (json && Array.isArray(json.documents)) {
+					console.log("Found", json.documents.length, "documents");
+					console.log("Returning documents:", json.documents);
+					return json.documents;
+				}
+				if (json && json.documents && !Array.isArray(json.documents)) {
+					console.warn(
+						"Documents is not an array:",
+						typeof json.documents,
+						json.documents
+					);
+				}
+				console.warn("No documents array in manifest");
 				return null;
 			}
 			return null;
 		} catch (e) {
-			console.warn("Drive manifest fetch failed:", e);
+			console.error("Drive manifest fetch failed:", e);
 			return null;
 		}
 	}
@@ -237,6 +394,7 @@
 	}
 
 	function createDriveResourceTile(doc) {
+		console.log("createDriveResourceTile called with:", doc);
 		const tile = document.createElement("div");
 		tile.className = "resource-tile";
 		tile.onclick = () => expandDriveResource(doc);
@@ -252,6 +410,7 @@
 				<span class="resource-date">${escapeHtml(date)}</span>
 			</div>
 		`;
+		console.log("Created tile:", tile);
 		return tile;
 	}
 
@@ -577,6 +736,12 @@
 	document.addEventListener("DOMContentLoaded", function () {
 		const productsModal = document.getElementById("products-modal");
 		prefetchDriveResources();
+
+		// Load resources if on resources page
+		if (document.getElementById("resources-grid")) {
+			loadResources();
+		}
+
 		document.querySelectorAll(".learn-more-btn").forEach((btn) => {
 			if (!btn.dataset.originalText) {
 				btn.dataset.originalText = btn.textContent.trim();
@@ -600,22 +765,24 @@
 
 		// Enhanced functionality initialization
 		// Back to top button
-		window.addEventListener('scroll', handleBackToTopVisibility);
-		
+		window.addEventListener("scroll", handleBackToTopVisibility);
+
 		// Keyboard navigation improvements
-		document.addEventListener('keydown', function(e) {
+		document.addEventListener("keydown", function (e) {
 			// Alt + T for back to top
-			if (e.altKey && e.key === 't') {
+			if (e.altKey && e.key === "t") {
 				e.preventDefault();
 				scrollToTop();
 			}
 		});
 
 		// Improve focus management for modals
-		const modals = document.querySelectorAll('.modal');
-		modals.forEach(modal => {
-			modal.addEventListener('show', function() {
-				const firstFocusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+		const modals = document.querySelectorAll(".modal");
+		modals.forEach((modal) => {
+			modal.addEventListener("show", function () {
+				const firstFocusable = modal.querySelector(
+					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+				);
 				if (firstFocusable) {
 					setTimeout(() => firstFocusable.focus(), 100);
 				}
@@ -679,7 +846,10 @@
 			const expandedResource = document.getElementById("expanded-resource");
 			if (expandedResource && expandedResource.classList.contains("show")) {
 				closeExpandedResource();
-			} else if (architectureModal && architectureModal.classList.contains("show")) {
+			} else if (
+				architectureModal &&
+				architectureModal.classList.contains("show")
+			) {
 				closeArchitectureDiagram();
 			} else if (resourcesModal && resourcesModal.classList.contains("show")) {
 				closeResourcesModal();
@@ -771,92 +941,90 @@
 	window.openArchitectureDiagram = openArchitectureDiagram;
 	window.closeArchitectureDiagram = closeArchitectureDiagram;
 })();
-	// Back to Top Button Functionality
-	function scrollToTop() {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
+// Back to Top Button Functionality
+function scrollToTop() {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth",
+	});
+}
+
+function handleBackToTopVisibility() {
+	const backToTopBtn = document.getElementById("back-to-top");
+	if (backToTopBtn) {
+		if (window.pageYOffset > 300) {
+			backToTopBtn.classList.add("visible");
+		} else {
+			backToTopBtn.classList.remove("visible");
+		}
+	}
+}
+
+// Loading States
+function showLoadingOverlay() {
+	const overlay = document.getElementById("loading-overlay");
+	if (overlay) {
+		overlay.classList.add("show");
+	}
+}
+
+function hideLoadingOverlay() {
+	const overlay = document.getElementById("loading-overlay");
+	if (overlay) {
+		overlay.classList.remove("show");
+	}
+}
+
+// Enhanced Resources Loading with Loading State
+async function loadResourcesWithLoading() {
+	try {
+		showLoadingOverlay();
+		await loadResources();
+	} finally {
+		setTimeout(hideLoadingOverlay, 500); // Small delay for better UX
+	}
+}
+
+// Collapsible Sections
+function toggleCollapsible(sectionId) {
+	const section = document.getElementById(sectionId);
+	if (section) {
+		section.classList.toggle("expanded");
+	}
+}
+
+// Enhanced Modal Opening with Loading
+function openResourcesModalEnhanced() {
+	const modal = document.getElementById("resources-modal");
+	if (modal) {
+		modal.classList.add("show");
+		document.body.style.overflow = "hidden";
+		loadResourcesWithLoading();
+	}
+}
+
+// Smooth scroll to sections
+function scrollToSection(sectionId) {
+	const section = document.getElementById(sectionId);
+	if (section) {
+		section.scrollIntoView({
+			behavior: "smooth",
+			block: "start",
 		});
 	}
+}
 
-	function handleBackToTopVisibility() {
-		const backToTopBtn = document.getElementById('back-to-top');
-		if (backToTopBtn) {
-			if (window.pageYOffset > 300) {
-				backToTopBtn.classList.add('visible');
-			} else {
-				backToTopBtn.classList.remove('visible');
-			}
-		}
+// Keyboard handler for collapsible sections
+function handleCollapsibleKeydown(event, sectionId) {
+	if (event.key === "Enter" || event.key === " ") {
+		event.preventDefault();
+		toggleCollapsible(sectionId);
 	}
+}
 
-	// Loading States
-	function showLoadingOverlay() {
-		const overlay = document.getElementById('loading-overlay');
-		if (overlay) {
-			overlay.classList.add('show');
-		}
-	}
-
-	function hideLoadingOverlay() {
-		const overlay = document.getElementById('loading-overlay');
-		if (overlay) {
-			overlay.classList.remove('show');
-		}
-	}
-
-	// Enhanced Resources Loading with Loading State
-	async function loadResourcesWithLoading() {
-		try {
-			showLoadingOverlay();
-			await loadResources();
-		} finally {
-			setTimeout(hideLoadingOverlay, 500); // Small delay for better UX
-		}
-	}
-
-	// Collapsible Sections
-	function toggleCollapsible(sectionId) {
-		const section = document.getElementById(sectionId);
-		if (section) {
-			section.classList.toggle('expanded');
-		}
-	}
-
-	// Enhanced Modal Opening with Loading
-	function openResourcesModalEnhanced() {
-		const modal = document.getElementById('resources-modal');
-		if (modal) {
-			modal.classList.add('show');
-			document.body.style.overflow = 'hidden';
-			loadResourcesWithLoading();
-		}
-	}
-
-	// Smooth scroll to sections
-	function scrollToSection(sectionId) {
-		const section = document.getElementById(sectionId);
-		if (section) {
-			section.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start'
-			});
-		}
-	}
-
-
-
-	// Keyboard handler for collapsible sections
-	function handleCollapsibleKeydown(event, sectionId) {
-		if (event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault();
-			toggleCollapsible(sectionId);
-		}
-	}
-
-	// Expose new functions globally
-	window.scrollToTop = scrollToTop;
-	window.toggleCollapsible = toggleCollapsible;
-	window.scrollToSection = scrollToSection;
-	window.openResourcesModalEnhanced = openResourcesModalEnhanced;
-	window.handleCollapsibleKeydown = handleCollapsibleKeydown;
+// Expose new functions globally
+window.scrollToTop = scrollToTop;
+window.toggleCollapsible = toggleCollapsible;
+window.scrollToSection = scrollToSection;
+window.openResourcesModalEnhanced = openResourcesModalEnhanced;
+window.handleCollapsibleKeydown = handleCollapsibleKeydown;

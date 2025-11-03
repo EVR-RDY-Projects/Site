@@ -61,6 +61,7 @@
 html {
   overflow-x: hidden;
   width: 100%;
+  height: 100%;
 }
 
 /* Modern Typography System */
@@ -77,6 +78,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Modern Container System - Dynamic Sizing */
@@ -166,6 +170,7 @@ blockquote {
 
 .content-wrap {
   margin: var(--space-xl) auto var(--space-3xl);
+  flex: 1 0 auto;
 }
 
 /* Modern Card Component - Dynamic Sizing */
@@ -1554,11 +1559,30 @@ body.loaded .card {
   border-bottom: 1px solid rgba(229, 228, 216, 0.15);
 }
 
+.product-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 var(--space-md) 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
 .product-header h3 {
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--bone);
   margin: 0 0 var(--space-xs) 0;
+}
+
+.product-header .one-liner {
+  font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+  color: #ececec;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .product-subtitle {
@@ -2348,9 +2372,14 @@ Hover effect for challenge cards
   animation: pulse 2s ease-in-out infinite;
 } */
 
-/*.animate-glow {
-  animation: glow 2s ease-in-out infinite;
-}*/
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+  position: relative;
+}
+
+.animate-glow:hover {
+  animation-duration: 1.5s;
+}
 
 /* Triggered animations */
 .animate-slide-up.animate-triggered {
@@ -2580,6 +2609,7 @@ footer {
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   margin: var(--space-xl) 0;
+  margin-top: auto;
   border: 1px solid rgba(229, 228, 216, 0.1);
   text-align: center;
   box-shadow: 
@@ -2587,6 +2617,7 @@ footer {
     0 4px 6px -2px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition: all var(--transition-normal);
+  flex-shrink: 0;
 }
 
 footer:hover {
@@ -2812,16 +2843,24 @@ footer:hover {
   transition: all var(--transition-normal);
 }
 
-.erin-photo {
-  object-position: center 20%;
+.erin-photo,
+.erin-burns-photo {
+  object-position: top;
 }
 
-.timothy-photo {
-  object-position: center 0%;
+.timothy-photo,
+.timothy-deberry-photo {
+  object-position: bottom;
 }
 
-.shayla-photo {
-  object-position: center 20%;
+.shayla-photo,
+.shayla-lapoint-photo {
+  object-position: top;
+}
+
+.dylan-photo,
+.dylan-knox-photo {
+  object-position: top center;
 }
 
 .member-badge {
@@ -3664,7 +3703,7 @@ html {
   gap: var(--space-xs);
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-xl);
-  font-size: 0.75rem;
+  font-size: 0.5rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -3677,21 +3716,23 @@ html {
   background: linear-gradient(135deg, #4caf50, #66bb6a);
   color: white;
   box-shadow: 
-    var(--shadow-md),
-    0 0 0 1px rgba(76, 175, 80, 0.2);
+    0 2px 8px rgba(76, 175, 80, 0.3),
+    0 0 0 1px rgba(76, 175, 80, 0.2),
+    0 0 12px rgba(76, 175, 80, 0.2);
 }
 
 .status-indicator.development {
   background: linear-gradient(135deg, #2196f3, #42a5f5);
   color: white;
   box-shadow: 
-    var(--shadow-md),
-    0 0 0 1px rgba(33, 150, 243, 0.2);
+    0 2px 8px rgba(33, 150, 243, 0.3),
+    0 0 0 1px rgba(33, 150, 243, 0.2),
+    0 0 12px rgba(33, 150, 243, 0.2);
 }
 
 .status-indicator:hover {
   transform: none;
-  box-shadow: var(--shadow-sm);
+  filter: brightness(1.1);
 }
 
 /* Responsive Button Adjustments */

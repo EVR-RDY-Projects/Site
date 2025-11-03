@@ -95,7 +95,7 @@ const team = [
           {team.map((member, index) => (
             <button type="button" class="team-photo-link" data-member-index={index} aria-label={`View ${member.name}'s bio`}>
               <div class="team-photo-wrapper">
-                <img src={member.photoSrc} alt={member.name} class="team-photo-thumb" />
+                <img src={member.photoSrc} alt={member.name} class={`team-photo-thumb ${member.name.toLowerCase().replace(/\s+/g, '-')}-photo`} />
                 {member.badge && <div class="photo-badge">{member.badge}</div>}
               </div>
             </button>
@@ -200,20 +200,60 @@ const team = [
     position: relative;
   }
 
+  @keyframes pulsate-glow {
+    0%, 100% {
+      box-shadow: 
+        0 0 10px rgba(169, 214, 138, 0.4),
+        0 0 20px rgba(169, 214, 138, 0.3),
+        0 0 30px rgba(169, 214, 138, 0.2),
+        0 0 0 4px rgba(169, 214, 138, 0.3);
+    }
+    50% {
+      box-shadow: 
+        0 0 20px rgba(169, 214, 138, 0.6),
+        0 0 40px rgba(169, 214, 138, 0.5),
+        0 0 60px rgba(169, 214, 138, 0.4),
+        0 0 0 4px rgba(169, 214, 138, 0.5);
+    }
+  }
+
   .team-photo-thumb {
     width: 140px;
     height: 140px;
     border-radius: 50%;
     object-fit: cover;
+    object-position: center center;
     border: 4px solid rgba(169, 214, 138, 0.3);
     transition: all var(--transition-normal);
+    animation: pulsate-glow 3s ease-in-out infinite;
     box-shadow: var(--shadow-md);
+  }
+
+  .team-photo-thumb.shayla-lapoint-photo {
+    object-position: top;
+  }
+
+  .team-photo-thumb.timothy-deberry-photo {
+    object-position: top;
+  }
+
+  .team-photo-thumb.erin-burns-photo {
+    object-position: center;
+  }
+
+  .team-photo-thumb.dylan-knox-photo {
+    object-position: top center;
   }
 
   .team-photo-link:hover .team-photo-thumb {
     transform: scale(1.15);
     border-color: rgba(169, 214, 138, 0.8);
-    box-shadow: 0 8px 30px rgba(169, 214, 138, 0.4);
+    animation-duration: 1.5s;
+    box-shadow: 
+      0 0 25px rgba(169, 214, 138, 0.7),
+      0 0 50px rgba(169, 214, 138, 0.6),
+      0 0 75px rgba(169, 214, 138, 0.5),
+      0 0 0 6px rgba(169, 214, 138, 0.6);
   }
 
   .photo-badge {
@@ -254,6 +294,8 @@ const team = [
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.85);
@@ -264,13 +306,15 @@ const team = [
     justify-content: center;
     overflow-y: auto;
     padding: var(--space-xl);
+    box-sizing: border-box;
   }
 
   .team-modal-content {
     position: relative;
     width: 90%;
     max-width: 900px;
-    max-height: calc(90vh - 2 * var(--space-xl));
+    height: 100%;
+    max-height: 100vh;
     margin: auto;
     background: rgba(14, 16, 18, 0.98);
     border-radius: var(--radius-xl);
@@ -279,6 +323,7 @@ const team = [
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
   }
 
   .team-modal-close {
@@ -739,12 +784,32 @@ const team = [
       `;
 
       modal.classList.add('show');
+      
+      // Prevent background scrolling
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      
+      // Store scroll position for restoration
+      modal.dataset.scrollY = scrollY.toString();
     };
 
     window.closeTeamModal = () => {
       modal.classList.remove('show');
+      
+      // Restore background scrolling
+      const scrollY = modal.dataset.scrollY ? parseInt(modal.dataset.scrollY) : 0;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
     };
 
     // Add click handlers to photo links
