@@ -295,48 +295,19 @@
 
 	async function getDriveManifestDocuments() {
 		try {
-			// Skip Drive API on localhost to avoid referrer blocking
-			const isLocalhost =
-				window.location.hostname === "localhost" ||
-				window.location.hostname === "127.0.0.1" ||
-				window.location.hostname.startsWith("192.168.") ||
-				window.location.hostname.startsWith("10.");
-			if (isLocalhost) {
-				console.log(
-					"Localhost detected, skipping Drive API to use repository fallback"
-				);
-				return null;
-			}
-
-			console.log("Starting Drive manifest fetch...");
 			if (DRIVE_FOLDER_URL && DRIVE_API_KEY) {
 				const folderIdMatch = DRIVE_FOLDER_URL.match(
 					/folders\/([A-Za-z0-9_-]+)/
 				);
 				const folderId = folderIdMatch ? folderIdMatch[1] : "";
-				console.log("Folder ID:", folderId);
-				if (!folderId) {
-					console.warn("No folder ID found in URL");
-					return null;
-				}
+				if (!folderId) return null;
 				const q = encodeURIComponent(
 					`'${folderId}' in parents and trashed = false`
 				);
 				const listUrl = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,modifiedTime,parents)&supportsAllDrives=true&includeItemsFromAllDrives=true&key=${DRIVE_API_KEY}`;
-				console.log("Fetching folder listing...");
 				const listRes = await fetch(listUrl, { cache: "no-store" });
-				if (!listRes.ok) {
-					console.error(
-						"Folder listing failed:",
-						listRes.status,
-						listRes.statusText
-					);
-					const errorText = await listRes.text();
-					console.error("Error response:", errorText);
-					return null;
-				}
+				if (!listRes.ok) return null;
 				const list = await listRes.json();
-				console.log("Files found:", list.files?.length || 0);
 				const files = (list && list.files) || [];
 				if (!files.length) {
 					console.warn(
@@ -355,109 +326,17 @@
 							(f.name || "").toLowerCase().startsWith("manifest") &&
 							(f.mimeType || "").includes("json")
 					);
-				if (!file || !file.id) {
-					console.warn("No manifest.json file found in folder");
-					return null;
-				}
-				console.log("Found manifest file:", file.name);
-
-				// Try direct public URL first (works if file is publicly shared)
-				const publicUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
-				console.log("Trying direct public URL:", publicUrl);
-				try {
-					const publicRes = await fetch(publicUrl, { cache: "no-store" });
-					if (publicRes.ok) {
-						const text = await publicRes.text();
-						// Check if it's JSON or if it redirected to a confirmation page
-						if (text.trim().startsWith('{')) {
-							try {
-								const json = JSON.parse(text);
-								if (json && Array.isArray(json.documents)) {
-									console.log("Successfully loaded via direct public URL");
-									return json.documents;
-								}
-							} catch (parseError) {
-								console.log("Public URL returned non-JSON, trying metadata approach...");
-							}
-						}
-					}
-				} catch (publicError) {
-					console.log("Direct public URL failed, trying metadata approach...");
-				}
-
-				// Get file metadata to access webContentLink (public share URL, no CORS)
-				const metaUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?fields=webContentLink&key=${DRIVE_API_KEY}`;
-				try {
-					const metaRes = await fetch(metaUrl, { cache: "no-store" });
-					if (!metaRes.ok) {
-						console.warn("Metadata fetch failed:", metaRes.status, metaRes.statusText);
-						// If CORS or permission error, fall back immediately
-						if (metaRes.status === 403 || metaRes.status === 0) {
-							console.warn("CORS or permission error detected, falling back to repository");
-							return null;
-						}
-					}
-					if (metaRes.ok) {
-						const meta = await metaRes.json();
-						console.log("File metadata:", meta);
-
-						// Use webContentLink if available (works for publicly shared files, no CORS)
-						if (meta.webContentLink) {
-							console.log("Using webContentLink (public share URL) to avoid CORS");
-							const shareRes = await fetch(meta.webContentLink, {
-								cache: "no-store",
-							});
-							if (shareRes.ok) {
-								const json = await shareRes.json();
-								console.log("Manifest JSON:", json);
-								console.log("Manifest documents:", json?.documents);
-								if (json && Array.isArray(json.documents)) {
-									console.log("Found", json.documents.length, "documents");
-									return json.documents;
-								}
-							}
-						}
-					}
-				} catch (metaError) {
-					console.error("Could not fetch metadata or webContentLink:", metaError);
-					// If metadata fetch fails due to CORS/network error, fall back immediately
-					if (metaError.name === 'TypeError' || metaError.message.includes('fetch')) {
-						console.warn("Network/CORS error detected, falling back to repository manifest");
-						return null;
-					}
-				}
-
-				// Final fallback: API download (will likely hit CORS)
-				console.log("webContentLink not available or failed, trying API download...");
+				if (!file || !file.id) return null;
 				const downloadUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${DRIVE_API_KEY}`;
-				try {
-					const res = await fetch(downloadUrl, { cache: "no-store" });
-					if (!res.ok) {
-						console.error("Manifest download failed:", res.status, res.statusText);
-						return null;
-					}
-					const json = await res.json();
-				console.log("Manifest JSON:", json);
-				console.log("Manifest documents:", json?.documents);
-				console.log("Is documents array?", Array.isArray(json?.documents));
-				if (json && Array.isArray(json.documents)) {
-					console.log("Found", json.documents.length, "documents");
-					console.log("Returning documents:", json.documents);
-					return json.documents;
-				}
-				if (json && json.documents && !Array.isArray(json.documents)) {
-					console.warn(
-						"Documents is not an array:",
-						typeof json.documents,
-						json.documents
-					);
-				}
-				console.warn("No documents array in manifest");
+				const res = await fetch(downloadUrl, { cache: "no-store" });
+				if (!res.ok) return null;
+				const json = await res.json();
+				if (json && Array.isArray(json.documents)) return json.documents;
 				return null;
 			}
 			return null;
 		} catch (e) {
-			console.error("Drive manifest fetch failed:", e);
+			console.warn("Drive manifest fetch failed:", e);
 			return null;
 		}
 	}

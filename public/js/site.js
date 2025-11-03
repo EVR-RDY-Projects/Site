@@ -106,27 +106,150 @@
 
 	// Dynamic Resources Loading (prefers Drive manifest when configured)
 	async function loadResources() {
+		const resourcesContainer = document.getElementById("resources-grid");
+		if (!resourcesContainer) {
+			console.log("Resources container not found");
+			return;
+		}
+
 		try {
-			const resourcesContainer = document.getElementById("resources-grid");
-			if (!resourcesContainer) return;
+			console.log("Starting loadResources()");
 			resourcesContainer.innerHTML = "<p>Loading resources…</p>";
-			let driveDocs = DRIVE_DOCS_CACHE;
-			if (!driveDocs) {
-				if (DRIVE_DOCS_PROMISE) {
-					await DRIVE_DOCS_PROMISE;
-					driveDocs = DRIVE_DOCS_CACHE;
-				} else {
-					await prefetchDriveResources();
-					driveDocs = DRIVE_DOCS_CACHE;
+
+			// Add timeout to prevent hanging forever
+			const timeoutPromise = new Promise((_, reject) => {
+				setTimeout(
+					() => reject(new Error("Resource loading timeout after 30 seconds")),
+					30000
+				);
+			});
+
+			const loadPromise = (async () => {
+				let driveDocs = DRIVE_DOCS_CACHE;
+				console.log("Initial cache check:", driveDocs);
+				if (!driveDocs) {
+					console.log("Cache empty, waiting for promise or prefetching...");
+					if (DRIVE_DOCS_PROMISE) {
+						console.log("Waiting for existing promise...");
+						try {
+							await DRIVE_DOCS_PROMISE;
+							driveDocs = DRIVE_DOCS_CACHE;
+							console.log("Promise resolved, cache now:", driveDocs);
+						} catch (error) {
+							console.error("Promise rejected:", error);
+							driveDocs = null;
+						}
+					} else {
+						console.log("No promise, calling prefetchDriveResources()...");
+						try {
+							await prefetchDriveResources();
+							driveDocs = DRIVE_DOCS_CACHE;
+							console.log("Prefetch completed, cache now:", driveDocs);
+						} catch (error) {
+							console.error("Prefetch failed:", error);
+							driveDocs = null;
+						}
+					}
+				}
+				console.log("Drive docs loaded:", driveDocs?.length || 0);
+				console.log("Drive docs data:", driveDocs);
+				console.log("driveDocs type:", typeof driveDocs);
+				console.log("Is driveDocs array?", Array.isArray(driveDocs));
+				return driveDocs;
+			})();
+
+			let driveDocs = await Promise.race([loadPromise, timeoutPromise]);
+
+			// Check if driveDocs is actually the full manifest object instead of just documents array
+			if (driveDocs && !Array.isArray(driveDocs) && driveDocs.documents) {
+				console.log(
+					"driveDocs is full manifest object, extracting documents array"
+				);
+				driveDocs = driveDocs.documents;
+				console.log("After extraction, driveDocs:", driveDocs);
+				console.log("Is now array?", Array.isArray(driveDocs));
+			}
+
+			// If Drive failed, try loading from repository
+			if (!driveDocs || !Array.isArray(driveDocs) || driveDocs.length === 0) {
+				console.log("Drive failed or empty, trying repository fallback...");
+				console.log("driveDocs value:", driveDocs);
+				console.log("Is array?", Array.isArray(driveDocs));
+				if (driveDocs && !Array.isArray(driveDocs)) {
+					console.log(
+						"driveDocs is not an array:",
+						typeof driveDocs,
+						driveDocs
+					);
+				}
+				const files = await getResourceManifest();
+				if (files && files.length) {
+					console.log("Loading", files.length, "files from repository");
+					resourcesContainer.innerHTML = "";
+					for (const fileName of files) {
+						try {
+							const rawUrl = getRawGitHubUrl(
+								`/resources/markdown/${fileName}.md`
+							);
+							const response = await fetch(rawUrl);
+							if (!response.ok) continue;
+							const markdownContent = await response.text();
+							const resource = parseMarkdownMetadata(markdownContent, fileName);
+							if (resource) {
+								const tile = createResourceTile(resource);
+								resourcesContainer.appendChild(tile);
+							}
+						} catch (error) {
+							console.error("Failed to load", fileName, ":", error);
+						}
+					}
+					return;
 				}
 			}
-			if (driveDocs && driveDocs.length) {
+
+			if (driveDocs && Array.isArray(driveDocs) && driveDocs.length > 0) {
+				console.log("Rendering", driveDocs.length, "Drive documents");
+				console.log("Documents data:", driveDocs);
 				resourcesContainer.innerHTML = "";
-				driveDocs.forEach((doc) => {
-					const tile = createDriveResourceTile(doc);
-					resourcesContainer.appendChild(tile);
+				let tilesCreated = 0;
+				driveDocs.forEach((doc, index) => {
+					try {
+						console.log(
+							`Creating tile ${index + 1}/${driveDocs.length} for document:`,
+							doc
+						);
+						const tile = createDriveResourceTile(doc);
+						if (tile) {
+							resourcesContainer.appendChild(tile);
+							tilesCreated++;
+							console.log(
+								`Tile ${index + 1} created and appended successfully`
+							);
+						} else {
+							console.error(`Tile ${index + 1} was null or undefined`);
+						}
+					} catch (error) {
+						console.error(
+							`Error creating tile for document ${index + 1}:`,
+							error
+						);
+						console.error("Document data:", doc);
+					}
 				});
+				console.log(
+					`Resources grid now has ${tilesCreated} tiles (expected ${driveDocs.length})`
+				);
+				if (tilesCreated === 0 && driveDocs.length > 0) {
+					console.error("No tiles were created even though documents exist!");
+					const errorMsg = document.createElement("p");
+					errorMsg.textContent =
+						"Failed to render resources. Check console for errors.";
+					errorMsg.style.color = "var(--bright)";
+					resourcesContainer.appendChild(errorMsg);
+				}
 			} else {
+				console.log("No resources to display. driveDocs:", driveDocs);
+				console.log("driveDocs is:", typeof driveDocs, driveDocs);
 				const empty = document.createElement("p");
 				empty.textContent = "No resources available.";
 				resourcesContainer.innerHTML = "";
@@ -134,6 +257,26 @@
 			}
 		} catch (error) {
 			console.error("Failed to load resources:", error);
+			console.error("Error stack:", error.stack);
+			const resourcesContainer = document.getElementById("resources-grid");
+			if (resourcesContainer) {
+				resourcesContainer.innerHTML = `<p style="color: var(--bright);">Failed to load resources. Error: ${
+					error.message || error
+				}. Check console for details.</p>`;
+			}
+		} finally {
+			// Ensure we always update the UI, even if there was an error
+			const resourcesContainer = document.getElementById("resources-grid");
+			if (
+				resourcesContainer &&
+				resourcesContainer.innerHTML === "<p>Loading resources…</p>"
+			) {
+				console.warn(
+					"loadResources completed but UI still shows loading. This indicates a logic error."
+				);
+				resourcesContainer.innerHTML =
+					"<p style='color: var(--bright);'>No resources were loaded. Check console for errors.</p>";
+			}
 		}
 	}
 
@@ -237,21 +380,65 @@
 	}
 
 	function createDriveResourceTile(doc) {
+		console.log("createDriveResourceTile called with:", doc);
+		console.log("Document structure check:", {
+			id: doc?.id,
+			title: doc?.title,
+			shareURL: doc?.shareURL,
+			shareUrl: doc?.shareUrl,
+			hasShareUrl: !!(doc?.shareURL || doc?.shareUrl),
+		});
+		if (!doc) {
+			console.error("createDriveResourceTile: doc is null or undefined");
+			return null;
+		}
 		const tile = document.createElement("div");
 		tile.className = "resource-tile";
 		tile.onclick = () => expandDriveResource(doc);
 		const icon = "📄";
-		const date = doc.lastEdited || doc.creationDate || "";
+
+		// Format date from ISO string to readable format
+		let date = "";
+		if (doc.lastEdited) {
+			try {
+				const dateObj = new Date(doc.lastEdited);
+				date = dateObj.toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+				});
+			} catch (e) {
+				date = doc.lastEdited;
+			}
+		} else if (doc.creationDate) {
+			try {
+				const dateObj = new Date(doc.creationDate);
+				date = dateObj.toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+				});
+			} catch (e) {
+				date = doc.creationDate;
+			}
+		}
+
 		const type = doc.type || "Document";
+		const title = doc.title || "Document";
+		const description = doc.description || "";
+
+		console.log("Tile data - title:", title, "type:", type, "date:", date);
+
 		tile.innerHTML = `
 			<div class="resource-icon">${icon}</div>
-			<h3>${escapeHtml(doc.title || "Document")}</h3>
-			<p>${escapeHtml(doc.description || "")}</p>
+			<h3>${escapeHtml(title)}</h3>
+			<p>${escapeHtml(description)}</p>
 			<div class="resource-meta">
 				<span class="resource-type">${escapeHtml(type)}</span>
 				<span class="resource-date">${escapeHtml(date)}</span>
 			</div>
 		`;
+		console.log("Created tile HTML:", tile.innerHTML.substring(0, 100) + "...");
 		return tile;
 	}
 
@@ -577,6 +764,12 @@
 	document.addEventListener("DOMContentLoaded", function () {
 		const productsModal = document.getElementById("products-modal");
 		prefetchDriveResources();
+
+		// Load resources if on resources page
+		if (document.getElementById("resources-grid")) {
+			loadResources();
+		}
+
 		document.querySelectorAll(".learn-more-btn").forEach((btn) => {
 			if (!btn.dataset.originalText) {
 				btn.dataset.originalText = btn.textContent.trim();
@@ -600,22 +793,24 @@
 
 		// Enhanced functionality initialization
 		// Back to top button
-		window.addEventListener('scroll', handleBackToTopVisibility);
-		
+		window.addEventListener("scroll", handleBackToTopVisibility);
+
 		// Keyboard navigation improvements
-		document.addEventListener('keydown', function(e) {
+		document.addEventListener("keydown", function (e) {
 			// Alt + T for back to top
-			if (e.altKey && e.key === 't') {
+			if (e.altKey && e.key === "t") {
 				e.preventDefault();
 				scrollToTop();
 			}
 		});
 
 		// Improve focus management for modals
-		const modals = document.querySelectorAll('.modal');
-		modals.forEach(modal => {
-			modal.addEventListener('show', function() {
-				const firstFocusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+		const modals = document.querySelectorAll(".modal");
+		modals.forEach((modal) => {
+			modal.addEventListener("show", function () {
+				const firstFocusable = modal.querySelector(
+					'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+				);
 				if (firstFocusable) {
 					setTimeout(() => firstFocusable.focus(), 100);
 				}
@@ -679,7 +874,10 @@
 			const expandedResource = document.getElementById("expanded-resource");
 			if (expandedResource && expandedResource.classList.contains("show")) {
 				closeExpandedResource();
-			} else if (architectureModal && architectureModal.classList.contains("show")) {
+			} else if (
+				architectureModal &&
+				architectureModal.classList.contains("show")
+			) {
 				closeArchitectureDiagram();
 			} else if (resourcesModal && resourcesModal.classList.contains("show")) {
 				closeResourcesModal();
@@ -771,92 +969,90 @@
 	window.openArchitectureDiagram = openArchitectureDiagram;
 	window.closeArchitectureDiagram = closeArchitectureDiagram;
 })();
-	// Back to Top Button Functionality
-	function scrollToTop() {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
+// Back to Top Button Functionality
+function scrollToTop() {
+	window.scrollTo({
+		top: 0,
+		behavior: "smooth",
+	});
+}
+
+function handleBackToTopVisibility() {
+	const backToTopBtn = document.getElementById("back-to-top");
+	if (backToTopBtn) {
+		if (window.pageYOffset > 300) {
+			backToTopBtn.classList.add("visible");
+		} else {
+			backToTopBtn.classList.remove("visible");
+		}
+	}
+}
+
+// Loading States
+function showLoadingOverlay() {
+	const overlay = document.getElementById("loading-overlay");
+	if (overlay) {
+		overlay.classList.add("show");
+	}
+}
+
+function hideLoadingOverlay() {
+	const overlay = document.getElementById("loading-overlay");
+	if (overlay) {
+		overlay.classList.remove("show");
+	}
+}
+
+// Enhanced Resources Loading with Loading State
+async function loadResourcesWithLoading() {
+	try {
+		showLoadingOverlay();
+		await loadResources();
+	} finally {
+		setTimeout(hideLoadingOverlay, 500); // Small delay for better UX
+	}
+}
+
+// Collapsible Sections
+function toggleCollapsible(sectionId) {
+	const section = document.getElementById(sectionId);
+	if (section) {
+		section.classList.toggle("expanded");
+	}
+}
+
+// Enhanced Modal Opening with Loading
+function openResourcesModalEnhanced() {
+	const modal = document.getElementById("resources-modal");
+	if (modal) {
+		modal.classList.add("show");
+		document.body.style.overflow = "hidden";
+		loadResourcesWithLoading();
+	}
+}
+
+// Smooth scroll to sections
+function scrollToSection(sectionId) {
+	const section = document.getElementById(sectionId);
+	if (section) {
+		section.scrollIntoView({
+			behavior: "smooth",
+			block: "start",
 		});
 	}
+}
 
-	function handleBackToTopVisibility() {
-		const backToTopBtn = document.getElementById('back-to-top');
-		if (backToTopBtn) {
-			if (window.pageYOffset > 300) {
-				backToTopBtn.classList.add('visible');
-			} else {
-				backToTopBtn.classList.remove('visible');
-			}
-		}
+// Keyboard handler for collapsible sections
+function handleCollapsibleKeydown(event, sectionId) {
+	if (event.key === "Enter" || event.key === " ") {
+		event.preventDefault();
+		toggleCollapsible(sectionId);
 	}
+}
 
-	// Loading States
-	function showLoadingOverlay() {
-		const overlay = document.getElementById('loading-overlay');
-		if (overlay) {
-			overlay.classList.add('show');
-		}
-	}
-
-	function hideLoadingOverlay() {
-		const overlay = document.getElementById('loading-overlay');
-		if (overlay) {
-			overlay.classList.remove('show');
-		}
-	}
-
-	// Enhanced Resources Loading with Loading State
-	async function loadResourcesWithLoading() {
-		try {
-			showLoadingOverlay();
-			await loadResources();
-		} finally {
-			setTimeout(hideLoadingOverlay, 500); // Small delay for better UX
-		}
-	}
-
-	// Collapsible Sections
-	function toggleCollapsible(sectionId) {
-		const section = document.getElementById(sectionId);
-		if (section) {
-			section.classList.toggle('expanded');
-		}
-	}
-
-	// Enhanced Modal Opening with Loading
-	function openResourcesModalEnhanced() {
-		const modal = document.getElementById('resources-modal');
-		if (modal) {
-			modal.classList.add('show');
-			document.body.style.overflow = 'hidden';
-			loadResourcesWithLoading();
-		}
-	}
-
-	// Smooth scroll to sections
-	function scrollToSection(sectionId) {
-		const section = document.getElementById(sectionId);
-		if (section) {
-			section.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start'
-			});
-		}
-	}
-
-
-
-	// Keyboard handler for collapsible sections
-	function handleCollapsibleKeydown(event, sectionId) {
-		if (event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault();
-			toggleCollapsible(sectionId);
-		}
-	}
-
-	// Expose new functions globally
-	window.scrollToTop = scrollToTop;
-	window.toggleCollapsible = toggleCollapsible;
-	window.scrollToSection = scrollToSection;
-	window.openResourcesModalEnhanced = openResourcesModalEnhanced;
-	window.handleCollapsibleKeydown = handleCollapsibleKeydown;
+// Expose new functions globally
+window.scrollToTop = scrollToTop;
+window.toggleCollapsible = toggleCollapsible;
+window.scrollToSection = scrollToSection;
+window.openResourcesModalEnhanced = openResourcesModalEnhanced;
+window.handleCollapsibleKeydown = handleCollapsibleKeydown;
