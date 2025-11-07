@@ -8,11 +8,14 @@
 :root {
   /* Brand Colors - Military/Cyber Theme */
   --bone: #e5e4d8;
-  /* --olive: #848c6a; */
   --bright: #a9d68a;
   --ink: #0e1012;
   --muted: #b9baaf;
   --panel: rgba(14,16,18,.58);
+  --accent: #6b9460;
+  --status-active: #5aa5ff;
+  --status-pilot: #ff8a3d;
+  --status-design: #a9d68a;
   
   /* Modern Typography Scale */
   --font-heading: 'Geist', system-ui, -apple-system, sans-serif;
@@ -93,7 +96,7 @@ h1 {
 
 h2 {
   font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 600;
   background: linear-gradient(135deg, var(--bone), var(--bright));
   -webkit-background-clip: text;
   background-clip: text;
@@ -103,8 +106,8 @@ h2 {
 }
 
 h3 {
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  font-weight: 600;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 500;
   color: #fff;
   margin-top: var(--space-lg);
   margin-bottom: var(--space-sm);
@@ -113,7 +116,7 @@ h3 {
 p {
   color: #d9dacd;
   font-size: clamp(1rem, 1.15vw, 1.125rem);
-  line-height: 1.7;
+  line-height: 1.55;
   margin: var(--space-sm) 0;
 }
 
@@ -212,7 +215,7 @@ blockquote {
   content: '';
   width: 4px;
   height: 24px;
-  background: linear-gradient(180deg, var(--bright), var(--muted));
+  background: linear-gradient(180deg, var(--bright), var(--accent));
   border-radius: 2px;
   flex-shrink: 0;
 }
@@ -224,7 +227,7 @@ blockquote {
   left: 0;
   width: 60px;
   height: 2px;
-  background: linear-gradient(90deg, var(--bright), var(--muted));
+  background: linear-gradient(90deg, var(--bright), var(--accent));
   border-radius: 1px;
   opacity: 0.8;
 }
@@ -339,6 +342,43 @@ blockquote {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(90, 165, 255, 0.25);
+  background: rgba(90, 165, 255, 0.12);
+  color: #b7d8ff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-indicator.pilot {
+  background: rgba(255, 138, 61, 0.18);
+  border-color: rgba(255, 138, 61, 0.28);
+  color: #ffc39f;
+}
+
+.status-indicator.design {
+  background: rgba(169, 214, 138, 0.18);
+  border-color: rgba(169, 214, 138, 0.28);
+  color: #dff5cd;
+}
+
+.humor-aside {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(229, 228, 216, 0.65);
+}
+
+.anchor-offset {
+  scroll-margin-top: 120px;
 }
 
 /* Modern Spacing Utilities */

@@ -8,11 +8,12 @@ export interface Props {
 const { currentPath = '', showBanner = false, pageTitle } = Astro.props;
 
 const navItems = [
-  { name: 'Products', href: '/products' },
-  { name: 'Team', href: '/team' },
-  { name: 'Resources', href: '/resources' },
-  { name: 'Reviewer Summary', href: '/reviewers' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Mission', href: '#mission', fallback: '/#mission' },
+  { name: 'Overview', href: '#overview', fallback: '/#overview' },
+  { name: 'Pipeline', href: '#pipeline', fallback: '/#pipeline' },
+  { name: 'Team', href: '#team', fallback: '/#team' },
+  { name: 'Contact', href: '#engage', fallback: '/#engage' },
+  { name: 'Resources', href: '#resources', fallback: '/#resources' },
 ];
 
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
@@ -34,12 +35,13 @@ const isHome = currentPath === '/' || currentPath === '';
       <ul class="nav-links" role="menubar" aria-label="Main navigation">
         {navItems.map((item) => (
           <li role="none">
-            <a 
-              href={item.href} 
-              class={isActive(item.href) ? 'active' : ''}
+            <a
+              href={isHome ? item.href : item.fallback}
+              class={!isHome && isActive(item.fallback ?? item.href) ? 'active' : ''}
               role="menuitem"
               aria-label={`Navigate to ${item.name}`}
-              aria-current={isActive(item.href) ? 'page' : undefined}
+              aria-current={!isHome && isActive(item.fallback ?? item.href) ? 'page' : undefined}
+              data-nav-anchor={isHome && item.href.startsWith('#') ? true : undefined}
             >
               {item.name}
             </a>
@@ -52,7 +54,7 @@ const isHome = currentPath === '/' || currentPath === '';
     <div class="hero parallax" data-speed="0.5">
       <div class="container">
         <div class="hero-content animate-fade-in-up parallax" data-speed="0.3">
-          <img src="/img/banner.png" alt="EVR:RDY — Defend Forward · Advance Always" loading="eager" fetchpriority="high">
+          <img src="/img/banner.png" alt="EVR:RDY — Defend Forward · Advance Always" loading="eager" fetchpriority="high" />
         </div>
       </div>
     </div>
@@ -107,6 +109,8 @@ const isHome = currentPath === '/' || currentPath === '';
     align-items: center;
     gap: var(--space-xl);
     position: relative;
+    padding: 0 clamp(1.5rem, 4vw, 3.5rem);
+    padding-left: clamp(6.5rem, 12vw, 9rem);
   }
 
   .logo {
@@ -212,6 +216,9 @@ const isHome = currentPath === '/' || currentPath === '';
     margin: 0;
     padding: 0;
     flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+    margin: 0 auto;
   }
 
   .nav-links a {
@@ -448,6 +455,7 @@ const isHome = currentPath === '/' || currentPath === '';
       visibility: hidden;
       transition: all var(--transition-normal);
       z-index: 999;
+      margin: 0;
     }
 
     .nav-links.open {
@@ -478,6 +486,7 @@ const isHome = currentPath === '/' || currentPath === '';
       border-color: rgba(169, 214, 138, 0.3);
       transform: translateX(4px);
     }
+
   }
 
   @media (max-width: 480px) {
@@ -557,6 +566,38 @@ const isHome = currentPath === '/' || currentPath === '';
         });
       });
     }
+
+    const smoothScrollTo = (hash) => {
+      const target = document.querySelector(hash);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    const anchorLinks = document.querySelectorAll('a[data-nav-anchor]');
+    anchorLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        const isHash = href.startsWith('#');
+        const isRootHash = href.startsWith('/#');
+        const homePaths = window.location.pathname === '/' || window.location.pathname === '';
+
+        if (isHash || (isRootHash && homePaths)) {
+          const targetHash = isHash ? href : href.substring(1);
+          event.preventDefault();
+
+          if (isMobile && navLinks && mobileMenuToggle) {
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('open');
+            document.body.style.overflow = '';
+          }
+
+          requestAnimationFrame(() => smoothScrollTo(targetHash));
+        }
+      });
+    });
     
     // On mobile or non-home pages, always show the logo
     if ((!isHomePage || isMobile) && logo) {
