@@ -9,11 +9,11 @@ const { currentPath = '', showBanner = false, pageTitle } = Astro.props;
 
 const navItems = [
   { name: 'Mission', href: '#mission', fallback: '/#mission' },
-  { name: 'Overview', href: '#overview', fallback: '/#overview' },
-  { name: 'Pipeline', href: '#pipeline', fallback: '/#pipeline' },
+  { name: 'Approach', href: '#approach', fallback: '/#approach' },
+  { name: 'Data Flow', href: '#pipeline', fallback: '/#pipeline' },
   { name: 'Team', href: '#team', fallback: '/#team' },
-  { name: 'Contact', href: '#engage', fallback: '/#engage' },
-  { name: 'Resources', href: '#resources', fallback: '/#resources' },
+  { name: 'Engage', href: '#engage', fallback: '/#engage' },
+  // Resources removed from top navigation per request
 ];
 
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
@@ -303,7 +303,7 @@ const isHome = currentPath === '/' || currentPath === '';
   }
 
   .hero {
-    padding-top: var(--space-lg);
+    padding-top: 0;
   }
 
   .hero img {
