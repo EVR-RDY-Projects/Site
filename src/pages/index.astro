@@ -1,3 +1,19 @@
+<!-- EVR:RDY engagement uplift v1 — 2025-11-08
+Acceptance criteria:
+ ☐ Hero: engagement-first messaging, dual CTAs, proof chips band
+ ☐ Overview: pilot CTAs on product tiles, clarity one-liner
+ ☐ Approach: 3-step visual cards with icons
+ ☐ Pipeline: caption, animated flow dots, sample detection modal, status tooltips
+ ☐ Team: micro-badges, avatar click toggle
+ ☐ Engage: track action buttons, response SLA note
+ ☐ Trust block expanded, logos placeholder, footer humor relocation
+ ☐ Sticky footer CTA bar (scroll threshold ~30%)
+ ☐ Copy: 'operators' → 'systems and sites'
+ ☐ Accessibility: focus rings, reduced-motion guards
+ ☐ Performance: lighter shadows, smaller animations
+ ☐ Meta: description update, schema sameAs LinkedIn, OG/Twitter asset <1MB, rel=noopener audit
+Pre-uplift backup: src/archive/index.backup-2025-11-08.astro
+-->
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
@@ -10,8 +26,15 @@ const pipelineComponents = {
     status: 'Active Dev · 75%',
     variant: 'active',
     domain: 'ot',
-    description: 'Slow-and-low OT host telemetry agent that captures system state without disrupting production equipment.',
-    outcome: 'Collects high-fidelity host data and prepares it for Chronicle-ready enrichment.'
+    description: 'Lightweight host visibility agent for fragile industrial control systems — no kernel drivers, no intrusive footprint.',
+    outcome: 'Collects high-fidelity host data (event logs, processes, network tables) every 2-3 minutes with strict CPU/memory limits.',
+    image: '/img/scout.png',
+    details: {
+      dataSize: '~10–60 KB per tick, ~5–30 MB/day per host',
+      transport: 'BITS, SMB drop, or robocopy with HMAC/AEAD integrity',
+      compatibility: 'Windows XP/2003 through Windows 11',
+      compliance: 'IEC 62443, NERC CIP, NIST SP 800-82'
+    }
   },
   seer: {
     id: 'seer',
@@ -19,8 +42,15 @@ const pipelineComponents = {
     status: 'PoC',
     variant: 'pilot',
     domain: 'ot',
-    description: 'Commodity network sensor producing full packet capture and Zeek-style logs for OT environments.',
-    outcome: 'Delivers deep network visibility at a price point small operators can afford.'
+    description: 'Low-cost telemetry node capturing packet data and ICS protocol metadata (Modbus, DNP3, S7) for forensic readiness.',
+    outcome: 'Delivers deep network visibility with full PCAP + Zeek metadata at prices small operators can afford.',
+    image: '/img/seer.png',
+    details: {
+      throughput: '100 Mbps – 1 Gbps',
+      dataVolume: '5–15 GB/day JSON metadata, 24–72h PCAP retention per 4TB drive',
+      stack: 'Linux + Zeek + ICSNPP + Fluent Bit on commodity hardware',
+      compliance: 'IEC 62443, NERC CIP, MITRE ATT&CK for ICS'
+    }
   },
   ghost: {
     id: 'ghost',
@@ -28,8 +58,15 @@ const pipelineComponents = {
     status: 'PoC',
     variant: 'pilot',
     domain: 'buffer',
-    description: 'Hardware-enforced unidirectional data diode using modified media converters and fiber.',
-    outcome: 'Protects OT enclaves while streaming telemetry safely into IT analytics.'
+    description: 'Hardware-enforced unidirectional data diode using optical/electrical isolation — eliminates inbound control risk.',
+    outcome: 'Physically enforces one-way data flow from OT to IT with zero software dependency.',
+    image: '/img/ghost.png',
+    details: {
+      isolation: 'Optical/electrical TX-only with fail-safe design',
+      throughput: '100 Mbps–1 Gbps, negligible latency',
+      build: 'Commodity fiber media converters emulate commercial diodes',
+      compliance: 'IEC 62443 zone segmentation, NERC CIP-005 perimeter security'
+    }
   },
   rampart: {
     id: 'rampart',
@@ -37,8 +74,15 @@ const pipelineComponents = {
     status: 'Active Dev',
     variant: 'active',
     domain: 'mission-hub',
-    description: 'Data processing and forwarding engine normalizing telemetry for Chronicle ingestion.',
-    outcome: 'Automates enrichment, queueing, and delivery to TacSOC and partner SIEMs.'
+    description: 'Trusted IT-side landing zone that receives, normalizes, and stages telemetry from GHOST Diode.',
+    outcome: 'Normalizes logs into consistent JSON schema, deduplicates, compresses, and forwards to Chronicle SIEM.',
+    image: '/img/rampart.png',
+    details: {
+      performance: '10k–50k events/sec normalization, <1s latency to SIEM',
+      dataVolume: '5–20 GB/day output per site',
+      functions: 'Ingest, normalize, deduplicate, stage forensics, forward to SOC',
+      protocols: 'Syslog, HTTPS, UDP forwarding'
+    }
   },
   aiTriage: {
     id: 'ai-triage',
@@ -46,8 +90,14 @@ const pipelineComponents = {
     status: 'Design',
     variant: 'design',
     domain: 'mission-hub',
-    description: 'AI triage and signal/noise reduction keeps analysts focused on actionable intelligence.',
-    outcome: 'Shrinks analyst-to-alert ratios so a lean team can move faster.'
+    description: 'AI-driven alert triage and correlation using Google Chronicle with YARA-L 2.0 detection rules.',
+    outcome: 'Reduces alert noise by 50-70% with <1min auto-classification, keeping analysts focused on real threats.',
+    details: {
+      platform: 'Google Chronicle Security Operations + Gemini LLM',
+      metrics: '50–70% alert-noise reduction, <1min classification',
+      throughput: '10k–50k events/sec with automated playbook execution',
+      guardrails: 'OT safety-impacting actions require manual approval'
+    }
   },
   hunterKiller: {
     id: 'hunter-killer',
@@ -55,8 +105,14 @@ const pipelineComponents = {
     status: 'Pilot',
     variant: 'pilot',
     domain: 'mission-hub',
-    description: 'Veteran defenders executing R.A.I.D. playbooks for high-signal hunts and incident response.',
-    outcome: 'Delivers decisive response across partner networks and mentors local operators.'
+    description: 'Elite veteran defenders executing R.A.I.D. playbooks (Recon → Acquire → Interpret → Defend) for threat hunting.',
+    outcome: 'Small 5-10 person teams deliver the defensive power of 50-person SOCs through discipline and automation.',
+    details: {
+      model: 'Special operations: unified L1-L3 SOC roles with mentorship pipeline',
+      methodology: 'R.A.I.D. Framework for structured, repeatable hunts',
+      compensation: 'Above-market base + performance bonuses + equity ("Everyone Eats")',
+      growth: 'Apprentices → operators → new team formation via split-off doctrine'
+    }
   },
   chronicleStack: {
     id: 'chronicle-fusion',
@@ -64,8 +120,14 @@ const pipelineComponents = {
     status: 'Design',
     variant: 'design',
     domain: 'mission-hub',
-    description: 'Shared Chronicle automations, detection content, and reporting pipeline.',
-    outcome: 'Cuts analytic cost while preserving compliance-grade evidence for every partner.'
+    description: 'Pooled Chronicle SIEM infrastructure with shared detection rules, automation, and compliance reporting.',
+    outcome: 'Multi-tenant architecture cuts per-customer cost while enabling collective defense across all partners.',
+    details: {
+      architecture: 'Multi-tenant SIEM with separation + shared threat intelligence',
+      benefits: 'Detection at one site strengthens all, pooled telemetry and hunting',
+      compliance: 'Compliance-grade evidence retention and reporting',
+      scaling: 'Shared licenses and infrastructure reduce deployment costs'
+    }
   }
 };
 
@@ -75,8 +137,18 @@ const tacSocGroup = {
   status: 'Design + Pilot',
   variant: 'design',
   domain: 'mission-hub',
-  description: 'Veteran-led mission cloud that fuses AI triage, hunter/killer teams, and a shared Chronicle stack.',
-  outcome: 'Delivers coordinated detection, response, and reporting for every partner operator.',
+  description: 'AI-driven, shared-service SOC that compresses the defensive power of a 50-person SOC into a 5-10 person elite veteran unit enhanced by automation and special-operations discipline.',
+  outcome: 'Delivers coordinated detection, response, and reporting across all partner networks while training veterans into cybersecurity professionals.',
+  image: '/img/tacsop.png',
+  details: {
+    mission: 'Affordable SOC capability for small OT/ICS operators via pooled infrastructure and AI automation',
+    workforce: 'Hunter-Killer teams using special operations methodology (comprehensive L1-L3 functions, mentorship pipeline)',
+    automation: '50-70% alert-noise reduction, <1min auto-classification via Chronicle + Gemini LLM',
+    infrastructure: 'Shared Chronicle licenses enable collective defense—detection at one site strengthens all',
+    framework: 'R.A.I.D. methodology (Recon → Acquire → Interpret → Defend) for continuous improvement',
+    compensation: 'Above-market base pay + performance bonuses + equity participation ("Everyone Eats")',
+    compliance: 'IEC 62443, NERC CIP, NIST SP 800-82, MITRE ATT&CK for ICS alignment'
+  },
   components: [pipelineComponents.aiTriage, pipelineComponents.hunterKiller, pipelineComponents.chronicleStack]
 };
 
@@ -142,16 +214,16 @@ const flagshipProducts = [
 
 const contributorPaths = [
   {
-    title: 'Strategic partners',
-    detail: 'Co-fund the TacSOC launch, shape service tiers, and secure priority onboarding.'
+    title: 'Build with Open Source',
+    detail: 'Contribute to open-source telemetry tools, harden SCOUT/SEER transports, enhance RAMPART automation, or expand detection content. Join veteran engineers building transparent, accessible defense technology for critical infrastructure.'
   },
   {
-    title: 'OT operators',
-    detail: 'Pilot T.A.P.S. components in production-like environments and feed real telemetry back to the team.'
+    title: 'Deploy Google SecOps',
+    detail: 'Pilot T.A.P.S. components in production-like OT/ICS environments. Feed real telemetry into the shared TacSOC, help validate Chronicle integration, and strengthen collective defense intelligence across all partner sites.'
   },
   {
-    title: 'Builders & analysts',
-    detail: 'Join veteran engineers to harden SCOUT transport, enrich RAMPART automations, and expand hunt content.'
+    title: 'Collaborate With Us',
+    detail: 'We are seeking mission-aligned public, private, and academic partners to work jointly on critical-infrastructure cybersecurity initiatives, enabling shared grant eligibility and expanding access to modern defense capabilities for underserved operators.'
   }
 ];
 
@@ -173,7 +245,8 @@ const teamMembers = [
       'Erin Burns is an information security professional with over 17 years of experience leading and executing large-scale cybersecurity engagements and operations. As the founder of EVR:RDY, he combines deep technical knowledge with strategic leadership to advance OT/ICS cyber defense capabilities.',
       'With expertise in incident response, forensics, and hunt operations gained through daily analysis of national-level intrusions, Erin has planned and conducted multiple simultaneous defensive cyber operations in unique occupational technology and information technology environments, creating innovative procedures that enhance organizational effectiveness.'
     ],
-    photo: '/img/erin-burns.jpeg',
+  photo: '/img/erin-burns.jpeg',
+  email: 'ops@evrrdy.com',
     linkedin: 'https://www.linkedin.com/in/erinburns757/'
   },
   {
@@ -193,7 +266,8 @@ const teamMembers = [
       'Timothy DeBerry is a former combat Infantryman with multiple combat tours before transitioning to cyber operations as a Cyber Warrant Officer. With over 16 years of military service across infantry and cyber warfare roles, he brings exceptional leadership, operational excellence, and security-first engineering to EVR:RDY.',
       'As one of the Founding Engineers and the Principal Developer at EVR:RDY, Timothy owns engineering governance and SDLC, architects and implements core software with security-first design principles, and drives integrations and release readiness for open-source, affordable solutions that protect critical infrastructure. With proficiency in Python, C, automation, and security engineering, he combines combat-proven leadership with technical expertise to build production-quality systems that operate reliably in industrial environments.'
     ],
-    photo: '/img/timothy-deberry.jpeg',
+  photo: '/img/timothy-deberry.jpeg',
+  email: 'craig@evrrdy.com',
     linkedin: 'https://www.linkedin.com/in/timothy-deberry-35425b75/',
     github: 'https://github.com/nybblez0x42697A'
   },
@@ -215,7 +289,8 @@ const teamMembers = [
       'Since entering the cybersecurity field in 2016, Shayla has developed and led initiatives in Defensive Cyber Operations (DCO), Industrial Control Systems (ICS)/SCADA security, cloud architecture protection, and tactical communications security. Her extensive background includes serving as a Cyber Operations Maneuver Planner and a Master Network Analyst, where she specialized in integrating sensing, detection, and response mechanisms into mission-critical systems.',
       'A CISSP-certified professional and holder of 12 SANS certifications, Shayla is recognized for her expertise in developing and employing continuous monitoring strategies that enhance situational awareness, reduce attack surfaces, and ensure mission assurance in complex operational environments. Her passion lies in bridging the gap between technical defense capabilities and mission objectives—ensuring that sensing and monitoring technologies empower decision-makers at every echelon.'
     ],
-    photo: '/img/shayla-lapoint.jpeg'
+  photo: '/img/shayla-lapoint.jpeg',
+  email: 's.lapoint@evrrdy.com'
   },
   {
     id: 'dylan-knox',
@@ -235,7 +310,8 @@ const teamMembers = [
       'With expertise spanning from conceptual design to production validation, Dylan has led the development of custom hardware solutions that meet the stringent requirements of OT/ICS environments. His work includes designing low-footprint sensors, developing air-gap communication devices, and creating hardware-enforced security mechanisms that protect critical infrastructure.',
       'Dylan is recognized for his ability to bridge the gap between theoretical design and practical implementation, rapidly iterating from prototypes to production-ready hardware.'
     ],
-    photo: '/img/knox.png',
+  photo: '/img/knox.png',
+  email: 'dknox@evrrdy.com',
     linkedin: 'https://www.linkedin.com/in/dylan-knox-356887132/'
   }
 ];
@@ -266,7 +342,7 @@ const trustLinks = [
   { label: 'Security', value: 'Security Statement', href: '/security' }
 ];
 
-const humorAside = 'We’ve done so much with so little that investors call it capital efficiency. We call it Tuesday.';
+const humorAside = 'The hardest steel is forged in the intense heat of the hottest dumpster fires.';
 ---
 
 <BaseLayout>
@@ -307,96 +383,172 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   <Header currentPath="/" />
 
   <main id="main-content" class="command-brief">
-    <section id="mission" class="anchor-offset mission-hero">
+  <section id="mission" class="anchor-offset mission-hero">
       <div class="container">
         <div class="split-layout">
           <article class="split-copy split-copy--framed split-copy--framed--mission" aria-label="Mission">
           <span class="hero-eyebrow">Veteran-led defensive operations</span>
-          <h1>Defend Critical Infrastructure Without Compromise</h1>
-          <p>
-            EVR:RDY unites combat-tested defenders and civilian builders to deliver low-cost, practical protection for OT/ICS operators. This isn’t "just" a mission—it’s a
-            mandate.
+          <h2 class="section-title">Mission</h2>
+          <h1>Critical Infrastructure Defense</h1>
+          <p class="hero-subhead">
+            EVR:RDY delivers the lowest-cost, scalable cybersecurity solutions for OT/ICS environments with limited budgets and resources. We combine open-source tools with vendor-grade support, pooled resources, and AI-enabled elite teams powered by Google SecOpsto reduce expense while defending the nation’s critical infrastructure from evolving cyber threats.
           </p>
-          <blockquote class="mission-quote-secondary">
-            We have done so much, for so long, with so little, we are now qualified to do anything with nothing.<br />
-            <span>– Frank Sinatra</span>
-        </blockquote>
+          <div class="hero-proof-band" data-animate="proof-band">
+            <div class="hero-proof-item">
+              <span class="proof-value">1,015</span>
+              <span class="proof-label">Sites with physical disruption in OT environments in 2024</span>
+            </div>
+            <div class="hero-proof-item">
+              <span class="proof-value">145,000+</span>
+              <span class="proof-label">ICS services exposed worldwide</span>
+            </div>
+            <div class="hero-proof-item">
+              <span class="proof-value">56%</span>
+              <span class="proof-label">Of organizations have OT-specific incident response plans</span>
+            </div>
+            <div class="hero-proof-item">
+              <span class="proof-value">87%</span>
+              <span class="proof-label">OT cyberattacks up year-over-year</span>
+            </div>
+            <div class="hero-proof-item">
+              <span class="proof-value">81%</span>
+              <span class="proof-label">Of industrial firms allocate <50% of security budgets to OT</span>
+            </div>
+            <div class="hero-proof-item">
+              <span class="proof-value proof-value--green">100%</span>
+              <span class="proof-label">Veteran-owned. Ready to defend.</span>
+            </div>
+          </div>
+          <blockquote class="mission-quote">
+            <p>"We have done so much, for so long, with so little, we are now qualified to do anything with nothing."</p>
+            <cite>— unknown service member</cite>
+          </blockquote>
         </article>
           <aside class="split-sidecards" aria-label="Challenge and solution">
           <article class="card hero-flagship-card">
             <div class="flagship-meta">
               <h2 class="challenge-title">Challenge</h2>
             </div>
-            <p class="flagship-one-liner">OT operators must defend more with less:</p>
+            <p class="flagship-one-liner">Critical infrastructure systems face a growing cyber threat landscape — but the teams defending them are often under-resourced and overextended.</p>
             <ul class="flagship-bullets challenge">
-              <li>Underfunded programs can’t bankroll full-scale SOC buildouts or heavy appliances.</li>
-              <li>Legacy platforms demand capex and licenses smaller utilities cannot sustain.</li>
-              <li>Talent shortages make automation and pooled expertise mandatory.</li>
+              <li>Many sites lack the funding or staff to build and sustain a full-scale SOC.</li>
+              <li>Legacy security tools are costly, complex, and not designed for OT or ICS environments.</li>
+              <li>The shortage of skilled defenders demands automation, AI-assisted analysis, and scalable SecOps models.</li>
             </ul>
+            <p class="flagship-one-liner">EVR:RDY was built to close that gap — applying military-grade cyber discipline and Google SecOps technology to help small and mid-size infrastructure sites defend like national-level operations.</p>
           </article>
           <article class="card hero-flagship-card">
             <div class="flagship-meta">
               <h2 class="solution-title">Solution</h2>
             </div>
-            <p class="flagship-one-liner">Scaleable, lean defensive operations. Commodity telemetry pipelines—without the vendor tax.</p>
+            <p class="flagship-one-liner">EVR:RDY transforms military-proven defense principles into a cloud-native security framework built for the realities of critical infrastructure.</p>
             <ul class="flagship-bullets solution">
-              <li>Shrink analyst-to-asset ratios to enable accelerated response.</li>
-              <li>Feed analytics with secure telemetry running on commodity hardware.</li>
-              <li>Blend mentorship and speed with Veteran-led teams—operators defend forward.</li>
+              <li>Powered by Google SecOps, our modular architecture delivers enterprise-grade visibility and automation without the traditional cost barrier.</li>
+              <li>Unified telemetry pipelines feed real-time data from multiple sites into a single defense layer, enabling faster detection and coordinated response.</li>
+              <li>Scalable deployment models grow from individual sites to national infrastructure networks—ensuring the same protection level across every critical system.</li>
             </ul>
+            <p class="flagship-one-liner">With EVR:RDY, critical infrastructure can finally defend with the speed, precision, and intelligence once reserved for military operations.</p>
           </article>
           </aside>
         </div>
       </div>
       </section>
 
-    <section id="overview" class="split-section anchor-offset">
+  <section id="approach" class="anchor-offset">
       <div class="container">
-        <div class="split-layout">
-          <article class="split-copy split-copy--framed split-copy--framed--overview" aria-label="Overview">
-          <span class="hero-eyebrow">Affordable Critical Infrastructure Defense</span>
-          <h1>Open-source OT/ICS defense you can actually afford.</h1>
+        <article class="split-copy split-copy--framed" aria-label="Approach">
+          <span class="hero-eyebrow">How We Operate</span>
+          <h2 class="section-title">Approach</h2>
           <p>
-            EVR:RDY combines lean operations with commodity telemetry so resource-constrained operators can defend critical infrastructure without big-box price tags.
+            EVR:RDY applies the structure and precision of military cyber operations to defend the civilian systems that keep our nation running. Our approach is guided by transparency, scalability, and shared strength — principles that allow small operators to achieve large-scale resilience. We combine the openness of community-driven innovation with the power of enterprise-class automation to create a defense ecosystem that is both sustainable and effective.
+          </p>
+
+          <div class="approach-grid">
+            <article class="approach-card">
+              <h3>Why Open Source</h3>
+              <p class="badge-row">Accessibility · Transparency · Trust</p>
+              <p>
+                Security should never be a luxury. Open-source technology allows EVR:RDY to deliver enterprise-grade defense capabilities at a fraction of traditional cost, while maintaining the transparency and verifiability that critical infrastructure demands.
+              </p>
+              <p>By releasing core components of our systems and tools openly, we:</p>
+              <ul class="approach-bullets">
+                <li><strong>Remove barriers to adoption:</strong> Giving smaller utilities, municipalities, and operators immediate access to proven, reliable cybersecurity technology without vendor lock-in.</li>
+                <li><strong>Enable collective innovation:</strong> Empowering a global community of defenders, researchers, and veterans to continuously enhance the tools protecting our shared infrastructure.</li>
+                <li><strong>Ensure auditability and safety:</strong> Allowing operators to inspect every line of code that touches their environment, building confidence that no hidden risks exist.</li>
+                <li><strong>Sustain long-term resilience:</strong> Ensuring that open ecosystems endure beyond vendor lifecycles or budget cycles, providing continuity in protection.</li>
+              </ul>
+              <p class="approach-note">Open source is not a business model — it is a mission principle. It keeps innovation accessible, defenses transparent, and security sustainable, especially for those protecting systems vital to national stability.</p>
+            </article>
+
+            <article class="approach-card">
+              <h3>Why Google SecOps</h3>
+              <p class="badge-row">Scale · Automation · Collective Defense</p>
+              <p>
+                The TACSOC (Threat Analysis &amp; Cyber Security Operations Center) operates on Google SecOps (Chronicle) because it delivers nation-scale analytics at mission-level affordability. Built for massive telemetry, Chronicle provides the performance, automation, and reach required to defend multiple infrastructure sites under one unified command.
+              </p>
+              <p>We chose Google SecOps because it enables:</p>
+              <ul class="approach-bullets">
+                <li><strong>Massive Scalability:</strong> Ingests telemetry from hundreds of distributed OT/ICS environments without on-premise overhead.</li>
+                <li><strong>AI-Driven Speed:</strong> Integrated Gemini AI accelerates triage, detection, and response, amplifying the impact of small elite teams.</li>
+                <li><strong>Unified Data Model (UDM):</strong> Normalizes telemetry from T.A.P.S. and other data sources for rapid enrichment and analysis.</li>
+                <li><strong>Shared Intelligence:</strong> Threat detections and insights from one defended site immediately strengthen all others, forming a collective defense network.</li>
+                <li><strong>Operational Affordability:</strong> Shared licensing and cloud-native infrastructure reduce per-operator cost while expanding analytical reach.</li>
+              </ul>
+            </article>
+
+            <article class="approach-card">
+              <h3>Funding Plan</h3>
+              <p class="badge-row">Shared Value · Sustainable Growth · Mission Reinvestment</p>
+              <p>
+                EVR:RDY’s funding model is designed to sustain operations without compromising mission integrity. Every dollar supports capability growth, workforce development, and defensive readiness for the operators who need it most.
+              </p>
+              <p>
+                Our financial approach blends traditional and community-driven funding streams to create enduring independence and resilience:
+              </p>
+              <ul class="approach-bullets">
+                <li><strong>Subscription-Based Services:</strong> TACSOC and managed defense offerings are provided through scalable, pooled subscriptions that minimize per-operator cost while maintaining enterprise-grade capability.</li>
+                <li><strong>Public–Private Partnerships:</strong> Collaborations with state, municipal, and federal stakeholders align national security priorities with local operational needs, funding deployments that protect shared infrastructure.</li>
+                <li><strong>Mission-Aligned Investment:</strong> Private and veteran-led capital supports expansion of open-source development, training programs, and AI-driven operational tools — ensuring profits reinforce purpose.</li>
+                <li><strong>Grant and Cooperative Programs:</strong> Federal and state cybersecurity grants are leveraged to subsidize rural and small-utility deployments, accelerating equitable access to modern defense technology.</li>
+                <li><strong>Revenue Reinvestment:</strong> A portion of net proceeds is reinvested directly into R&amp;D, training, and the veteran workforce pipeline to continuously improve capabilities and expand reach.</li>
+              </ul>
+              <p class="approach-note">This model ensures EVR:RDY remains self-sustaining, mission-driven, and community-empowering — not dependent on single-source funding or external control. It aligns with our founding principle: to defend forward, affordably, and for all.</p>
+            </article>
+          </div>
+
+          <h3>In Combination</h3>
+          <p>
+            <strong>Open Source</strong> provides the foundation — a transparent, accessible layer of telemetry and tooling any operator can deploy safely.<br />
+            <strong>Google SecOps</strong> provides the command layer — an AI-accelerated analysis and response engine that turns distributed telemetry into coordinated action.
+          </p>
+          <p>Together, they embody EVR:RDY’s operational doctrine:</p>
+          <blockquote class="mission-quote">
+            <p>“Open where possible, automated where practical, and secure by design everywhere.”</p>
+          </blockquote>
+          <p>
+            This integration allows the TACSOC to deliver enterprise-class detection, investigation, and response for small and midsized critical infrastructure operators — at a cost, scale, and speed they can truly sustain.
           </p>
         </article>
-          <aside class="split-sidecards" aria-label="Flagship capabilities">
-          {flagshipProducts.map((product) => (
-            <article class="card hero-flagship-card">
-              <div class="flagship-meta">
-                <h3>{product.name}</h3>
-                <span
-                  class={`status-indicator ${product.variant === 'design' ? 'design' : product.variant === 'pilot' ? 'pilot' : ''}`}
-                >
-                  {product.status}
-                </span>
-              </div>
-              <p class="flagship-one-liner">{product.oneLiner}</p>
-              <ul class="flagship-bullets">
-                {product.bullets.map((bullet) => (
-                  <li>{bullet}</li>
-                ))}
-              </ul>
-              <a class="flagship-link" href={product.link}>View {product.name}</a>
-            </article>
-          ))}
-          </aside>
-        </div>
       </div>
-      </section>
+    </section>
 
-    <section id="pipeline" class="anchor-offset">
+  <section id="pipeline" class="anchor-offset">
       <div class="container">
           <article class="card pipeline-card">
-            <span class="hero-eyebrow">Mission Data on Tap</span>
+            <span class="hero-eyebrow">Mission Data</span>
           <div class="pipeline-intro">
-            <h2>Pipeline</h2>
+            <h2>Data Flow</h2>
             <p>
-              The T.A.P.S. pipeline moves telemetry from the edge of an OT network into analysts’ hands. Each stage is transparent about status, funding needs, and
-              mission impact.
+              T.A.P.S. (Telemetry, Analysis, Processing, and Security) is the backbone of our defensive operations — a disciplined data pipeline that carries mission-critical telemetry from the farthest edge of the OT network directly into analysts’ hands.
+            </p>
+            <p>
+              The pipeline ensures that every packet, signal, and alert moves securely, transparently, and with measurable impact. From remote field sensors to central command dashboards, T.A.P.S. provides the real-time visibility that defenders need to anticipate, identify, and neutralize threats before they disrupt operations.
             </p>
             <p>
               From SCOUT at the host to the TacSOC, every component is engineered to keep defenders ahead of threats without vendor lock-in.
+            </p>
+            <p class="pipeline-hint">
+              <em>Click on hardware component icons below for detailed technical specifications and compliance information.</em>
             </p>
           </div>
           <div class="pipeline-flow pipeline-flow--compact">
@@ -414,38 +566,83 @@ const humorAside = 'We’ve done so much with so little that investors call it c
                   <div class="domain-components domain-components--compact">
                     {domain.components.map((component, componentIndex) => (
                       <Fragment>
-                        <details class={`component-compact ${component.components ? 'component-compact--group' : ''}`}>
-                          <summary>
-                            <span class="component-label">{component.name}</span>
-                            {component.status ? (
-                              <span class={`status-indicator ${component.variant ?? ''}`}>{component.status}</span>
-                            ) : null}
-                          </summary>
-                          <div class="component-body">
-                            {component.description ? <p>{component.description}</p> : null}
-                            {component.components ? (
-                              <div class="component-subgrid">
-                                {component.components.map((subComponent) => (
-                                  <div class={`component-subcard ${subComponent.variant ?? ''}`}>
-                                    <div class="component-subcard-header">
-                                      <span>{subComponent.name}</span>
-                                      {subComponent.status ? (
-                                        <span class={`status-indicator ${subComponent.variant ?? ''}`}>{subComponent.status}</span>
-                                      ) : null}
-          </div>
-                                    {subComponent.description ? <p>{subComponent.description}</p> : null}
-                                    {subComponent.outcome ? (
-                                      <p class="component-impact"><strong>Impact:</strong> {subComponent.outcome}</p>
+                        <div class="component-icon-wrapper">
+                          {component.image ? (
+                            <details class="component-compact component-with-icon">
+                              <summary>
+                                <img src={component.image} alt={component.name} class="component-image" />
+                                <div class="component-summary">
+                                  <div class="component-summary-header">
+                                    <span class="component-label">{component.name}</span>
+                                    {component.status ? (
+                                      <span class={`status-indicator ${component.variant ?? ''}`}>{component.status}</span>
                                     ) : null}
+                                  </div>
+                                  {component.description ? (
+                                    <p class="component-summary-overview">{component.description}</p>
+                                  ) : null}
+                                </div>
+                              </summary>
+                              <div class="component-body">
+                                {component.outcome ? (
+                                  <div class="component-section">
+                                    <strong>Mission Impact:</strong>
+                                    <p>{component.outcome}</p>
+                                  </div>
+                                ) : null}
+                                {component.details ? (
+                                  <div class="component-section component-details">
+                                    <strong>Technical Specs:</strong>
+                                    <ul>
+                                      {Object.entries(component.details).map(([key, value]) => (
+                                        <li>
+                                          <span class="detail-label">{key.replace(/([A-Z])/g, ' $1').trim()}:</span> {value}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                ) : null}
+                                <div class="component-section">
+                                  <strong>Domain:</strong>
+                                  <p>{component.domain === 'ot' ? 'Operational Technology Network' : component.domain === 'buffer' ? 'Cross-Domain Guard (One-Way Buffer)' : 'Mission Hub / IT Network'}</p>
+                                </div>
+                              </div>
+                            </details>
+                          ) : (
+                            <details class={`component-compact ${component.components ? 'component-compact--group' : ''}`}>
+                              <summary>
+                                <span class="component-label">{component.name}</span>
+                                {component.status ? (
+                                  <span class={`status-indicator ${component.variant ?? ''}`}>{component.status}</span>
+                                ) : null}
+                              </summary>
+                              <div class="component-body">
+                                {component.description ? <p>{component.description}</p> : null}
+                                {component.components ? (
+                                  <div class="component-subgrid">
+                                    {component.components.map((subComponent) => (
+                                      <div class={`component-subcard ${subComponent.variant ?? ''}`}>
+                                        <div class="component-subcard-header">
+                                          <span>{subComponent.name}</span>
+                                          {subComponent.status ? (
+                                            <span class={`status-indicator ${subComponent.variant ?? ''}`}>{subComponent.status}</span>
+                                          ) : null}
+          </div>
+                                        {subComponent.description ? <p>{subComponent.description}</p> : null}
+                                        {subComponent.outcome ? (
+                                          <p class="component-impact"><strong>Impact:</strong> {subComponent.outcome}</p>
+                                        ) : null}
         </div>
-                                ))}
+                                    ))}
           </div>
-                            ) : null}
-                            {component.outcome ? (
-                              <p class="component-impact"><strong>Impact:</strong> {component.outcome}</p>
-                            ) : null}
+                                ) : null}
+                                {component.outcome ? (
+                                  <p class="component-impact"><strong>Impact:</strong> {component.outcome}</p>
+                                ) : null}
           </div>
-                        </details>
+                            </details>
+                          )}
+                        </div>
                         {componentIndex < domain.components.length - 1 ? (
                           <div class="connector-line connector-line--compact" aria-hidden="true">
                             <span class="pipeline-line"></span>
@@ -471,10 +668,11 @@ const humorAside = 'We’ve done so much with so little that investors call it c
         </div>
       </section>
 
-    <section id="team" class="anchor-offset">
+  <section id="team" class="anchor-offset">
       <div class="container">
         <article class="team-panel split-copy--framed split-copy--framed--team">
           <header class="team-panel-header">
+              <h2 class="section-title">Team</h2>
               <span class="hero-eyebrow">Veterans Running Point</span>
               <h2>The EVR:RDY Team</h2>
             <p>
@@ -484,11 +682,19 @@ const humorAside = 'We’ve done so much with so little that investors call it c
           </header>
           <div class="team-stack">
             {teamMembers.map((member) => (
-              <article class="team-card team-card--stacked">
+              <article class="team-card team-card--stacked" data-animate="team-card">
                 <div class="team-header">
-                  <div class="team-avatar">
-                    <img src={member.photo} alt={member.name} class="team-photo" loading="lazy" />
+                  <div class="team-info">
+                    <h3 class="team-name">{member.name}</h3>
+                    <span class="team-role-tag">{member.role}</span>
                     <div class="team-link-icons">
+                      {member.email ? (
+                        <a class="team-link-icon" href={`mailto:${member.email}`} aria-label={`Email ${member.name}`}>
+                          <svg class="icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                          </svg>
+                        </a>
+                      ) : null}
                       {member.linkedin ? (
                         <a class="team-link-icon" href={member.linkedin} target="_blank" rel="noopener" aria-label={`LinkedIn profile for ${member.name}`}>
                           <svg class="icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
@@ -503,42 +709,47 @@ const humorAside = 'We’ve done so much with so little that investors call it c
                           </svg>
                         </a>
                       ) : null}
-          </div>
-          </div>
-                  <div class="team-heading">
-                    <div class="team-name-row">
-                      <h3>{member.name}</h3>
-        </div>
-                    <span class="team-role-tag">{member.role}</span>
+                    </div>
+                  </div>
+                  <div class="team-avatar">
+                    <img src={member.photo} alt={member.name} class="team-photo" loading="lazy" />
                   </div>
                 </div>
                 <p class="team-tagline">{member.tagline}</p>
-                <ul class="team-highlights">
-                  {member.highlights.map((highlight) => (
-                    <li>{highlight}</li>
-                  ))}
-                </ul>
-                <button
-                  type="button"
-                  class="team-toggle"
-                  data-bio-toggle={member.id}
-                  aria-expanded="false"
-                  aria-controls={`bio-${member.id}`}
-                  id={`toggle-${member.id}`}
-                >
-                  Read bio
-                </button>
-                <div
-                  id={`bio-${member.id}`}
-                  class="team-bio"
-                  role="region"
-                  aria-labelledby={`toggle-${member.id}`}
-                  aria-hidden="true"
-                  hidden
-                >
-                  {member.bio.map((paragraph) => (
-                    <p>{paragraph}</p>
-                  ))}
+                <div class="team-bio-container">
+                  <div class="team-bio-preview">
+                    <p>{member.bio[0]}</p>
+                  </div>
+                  <button
+                    type="button"
+                    class="team-toggle team-toggle-read-more"
+                    data-bio-toggle={member.id}
+                    aria-expanded="false"
+                    aria-controls={`bio-${member.id}`}
+                    id={`toggle-${member.id}`}
+                  >
+                    Read more
+                  </button>
+                  <div
+                    id={`bio-${member.id}`}
+                    class="team-bio"
+                    role="region"
+                    aria-labelledby={`toggle-${member.id}`}
+                    aria-hidden="true"
+                    hidden
+                  >
+                    {member.bio.slice(1).map((paragraph) => (
+                      <p>{paragraph}</p>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    class="team-toggle team-toggle-show-less"
+                    data-bio-collapse={member.id}
+                    style="display: none;"
+                  >
+                    Show less
+                  </button>
                 </div>
               </article>
             ))}
@@ -547,10 +758,11 @@ const humorAside = 'We’ve done so much with so little that investors call it c
       </div>
       </section>
 
-    <section id="engage" class="anchor-offset">
+  <section id="engage" class="anchor-offset">
       <div class="container">
         <article class="engage-panel split-copy--framed split-copy--framed--engage">
           <header class="engage-header">
+              <h2 class="section-title">Engage</h2>
               <span class="hero-eyebrow">Suit Up or Sponsor Up</span>
             <h2>Help us protect critical infrastructure.</h2>
             <p>
@@ -572,12 +784,12 @@ const humorAside = 'We’ve done so much with so little that investors call it c
 
             <article class="engage-card engage-card--contact">
               <h3>Contact EVR:RDY</h3>
-              <p>Let’s coordinate next steps and keep critical infrastructure defended forward.</p>
+              <p>
+                Let’s coordinate next steps and keep critical infrastructure defended forward. Reach our operations desk for pilots,
+                deployments, support, or partnerships. Include your organization, scope, timeline, and any constraints—we’ll route it to
+                the right operator and respond quickly.
+              </p>
               <ul class="contact-list">
-                <li>
-                  <strong>Email</strong>
-                  <a href="mailto:founders@evrrdy.com">founders@evrrdy.com</a>
-                </li>
                 <li>
                   <strong>Operations</strong>
                   <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a>
@@ -590,7 +802,7 @@ const humorAside = 'We’ve done so much with so little that investors call it c
                 roadmap and tailor a partnership.
               </p>
               <div class="partner-actions">
-                <a class="cta-btn secondary" href="mailto:founders@evrrdy.com?subject=Partner%20with%20EVR:RDY">Coordinate a briefing</a>
+                <a class="cta-btn secondary" href="mailto:ops@evrrdy.com?subject=Partner%20with%20EVR:RDY">Coordinate a briefing</a>
               </div>
                         <blockquote class="mission-quote-secondary">
               <p class="humor-aside">{humorAside}</p>
@@ -604,35 +816,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
       </div>
       </section>
 
-    <section id="resources" class="anchor-offset">
-      <div class="container">
-        <article class="resources-panel split-copy--framed split-copy--framed--resources">
-          <header class="resources-header">
-            <span class="hero-eyebrow">Evidence for the Skeptics</span>
-            <h2>Resources &amp; Documentation</h2>
-            <p>
-              Access our latest briefs, technical runbooks, and partner-ready collateral. Everything you need to vet EVR:RDY without waiting on a call.
-            </p>
-          </header>
-          <div id="resources-grid" class="resources-grid" role="list" aria-live="polite">
-            <div class="skeleton-loader" aria-hidden="true">
-              <div class="skeleton-tile"></div>
-              <div class="skeleton-tile"></div>
-              <div class="skeleton-tile"></div>
-            </div>
-          </div>
-        </article>
-      </div>
-      </section>
-
-    <div id="expanded-resource" class="expanded-resource" onclick="closeExpandedResource()">
-      <div class="expanded-resource-content" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-label="Expanded resource">
-        <button class="close-expanded-btn" type="button" onclick="closeExpandedResource()" aria-label="Close resource">&times;</button>
-        <div id="expanded-resource-content" class="markdown-content" role="document">
-          <!-- Resource content injected by site.js -->
-    </div>
-      </div>
-    </div>
+  <!-- Resources section removed as per request -->
+  <!-- Expanded resource overlay removed -->
 
   </main>
 
@@ -641,14 +826,27 @@ const humorAside = 'We’ve done so much with so little that investors call it c
 
 <style>
   .command-brief {
-    padding-top: calc(var(--space-3xl) + 80px);
+    padding-top: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-3xl);
+    gap: var(--space-xl);
+  }
+
+  /* Ensure in-page anchor navigation does not hide section tops beneath fixed header */
+  .anchor-offset {
+    scroll-margin-top: 110px; /* approximate fixed nav height incl. padding */
+  }
+
+  @media (max-width: 780px) {
+    .anchor-offset { scroll-margin-top: 130px; } /* slightly larger on mobile due to stacked nav */
   }
 
   .command-brief section {
-    padding: var(--space-2xl) 0;
+    padding: 0 0 var(--space-xl) 0;
+  }
+
+  .mission-hero {
+    padding-top: var(--space-md);
   }
 
   .hero-section {
@@ -667,6 +865,94 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     letter-spacing: 0.2em;
     font-size: 0.75rem;
     color: rgba(169, 214, 138, 0.8);
+    margin-bottom: var(--space-xs);
+  }
+
+  .split-copy--framed--mission .section-title {
+    margin: 0 0 var(--space-xs) 0;
+  }
+
+  .split-copy--framed--mission h1 {
+    margin-top: 0;
+  }
+
+  .hero-subhead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(229, 228, 216, 0.85);
+    margin: var(--space-sm) 0 var(--space-md);
+  }
+
+  .hero-proof-band {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    margin: var(--space-md) 0 0;
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.15);
+  }
+
+  .hero-proof-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    background: rgba(169, 214, 138, 0.06);
+    border: 1px solid rgba(169, 214, 138, 0.12);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .hero-proof-item:hover {
+    background: rgba(169, 214, 138, 0.1);
+    border-color: rgba(169, 214, 138, 0.22);
+  }
+
+  .proof-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ef4444;
+    line-height: 1;
+  }
+
+  /* Green-highlighted proof values (e.g., Veteran-owned 100%) */
+  .proof-value--green {
+    color: var(--bright);
+  }
+
+  .proof-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(229, 228, 216, 0.7);
+    text-align: center;
+  }
+
+  .mission-quote {
+    margin: var(--space-sm) 0 0;
+    padding: var(--space-md);
+    border-left: 3px solid rgba(169, 214, 138, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-md);
+  }
+
+  .mission-quote p {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(229, 228, 216, 0.9);
+    margin: 0 0 var(--space-sm) 0;
+    line-height: 1.6;
+  }
+
+  .mission-quote cite {
+    display: block;
+    font-size: 0.9rem;
+    font-style: normal;
+    color: rgba(169, 214, 138, 0.8);
+    text-align: right;
   }
 
   .hero-copy h1 {
@@ -759,6 +1045,138 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     gap: var(--space-sm);
   }
 
+  /* Approach cards grid */
+  .approach-grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+    margin: var(--space-xl) 0 var(--space-2xl);
+    max-width: 920px;
+  }
+
+  .approach-card {
+    display: grid;
+    gap: var(--space-md);
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(169, 214, 138, 0.28);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .approach-card::before {
+    content: '';
+    position: absolute;
+    inset: -30% -40%;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.12), rgba(169, 214, 138, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .approach-card:hover::before,
+  .approach-card:focus-within::before {
+    opacity: 1;
+  }
+
+  .approach-card:hover,
+  .approach-card:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(169, 214, 138, 0.2), 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-color: rgba(169, 214, 138, 0.45);
+  }
+
+  .approach-card h3 {
+    margin: 0 0 var(--space-xs) 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bright);
+    letter-spacing: 0.02em;
+  }
+
+  .approach-card > p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(229, 228, 216, 0.9);
+    margin: 0;
+  }
+
+  .badge-row {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(169, 214, 138, 0.95);
+    background: rgba(169, 214, 138, 0.15);
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    width: fit-content;
+    margin: 0 0 var(--space-sm) 0;
+  }
+
+  .approach-bullets {
+    list-style: none;
+    margin: var(--space-md) 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+    font-size: 1rem;
+  }
+
+  .approach-bullets li {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    display: flex;
+    gap: var(--space-md);
+    line-height: 1.6;
+    position: relative;
+    color: rgba(229, 228, 216, 0.88);
+  }
+
+  .approach-bullets li::before {
+    content: '→';
+    color: var(--bright);
+    font-weight: 700;
+    font-size: 1.2rem;
+    width: 1.2em;
+    flex: 0 0 1.2em;
+    line-height: 1.4;
+  }
+
+  .approach-bullets li strong {
+    color: rgba(229, 228, 216, 0.98);
+  }
+
+  .approach-note {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(229, 228, 216, 0.85);
+    background: rgba(169, 214, 138, 0.12);
+    border: 1px solid rgba(169, 214, 138, 0.28);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin: var(--space-sm) 0 0;
+  }
+
+  @media (max-width: 860px) {
+    .approach-grid { gap: var(--space-lg); margin: var(--space-lg) 0 var(--space-xl); }
+    .approach-card { padding: var(--space-lg); gap: var(--space-sm); }
+    .approach-card h3 { font-size: 1.3rem; }
+    .approach-bullets { gap: var(--space-sm); font-size: 0.95rem; }
+    .approach-bullets li { padding: var(--space-sm); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .approach-card, .approach-card::before { transition: none !important; }
+    .approach-card:hover, .approach-card:focus-within { transform: none; }
+  }
+
 
   .split-layout,
   .section-grid {
@@ -812,8 +1230,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
 .split-sidecards {
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
-  justify-content: space-between;
+  padding-top: var(--space-xs);
+  justify-content: flex-start; /* stack from top; we'll push the last card down */
   height: 100%;
 }
 
@@ -829,6 +1247,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
 
 .split-sidecards > *:last-child {
   margin-bottom: 0;
+  /* Pin the second card (Solution) to the bottom of the column */
+  margin-top: auto;
 }
 
 .split-sidecards > *:last-child > *:last-child {
@@ -839,87 +1259,32 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  height: 100%;
+  /* let cards size naturally; avoid forced full-height */
 }
 
 .split-sidecards .hero-flagship-card > *:last-child {
   margin-top: auto;
 }
 
-  .split-copy--framed--resources {
-    padding: var(--space-xl);
-    border-radius: var(--radius-xl);
-    background: rgba(0, 0, 0, 0.28);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
-  }
-
-  .resources-panel {
-    display: grid;
-    gap: var(--space-xl);
-  }
-
-  .resources-header {
-    display: grid;
-    gap: var(--space-sm);
-    max-width: 720px;
-  }
-
-  .resources-header p {
-    color: rgba(229, 228, 216, 0.78);
-    margin: 0;
-  }
-
-  .skeleton-loader {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-lg);
-    width: 100%;
-  }
-
-  .skeleton-tile {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(229, 228, 216, 0.12);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    height: 280px;
-    position: relative;
-    overflow: hidden;
-    animation: skeleton-pulse 1.6s ease-in-out infinite;
-  }
-
-  .skeleton-tile::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(169, 214, 138, 0.12), transparent);
-    animation: skeleton-shimmer 2s infinite;
-  }
-
-  @keyframes skeleton-pulse {
-    0%,
-    100% {
-      opacity: 0.6;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @keyframes skeleton-shimmer {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: 100%;
-    }
-  }
+  /* Resources section removed: cleanup styles */
 
   .mission-hero .split-copy--framed--mission {
     border-radius: var(--radius-xl);
     box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+      padding: var(--space-lg);
+  }
+  /* Position the quote roughly mid-gap below the facts for better visual balance */
+  .mission-hero .split-copy--framed--mission .mission-quote {
+    margin-top: clamp(var(--space-md), 7vh, var(--space-2xl));
+  }
+
+  @media (max-width: 768px) {
+    .mission-hero .split-copy--framed--mission .mission-quote {
+      margin-top: var(--space-md);
+    }
   }
 
   .split-section .split-copy--framed--overview {
@@ -1114,7 +1479,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   .pipeline-intro {
     display: grid;
     gap: var(--space-sm);
-    max-width: 640px;
+    width: 100%;
+    max-width: none;
   }
 
   .pipeline-intro h2 {
@@ -1152,8 +1518,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   }
 
   .pipeline-domain.tacsoc {
-    border-color: rgba(170, 142, 255, 0.38);
-    background: linear-gradient(140deg, rgba(122, 83, 196, 0.28), rgba(28, 20, 46, 0.78));
+    border-color: rgba(169, 214, 138, 0.35);
+    background: linear-gradient(140deg, rgba(45, 65, 38, 0.68), rgba(18, 22, 16, 0.88));
     overflow: hidden;
   }
 
@@ -1161,8 +1527,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   .pipeline-domain.tacsoc::after {
     content: '';
     position: absolute;
-    background: radial-gradient(circle at center, rgba(170, 142, 255, 0.45) 0%, rgba(170, 142, 255, 0) 70%);
-    opacity: 0.6;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.22) 0%, rgba(169, 214, 138, 0) 70%);
+    opacity: 0.5;
   }
 
   .pipeline-domain.tacsoc::before {
@@ -1224,7 +1590,7 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   .domain-components {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* left-align the flow content */
     gap: var(--space-xs);
     position: relative;
     z-index: 1;
@@ -1437,6 +1803,137 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     animation: pipelinePulse 2s ease-in-out infinite;
   }
 
+  /* Icon-based component variant */
+  .component-compact.component-with-icon {
+    padding: var(--space-sm);
+  }
+
+  .component-compact.component-with-icon summary {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+  }
+
+  .component-icon-header { /* legacy support */
+    display: contents;
+  }
+
+  .component-with-icon .component-image {
+    width: 160px;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 3px solid rgba(169, 214, 138, 0.3);
+    background: rgba(0, 0, 0, 0.3);
+    padding: var(--space-sm);
+    transition: all var(--transition-normal);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .component-with-icon:hover .component-image,
+  .component-with-icon[open] .component-image {
+    border-color: rgba(169, 214, 138, 0.6);
+    transform: scale(1.08);
+    box-shadow: 0 8px 32px rgba(169, 214, 138, 0.4);
+  }
+
+  .component-with-icon .component-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-align: left; /* left-align label */
+    letter-spacing: 0.5px;
+  }
+
+  .component-summary {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .component-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+  }
+
+  .component-summary-overview {
+    margin: 0;
+    color: rgba(229, 228, 216, 0.85);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .component-compact.component-with-icon summary {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+    .component-with-icon .component-image {
+      width: 120px;
+    }
+  }
+
+  .component-with-icon .status-indicator {
+    font-size: 0.75rem;
+  }
+
+  .component-section {
+    margin-bottom: var(--space-sm);
+  }
+
+  .component-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .component-section strong {
+    display: block;
+    color: rgba(169, 214, 138, 0.95);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .component-section p {
+    margin: 0;
+    color: rgba(229, 228, 216, 0.85);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .component-details ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .component-details li {
+    margin: 6px 0;
+    padding: 6px 0;
+    color: rgba(229, 228, 216, 0.85);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(169, 214, 138, 0.1);
+  }
+
+  .component-details li:last-child {
+    border-bottom: none;
+  }
+
+  .component-details .detail-label {
+    color: rgba(169, 214, 138, 0.8);
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
   .component-compact::before {
     content: '';
     position: absolute;
@@ -1550,6 +2047,78 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     color: rgba(229, 228, 216, 0.75);
   }
 
+  /* Hint text styling */
+  .pipeline-hint {
+    color: rgba(169, 214, 138, 0.85);
+    font-size: 0.95rem;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+  }
+
+  .pipeline-hint em {
+    font-style: italic;
+  }
+
+  .pipeline-intro .section-actions {
+    display: block;
+    margin-top: var(--space-md);
+    text-align: center;
+  }
+
+  /* Backdrop overlay - no longer needed but keeping for compatibility */
+  .tooltip-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .tooltip-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media (max-width: 768px) {
+    .component-with-icon .component-image {
+      width: 120px;
+    }
+
+    .component-with-icon .component-label {
+      font-size: 0.95rem;
+    }
+
+    .component-tooltip {
+      min-width: 280px;
+      max-width: 90vw;
+      max-height: 60vh;
+      left: 50%;
+      right: auto;
+    }
+
+    .tooltip-header h5 {
+      font-size: 1rem;
+    }
+
+    .tooltip-section strong {
+      font-size: 0.7rem;
+    }
+
+    .tooltip-section p {
+      font-size: 0.85rem;
+    }
+
+    .tooltip-details li {
+      font-size: 0.8rem;
+    }
+  }
+
   .connector-line {
     display: flex;
     flex-direction: column;
@@ -1640,22 +2209,48 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     padding: 0;
     margin: var(--space-md) 0;
     display: grid;
-    gap: var(--space-xs);
-    font-size: 0.85rem;
+    gap: var(--space-sm);
+    font-size: 0.95rem;
+  }
+
+  .flagship-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(169, 214, 138, 0.12);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm);
   }
 
   .flagship-bullets li::before {
     content: '→';
     color: var(--bright);
-    margin-right: var(--space-xs);
-    font-size: 0.85rem;
-    vertical-align: middle;
+    font-size: 1rem;
+    line-height: 1.2;
+    width: 1.1em;
+    flex: 0 0 1.1em;
   }
 
   .flagship-bullets.challenge li::before {
     content: '✖';
     color: #ff6b6b;
     margin-right: var(--space-xs);
+  }
+
+  .flagship-bullets.challenge li {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.35);
+  }
+
+  .flagship-bullets.solution li::before {
+    content: '✔';
+    color: var(--bright);
+  }
+
+  .flagship-bullets.solution li {
+    background: rgba(169, 214, 138, 0.08);
+    border-color: rgba(169, 214, 138, 0.35);
   }
 
   .flagship-link {
@@ -1666,6 +2261,41 @@ const humorAside = 'We’ve done so much with so little that investors call it c
 
   .flagship-link:hover {
     text-decoration: underline;
+  }
+
+  .flagship-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+
+  .cta-btn-small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all var(--transition-normal);
+  }
+
+  .cta-btn-small.primary {
+    color: #0b1209;
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    border: 1px solid rgba(169, 214, 138, 0.45);
+    box-shadow: 0 8px 16px rgba(169, 214, 138, 0.25);
+  }
+
+  .cta-btn-small.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 20px rgba(169, 214, 138, 0.3);
   }
 
   .team-section {
@@ -1697,6 +2327,24 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     display: flex;
     gap: var(--space-md);
     align-items: center;
+    justify-content: space-between;
+  }
+
+  .team-info {
+    display: grid;
+    gap: var(--space-xs);
+    flex: 1;
+  }
+
+  .team-name {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bright);
+  }
+
+  .team-avatar {
+    flex-shrink: 0;
   }
 
   .team-heading {
@@ -1721,6 +2369,7 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   .team-link-icons {
     display: flex;
     gap: var(--space-xs);
+    margin-top: var(--space-xs);
   }
 
   .team-link-icon {
@@ -1748,8 +2397,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   }
 
   .team-photo {
-    width: 64px;
-    height: 64px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 50%;
     border: 2px solid rgba(169, 214, 138, 0.35);
@@ -1766,11 +2415,50 @@ const humorAside = 'We’ve done so much with so little that investors call it c
     letter-spacing: 0.08em;
     text-transform: uppercase;
     border: 1px solid rgba(169, 214, 138, 0.35);
+    width: fit-content;
+    max-width: max-content;
   }
 
   .team-tagline {
     margin: 0;
     color: rgba(229, 228, 216, 0.8);
+  }
+
+  .team-bio-container {
+    margin: var(--space-sm) 0 0;
+  }
+
+  .team-bio-preview {
+    margin: 0;
+  }
+
+  .team-bio-preview p {
+    margin: 0 0 var(--space-sm) 0;
+    color: rgba(229, 228, 216, 0.85);
+    line-height: 1.6;
+  }
+
+  .team-toggle-read-more {
+    margin-bottom: var(--space-sm);
+  }
+
+  .team-bio {
+    margin: 0;
+    padding: 0;
+  }
+
+  .team-bio p {
+    margin: 0 0 var(--space-sm) 0;
+    color: rgba(229, 228, 216, 0.85);
+    line-height: 1.6;
+  }
+
+  .team-bio p:last-child {
+    margin-bottom: var(--space-sm);
+  }
+
+  .team-toggle-show-less {
+    margin-top: 0;
   }
 
   .team-tags {
@@ -1811,9 +2499,8 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   }
 
   .team-bio {
-    border-left: 2px solid rgba(169, 214, 138, 0.35);
-    padding-left: var(--space-md);
-    margin-top: var(--space-sm);
+    margin: 0;
+    padding: 0;
     display: grid;
     gap: var(--space-xs);
   }
@@ -1966,22 +2653,216 @@ const humorAside = 'We’ve done so much with so little that investors call it c
   }
 </style>
 
+<style>
+  /* UI enhancements: spacing, dividers, contrast, animations, and responsive tweaks */
+  .command-brief { gap: var(--space-xl); }
+  .command-brief section { padding: var(--space-xl) 0; position: relative; }
+  .command-brief section:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4%;
+    right: 4%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(169,214,138,0.06), transparent);
+    transform: translateY(-1px);
+  }
+
+  /* Hide complex sub-tiles to show one tile per section for now */
+  /* Only hide when section is collapsed; restore on expand */
+  .collapsed .split-sidecards,
+  .collapsed .engage-grid,
+  .collapsed .pipeline-flow,
+  .collapsed .team-stack { display: none !important; }
+
+  /* Uniform tile width when collapsed */
+  .command-brief .container { width: 100%; }
+  .collapsed .split-layout,
+  .collapsed .team-panel,
+  .collapsed .engage-panel,
+  .collapsed .pipeline-card { width: 100%; max-width: 1120px; margin-inline: auto; }
+  .collapsed .split-layout { grid-template-columns: 1fr; }
+  .collapsed .split-copy--framed,
+  .collapsed .split-copy--framed--mission,
+  .collapsed .split-copy--framed--overview,
+  .collapsed .split-copy--framed--team,
+  .collapsed .split-copy--framed--engage,
+  .collapsed .pipeline-card { margin-inline: auto; }
+
+  /* Smooth size change on expand */
+  .split-layout, .team-panel, .engage-panel, .pipeline-card { transition: max-width .3s ease; }
+
+  .section-actions { margin-top: var(--space-md); }
+  .section-toggle { 
+    background: rgba(169,214,138,0.12); 
+    color: var(--bright); 
+    border: 1px solid rgba(169,214,138,0.35); 
+    padding: 0.55rem 1rem; 
+    border-radius: var(--radius-md); 
+    font-weight: 600; 
+    cursor: pointer; 
+    font-size: 0.8rem; 
+    letter-spacing: 0.08em; 
+    text-transform: uppercase; 
+    transition: background .25s ease, color .25s ease, box-shadow .25s ease; 
+  }
+  .section-toggle:hover { background: rgba(169,214,138,0.2); box-shadow: 0 4px 14px rgba(169,214,138,0.25); }
+  .section-toggle[aria-expanded="true"] { background: rgba(169,214,138,0.28); }
+
+  /* Section title styling */
+  .section-title { 
+    margin: 0 0 var(--space-sm) 0; 
+    font-size: clamp(1rem, 1.8vw, 1.25rem); 
+    letter-spacing: 0.12em; 
+    text-transform: uppercase; 
+    color: rgba(169,214,138,0.95);
+  }
+
+  /* Typography & contrast */
+  .command-brief h2 { font-size: clamp(1.2rem, 2.2vw, 1.6rem); color: rgba(229,228,216,0.96); margin-bottom: var(--space-md); }
+  .command-brief h1 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: rgba(229,228,216,1); }
+  .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.18em; color: rgba(169,214,138,0.92); }
+  .flagship-one-liner, .domain-summary, .team-tagline, .team-bio p, .flagship-bullets li { color: rgba(229,228,216,0.82); font-weight: 400; }
+
+  /* Animate-in helpers (IntersectionObserver will toggle .in-view) */
+  [data-animate] { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; will-change: opacity, transform; }
+  [data-animate].in-view { opacity: 1; transform: translateY(0); }
+
+  /* Hero quote & flagship cards initial states */
+  .mission-quote-secondary[data-animate="quote"] { opacity: 0; transform: translateY(6px); }
+  .mission-quote-secondary.in-view { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+  .hero-flagship-card[data-animate="flagship"] { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease, box-shadow .35s ease; }
+  .hero-flagship-card.in-view { opacity: 1; transform: translateY(0); }
+
+  [data-animate="proof-band"] { opacity: 0; transform: translateY(6px); }
+  [data-animate="proof-band"].in-view { opacity: 1; transform: translateY(0); transition: opacity .5s ease .2s, transform .5s ease .2s; }
+
+  /* Subtle hover glow and lighter shadows for performance */
+  :root { --card-glow: rgba(169,214,138,0.08); }
+  .hero-flagship-card:hover, .team-card:hover, .component-subcard:hover { box-shadow: 0 12px 30px var(--card-glow); transform: translateY(-4px); }
+
+  /* Reduce very heavy shadows used site-wide and reuse medium shadow variable */
+  :root { --shadow-md: 0 8px 20px rgba(0,0,0,0.32); }
+  .split-copy--framed, .team-card--stacked, .engage-card, .pipeline-card { box-shadow: var(--shadow-md); }
+
+  /* Pipeline details: animate open/close via max-height (JS sets exact height) */
+  .component-body { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
+  .component-compact[open] .component-body { opacity: 1; }
+
+  /* Team bios: animated expand/collapse (JS toggles aria-hidden and max-height) */
+  .team-bio { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
+  .team-bio[aria-hidden="false"] { opacity: 1; }
+
+  /* Mobile responsiveness tweaks */
+  @media (max-width: 768px) {
+    .split-layout { gap: var(--space-lg); grid-template-columns: 1fr; }
+    .pipeline-flow { grid-template-columns: 1fr; }
+    .pipeline-domain { padding: var(--space-md); }
+    .component-subgrid { grid-template-columns: 1fr; }
+  }
+
+  /* Performance hint: reduce animation work on reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    [data-animate] { transition: none; opacity: 1 !important; transform: none !important; }
+    .component-body, .team-bio { transition: none !important; }
+  }
+</style>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const toggles = document.querySelectorAll('[data-bio-toggle]');
-    toggles.forEach((button) => {
-      button.addEventListener('click', () => {
-        const id = button.getAttribute('data-bio-toggle');
-        if (!id) return;
-        const region = document.getElementById(`bio-${id}`);
-        if (!region) return;
+    // IntersectionObserver: reveal animated elements
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-        button.setAttribute('aria-expanded', (!expanded).toString());
-        region.hidden = expanded;
-        region.setAttribute('aria-hidden', expanded ? 'true' : 'false');
-        button.textContent = expanded ? 'Read bio' : 'Hide bio';
+    document.querySelectorAll('[data-animate]').forEach((el) => io.observe(el));
+
+    // Animate details (.component-compact) open/close by adjusting maxHeight
+    document.querySelectorAll('details.component-compact').forEach((details) => {
+      const body = details.querySelector('.component-body');
+      if (!body) return;
+      // Initialize
+      body.style.maxHeight = details.open ? body.scrollHeight + 'px' : '0px';
+      details.addEventListener('toggle', () => {
+        if (details.open) {
+          // expand to content height
+          body.style.maxHeight = body.scrollHeight + 'px';
+        } else {
+          // collapse
+          body.style.maxHeight = '0px';
+        }
       });
     });
+
+    // Team bios: animated expand/collapse using aria-hidden and maxHeight
+    const bioToggles = document.querySelectorAll('[data-bio-toggle]');
+    bioToggles.forEach((button) => {
+      const id = button.getAttribute('data-bio-toggle');
+      if (!id) return;
+      const region = document.getElementById(`bio-${id}`);
+      const showLessBtn = document.querySelector(`[data-bio-collapse="${id}"]`);
+      if (!region) return;
+      
+      // set initial states
+      region.setAttribute('aria-hidden', region.hidden ? 'true' : 'false');
+      region.style.maxHeight = region.hidden ? '0px' : region.scrollHeight + 'px';
+      
+      // Read more button click
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', (!expanded).toString());
+        if (!expanded) {
+          // expand
+          region.hidden = false;
+          region.setAttribute('aria-hidden', 'false');
+          region.style.maxHeight = region.scrollHeight + 'px';
+          button.style.display = 'none';
+          if (showLessBtn) showLessBtn.style.display = 'inline-block';
+        }
+      });
+      
+      // Show less button click
+      if (showLessBtn) {
+        showLessBtn.addEventListener('click', () => {
+          region.setAttribute('aria-hidden', 'true');
+          region.style.maxHeight = '0px';
+          region.hidden = true;
+          button.setAttribute('aria-expanded', 'false');
+          button.style.display = 'inline-block';
+          showLessBtn.style.display = 'none';
+        });
+      }
+    });
+
+    // Section toggle: expand/collapse per-section details without losing content
+    document.querySelectorAll('.section-toggle').forEach((btn) => {
+      const targetId = btn.getAttribute('data-toggle-section');
+      if (!targetId) return;
+      const section = document.getElementById(targetId);
+      if (!section) return;
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          section.classList.add('collapsed');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = 'Show details';
+        } else {
+          section.classList.remove('collapsed');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.textContent = 'Hide details';
+        }
+      });
+    });
+
+    // Respect prefers-reduced-motion: reveal all immediately
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('[data-animate]').forEach((el) => el.classList.add('in-view'));
+    }
   });
 </script>

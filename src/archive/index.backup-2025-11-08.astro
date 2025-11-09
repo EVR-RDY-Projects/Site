@@ -1,0 +1,4235 @@
+<!-- Backup of homepage prior to Engagement Uplift changes. Saved on 2025-11-08. -->
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pipelineComponents = {
+  scout: {
+    id: 'scout',
+    name: 'SCOUT',
+    status: 'Active Dev · 75%',
+    variant: 'active',
+    domain: 'ot',
+    description: 'Slow-and-low OT host telemetry agent that captures system state without disrupting production equipment.',
+    outcome: 'Collects high-fidelity host data and prepares it for Chronicle-ready enrichment.'
+  },
+  seer: {
+    id: 'seer',
+    name: 'SEER',
+    status: 'PoC',
+    variant: 'pilot',
+    domain: 'ot',
+    description: 'Commodity network sensor producing full packet capture and Zeek-style logs for OT environments.',
+    outcome: 'Delivers deep network visibility at a price point small operators can afford.'
+  },
+  ghost: {
+    id: 'ghost',
+    name: 'GHOST',
+    status: 'PoC',
+    variant: 'pilot',
+    domain: 'buffer',
+    description: 'Hardware-enforced unidirectional data diode using modified media converters and fiber.',
+    outcome: 'Protects OT enclaves while streaming telemetry safely into IT analytics.'
+  },
+  rampart: {
+    id: 'rampart',
+    name: 'RAMPART',
+    status: 'Active Dev',
+    variant: 'active',
+    domain: 'mission-hub',
+    description: 'Data processing and forwarding engine normalizing telemetry for Chronicle ingestion.',
+    outcome: 'Automates enrichment, queueing, and delivery to TacSOC and partner SIEMs.'
+  },
+  aiTriage: {
+    id: 'ai-triage',
+    name: 'AI Triage Cell',
+    status: 'Design',
+    variant: 'design',
+    domain: 'mission-hub',
+    description: 'AI triage and signal/noise reduction keeps analysts focused on actionable intelligence.',
+    outcome: 'Shrinks analyst-to-alert ratios so a lean team can move faster.'
+  },
+  hunterKiller: {
+    id: 'hunter-killer',
+    name: 'Hunter/Killer Teams',
+    status: 'Pilot',
+    variant: 'pilot',
+    domain: 'mission-hub',
+    description: 'Veteran defenders executing R.A.I.D. playbooks for high-signal hunts and incident response.',
+    outcome: 'Delivers decisive response across partner networks and mentors local operators.'
+  },
+  chronicleStack: {
+    id: 'chronicle-fusion',
+    name: 'Shared Chronicle Stack',
+    status: 'Design',
+    variant: 'design',
+    domain: 'mission-hub',
+    description: 'Shared Chronicle automations, detection content, and reporting pipeline.',
+    outcome: 'Cuts analytic cost while preserving compliance-grade evidence for every partner.'
+  }
+};
+
+const tacSocGroup = {
+  id: 'tacsoc',
+  name: 'TacSOC Cloud',
+  status: 'Design + Pilot',
+  variant: 'design',
+  domain: 'mission-hub',
+  description: 'Veteran-led mission cloud that fuses AI triage, hunter/killer teams, and a shared Chronicle stack.',
+  outcome: 'Delivers coordinated detection, response, and reporting for every partner operator.',
+  components: [pipelineComponents.aiTriage, pipelineComponents.hunterKiller, pipelineComponents.chronicleStack]
+};
+
+const pipelineDomains = [
+  {
+    id: 'ot',
+    title: 'OT Network',
+    label: 'Operational Technology',
+    summary: 'SCOUT and SEER harvest host and network telemetry without disrupting production workflows.',
+    status: 'Active Deployment',
+    statusVariant: 'active',
+    variant: 'ot',
+    components: [pipelineComponents.scout, pipelineComponents.seer]
+  },
+  {
+    id: 'buffer',
+    title: 'One-Way Buffer',
+    label: 'Cross-Domain Guard',
+    summary: 'GHOST hardware diode pushes telemetry forward while preventing any path back into OT.',
+    status: 'Hardware PoC',
+    statusVariant: 'pilot',
+    variant: 'buffer',
+    components: [pipelineComponents.ghost]
+  },
+  {
+    id: 'mission-hub',
+    title: 'IT Network',
+    label: 'Information Technology',
+    summary: 'RAMPART conditions telemetry before the TacSOC cloud analyzes, hunts, and reports.',
+    status: 'Design + Pilot',
+    statusVariant: 'design',
+    variant: 'tacsoc',
+    components: [pipelineComponents.rampart, tacSocGroup]
+  }
+];
+
+const flagshipProducts = [
+  {
+    name: 'T.A.P.S.',
+    oneLiner: 'Telemetry Acquisition Platform Solution — a complete OT-to-IT pipeline ready for Chronicle.',
+    bullets: [
+      'SCOUT, SEER, GHOST, and RAMPART working together end-to-end',
+      'Runs on commodity hardware with OT-safe footprint',
+      'Chronicle-ready schemas and automations out of the box'
+    ],
+    status: 'Active Development',
+    variant: 'active',
+    link: '/products/taps'
+  },
+  {
+    name: 'TacSOC',
+    oneLiner: 'Lean, AI-assisted SOC built for small OT teams that need enterprise-grade outcomes.',
+    bullets: [
+      'AI triage and signal/noise reduction',
+      'Hunter/Killer teams trained on R.A.I.D. playbooks',
+      'Shared Chronicle resources to cut analytic cost'
+    ],
+    status: 'Design + Pilot',
+    variant: 'design',
+    link: '/products/tacsoc'
+  }
+];
+
+const contributorPaths = [
+  {
+    title: 'Strategic partners',
+    detail: 'Co-fund the TacSOC launch, shape service tiers, and secure priority onboarding.'
+  },
+  {
+    title: 'OT operators',
+    detail: 'Pilot T.A.P.S. components in production-like environments and feed real telemetry back to the team.'
+  },
+  {
+    title: 'Builders & analysts',
+    detail: 'Join veteran engineers to harden SCOUT transport, enrich RAMPART automations, and expand hunt content.'
+  }
+];
+
+const teamMembers = [
+  {
+    id: 'erin-burns',
+    name: 'Erin Burns',
+    role: 'Founder, Master Host Analyst',
+    tagline: '10+ years DFIR expertise across enterprise and ICS',
+    highlights: [
+      'Leadership',
+      'Operations',
+      'Strategy',
+      'Architecture',
+      'Systems',
+      'Cybersecurity'
+    ],
+    bio: [
+      'Erin Burns is an information security professional with over 17 years of experience leading and executing large-scale cybersecurity engagements and operations. As the founder of EVR:RDY, he combines deep technical knowledge with strategic leadership to advance OT/ICS cyber defense capabilities.',
+      'With expertise in incident response, forensics, and hunt operations gained through daily analysis of national-level intrusions, Erin has planned and conducted multiple simultaneous defensive cyber operations in unique occupational technology and information technology environments, creating innovative procedures that enhance organizational effectiveness.'
+    ],
+    photo: '/img/erin-burns.jpeg',
+    linkedin: 'https://www.linkedin.com/in/erinburns757/'
+  },
+  {
+    id: 'timothy-deberry',
+    name: 'Timothy DeBerry',
+    role: 'Principal Developer, Founding Engineer',
+    tagline: 'Production-quality systems architect and secure coder',
+    highlights: [
+      'Leadership',
+      'Development',
+      'Integration',
+      'Automation',
+      'Secure Coding',
+      'Secure Design'
+    ],
+    bio: [
+      'Timothy DeBerry is a former combat Infantryman with multiple combat tours before transitioning to cyber operations as a Cyber Warrant Officer. With over 16 years of military service across infantry and cyber warfare roles, he brings exceptional leadership, operational excellence, and security-first engineering to EVR:RDY.',
+      'As one of the Founding Engineers and the Principal Developer at EVR:RDY, Timothy owns engineering governance and SDLC, architects and implements core software with security-first design principles, and drives integrations and release readiness for open-source, affordable solutions that protect critical infrastructure. With proficiency in Python, C, automation, and security engineering, he combines combat-proven leadership with technical expertise to build production-quality systems that operate reliably in industrial environments.'
+    ],
+    photo: '/img/timothy-deberry.jpeg',
+    linkedin: 'https://www.linkedin.com/in/timothy-deberry-35425b75/',
+    github: 'https://github.com/nybblez0x42697A'
+  },
+  {
+    id: 'shayla-lapoint',
+    name: 'Shayla LaPoint',
+    role: 'Lead Security Engineer, Founding Engineer',
+    tagline: 'Network analysis and threat modeling specialist',
+    highlights: [
+      'Leadership',
+      'Secure Architecture',
+      'Network Analysis',
+      'Threat Modeling',
+      'Incident Response',
+      'Digital Forensics'
+    ],
+    bio: [
+      'Shayla LaPoint is a U.S. Army Cyber Warrant Officer with over a decade of experience in the Cyber Protection Brigade, where she led and executed missions focused on defending critical networks and infrastructure. With a Bachelor of Science in Information Systems Security, she combines deep technical acumen with operational leadership to advance cyber resilience across enterprise and tactical environments.',
+      'Since entering the cybersecurity field in 2016, Shayla has developed and led initiatives in Defensive Cyber Operations (DCO), Industrial Control Systems (ICS)/SCADA security, cloud architecture protection, and tactical communications security. Her extensive background includes serving as a Cyber Operations Maneuver Planner and a Master Network Analyst, where she specialized in integrating sensing, detection, and response mechanisms into mission-critical systems.',
+      'A CISSP-certified professional and holder of 12 SANS certifications, Shayla is recognized for her expertise in developing and employing continuous monitoring strategies that enhance situational awareness, reduce attack surfaces, and ensure mission assurance in complex operational environments. Her passion lies in bridging the gap between technical defense capabilities and mission objectives—ensuring that sensing and monitoring technologies empower decision-makers at every echelon.'
+    ],
+    photo: '/img/shayla-lapoint.jpeg'
+  },
+  {
+    id: 'dylan-knox',
+    name: 'Dylan Knox',
+    role: 'Lead Hardware Engineer, Founding Engineer',
+    tagline: 'Hardware design and prototyping innovator',
+    highlights: [
+      'Leadership',
+      'Hardware Design',
+      'Electronics Design',
+      'Prototyping',
+      'Research & Development',
+      'Testing & Validation'
+    ],
+    bio: [
+      'Dylan Knox is a Lead Hardware Engineer specializing in custom electronics design, R&D, and rapid prototyping for critical infrastructure security solutions. His innovative approach to hardware engineering has been instrumental in developing the physical components that power EVR:RDY\'s telemetry acquisition platform.',
+      'With expertise spanning from conceptual design to production validation, Dylan has led the development of custom hardware solutions that meet the stringent requirements of OT/ICS environments. His work includes designing low-footprint sensors, developing air-gap communication devices, and creating hardware-enforced security mechanisms that protect critical infrastructure.',
+      'Dylan is recognized for his ability to bridge the gap between theoretical design and practical implementation, rapidly iterating from prototypes to production-ready hardware.'
+    ],
+    photo: '/img/knox.png',
+    linkedin: 'https://www.linkedin.com/in/dylan-knox-356887132/'
+  }
+];
+
+const reviewerChecklist = [
+  {
+    label: 'Business',
+    detail: 'EVR:RDY builds the TacSOC and T.A.P.S. pipeline so resource-constrained OT/ICS operators can defend critical infrastructure.'
+  },
+  {
+    label: 'Products & stage',
+    detail: 'TacSOC (Design + Pilot), T.A.P.S. (Active Dev) with SCOUT, SEER, GHOST, and RAMPART statuses transparent above.'
+  },
+  {
+    label: 'Team',
+    detail: 'Veteran-led operators with LinkedIn-linked profiles and proven DFIR, engineering, and hardware experience.'
+  },
+  {
+    label: 'Trust',
+    detail: 'EVR:RDY Defensive Operations Group LLC · founders@evrrdy.com · Privacy & Security statements linked below.'
+  }
+];
+
+const trustLinks = [
+  { label: 'Company', value: 'EVR:RDY Defensive Operations Group LLC' },
+  { label: 'Email', value: 'founders@evrrdy.com', href: 'mailto:founders@evrrdy.com' },
+  { label: 'Privacy', value: 'Privacy Policy', href: '/privacy' },
+  { label: 'Security', value: 'Security Statement', href: '/security' }
+];
+
+const humorAside = 'We’ve done so much with so little that investors call it capital efficiency. We call it Tuesday.';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>EVR:RDY — Command Brief for Critical Infrastructure Defense</title>
+    <meta
+      name="description"
+      content="One-page briefing on EVR:RDY’s TacSOC and T.A.P.S. pipeline securing critical infrastructure. See mission, pipeline flow, team, and partnership paths."
+    />
+    <meta property="og:title" content="EVR:RDY — Command Brief for Critical Infrastructure Defense" />
+    <meta
+      property="og:description"
+      content="Veteran-led operators delivering TacSOC and the T.A.P.S. telemetry pipeline. Mission, momentum, and partnership opportunities in one scroll."
+    />
+    <meta property="og:url" content="https://evrrdy.com/" />
+    <meta property="og:image" content="https://evrrdy.com/img/banner.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EVR:RDY — Command Brief for Critical Infrastructure Defense" />
+    <meta
+      name="twitter:description"
+      content="Veteran-led OT/ICS defense. Explore TacSOC and the T.A.P.S. pipeline milestones, team, and partnership paths."
+    />
+    <meta name="twitter:image" content="https://evrrdy.com/img/banner.png" />
+    <link rel="canonical" href="https://evrrdy.com/" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EVR:RDY Defensive Operations Group LLC",
+      "url": "https://evrrdy.com/",
+      "logo": "https://evrrdy.com/img/logo.png",
+        "description": "Veteran-led operators delivering TacSOC and the T.A.P.S. telemetry pipeline for critical infrastructure."
+      })}
+    />
+  </Fragment>
+
+  <Header currentPath="/" />
+
+  <main id="main-content" class="command-brief">
+  <section id="mission" class="anchor-offset mission-hero collapsed">
+      <div class="container">
+        <div class="split-layout">
+          <article class="split-copy split-copy--framed split-copy--framed--mission" aria-label="Mission">
+          <span class="hero-eyebrow">Veteran-led defensive operations</span>
+          <h2 class="section-title">Mission</h2>
+          <h1>Defend Critical Infrastructure Without Compromise</h1>
+          <p>
+            EVR:RDY leverages battle-hardened military cyber expertise to actively defend the critical systems and sites that keep our society running — from energy and water to transportation and communications. Powered by Google SecOps, we deliver scalable, affordable, and mission-proven cybersecurity to organizations safeguarding vital infrastructure.
+          </p>
+          <blockquote class="mission-quote-secondary" data-animate="quote">
+        We have done so much, for so long, with so little, we are now qualified to do anything with nothing.<br />
+        <span>– Frank Sinatra</span>
+      </blockquote>
+      <div class="section-actions">
+        <button type="button" class="section-toggle" data-toggle-section="mission" aria-controls="mission" aria-expanded="false">Show details</button>
+      </div>
+        </article>
+          <aside class="split-sidecards" aria-label="Challenge and solution">
+          <article class="card hero-flagship-card" data-animate="flagship">
+            <div class="flagship-meta">
+              <h2 class="challenge-title">Challenge</h2>
+            </div>
+            <p class="flagship-one-liner">Critical infrastructure systems face a growing cyber threat landscape — but the teams defending them are often under-resourced and overextended.</p>
+            <ul class="flagship-bullets challenge">
+              <li>Many sites lack the funding or staff to build and sustain a full-scale SOC.</li>
+              <li>Legacy security tools are costly, complex, and not designed for OT or ICS environments.</li>
+              <li>The shortage of skilled defenders demands automation, AI-assisted analysis, and scalable SecOps models.</li>
+            </ul>
+            <p class="flagship-one-liner">EVR:RDY was built to close that gap — applying military-grade cyber discipline and Google SecOps technology to help small and mid-size infrastructure sites defend like national-level operations.</p>
+          </article>
+          <article class="card hero-flagship-card" data-animate="flagship">
+            <div class="flagship-meta">
+              <h2 class="solution-title">Solution</h2>
+            </div>
+            <p class="flagship-one-liner">EVR:RDY transforms military-proven defense principles into a cloud-native security framework built for the realities of critical infrastructure.</p>
+            <ul class="flagship-bullets solution">
+              <li>Powered by Google SecOps, our modular architecture delivers enterprise-grade visibility and automation without the traditional cost barrier.</li>
+              <li>Unified telemetry pipelines feed real-time data from multiple sites into a single defense layer, enabling faster detection and coordinated response.</li>
+              <li>Scalable deployment models grow from individual sites to national infrastructure networks—ensuring the same protection level across every critical system.</li>
+            </ul>
+            <p class="flagship-one-liner">With EVR:RDY, critical infrastructure can finally defend with the speed, precision, and intelligence once reserved for military operations.</p>
+          </article>
+          </aside>
+        </div>
+      </div>
+      </section>
+
+  <section id="overview" class="split-section anchor-offset collapsed">
+      <div class="container">
+        <div class="split-layout">
+          <article class="split-copy split-copy--framed split-copy--framed--overview" aria-label="Overview">
+          <span class="hero-eyebrow">Affordable Critical Infrastructure Defense</span>
+          <h2 class="section-title">Overview</h2>
+          <h1>Open-source OT/ICS defense you can actually afford.</h1>
+          <p>
+            EVR:RDY combines lean operations with commodity telemetry so resource-constrained operators can defend critical infrastructure without big-box price tags.
+          </p>
+          <div class="section-actions">
+            <button type="button" class="section-toggle" data-toggle-section="overview" aria-controls="overview" aria-expanded="false">Show details</button>
+          </div>
+        </article>
+          <aside class="split-sidecards" aria-label="Flagship capabilities">
+          {flagshipProducts.map((product) => (
+            <article class="card hero-flagship-card" data-animate="flagship">
+              <div class="flagship-meta">
+                <h3>{product.name}</h3>
+                <span
+                  class={`status-indicator ${product.variant === 'design' ? 'design' : product.variant === 'pilot' ? 'pilot' : ''}`}
+                >
+                  {product.status}
+                </span>
+              </div>
+              <p class="flagship-one-liner">{product.oneLiner}</p>
+              <ul class="flagship-bullets">
+                {product.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+              <a class="flagship-link" href={product.link}>View {product.name}</a>
+            </article>
+          ))}
+          </aside>
+        </div>
+      </div>
+      </section>
+
+    <section id="approach" class="anchor-offset">
+      <div class="container">
+        <article class="split-copy split-copy--framed" aria-label="Approach">
+          <span class="hero-eyebrow">How We Operate</span>
+          <h2 class="section-title">Approach</h2>
+          <p>
+            We apply the structure and precision of military cyber operations to protect the civilian systems that keep our world running.
+          </p>
+          <ul class="flagship-bullets">
+            <li>
+              TAPS (Telemetry Acquisition Platform Solution) gathers data from distributed OT/ICS environments and feeds it into a unified Google SecOps–powered defense layer.
+            </li>
+            <li>
+              TACSOC (Threat Analysis &amp; Cyber Security Operations Center) fuses intelligence, monitoring, and response—centralizing security for multiple infrastructure sites under one operational command.
+            </li>
+            <li>
+              EVR:RDY’s training and simulation programs ensure defenders learn by doing, applying real-world tactics on live systems to strengthen readiness and response speed.
+            </li>
+          </ul>
+          <p>
+            This approach builds a defense ecosystem capable of protecting energy, water, transportation, and communication systems with military-grade efficiency and national-scale reach.
+          </p>
+        </article>
+      </div>
+    </section>
+
+  <section id="pipeline" class="anchor-offset collapsed">
+      <div class="container">
+          <article class="card pipeline-card">
+            <span class="hero-eyebrow">Mission Data on Tap</span>
+          <div class="pipeline-intro">
+            <h2>Pipeline</h2>
+            <p>
+              The T.A.P.S. pipeline moves telemetry from the edge of an OT network into analysts’ hands. Each stage is transparent about status, funding needs, and
+              mission impact.
+            </p>
+            <p>
+              From SCOUT at the host to the TacSOC, every component is engineered to keep defenders ahead of threats without vendor lock-in.
+            </p>
+            <div class="section-actions">
+              <button type="button" class="section-toggle" data-toggle-section="pipeline" aria-controls="pipeline" aria-expanded="false">Show details</button>
+            </div>
+          </div>
+          <div class="pipeline-flow pipeline-flow--compact">
+            {pipelineDomains.map((domain, domainIndex) => (
+              <Fragment>
+                <div class={`pipeline-domain ${domain.variant ?? ''}`} data-pipeline-domain={`${domain.id}-compact`}>
+                  <header class="domain-header">
+                    <span class="domain-badge">{domain.label}</span>
+                    <div class="domain-meta">
+                      <h4>{domain.title}</h4>
+                      <span class={`status-indicator ${domain.statusVariant ?? ''}`}>{domain.status}</span>
+          </div>
+                  </header>
+                  <p class="domain-summary">{domain.summary}</p>
+                  <div class="domain-components domain-components--compact">
+                    {domain.components.map((component, componentIndex) => (
+                      <Fragment>
+                        <details class={`component-compact ${component.components ? 'component-compact--group' : ''}`}>
+                          <summary>
+                            <span class="component-label">{component.name}</span>
+                            {component.status ? (
+                              <span class={`status-indicator ${component.variant ?? ''}`}>{component.status}</span>
+                            ) : null}
+                          </summary>
+                          <div class="component-body">
+                            {component.description ? <p>{component.description}</p> : null}
+                            {component.components ? (
+                              <div class="component-subgrid">
+                                {component.components.map((subComponent) => (
+                                  <div class={`component-subcard ${subComponent.variant ?? ''}`}>
+                                    <div class="component-subcard-header">
+                                      <span>{subComponent.name}</span>
+                                      {subComponent.status ? (
+                                        <span class={`status-indicator ${subComponent.variant ?? ''}`}>{subComponent.status}</span>
+                                      ) : null}
+          </div>
+                                    {subComponent.description ? <p>{subComponent.description}</p> : null}
+                                    {subComponent.outcome ? (
+                                      <p class="component-impact"><strong>Impact:</strong> {subComponent.outcome}</p>
+                                    ) : null}
+        </div>
+                                ))}
+          </div>
+                            ) : null}
+                            {component.outcome ? (
+                              <p class="component-impact"><strong>Impact:</strong> {component.outcome}</p>
+                            ) : null}
+          </div>
+                        </details>
+                        {componentIndex < domain.components.length - 1 ? (
+                          <div class="connector-line connector-line--compact" aria-hidden="true">
+                            <span class="pipeline-line"></span>
+                            <span class="pipeline-arrow">↓</span>
+                            <span class="pipeline-line"></span>
+          </div>
+                        ) : null}
+                      </Fragment>
+                    ))}
+        </div>
+                </div>
+                {domainIndex < pipelineDomains.length - 1 ? (
+                  <div class="compact-domain-connector" aria-hidden="true">
+                    <span class="pipeline-line"></span>
+                    <span class="pipeline-arrow">↓</span>
+                    <span class="pipeline-line"></span>
+                  </div>
+                ) : null}
+              </Fragment>
+            ))}
+          </div>
+        </article>
+        </div>
+      </section>
+
+  <section id="team" class="anchor-offset collapsed">
+      <div class="container">
+        <article class="team-panel split-copy--framed split-copy--framed--team">
+          <header class="team-panel-header">
+              <h2 class="section-title">Team</h2>
+              <span class="hero-eyebrow">Veterans Running Point</span>
+              <h2>The EVR:RDY Team</h2>
+            <p>
+              Veteran responders build the TacSOC and T.A.P.S. pipeline so critical infrastructure stays defended. Expand any bio to see the depth behind the mission and
+              the blend of mission-first leadership with engineering rigor.
+            </p>
+            <div class="section-actions">
+              <button type="button" class="section-toggle" data-toggle-section="team" aria-controls="team" aria-expanded="false">Show details</button>
+            </div>
+          </header>
+          <div class="team-stack">
+            {teamMembers.map((member) => (
+              <article class="team-card team-card--stacked" data-animate="team-card">
+                <div class="team-header">
+                  <div class="team-avatar">
+                    <img src={member.photo} alt={member.name} class="team-photo" loading="lazy" />
+                    <div class="team-link-icons">
+                      {member.linkedin ? (
+                        <a class="team-link-icon" href={member.linkedin} target="_blank" rel="noopener" aria-label={`LinkedIn profile for ${member.name}`}>
+                          <svg class="icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                            <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.98h4.56V24H.22zM8.44 8.98h4.37v2.05h.06c.61-1.15 2.11-2.36 4.34-2.36 4.64 0 5.49 3.06 5.49 7.03V24h-4.54v-6.98c0-1.66-.03-3.79-2.31-3.79-2.31 0-2.66 1.8-2.66 3.66V24H8.44z" />
+                          </svg>
+                        </a>
+                      ) : null}
+                      {member.github ? (
+                        <a class="team-link-icon" href={member.github} target="_blank" rel="noopener" aria-label={`GitHub profile for ${member.name}`}>
+                          <svg class="icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                            <path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.09 3.29 9.4 7.86 10.94.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.11-.75.4-1.27.72-1.56-2.55-.29-5.24-1.28-5.24-5.71 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.38 11.1 11.1 0 0 1 2.93.39c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.44-2.7 5.41-5.27 5.7.41.35.77 1.04.77 2.11 0 1.53-.01 2.76-.01 3.14 0 .31.21.67.8.56A10.53 10.53 0 0 0 23.5 12C23.5 5.74 18.26.5 12 .5z" />
+                          </svg>
+                        </a>
+                      ) : null}
+          </div>
+          </div>
+                  <div class="team-heading">
+                    <div class="team-name-row">
+                      <h3>{member.name}</h3>
+        </div>
+                    <span class="team-role-tag">{member.role}</span>
+                  </div>
+                </div>
+                <p class="team-tagline">{member.tagline}</p>
+                <ul class="team-highlights">
+                  {member.highlights.map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  class="team-toggle"
+                  data-bio-toggle={member.id}
+                  aria-expanded="false"
+                  aria-controls={`bio-${member.id}`}
+                  id={`toggle-${member.id}`}
+                >
+                  Read bio
+                </button>
+                <div
+                  id={`bio-${member.id}`}
+                  class="team-bio"
+                  role="region"
+                  aria-labelledby={`toggle-${member.id}`}
+                  aria-hidden="true"
+                  hidden
+                >
+                  {member.bio.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </article>
+      </div>
+      </section>
+
+  <section id="engage" class="anchor-offset collapsed">
+      <div class="container">
+        <article class="engage-panel split-copy--framed split-copy--framed--engage">
+          <header class="engage-header">
+              <h2 class="section-title">Engage</h2>
+              <span class="hero-eyebrow">Suit Up or Sponsor Up</span>
+            <h2>Help us protect critical infrastructure.</h2>
+            <p>
+              Builders, operators, and funders drive our momentum. Share your talent, pilot the pipeline, or back the mission so veteran defenders can move faster.
+            </p>
+            <div class="section-actions">
+              <button type="button" class="section-toggle" data-toggle-section="engage" aria-controls="engage" aria-expanded="false">Show details</button>
+            </div>
+          </header>
+          <div class="engage-grid">
+            <article class="engage-card">
+              <h3>How you can engage</h3>
+              <div class="contributor-grid">
+                {contributorPaths.map((path) => (
+                  <div class="contributor-item">
+                    <h4>{path.title}</h4>
+                    <p>{path.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article class="engage-card engage-card--contact">
+              <h3>Contact EVR:RDY</h3>
+              <p>Let’s coordinate next steps and keep critical infrastructure defended forward.</p>
+              <ul class="contact-list">
+                <li>
+                  <strong>Email</strong>
+                  <a href="mailto:founders@evrrdy.com">founders@evrrdy.com</a>
+                </li>
+                <li>
+                  <strong>Operations</strong>
+                  <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a>
+                </li>
+              </ul>
+              <div class="partner-contact">
+<h3>Partner briefings</h3>
+              <p>
+                Funding accelerates production launch, expands telemetry reach, and puts trained veteran analysts on the front line of OT defense. Let’s brief you on the
+                roadmap and tailor a partnership.
+              </p>
+              <div class="partner-actions">
+                <a class="cta-btn secondary" href="mailto:founders@evrrdy.com?subject=Partner%20with%20EVR:RDY">Coordinate a briefing</a>
+              </div>
+                        <blockquote class="mission-quote-secondary">
+              <p class="humor-aside">{humorAside}</p>
+            <span>– Anonymous</span>
+        </blockquote>
+        
+              </div>
+            </article>
+          </div>
+        </article>
+      </div>
+      </section>
+
+  <!-- Resources section removed as per request -->
+  <!-- Expanded resource overlay removed -->
+
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .command-brief {
+    padding-top: calc(var(--space-2xl) + 80px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .command-brief section {
+    padding: var(--space-xl) 0;
+  }
+
+  .hero-section {
+    padding-top: var(--space-3xl);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .hero-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: rgba(169, 214, 138, 0.8);
+  }
+
+  .hero-copy h1 {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-quote {
+    margin: var(--space-lg) 0;
+    border-left: 3px solid var(--bright);
+    padding-left: var(--space-md);
+    color: rgba(229, 228, 216, 0.8);
+    font-style: italic;
+  }
+
+  .hero-quote span {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+    color: rgba(229, 228, 216, 0.6);
+  }
+
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.9rem 1.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all var(--transition-normal);
+  }
+
+  .cta-btn.primary {
+    color: #0b1209;
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    border: 1px solid rgba(169, 214, 138, 0.45);
+    box-shadow: 0 16px 32px rgba(169, 214, 138, 0.35);
+  }
+
+  .cta-btn.secondary {
+    color: var(--bright);
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    background: rgba(169, 214, 138, 0.08);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 36px rgba(169, 214, 138, 0.25);
+  }
+
+  .hero-flagship {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .hero-flagship-card {
+    padding: var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .mission-quote-secondary {
+    border-left: 3px solid var(--bright);
+    padding-left: var(--space-md);
+    color: rgba(229, 228, 216, 0.8);
+    font-style: italic;
+  }
+
+  .mission-quote-secondary span {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+    color: rgba(229, 228, 216, 0.6);
+  }
+
+  .mission-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+
+  .split-layout,
+  .section-grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+    align-items: stretch;
+  }
+
+  .split-layout > *,
+  .section-grid > * {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .split-copy,
+  .section-copy {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    height: 100%;
+    align-self: stretch;
+  }
+
+  .split-copy--framed {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(18px);
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .split-copy--framed > *:first-child {
+    margin-top: 0;
+  }
+
+  .split-copy--framed > *:last-child {
+    margin-bottom: 0;
+  }
+
+.split-sidecards {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.split-sidecards > * {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.split-sidecards > *:first-child {
+  margin-top: 0;
+}
+
+.split-sidecards > *:last-child {
+  margin-bottom: 0;
+}
+
+.split-sidecards > *:last-child > *:last-child {
+  margin-top: auto;
+}
+
+.split-sidecards .hero-flagship-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+}
+
+.split-sidecards .hero-flagship-card > *:last-child {
+  margin-top: auto;
+}
+
+  /* Resources section removed: cleanup styles */
+
+  .mission-hero .split-copy--framed--mission {
+    border-radius: var(--radius-xl);
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+  }
+
+  .split-section .split-copy--framed--overview {
+    
+    border-radius: var(--radius-xl);
+    background: rgba(0, 0, 0, 0.32);
+  }
+
+  .section-grid .split-copy--framed--team,
+  .section-grid .split-copy--framed--join,
+  .section-grid .split-copy--framed--partner {
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  }
+
+  #join .split-copy--framed--join,
+  #partner .split-copy--framed--partner {
+    background: rgba(0, 0, 0, 0.28);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+.split-copy--framed--pipeline {
+  justify-content: center;
+}
+
+.engage-panel {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.engage-header {
+  display: grid;
+  gap: var(--space-sm);
+  text-align: left;
+  max-width: 100%;
+  margin: 0;
+}
+
+.engage-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.engage-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(169, 214, 138, 0.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.38);
+  display: grid;
+  gap: var(--space-md);
+}
+
+.engage-card--partner {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(169, 214, 138, 0.22);
+}
+
+.partner-contact {
+  display: grid;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(169, 214, 138, 0.18);
+}
+
+.pipeline-intro-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(169, 214, 138, 0.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  max-width: 760px;
+  margin: 0 auto var(--space-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
+}
+
+  @media (max-width: 768px) {
+    .split-layout,
+    .section-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .split-copy--framed,
+    .split-copy--framed--pipeline {
+      max-height: none;
+    }
+
+    .skeleton-loader {
+      grid-template-columns: 1fr;
+    }
+  }
+
+.team-card--stacked {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(169, 214, 138, 0.18);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px);
+  display: grid;
+  gap: var(--space-md);
+}
+
+.team-card--stacked .team-header {
+  justify-content: flex-start;
+}
+
+.team-card--stacked .team-toggle {
+  margin-top: var(--space-sm);
+}
+
+.team-panel {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.team-stack {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.contact-list {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.contact-list li strong {
+  display: block;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(229, 228, 216, 0.65);
+}
+
+.contact-list a {
+  color: var(--bright);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+}
+
+  .split-copy,
+  .section-copy,
+  .section-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    height: 100%;
+  }
+
+  .section-cards .hero-flagship-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-lg);
+  }
+
+  .challenge-list,
+  .solution-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .challenge-list li,
+  .solution-list li {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+  }
+
+  .pipeline-card {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-xl);
+  }
+
+  .pipeline-intro {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 640px;
+  }
+
+  .pipeline-intro h2 {
+    margin: 0;
+  }
+
+  .pipeline-intro h2::before,
+  .pipeline-intro h2::after {
+    display: none;
+  }
+
+  .pipeline-flow {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .pipeline-domain {
+    position: relative;
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(90, 165, 255, 0.18);
+    background: rgba(14, 16, 18, 0.55);
+  }
+
+  .pipeline-domain.ot {
+    border-color: rgba(90, 165, 255, 0.25);
+    background: linear-gradient(135deg, rgba(90, 165, 255, 0.16), rgba(14, 16, 18, 0.6));
+  }
+
+  .pipeline-domain.buffer {
+    border-color: rgba(255, 138, 61, 0.28);
+    background: linear-gradient(135deg, rgba(255, 138, 61, 0.18), rgba(14, 16, 18, 0.58));
+  }
+
+  .pipeline-domain.tacsoc {
+    border-color: rgba(170, 142, 255, 0.38);
+    background: linear-gradient(140deg, rgba(122, 83, 196, 0.28), rgba(28, 20, 46, 0.78));
+    overflow: hidden;
+  }
+
+  .pipeline-domain.tacsoc::before,
+  .pipeline-domain.tacsoc::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(170, 142, 255, 0.45) 0%, rgba(170, 142, 255, 0) 70%);
+    opacity: 0.6;
+  }
+
+  .pipeline-domain.tacsoc::before {
+    width: 140%;
+    height: 140%;
+    top: -55%;
+    left: -20%;
+  }
+
+  .pipeline-domain.tacsoc::after {
+    width: 120%;
+    height: 120%;
+    bottom: -45%;
+    right: -15%;
+  }
+
+  .domain-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(229, 228, 216, 0.25);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(229, 228, 216, 0.75);
+  }
+
+  .domain-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .domain-meta h4 {
+    margin: 0;
+  }
+
+  .domain-summary {
+    margin: 0;
+    color: rgba(229, 228, 216, 0.78);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-components {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-components--compact {
+    gap: var(--space-sm);
+  }
+
+  .pipeline-node {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(90, 165, 255, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md) var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .pipeline-node.has-children {
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: var(--radius-xl);
+  }
+
+  .pipeline-node.tacsoc-cloud {
+    background: rgba(169, 214, 138, 0.12);
+    border: 1px solid rgba(169, 214, 138, 0.4);
+    box-shadow: 0 0 32px rgba(169, 214, 138, 0.25);
+  }
+
+  .pipeline-node.has-children > p {
+    margin-bottom: var(--space-sm);
+  }
+
+  .pipeline-node.pilot {
+    border-color: rgba(255, 138, 61, 0.26);
+  }
+
+  .pipeline-node.design {
+    border-color: rgba(169, 214, 138, 0.26);
+  }
+
+  .node-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .pipeline-node h5 {
+    margin: 0;
+  }
+
+  .pipeline-node p {
+    font-size: 0.9rem;
+  }
+
+  .node-subcomponents {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .subcomponent-node {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(169, 214, 138, 0.22);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .subcomponent-node.pilot {
+    border-color: rgba(255, 138, 61, 0.3);
+  }
+
+  .subcomponent-node.design {
+    border-color: rgba(169, 214, 138, 0.35);
+  }
+
+  .sub-node-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-2xs, 0.35rem);
+  }
+
+  .sub-node-header h6 {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .subcomponent-node p {
+    font-size: 0.85rem;
+  }
+
+  .node-outcome {
+    font-size: 0.95rem;
+    color: rgba(229, 228, 216, 0.75);
+    margin-top: var(--space-sm);
+  }
+
+  .node-outcome--group {
+    margin-top: var(--space-md);
+  }
+
+  .sub-node-outcome {
+    font-size: 0.82rem;
+    color: rgba(229, 228, 216, 0.7);
+    margin-top: var(--space-2xs, 0.35rem);
+  }
+
+  .pipeline-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    width: 100%;
+    max-width: 520px;
+    margin: 0.35rem auto;
+  }
+
+  .pipeline-line {
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(90, 165, 255, 0.4), rgba(169, 214, 138, 0.3));
+  }
+
+  .pipeline-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    background: rgba(169, 214, 138, 0.08);
+    color: rgba(169, 214, 138, 0.9);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .status-indicator.active {
+    background: rgba(90, 165, 255, 0.18);
+    color: var(--status-active);
+  }
+
+  .pipeline-connector--component .pipeline-line {
+    height: 18px;
+  }
+
+  .pipeline-connector--component .pipeline-arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  .pipeline-connector--domain {
+    max-width: 360px;
+  }
+
+  .pipeline-connector--sub {
+    max-width: 240px;
+  }
+
+  .pipeline-connector--sub .pipeline-arrow {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .pipeline-connector--sub .pipeline-line {
+    height: 14px;
+  }
+
+  /* Option A */
+
+  .pipeline-flow--compact {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @keyframes pipelinePulse {
+    0% {
+      box-shadow: 0 0 0 rgba(169, 214, 138, 0.0), inset 0 0 0 rgba(169, 214, 138, 0);
+      border-color: rgba(229, 228, 216, 0.12);
+    }
+    50% {
+      box-shadow: 0 0 26px rgba(169, 214, 138, 0.26), inset 0 0 0 rgba(169, 214, 138, 0.1);
+      border-color: rgba(169, 214, 138, 0.32);
+    }
+    100% {
+      box-shadow: 0 0 0 rgba(169, 214, 138, 0.0), inset 0 0 0 rgba(169, 214, 138, 0);
+      border-color: rgba(229, 228, 216, 0.12);
+    }
+  }
+
+  .component-compact {
+    border: 1px solid rgba(229, 228, 216, 0.12);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal), background var(--transition-normal);
+    box-shadow: inset 0 0 0 rgba(169, 214, 138, 0);
+    animation: pipelinePulse 2s ease-in-out infinite;
+  }
+
+  .component-compact::before {
+    content: '';
+    position: absolute;
+    inset: -30% -40%;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.16), rgba(169, 214, 138, 0));
+    opacity: 0;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    pointer-events: none;
+  }
+
+  .component-compact:hover::before,
+  .component-compact:focus-within::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .component-compact summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+  }
+
+  .component-compact summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .component-compact:hover,
+  .component-compact:focus-within {
+    border-color: rgba(169, 214, 138, 0.28);
+    box-shadow: 0 0 24px rgba(169, 214, 138, 0.18), inset 0 0 0 rgba(169, 214, 138, 0.08);
+    animation-play-state: paused;
+  }
+
+  .component-compact[open] {
+    background: rgba(0, 0, 0, 0.55);
+    border-color: rgba(169, 214, 138, 0.35);
+    box-shadow: 0 0 32px rgba(169, 214, 138, 0.25), inset 0 0 0 rgba(169, 214, 138, 0.12);
+    animation: none;
+  }
+
+  .component-compact[open]::before {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .component-body {
+    display: grid;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    color: rgba(229, 228, 216, 0.78);
+  }
+
+  .component-subgrid {
+    display: grid;
+    gap: var(--space-xs);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .component-subcard {
+    border: 1px solid rgba(169, 214, 138, 0.22);
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.5);
+    padding: var(--space-xs) var(--space-sm);
+    display: grid;
+    gap: var(--space-2xs, 0.35rem);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 rgba(169, 214, 138, 0);
+    animation: pipelinePulse 2s ease-in-out infinite;
+  }
+
+  .component-subcard::before {
+    content: '';
+    position: absolute;
+    inset: -35% -45%;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.22), rgba(169, 214, 138, 0));
+    opacity: 0;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    pointer-events: none;
+  }
+
+  .component-subcard:hover::before,
+  .component-subcard:focus-within::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .component-subcard:hover,
+  .component-subcard:focus-within {
+    border-color: rgba(169, 214, 138, 0.32);
+    box-shadow: 0 0 18px rgba(169, 214, 138, 0.22), inset 0 0 0 rgba(169, 214, 138, 0.08);
+    animation-play-state: paused;
+  }
+
+  .component-subcard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .component-impact {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(229, 228, 216, 0.75);
+  }
+
+  .connector-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .connector-line--compact .pipeline-line {
+    height: 16px;
+  }
+
+  .connector-line--compact .pipeline-arrow {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .compact-domain-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .compact-domain-connector .pipeline-line {
+    height: 24px;
+  }
+
+  .compact-domain-connector .pipeline-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1.1rem;
+  }
+
+  /* Compact pipeline layout */
+
+  .flagship-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .flagship-item {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .flagship-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xs);
+    gap: var(--space-sm);
+  }
+
+  .flagship-meta h3 {
+    margin: 0;
+    flex: 1;
+  }
+
+  .hero-flagship-card h2::before,
+  .hero-flagship-card h2::after {
+    display: none;
+  }
+
+  .challenge-title {
+    color: #ff6b6b;
+  }
+
+  .solution-title {
+    color: var(--bright);
+  }
+
+  .flagship-one-liner {
+    margin: var(--space-xs) 0;
+    color: rgba(229, 228, 216, 0.85);
+  }
+
+  .flagship-bullets {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0;
+    display: grid;
+    gap: var(--space-xs);
+    font-size: 0.85rem;
+  }
+
+  .flagship-bullets li::before {
+    content: '→';
+    color: var(--bright);
+    margin-right: var(--space-xs);
+    font-size: 0.85rem;
+    vertical-align: middle;
+  }
+
+  .flagship-bullets.challenge li::before {
+    content: '✖';
+    color: #ff6b6b;
+    margin-right: var(--space-xs);
+  }
+
+  .flagship-link {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .flagship-link:hover {
+    text-decoration: underline;
+  }
+
+  .team-section {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .team-intro {
+    max-width: 640px;
+    color: rgba(229, 228, 216, 0.78);
+  }
+
+  .team-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .team-card {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .team-header {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  .team-heading {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .team-name-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+.team-meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+  .team-link-icons {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .team-link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    background: rgba(169, 214, 138, 0.1);
+    color: var(--bright);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .team-link-icon:hover {
+    background: rgba(169, 214, 138, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .team-link-icon .icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .team-photo {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(169, 214, 138, 0.35);
+  }
+
+  .team-role-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(169, 214, 138, 0.18);
+    color: rgba(229, 228, 216, 0.92);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(169, 214, 138, 0.35);
+  }
+
+  .team-tagline {
+    margin: 0;
+    color: rgba(229, 228, 216, 0.8);
+  }
+
+  .team-tags {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .team-tags li {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(90, 165, 255, 0.18);
+    color: rgba(229, 228, 216, 0.88);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(90, 165, 255, 0.25);
+  }
+
+  .team-toggle {
+    justify-self: start;
+    padding: 0.55rem 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    background: rgba(169, 214, 138, 0.08);
+    color: var(--bright);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .team-toggle:hover {
+    background: rgba(169, 214, 138, 0.16);
+  }
+
+  .team-bio {
+    border-left: 2px solid rgba(169, 214, 138, 0.35);
+    padding-left: var(--space-md);
+    margin-top: var(--space-sm);
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .team-bio[hidden] {
+    display: none;
+  }
+
+  .team-links {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .team-link {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .team-link:hover {
+    text-decoration: underline;
+  }
+
+  .contributor-card {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .contributor-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .contributor-item {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .cta-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .partner-card {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .partner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .reviewer-card {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .reviewer-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .reviewer-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .reviewer-checklist li {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+  }
+
+  .trust-block {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .trust-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .trust-label {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(229, 228, 216, 0.6);
+  }
+
+  .trust-list a {
+    color: var(--bright);
+    text-decoration: none;
+  }
+
+  .trust-list a:hover {
+    text-decoration: underline;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (min-width: 960px) {
+    .group-components {
+      flex-wrap: nowrap;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-proof-band {
+      padding: var(--space-lg);
+    }
+
+    .hero-proof-item {
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .partner-actions,
+    .hero-cta-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>
+
+<style>
+  /* UI enhancements: spacing, dividers, contrast, animations, and responsive tweaks */
+  .command-brief { gap: var(--space-xl); }
+  .command-brief section { padding: var(--space-xl) 0; position: relative; }
+  .command-brief section:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4%;
+    right: 4%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(169,214,138,0.06), transparent);
+    transform: translateY(-1px);
+  }
+
+  /* Hide complex sub-tiles to show one tile per section for now */
+  /* Only hide when section is collapsed; restore on expand */
+  .collapsed .split-sidecards,
+  .collapsed .engage-grid,
+  .collapsed .pipeline-flow,
+  .collapsed .team-stack { display: none !important; }
+
+  /* Uniform tile width when collapsed */
+  .command-brief .container { width: 100%; }
+  .collapsed .split-layout,
+  .collapsed .team-panel,
+  .collapsed .engage-panel,
+  .collapsed .pipeline-card { width: 100%; max-width: 1120px; margin-inline: auto; }
+  .collapsed .split-layout { grid-template-columns: 1fr; }
+  .collapsed .split-copy--framed,
+  .collapsed .split-copy--framed--mission,
+  .collapsed .split-copy--framed--overview,
+  .collapsed .split-copy--framed--team,
+  .collapsed .split-copy--framed--engage,
+  .collapsed .pipeline-card { margin-inline: auto; }
+
+  /* Smooth size change on expand */
+  .split-layout, .team-panel, .engage-panel, .pipeline-card { transition: max-width .3s ease; }
+
+  .section-actions { margin-top: var(--space-md); }
+  .section-toggle { 
+    background: rgba(169,214,138,0.12); 
+    color: var(--bright); 
+    border: 1px solid rgba(169,214,138,0.35); 
+    padding: 0.55rem 1rem; 
+    border-radius: var(--radius-md); 
+    font-weight: 600; 
+    cursor: pointer; 
+    font-size: 0.8rem; 
+    letter-spacing: 0.08em; 
+    text-transform: uppercase; 
+    transition: background .25s ease, color .25s ease, box-shadow .25s ease; 
+  }
+  .section-toggle:hover { background: rgba(169,214,138,0.2); box-shadow: 0 4px 14px rgba(169,214,138,0.25); }
+  .section-toggle[aria-expanded="true"] { background: rgba(169,214,138,0.28); }
+
+  /* Section title styling */
+  .section-title { 
+    margin: 0 0 var(--space-sm) 0; 
+    font-size: clamp(1rem, 1.8vw, 1.25rem); 
+    letter-spacing: 0.12em; 
+    text-transform: uppercase; 
+    color: rgba(169,214,138,0.95);
+  }
+
+  /* Typography & contrast */
+  .command-brief h2 { font-size: clamp(1.2rem, 2.2vw, 1.6rem); color: rgba(229,228,216,0.96); margin-bottom: var(--space-md); }
+  .command-brief h1 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: rgba(229,228,216,1); }
+  .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.18em; color: rgba(169,214,138,0.92); }
+  .flagship-one-liner, .domain-summary, .team-tagline, .team-bio p, .flagship-bullets li { color: rgba(229,228,216,0.82); font-weight: 400; }
+
+  /* Animate-in helpers (IntersectionObserver will toggle .in-view) */
+  [data-animate] { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; will-change: opacity, transform; }
+  [data-animate].in-view { opacity: 1; transform: translateY(0); }
+
+  /* Hero quote & flagship cards initial states */
+  .mission-quote-secondary[data-animate="quote"] { opacity: 0; transform: translateY(6px); }
+  .mission-quote-secondary.in-view { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+  .hero-flagship-card[data-animate="flagship"] { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease, box-shadow .35s ease; }
+  .hero-flagship-card.in-view { opacity: 1; transform: translateY(0); }
+
+  /* Subtle hover glow and lighter shadows for performance */
+  :root { --card-glow: rgba(169,214,138,0.08); }
+  .hero-flagship-card:hover, .team-card:hover, .component-subcard:hover { box-shadow: 0 12px 30px var(--card-glow); transform: translateY(-4px); }
+
+  /* Reduce very heavy shadows used site-wide and reuse medium shadow variable */
+  :root { --shadow-md: 0 8px 20px rgba(0,0,0,0.32); }
+  .split-copy--framed, .team-card--stacked, .engage-card, .pipeline-card { box-shadow: var(--shadow-md); }
+
+  /* Pipeline details: animate open/close via max-height (JS sets exact height) */
+  .component-body { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
+  .component-compact[open] .component-body { opacity: 1; }
+
+  /* Team bios: animated expand/collapse (JS toggles aria-hidden and max-height) */
+  .team-bio { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
+  .team-bio[aria-hidden="false"] { opacity: 1; }
+
+  /* Mobile responsiveness tweaks */
+  @media (max-width: 768px) {
+    .split-layout { gap: var(--space-lg); grid-template-columns: 1fr; }
+    .pipeline-flow { grid-template-columns: 1fr; }
+    .pipeline-domain { padding: var(--space-md); }
+    .component-subgrid { grid-template-columns: 1fr; }
+  }
+
+  /* Performance hint: reduce animation work on reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    [data-animate] { transition: none; opacity: 1 !important; transform: none !important; }
+    .component-body, .team-bio { transition: none !important; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // IntersectionObserver: reveal animated elements
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-animate]').forEach((el) => io.observe(el));
+
+    // Animate details (.component-compact) open/close by adjusting maxHeight
+    document.querySelectorAll('details.component-compact').forEach((details) => {
+      const body = details.querySelector('.component-body');
+      if (!body) return;
+      // Initialize
+      body.style.maxHeight = details.open ? body.scrollHeight + 'px' : '0px';
+      details.addEventListener('toggle', () => {
+        if (details.open) {
+          // expand to content height
+          body.style.maxHeight = body.scrollHeight + 'px';
+        } else {
+          // collapse
+          body.style.maxHeight = '0px';
+        }
+      });
+    });
+
+    // Team bios: animated expand/collapse using aria-hidden and maxHeight
+    const bioToggles = document.querySelectorAll('[data-bio-toggle]');
+    bioToggles.forEach((button) => {
+      const id = button.getAttribute('data-bio-toggle');
+      if (!id) return;
+      const region = document.getElementById(`bio-${id}`);
+      if (!region) return;
+      // set initial states
+      region.setAttribute('aria-hidden', region.hidden ? 'true' : 'false');
+      region.style.maxHeight = region.hidden ? '0px' : region.scrollHeight + 'px';
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', (!expanded).toString());
+        if (expanded) {
+          // collapse
+          region.setAttribute('aria-hidden', 'true');
+          region.style.maxHeight = '0px';
+          region.hidden = true;
+          button.textContent = 'Read bio';
+        } else {
+          // expand
+          region.hidden = false;
+          region.setAttribute('aria-hidden', 'false');
+          region.style.maxHeight = region.scrollHeight + 'px';
+          button.textContent = 'Hide bio';
+        }
+      });
+    });
+
+    // Section toggle: expand/collapse per-section details without losing content
+    document.querySelectorAll('.section-toggle').forEach((btn) => {
+      const targetId = btn.getAttribute('data-toggle-section');
+      if (!targetId) return;
+      const section = document.getElementById(targetId);
+      if (!section) return;
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          section.classList.add('collapsed');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = 'Show details';
+        } else {
+          section.classList.remove('collapsed');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.textContent = 'Hide details';
+        }
+      });
+    });
+
+    // Respect prefers-reduced-motion: reveal all immediately
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('[data-animate]').forEach((el) => el.classList.add('in-view'));
+    }
+  });
+</script>
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pipelineComponents = {
+  scout: {
+    id: 'scout',
+    name: 'SCOUT',
+    status: 'Active Dev · 75%',
+    variant: 'active',
+    domain: 'ot',
+    description: 'Slow-and-low OT host telemetry agent that captures system state without disrupting production equipment.',
+    outcome: 'Collects high-fidelity host data and prepares it for Chronicle-ready enrichment.'
+  },
+  seer: {
+    id: 'seer',
+    name: 'SEER',
+    status: 'PoC',
+    variant: 'pilot',
+    domain: 'ot',
+    description: 'Commodity network sensor producing full packet capture and Zeek-style logs for OT environments.',
+    outcome: 'Delivers deep network visibility at a price point small operators can afford.'
+  },
+  ghost: {
+    id: 'ghost',
+    name: 'GHOST',
+    status: 'PoC',
+    variant: 'pilot',
+    domain: 'buffer',
+    description: 'Hardware-enforced unidirectional data diode using modified media converters and fiber.',
+    outcome: 'Protects OT enclaves while streaming telemetry safely into IT analytics.'
+  },
+  rampart: {
+    id: 'rampart',
+    name: 'RAMPART',
+    status: 'Active Dev',
+    variant: 'active',
+    domain: 'mission-hub',
+    description: 'Data processing and forwarding engine normalizing telemetry for Chronicle ingestion.',
+    outcome: 'Automates enrichment, queueing, and delivery to TacSOC and partner SIEMs.'
+  },
+  aiTriage: {
+    id: 'ai-triage',
+    name: 'AI Triage Cell',
+    status: 'Design',
+    variant: 'design',
+    domain: 'mission-hub',
+    description: 'AI triage and signal/noise reduction keeps analysts focused on actionable intelligence.',
+    outcome: 'Shrinks analyst-to-alert ratios so a lean team can move faster.'
+  },
+  hunterKiller: {
+    id: 'hunter-killer',
+    name: 'Hunter/Killer Teams',
+    status: 'Pilot',
+    variant: 'pilot',
+    domain: 'mission-hub',
+    description: 'Veteran defenders executing R.A.I.D. playbooks for high-signal hunts and incident response.',
+    outcome: 'Delivers decisive response across partner networks and mentors local operators.'
+  },
+  chronicleStack: {
+    id: 'chronicle-fusion',
+    name: 'Shared Chronicle Stack',
+    status: 'Design',
+    variant: 'design',
+    domain: 'mission-hub',
+    description: 'Shared Chronicle automations, detection content, and reporting pipeline.',
+    outcome: 'Cuts analytic cost while preserving compliance-grade evidence for every partner.'
+  }
+};
+
+const tacSocGroup = {
+  id: 'tacsoc',
+  name: 'TacSOC Cloud',
+  status: 'Design + Pilot',
+  variant: 'design',
+  domain: 'mission-hub',
+  description: 'Veteran-led mission cloud that fuses AI triage, hunter/killer teams, and a shared Chronicle stack.',
+  outcome: 'Delivers coordinated detection, response, and reporting for every partner operator.',
+  components: [pipelineComponents.aiTriage, pipelineComponents.hunterKiller, pipelineComponents.chronicleStack]
+};
+
+const pipelineDomains = [
+  {
+    id: 'ot',
+    title: 'OT Network',
+    label: 'Operational Technology',
+    summary: 'SCOUT and SEER harvest host and network telemetry without disrupting production workflows.',
+    status: 'Active Deployment',
+    statusVariant: 'active',
+    variant: 'ot',
+    components: [pipelineComponents.scout, pipelineComponents.seer]
+  },
+  {
+    id: 'buffer',
+    title: 'One-Way Buffer',
+    label: 'Cross-Domain Guard',
+    summary: 'GHOST hardware diode pushes telemetry forward while preventing any path back into OT.',
+    status: 'Hardware PoC',
+    statusVariant: 'pilot',
+    variant: 'buffer',
+    components: [pipelineComponents.ghost]
+  },
+  {
+    id: 'mission-hub',
+    title: 'IT Network',
+    label: 'Information Technology',
+    summary: 'RAMPART conditions telemetry before the TacSOC cloud analyzes, hunts, and reports.',
+    status: 'Design + Pilot',
+    statusVariant: 'design',
+    variant: 'tacsoc',
+    components: [pipelineComponents.rampart, tacSocGroup]
+  }
+];
+
+const flagshipProducts = [
+  {
+    name: 'T.A.P.S.',
+    oneLiner: 'Telemetry Acquisition Platform Solution — a complete OT-to-IT pipeline ready for Chronicle.',
+    bullets: [
+      'SCOUT, SEER, GHOST, and RAMPART working together end-to-end',
+      'Runs on commodity hardware with OT-safe footprint',
+      'Chronicle-ready schemas and automations out of the box'
+    ],
+    status: 'Active Development',
+    variant: 'active',
+    link: '/products/taps'
+  },
+  {
+    name: 'TacSOC',
+    oneLiner: 'Lean, AI-assisted SOC built for small OT teams that need enterprise-grade outcomes.',
+    bullets: [
+      'AI triage and signal/noise reduction',
+      'Hunter/Killer teams trained on R.A.I.D. playbooks',
+      'Shared Chronicle resources to cut analytic cost'
+    ],
+    status: 'Design + Pilot',
+    variant: 'design',
+    link: '/products/tacsoc'
+  }
+];
+
+const contributorPaths = [
+  {
+    title: 'Strategic partners',
+    detail: 'Co-fund the TacSOC launch, shape service tiers, and secure priority onboarding.'
+  },
+  {
+    title: 'OT operators',
+    detail: 'Pilot T.A.P.S. components in production-like environments and feed real telemetry back to the team.'
+  },
+  {
+    title: 'Builders & analysts',
+    detail: 'Join veteran engineers to harden SCOUT transport, enrich RAMPART automations, and expand hunt content.'
+  }
+];
+
+const teamMembers = [
+  {
+    id: 'erin-burns',
+    name: 'Erin Burns',
+    role: 'Founder, Master Host Analyst',
+    tagline: '10+ years DFIR expertise across enterprise and ICS',
+    highlights: [
+      'Leadership',
+      'Operations',
+      'Strategy',
+      'Architecture',
+      'Systems',
+      'Cybersecurity'
+    ],
+    bio: [
+      'Erin Burns is an information security professional with over 17 years of experience leading and executing large-scale cybersecurity engagements and operations. As the founder of EVR:RDY, he combines deep technical knowledge with strategic leadership to advance OT/ICS cyber defense capabilities.',
+      'With expertise in incident response, forensics, and hunt operations gained through daily analysis of national-level intrusions, Erin has planned and conducted multiple simultaneous defensive cyber operations in unique occupational technology and information technology environments, creating innovative procedures that enhance organizational effectiveness.'
+    ],
+    photo: '/img/erin-burns.jpeg',
+    linkedin: 'https://www.linkedin.com/in/erinburns757/'
+  },
+  {
+    id: 'timothy-deberry',
+    name: 'Timothy DeBerry',
+    role: 'Principal Developer, Founding Engineer',
+    tagline: 'Production-quality systems architect and secure coder',
+    highlights: [
+      'Leadership',
+      'Development',
+      'Integration',
+      'Automation',
+      'Secure Coding',
+      'Secure Design'
+    ],
+    bio: [
+      'Timothy DeBerry is a former combat Infantryman with multiple combat tours before transitioning to cyber operations as a Cyber Warrant Officer. With over 16 years of military service across infantry and cyber warfare roles, he brings exceptional leadership, operational excellence, and security-first engineering to EVR:RDY.',
+      'As one of the Founding Engineers and the Principal Developer at EVR:RDY, Timothy owns engineering governance and SDLC, architects and implements core software with security-first design principles, and drives integrations and release readiness for open-source, affordable solutions that protect critical infrastructure. With proficiency in Python, C, automation, and security engineering, he combines combat-proven leadership with technical expertise to build production-quality systems that operate reliably in industrial environments.'
+    ],
+    photo: '/img/timothy-deberry.jpeg',
+    linkedin: 'https://www.linkedin.com/in/timothy-deberry-35425b75/',
+    github: 'https://github.com/nybblez0x42697A'
+  },
+  {
+    id: 'shayla-lapoint',
+    name: 'Shayla LaPoint',
+    role: 'Lead Security Engineer, Founding Engineer',
+    tagline: 'Network analysis and threat modeling specialist',
+    highlights: [
+      'Leadership',
+      'Secure Architecture',
+      'Network Analysis',
+      'Threat Modeling',
+      'Incident Response',
+      'Digital Forensics'
+    ],
+    bio: [
+      'Shayla LaPoint is a U.S. Army Cyber Warrant Officer with over a decade of experience in the Cyber Protection Brigade, where she led and executed missions focused on defending critical networks and infrastructure. With a Bachelor of Science in Information Systems Security, she combines deep technical acumen with operational leadership to advance cyber resilience across enterprise and tactical environments.',
+      'Since entering the cybersecurity field in 2016, Shayla has developed and led initiatives in Defensive Cyber Operations (DCO), Industrial Control Systems (ICS)/SCADA security, cloud architecture protection, and tactical communications security. Her extensive background includes serving as a Cyber Operations Maneuver Planner and a Master Network Analyst, where she specialized in integrating sensing, detection, and response mechanisms into mission-critical systems.',
+      'A CISSP-certified professional and holder of 12 SANS certifications, Shayla is recognized for her expertise in developing and employing continuous monitoring strategies that enhance situational awareness, reduce attack surfaces, and ensure mission assurance in complex operational environments. Her passion lies in bridging the gap between technical defense capabilities and mission objectives—ensuring that sensing and monitoring technologies empower decision-makers at every echelon.'
+    ],
+    photo: '/img/shayla-lapoint.jpeg'
+  },
+  {
+    id: 'dylan-knox',
+    name: 'Dylan Knox',
+    role: 'Lead Hardware Engineer, Founding Engineer',
+    tagline: 'Hardware design and prototyping innovator',
+    highlights: [
+      'Leadership',
+      'Hardware Design',
+      'Electronics Design',
+      'Prototyping',
+      'Research & Development',
+      'Testing & Validation'
+    ],
+    bio: [
+      'Dylan Knox is a Lead Hardware Engineer specializing in custom electronics design, R&D, and rapid prototyping for critical infrastructure security solutions. His innovative approach to hardware engineering has been instrumental in developing the physical components that power EVR:RDY\'s telemetry acquisition platform.',
+      'With expertise spanning from conceptual design to production validation, Dylan has led the development of custom hardware solutions that meet the stringent requirements of OT/ICS environments. His work includes designing low-footprint sensors, developing air-gap communication devices, and creating hardware-enforced security mechanisms that protect critical infrastructure.',
+      'Dylan is recognized for his ability to bridge the gap between theoretical design and practical implementation, rapidly iterating from prototypes to production-ready hardware.'
+    ],
+    photo: '/img/knox.png',
+    linkedin: 'https://www.linkedin.com/in/dylan-knox-356887132/'
+  }
+];
+
+const reviewerChecklist = [
+  {
+    label: 'Business',
+    detail: 'EVR:RDY builds the TacSOC and T.A.P.S. pipeline so resource-constrained OT/ICS operators can defend critical infrastructure.'
+  },
+  {
+    label: 'Products & stage',
+    detail: 'TacSOC (Design + Pilot), T.A.P.S. (Active Dev) with SCOUT, SEER, GHOST, and RAMPART statuses transparent above.'
+  },
+  {
+    label: 'Team',
+    detail: 'Veteran-led operators with LinkedIn-linked profiles and proven DFIR, engineering, and hardware experience.'
+  },
+  {
+    label: 'Trust',
+    detail: 'EVR:RDY Defensive Operations Group LLC · founders@evrrdy.com · Privacy & Security statements linked below.'
+  }
+];
+
+const trustLinks = [
+  { label: 'Company', value: 'EVR:RDY Defensive Operations Group LLC' },
+  { label: 'Email', value: 'founders@evrrdy.com', href: 'mailto:founders@evrrdy.com' },
+  { label: 'Privacy', value: 'Privacy Policy', href: '/privacy' },
+  { label: 'Security', value: 'Security Statement', href: '/security' }
+];
+
+const humorAside = 'We’ve done so much with so little that investors call it capital efficiency. We call it Tuesday.';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>EVR:RDY — Command Brief for Critical Infrastructure Defense</title>
+    <meta
+      name="description"
+      content="One-page briefing on EVR:RDY’s TacSOC and T.A.P.S. pipeline securing critical infrastructure. See mission, pipeline flow, team, and partnership paths."
+    />
+    <meta property="og:title" content="EVR:RDY — Command Brief for Critical Infrastructure Defense" />
+    <meta
+      property="og:description"
+      content="Veteran-led operators delivering TacSOC and the T.A.P.S. telemetry pipeline. Mission, momentum, and partnership opportunities in one scroll."
+    />
+    <meta property="og:url" content="https://evrrdy.com/" />
+    <meta property="og:image" content="https://evrrdy.com/img/banner.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EVR:RDY — Command Brief for Critical Infrastructure Defense" />
+    <meta
+      name="twitter:description"
+      content="Veteran-led OT/ICS defense. Explore TacSOC and the T.A.P.S. pipeline milestones, team, and partnership paths."
+    />
+    <meta name="twitter:image" content="https://evrrdy.com/img/banner.png" />
+    <link rel="canonical" href="https://evrrdy.com/" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EVR:RDY Defensive Operations Group LLC",
+      "url": "https://evrrdy.com/",
+      "logo": "https://evrrdy.com/img/logo.png",
+        "description": "Veteran-led operators delivering TacSOC and the T.A.P.S. telemetry pipeline for critical infrastructure."
+      })}
+    />
+  </Fragment>
+
+  <Header currentPath="/" />
+
+  <main id="main-content" class="command-brief">
+  <section id="mission" class="anchor-offset mission-hero collapsed">
+      <div class="container">
+        <div class="split-layout">
+          <article class="split-copy split-copy--framed split-copy--framed--mission" aria-label="Mission">
+          <span class="hero-eyebrow">Veteran-led defensive operations</span>
+          <h2 class="section-title">Mission</h2>
+          <h1>Defend Critical Infrastructure Without Compromise</h1>
+          <p>
+            EVR:RDY leverages battle-hardened military cyber expertise to actively defend the critical systems and sites that keep our society running — from energy and water to transportation and communications. Powered by Google SecOps, we deliver scalable, affordable, and mission-proven cybersecurity to organizations safeguarding vital infrastructure.
+          </p>
+          <blockquote class="mission-quote-secondary" data-animate="quote">
+        We have done so much, for so long, with so little, we are now qualified to do anything with nothing.<br />
+        <span>– Frank Sinatra</span>
+      </blockquote>
+      <div class="section-actions">
+        <button type="button" class="section-toggle" data-toggle-section="mission" aria-controls="mission" aria-expanded="false">Show details</button>
+      </div>
+        </article>
+          <aside class="split-sidecards" aria-label="Challenge and solution">
+          <article class="card hero-flagship-card" data-animate="flagship">
+            <div class="flagship-meta">
+              <h2 class="challenge-title">Challenge</h2>
+            </div>
+            <p class="flagship-one-liner">Critical infrastructure systems face a growing cyber threat landscape — but the teams defending them are often under-resourced and overextended.</p>
+            <ul class="flagship-bullets challenge">
+              <li>Many sites lack the funding or staff to build and sustain a full-scale SOC.</li>
+              <li>Legacy security tools are costly, complex, and not designed for OT or ICS environments.</li>
+              <li>The shortage of skilled defenders demands automation, AI-assisted analysis, and scalable SecOps models.</li>
+            </ul>
+            <p class="flagship-one-liner">EVR:RDY was built to close that gap — applying military-grade cyber discipline and Google SecOps technology to help small and mid-size infrastructure sites defend like national-level operations.</p>
+          </article>
+          <article class="card hero-flagship-card" data-animate="flagship">
+            <div class="flagship-meta">
+              <h2 class="solution-title">Solution</h2>
+            </div>
+            <p class="flagship-one-liner">EVR:RDY transforms military-proven defense principles into a cloud-native security framework built for the realities of critical infrastructure.</p>
+            <ul class="flagship-bullets solution">
+              <li>Powered by Google SecOps, our modular architecture delivers enterprise-grade visibility and automation without the traditional cost barrier.</li>
+              <li>Unified telemetry pipelines feed real-time data from multiple sites into a single defense layer, enabling faster detection and coordinated response.</li>
+              <li>Scalable deployment models grow from individual sites to national infrastructure networks—ensuring the same protection level across every critical system.</li>
+            </ul>
+            <p class="flagship-one-liner">With EVR:RDY, critical infrastructure can finally defend with the speed, precision, and intelligence once reserved for military operations.</p>
+          </article>
+          </aside>
+        </div>
+      </div>
+      </section>
+
+  <section id="overview" class="split-section anchor-offset collapsed">
+      <div class="container">
+        <div class="split-layout">
+          <article class="split-copy split-copy--framed split-copy--framed--overview" aria-label="Overview">
+          <span class="hero-eyebrow">Affordable Critical Infrastructure Defense</span>
+          <h2 class="section-title">Overview</h2>
+          <h1>Open-source OT/ICS defense you can actually afford.</h1>
+          <p>
+            EVR:RDY combines lean operations with commodity telemetry so resource-constrained operators can defend critical infrastructure without big-box price tags.
+          </p>
+          <div class="section-actions">
+            <button type="button" class="section-toggle" data-toggle-section="overview" aria-controls="overview" aria-expanded="false">Show details</button>
+          </div>
+        </article>
+          <aside class="split-sidecards" aria-label="Flagship capabilities">
+          {flagshipProducts.map((product) => (
+            <article class="card hero-flagship-card" data-animate="flagship">
+              <div class="flagship-meta">
+                <h3>{product.name}</h3>
+                <span
+                  class={`status-indicator ${product.variant === 'design' ? 'design' : product.variant === 'pilot' ? 'pilot' : ''}`}
+                >
+                  {product.status}
+                </span>
+              </div>
+              <p class="flagship-one-liner">{product.oneLiner}</p>
+              <ul class="flagship-bullets">
+                {product.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+              <a class="flagship-link" href={product.link}>View {product.name}</a>
+            </article>
+          ))}
+          </aside>
+        </div>
+      </div>
+      </section>
+
+    <section id="approach" class="anchor-offset">
+      <div class="container">
+        <article class="split-copy split-copy--framed" aria-label="Approach">
+          <span class="hero-eyebrow">How We Operate</span>
+          <h2 class="section-title">Approach</h2>
+          <p>
+            We apply the structure and precision of military cyber operations to protect the civilian systems that keep our world running.
+          </p>
+          <ul class="flagship-bullets">
+            <li>
+              TAPS (Telemetry Acquisition Platform Solution) gathers data from distributed OT/ICS environments and feeds it into a unified Google SecOps–powered defense layer.
+            </li>
+            <li>
+              TACSOC (Threat Analysis &amp; Cyber Security Operations Center) fuses intelligence, monitoring, and response—centralizing security for multiple infrastructure sites under one operational command.
+            </li>
+            <li>
+              EVR:RDY’s training and simulation programs ensure defenders learn by doing, applying real-world tactics on live systems to strengthen readiness and response speed.
+            </li>
+          </ul>
+          <p>
+            This approach builds a defense ecosystem capable of protecting energy, water, transportation, and communication systems with military-grade efficiency and national-scale reach.
+          </p>
+        </article>
+      </div>
+    </section>
+
+  <section id="pipeline" class="anchor-offset collapsed">
+      <div class="container">
+          <article class="card pipeline-card">
+            <span class="hero-eyebrow">Mission Data on Tap</span>
+          <div class="pipeline-intro">
+            <h2>Pipeline</h2>
+            <p>
+              The T.A.P.S. pipeline moves telemetry from the edge of an OT network into analysts’ hands. Each stage is transparent about status, funding needs, and
+              mission impact.
+            </p>
+            <p>
+              From SCOUT at the host to the TacSOC, every component is engineered to keep defenders ahead of threats without vendor lock-in.
+            </p>
+            <div class="section-actions">
+              <button type="button" class="section-toggle" data-toggle-section="pipeline" aria-controls="pipeline" aria-expanded="false">Show details</button>
+            </div>
+          </div>
+          <div class="pipeline-flow pipeline-flow--compact">
+            {pipelineDomains.map((domain, domainIndex) => (
+              <Fragment>
+                <div class={`pipeline-domain ${domain.variant ?? ''}`} data-pipeline-domain={`${domain.id}-compact`}>
+                  <header class="domain-header">
+                    <span class="domain-badge">{domain.label}</span>
+                    <div class="domain-meta">
+                      <h4>{domain.title}</h4>
+                      <span class={`status-indicator ${domain.statusVariant ?? ''}`}>{domain.status}</span>
+          </div>
+                  </header>
+                  <p class="domain-summary">{domain.summary}</p>
+                  <div class="domain-components domain-components--compact">
+                    {domain.components.map((component, componentIndex) => (
+                      <Fragment>
+                        <details class={`component-compact ${component.components ? 'component-compact--group' : ''}`}>
+                          <summary>
+                            <span class="component-label">{component.name}</span>
+                            {component.status ? (
+                              <span class={`status-indicator ${component.variant ?? ''}`}>{component.status}</span>
+                            ) : null}
+                          </summary>
+                          <div class="component-body">
+                            {component.description ? <p>{component.description}</p> : null}
+                            {component.components ? (
+                              <div class="component-subgrid">
+                                {component.components.map((subComponent) => (
+                                  <div class={`component-subcard ${subComponent.variant ?? ''}`}>
+                                    <div class="component-subcard-header">
+                                      <span>{subComponent.name}</span>
+                                      {subComponent.status ? (
+                                        <span class={`status-indicator ${subComponent.variant ?? ''}`}>{subComponent.status}</span>
+                                      ) : null}
+          </div>
+                                    {subComponent.description ? <p>{subComponent.description}</p> : null}
+                                    {subComponent.outcome ? (
+                                      <p class="component-impact"><strong>Impact:</strong> {subComponent.outcome}</p>
+                                    ) : null}
+        </div>
+                                ))}
+          </div>
+                            ) : null}
+                            {component.outcome ? (
+                              <p class="component-impact"><strong>Impact:</strong> {component.outcome}</p>
+                            ) : null}
+          </div>
+                        </details>
+                        {componentIndex < domain.components.length - 1 ? (
+                          <div class="connector-line connector-line--compact" aria-hidden="true">
+                            <span class="pipeline-line"></span>
+                            <span class="pipeline-arrow">↓</span>
+                            <span class="pipeline-line"></span>
+          </div>
+                        ) : null}
+                      </Fragment>
+                    ))}
+        </div>
+                </div>
+                {domainIndex < pipelineDomains.length - 1 ? (
+                  <div class="compact-domain-connector" aria-hidden="true">
+                    <span class="pipeline-line"></span>
+                    <span class="pipeline-arrow">↓</span>
+                    <span class="pipeline-line"></span>
+                  </div>
+                ) : null}
+              </Fragment>
+            ))}
+          </div>
+        </article>
+        </div>
+      </section>
+
+  <section id="team" class="anchor-offset collapsed">
+      <div class="container">
+        <article class="team-panel split-copy--framed split-copy--framed--team">
+          <header class="team-panel-header">
+              <h2 class="section-title">Team</h2>
+              <span class="hero-eyebrow">Veterans Running Point</span>
+              <h2>The EVR:RDY Team</h2>
+            <p>
+              Veteran responders build the TacSOC and T.A.P.S. pipeline so critical infrastructure stays defended. Expand any bio to see the depth behind the mission and
+              the blend of mission-first leadership with engineering rigor.
+            </p>
+            <div class="section-actions">
+              <button type="button" class="section-toggle" data-toggle-section="team" aria-controls="team" aria-expanded="false">Show details</button>
+            </div>
+          </header>
+          <div class="team-stack">
+            {teamMembers.map((member) => (
+              <article class="team-card team-card--stacked" data-animate="team-card">
+                <div class="team-header">
+                  <div class="team-avatar">
+                    <img src={member.photo} alt={member.name} class="team-photo" loading="lazy" />
+                    <div class="team-link-icons">
+                      {member.linkedin ? (
+                        <a class="team-link-icon" href={member.linkedin} target="_blank" rel="noopener" aria-label={`LinkedIn profile for ${member.name}`}>
+                          <svg class="icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                            <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8.98h4.56V24H.22zM8.44 8.98h4.37v2.05h.06c.61-1.15 2.11-2.36 4.34-2.36 4.64 0 5.49 3.06 5.49 7.03V24h-4.54v-6.98c0-1.66-.03-3.79-2.31-3.79-2.31 0-2.66 1.8-2.66 3.66V24H8.44z" />
+                          </svg>
+                        </a>
+                      ) : null}
+                      {member.github ? (
+                        <a class="team-link-icon" href={member.github} target="_blank" rel="noopener" aria-label={`GitHub profile for ${member.name}`}>
+                          <svg class="icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
+                            <path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.09 3.29 9.4 7.86 10.94.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.79 2.73 1.27 3.4.97.11-.75.4-1.27.72-1.56-2.55-.29-5.24-1.28-5.24-5.71 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.38 11.1 11.1 0 0 1 2.93.39c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.44-2.7 5.41-5.27 5.7.41.35.77 1.04.77 2.11 0 1.53-.01 2.76-.01 3.14 0 .31.21.67.8.56A10.53 10.53 0 0 0 23.5 12C23.5 5.74 18.26.5 12 .5z" />
+                          </svg>
+                        </a>
+                      ) : null}
+          </div>
+          </div>
+                  <div class="team-heading">
+                    <div class="team-name-row">
+                      <h3>{member.name}</h3>
+        </div>
+                    <span class="team-role-tag">{member.role}</span>
+                  </div>
+                </div>
+                <p class="team-tagline">{member.tagline}</p>
+                <ul class="team-highlights">
+                  {member.highlights.map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  class="team-toggle"
+                  data-bio-toggle={member.id}
+                  aria-expanded="false"
+                  aria-controls={`bio-${member.id}`}
+                  id={`toggle-${member.id}`}
+                >
+                  Read bio
+                </button>
+                <div
+                  id={`bio-${member.id}`}
+                  class="team-bio"
+                  role="region"
+                  aria-labelledby={`toggle-${member.id}`}
+                  aria-hidden="true"
+                  hidden
+                >
+                  {member.bio.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </article>
+      </div>
+      </section>
+
+  <section id="engage" class="anchor-offset collapsed">
+      <div class="container">
+        <article class="engage-panel split-copy--framed split-copy--framed--engage">
+          <header class="engage-header">
+              <h2 class="section-title">Engage</h2>
+              <span class="hero-eyebrow">Suit Up or Sponsor Up</span>
+            <h2>Help us protect critical infrastructure.</h2>
+            <p>
+              Builders, operators, and funders drive our momentum. Share your talent, pilot the pipeline, or back the mission so veteran defenders can move faster.
+            </p>
+            <div class="section-actions">
+              <button type="button" class="section-toggle" data-toggle-section="engage" aria-controls="engage" aria-expanded="false">Show details</button>
+            </div>
+          </header>
+          <div class="engage-grid">
+            <article class="engage-card">
+              <h3>How you can engage</h3>
+              <div class="contributor-grid">
+                {contributorPaths.map((path) => (
+                  <div class="contributor-item">
+                    <h4>{path.title}</h4>
+                    <p>{path.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article class="engage-card engage-card--contact">
+              <h3>Contact EVR:RDY</h3>
+              <p>Let’s coordinate next steps and keep critical infrastructure defended forward.</p>
+              <ul class="contact-list">
+                <li>
+                  <strong>Email</strong>
+                  <a href="mailto:founders@evrrdy.com">founders@evrrdy.com</a>
+                </li>
+                <li>
+                  <strong>Operations</strong>
+                  <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a>
+                </li>
+              </ul>
+              <div class="partner-contact">
+<h3>Partner briefings</h3>
+              <p>
+                Funding accelerates production launch, expands telemetry reach, and puts trained veteran analysts on the front line of OT defense. Let’s brief you on the
+                roadmap and tailor a partnership.
+              </p>
+              <div class="partner-actions">
+                <a class="cta-btn secondary" href="mailto:founders@evrrdy.com?subject=Partner%20with%20EVR:RDY">Coordinate a briefing</a>
+              </div>
+                        <blockquote class="mission-quote-secondary">
+              <p class="humor-aside">{humorAside}</p>
+            <span>– Anonymous</span>
+        </blockquote>
+        
+              </div>
+            </article>
+          </div>
+        </article>
+      </div>
+      </section>
+
+  <!-- Resources section removed as per request -->
+  <!-- Expanded resource overlay removed -->
+
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .command-brief {
+    padding-top: calc(var(--space-2xl) + 80px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .command-brief section {
+    padding: var(--space-xl) 0;
+  }
+
+  .hero-section {
+    padding-top: var(--space-3xl);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: var(--space-2xl);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .hero-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: rgba(169, 214, 138, 0.8);
+  }
+
+  .hero-copy h1 {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-quote {
+    margin: var(--space-lg) 0;
+    border-left: 3px solid var(--bright);
+    padding-left: var(--space-md);
+    color: rgba(229, 228, 216, 0.8);
+    font-style: italic;
+  }
+
+  .hero-quote span {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+    color: rgba(229, 228, 216, 0.6);
+  }
+
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.9rem 1.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all var(--transition-normal);
+  }
+
+  .cta-btn.primary {
+    color: #0b1209;
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    border: 1px solid rgba(169, 214, 138, 0.45);
+    box-shadow: 0 16px 32px rgba(169, 214, 138, 0.35);
+  }
+
+  .cta-btn.secondary {
+    color: var(--bright);
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    background: rgba(169, 214, 138, 0.08);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 36px rgba(169, 214, 138, 0.25);
+  }
+
+  .hero-flagship {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .hero-flagship-card {
+    padding: var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .mission-quote-secondary {
+    border-left: 3px solid var(--bright);
+    padding-left: var(--space-md);
+    color: rgba(229, 228, 216, 0.8);
+    font-style: italic;
+  }
+
+  .mission-quote-secondary span {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+    color: rgba(229, 228, 216, 0.6);
+  }
+
+  .mission-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+
+  .split-layout,
+  .section-grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+    align-items: stretch;
+  }
+
+  .split-layout > *,
+  .section-grid > * {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .split-copy,
+  .section-copy {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    height: 100%;
+    align-self: stretch;
+  }
+
+  .split-copy--framed {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(18px);
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .split-copy--framed > *:first-child {
+    margin-top: 0;
+  }
+
+  .split-copy--framed > *:last-child {
+    margin-bottom: 0;
+  }
+
+.split-sidecards {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.split-sidecards > * {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.split-sidecards > *:first-child {
+  margin-top: 0;
+}
+
+.split-sidecards > *:last-child {
+  margin-bottom: 0;
+}
+
+.split-sidecards > *:last-child > *:last-child {
+  margin-top: auto;
+}
+
+.split-sidecards .hero-flagship-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  height: 100%;
+}
+
+.split-sidecards .hero-flagship-card > *:last-child {
+  margin-top: auto;
+}
+
+  /* Resources section removed: cleanup styles */
+
+  .mission-hero .split-copy--framed--mission {
+    border-radius: var(--radius-xl);
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5);
+  }
+
+  .split-section .split-copy--framed--overview {
+    
+    border-radius: var(--radius-xl);
+    background: rgba(0, 0, 0, 0.32);
+  }
+
+  .section-grid .split-copy--framed--team,
+  .section-grid .split-copy--framed--join,
+  .section-grid .split-copy--framed--partner {
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  }
+
+  #join .split-copy--framed--join,
+  #partner .split-copy--framed--partner {
+    background: rgba(0, 0, 0, 0.28);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+.split-copy--framed--pipeline {
+  justify-content: center;
+}
+
+.engage-panel {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.engage-header {
+  display: grid;
+  gap: var(--space-sm);
+  text-align: left;
+  max-width: 100%;
+  margin: 0;
+}
+
+.engage-grid {
+  display: grid;
+  gap: var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.engage-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(169, 214, 138, 0.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.38);
+  display: grid;
+  gap: var(--space-md);
+}
+
+.engage-card--partner {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(169, 214, 138, 0.22);
+}
+
+.partner-contact {
+  display: grid;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(169, 214, 138, 0.18);
+}
+
+.pipeline-intro-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(169, 214, 138, 0.18);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-xl);
+  max-width: 760px;
+  margin: 0 auto var(--space-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
+}
+
+  @media (max-width: 768px) {
+    .split-layout,
+    .section-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .split-copy--framed,
+    .split-copy--framed--pipeline {
+      max-height: none;
+    }
+
+    .skeleton-loader {
+      grid-template-columns: 1fr;
+    }
+  }
+
+.team-card--stacked {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(169, 214, 138, 0.18);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(18px);
+  display: grid;
+  gap: var(--space-md);
+}
+
+.team-card--stacked .team-header {
+  justify-content: flex-start;
+}
+
+.team-card--stacked .team-toggle {
+  margin-top: var(--space-sm);
+}
+
+.team-panel {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.team-stack {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.contact-list {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.contact-list li strong {
+  display: block;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(229, 228, 216, 0.65);
+}
+
+.contact-list a {
+  color: var(--bright);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+}
+
+  .split-copy,
+  .section-copy,
+  .section-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    height: 100%;
+  }
+
+  .section-cards .hero-flagship-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-lg);
+  }
+
+  .challenge-list,
+  .solution-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .challenge-list li,
+  .solution-list li {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+  }
+
+  .pipeline-card {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-xl);
+  }
+
+  .pipeline-intro {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 640px;
+  }
+
+  .pipeline-intro h2 {
+    margin: 0;
+  }
+
+  .pipeline-intro h2::before,
+  .pipeline-intro h2::after {
+    display: none;
+  }
+
+  .pipeline-flow {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .pipeline-domain {
+    position: relative;
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(90, 165, 255, 0.18);
+    background: rgba(14, 16, 18, 0.55);
+  }
+
+  .pipeline-domain.ot {
+    border-color: rgba(90, 165, 255, 0.25);
+    background: linear-gradient(135deg, rgba(90, 165, 255, 0.16), rgba(14, 16, 18, 0.6));
+  }
+
+  .pipeline-domain.buffer {
+    border-color: rgba(255, 138, 61, 0.28);
+    background: linear-gradient(135deg, rgba(255, 138, 61, 0.18), rgba(14, 16, 18, 0.58));
+  }
+
+  .pipeline-domain.tacsoc {
+    border-color: rgba(170, 142, 255, 0.38);
+    background: linear-gradient(140deg, rgba(122, 83, 196, 0.28), rgba(28, 20, 46, 0.78));
+    overflow: hidden;
+  }
+
+  .pipeline-domain.tacsoc::before,
+  .pipeline-domain.tacsoc::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(170, 142, 255, 0.45) 0%, rgba(170, 142, 255, 0) 70%);
+    opacity: 0.6;
+  }
+
+  .pipeline-domain.tacsoc::before {
+    width: 140%;
+    height: 140%;
+    top: -55%;
+    left: -20%;
+  }
+
+  .pipeline-domain.tacsoc::after {
+    width: 120%;
+    height: 120%;
+    bottom: -45%;
+    right: -15%;
+  }
+
+  .domain-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgba(229, 228, 216, 0.25);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(229, 228, 216, 0.75);
+  }
+
+  .domain-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .domain-meta h4 {
+    margin: 0;
+  }
+
+  .domain-summary {
+    margin: 0;
+    color: rgba(229, 228, 216, 0.78);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-components {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-components--compact {
+    gap: var(--space-sm);
+  }
+
+  .pipeline-node {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(90, 165, 255, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md) var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .pipeline-node.has-children {
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: var(--radius-xl);
+  }
+
+  .pipeline-node.tacsoc-cloud {
+    background: rgba(169, 214, 138, 0.12);
+    border: 1px solid rgba(169, 214, 138, 0.4);
+    box-shadow: 0 0 32px rgba(169, 214, 138, 0.25);
+  }
+
+  .pipeline-node.has-children > p {
+    margin-bottom: var(--space-sm);
+  }
+
+  .pipeline-node.pilot {
+    border-color: rgba(255, 138, 61, 0.26);
+  }
+
+  .pipeline-node.design {
+    border-color: rgba(169, 214, 138, 0.26);
+  }
+
+  .node-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .pipeline-node h5 {
+    margin: 0;
+  }
+
+  .pipeline-node p {
+    font-size: 0.9rem;
+  }
+
+  .node-subcomponents {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .subcomponent-node {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(169, 214, 138, 0.22);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .subcomponent-node.pilot {
+    border-color: rgba(255, 138, 61, 0.3);
+  }
+
+  .subcomponent-node.design {
+    border-color: rgba(169, 214, 138, 0.35);
+  }
+
+  .sub-node-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-2xs, 0.35rem);
+  }
+
+  .sub-node-header h6 {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .subcomponent-node p {
+    font-size: 0.85rem;
+  }
+
+  .node-outcome {
+    font-size: 0.95rem;
+    color: rgba(229, 228, 216, 0.75);
+    margin-top: var(--space-sm);
+  }
+
+  .node-outcome--group {
+    margin-top: var(--space-md);
+  }
+
+  .sub-node-outcome {
+    font-size: 0.82rem;
+    color: rgba(229, 228, 216, 0.7);
+    margin-top: var(--space-2xs, 0.35rem);
+  }
+
+  .pipeline-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    width: 100%;
+    max-width: 520px;
+    margin: 0.35rem auto;
+  }
+
+  .pipeline-line {
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(180deg, rgba(90, 165, 255, 0.4), rgba(169, 214, 138, 0.3));
+  }
+
+  .pipeline-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    background: rgba(169, 214, 138, 0.08);
+    color: rgba(169, 214, 138, 0.9);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .status-indicator.active {
+    background: rgba(90, 165, 255, 0.18);
+    color: var(--status-active);
+  }
+
+  .pipeline-connector--component .pipeline-line {
+    height: 18px;
+  }
+
+  .pipeline-connector--component .pipeline-arrow {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  .pipeline-connector--domain {
+    max-width: 360px;
+  }
+
+  .pipeline-connector--sub {
+    max-width: 240px;
+  }
+
+  .pipeline-connector--sub .pipeline-arrow {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .pipeline-connector--sub .pipeline-line {
+    height: 14px;
+  }
+
+  /* Option A */
+
+  .pipeline-flow--compact {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  @keyframes pipelinePulse {
+    0% {
+      box-shadow: 0 0 0 rgba(169, 214, 138, 0.0), inset 0 0 0 rgba(169, 214, 138, 0);
+      border-color: rgba(229, 228, 216, 0.12);
+    }
+    50% {
+      box-shadow: 0 0 26px rgba(169, 214, 138, 0.26), inset 0 0 0 rgba(169, 214, 138, 0.1);
+      border-color: rgba(169, 214, 138, 0.32);
+    }
+    100% {
+      box-shadow: 0 0 0 rgba(169, 214, 138, 0.0), inset 0 0 0 rgba(169, 214, 138, 0);
+      border-color: rgba(229, 228, 216, 0.12);
+    }
+  }
+
+  .component-compact {
+    border: 1px solid rgba(229, 228, 216, 0.12);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal), background var(--transition-normal);
+    box-shadow: inset 0 0 0 rgba(169, 214, 138, 0);
+    animation: pipelinePulse 2s ease-in-out infinite;
+  }
+
+  .component-compact::before {
+    content: '';
+    position: absolute;
+    inset: -30% -40%;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.16), rgba(169, 214, 138, 0));
+    opacity: 0;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    pointer-events: none;
+  }
+
+  .component-compact:hover::before,
+  .component-compact:focus-within::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .component-compact summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+  }
+
+  .component-compact summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .component-compact:hover,
+  .component-compact:focus-within {
+    border-color: rgba(169, 214, 138, 0.28);
+    box-shadow: 0 0 24px rgba(169, 214, 138, 0.18), inset 0 0 0 rgba(169, 214, 138, 0.08);
+    animation-play-state: paused;
+  }
+
+  .component-compact[open] {
+    background: rgba(0, 0, 0, 0.55);
+    border-color: rgba(169, 214, 138, 0.35);
+    box-shadow: 0 0 32px rgba(169, 214, 138, 0.25), inset 0 0 0 rgba(169, 214, 138, 0.12);
+    animation: none;
+  }
+
+  .component-compact[open]::before {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .component-body {
+    display: grid;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+    color: rgba(229, 228, 216, 0.78);
+  }
+
+  .component-subgrid {
+    display: grid;
+    gap: var(--space-xs);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .component-subcard {
+    border: 1px solid rgba(169, 214, 138, 0.22);
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.5);
+    padding: var(--space-xs) var(--space-sm);
+    display: grid;
+    gap: var(--space-2xs, 0.35rem);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 rgba(169, 214, 138, 0);
+    animation: pipelinePulse 2s ease-in-out infinite;
+  }
+
+  .component-subcard::before {
+    content: '';
+    position: absolute;
+    inset: -35% -45%;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.22), rgba(169, 214, 138, 0));
+    opacity: 0;
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+    pointer-events: none;
+  }
+
+  .component-subcard:hover::before,
+  .component-subcard:focus-within::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .component-subcard:hover,
+  .component-subcard:focus-within {
+    border-color: rgba(169, 214, 138, 0.32);
+    box-shadow: 0 0 18px rgba(169, 214, 138, 0.22), inset 0 0 0 rgba(169, 214, 138, 0.08);
+    animation-play-state: paused;
+  }
+
+  .component-subcard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xs);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .component-impact {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(229, 228, 216, 0.75);
+  }
+
+  .connector-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .connector-line--compact .pipeline-line {
+    height: 16px;
+  }
+
+  .connector-line--compact .pipeline-arrow {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .compact-domain-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs, 0.25rem);
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .compact-domain-connector .pipeline-line {
+    height: 24px;
+  }
+
+  .compact-domain-connector .pipeline-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1.1rem;
+  }
+
+  /* Compact pipeline layout */
+
+  .flagship-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .flagship-item {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .flagship-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xs);
+    gap: var(--space-sm);
+  }
+
+  .flagship-meta h3 {
+    margin: 0;
+    flex: 1;
+  }
+
+  .hero-flagship-card h2::before,
+  .hero-flagship-card h2::after {
+    display: none;
+  }
+
+  .challenge-title {
+    color: #ff6b6b;
+  }
+
+  .solution-title {
+    color: var(--bright);
+  }
+
+  .flagship-one-liner {
+    margin: var(--space-xs) 0;
+    color: rgba(229, 228, 216, 0.85);
+  }
+
+  .flagship-bullets {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0;
+    display: grid;
+    gap: var(--space-xs);
+    font-size: 0.85rem;
+  }
+
+  .flagship-bullets li::before {
+    content: '→';
+    color: var(--bright);
+    margin-right: var(--space-xs);
+    font-size: 0.85rem;
+    vertical-align: middle;
+  }
+
+  .flagship-bullets.challenge li::before {
+    content: '✖';
+    color: #ff6b6b;
+    margin-right: var(--space-xs);
+  }
+
+  .flagship-link {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .flagship-link:hover {
+    text-decoration: underline;
+  }
+
+  .team-section {
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .team-intro {
+    max-width: 640px;
+    color: rgba(229, 228, 216, 0.78);
+  }
+
+  .team-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .team-card {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .team-header {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  .team-heading {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .team-name-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+.team-meta-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+  .team-link-icons {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .team-link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    background: rgba(169, 214, 138, 0.1);
+    color: var(--bright);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .team-link-icon:hover {
+    background: rgba(169, 214, 138, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .team-link-icon .icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .team-photo {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(169, 214, 138, 0.35);
+  }
+
+  .team-role-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(169, 214, 138, 0.18);
+    color: rgba(229, 228, 216, 0.92);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(169, 214, 138, 0.35);
+  }
+
+  .team-tagline {
+    margin: 0;
+    color: rgba(229, 228, 216, 0.8);
+  }
+
+  .team-tags {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .team-tags li {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(90, 165, 255, 0.18);
+    color: rgba(229, 228, 216, 0.88);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(90, 165, 255, 0.25);
+  }
+
+  .team-toggle {
+    justify-self: start;
+    padding: 0.55rem 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(169, 214, 138, 0.35);
+    background: rgba(169, 214, 138, 0.08);
+    color: var(--bright);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .team-toggle:hover {
+    background: rgba(169, 214, 138, 0.16);
+  }
+
+  .team-bio {
+    border-left: 2px solid rgba(169, 214, 138, 0.35);
+    padding-left: var(--space-md);
+    margin-top: var(--space-sm);
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .team-bio[hidden] {
+    display: none;
+  }
+
+  .team-links {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .team-link {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .team-link:hover {
+    text-decoration: underline;
+  }
+
+  .contributor-card {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .contributor-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .contributor-item {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .cta-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .partner-card {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .partner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .reviewer-card {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .reviewer-grid {
+    display: grid;
+    gap: var(--space-lg);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .reviewer-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .reviewer-checklist li {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+  }
+
+  .trust-block {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+  }
+
+  .trust-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .trust-label {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(229, 228, 216, 0.6);
+  }
+
+  .trust-list a {
+    color: var(--bright);
+    text-decoration: none;
+  }
+
+  .trust-list a:hover {
+    text-decoration: underline;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (min-width: 960px) {
+    .group-components {
+      flex-wrap: nowrap;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-proof-band {
+      padding: var(--space-lg);
+    }
+
+    .hero-proof-item {
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .partner-actions,
+    .hero-cta-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+</style>
+
+<style>
+  /* UI enhancements: spacing, dividers, contrast, animations, and responsive tweaks */
+  .command-brief { gap: var(--space-xl); }
+  .command-brief section { padding: var(--space-xl) 0; position: relative; }
+  .command-brief section:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4%;
+    right: 4%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(169,214,138,0.06), transparent);
+    transform: translateY(-1px);
+  }
+
+  /* Hide complex sub-tiles to show one tile per section for now */
+  /* Only hide when section is collapsed; restore on expand */
+  .collapsed .split-sidecards,
+  .collapsed .engage-grid,
+  .collapsed .pipeline-flow,
+  .collapsed .team-stack { display: none !important; }
+
+  /* Uniform tile width when collapsed */
+  .command-brief .container { width: 100%; }
+  .collapsed .split-layout,
+  .collapsed .team-panel,
+  .collapsed .engage-panel,
+  .collapsed .pipeline-card { width: 100%; max-width: 1120px; margin-inline: auto; }
+  .collapsed .split-layout { grid-template-columns: 1fr; }
+  .collapsed .split-copy--framed,
+  .collapsed .split-copy--framed--mission,
+  .collapsed .split-copy--framed--overview,
+  .collapsed .split-copy--framed--team,
+  .collapsed .split-copy--framed--engage,
+  .collapsed .pipeline-card { margin-inline: auto; }
+
+  /* Smooth size change on expand */
+  .split-layout, .team-panel, .engage-panel, .pipeline-card { transition: max-width .3s ease; }
+
+  .section-actions { margin-top: var(--space-md); }
+  .section-toggle { 
+    background: rgba(169,214,138,0.12); 
+    color: var(--bright); 
+    border: 1px solid rgba(169,214,138,0.35); 
+    padding: 0.55rem 1rem; 
+    border-radius: var(--radius-md); 
+    font-weight: 600; 
+    cursor: pointer; 
+    font-size: 0.8rem; 
+    letter-spacing: 0.08em; 
+    text-transform: uppercase; 
+    transition: background .25s ease, color .25s ease, box-shadow .25s ease; 
+  }
+  .section-toggle:hover { background: rgba(169,214,138,0.2); box-shadow: 0 4px 14px rgba(169,214,138,0.25); }
+  .section-toggle[aria-expanded="true"] { background: rgba(169,214,138,0.28); }
+
+  /* Section title styling */
+  .section-title { 
+    margin: 0 0 var(--space-sm) 0; 
+    font-size: clamp(1rem, 1.8vw, 1.25rem); 
+    letter-spacing: 0.12em; 
+    text-transform: uppercase; 
+    color: rgba(169,214,138,0.95);
+  }
+
+  /* Typography & contrast */
+  .command-brief h2 { font-size: clamp(1.2rem, 2.2vw, 1.6rem); color: rgba(229,228,216,0.96); margin-bottom: var(--space-md); }
+  .command-brief h1 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: rgba(229,228,216,1); }
+  .hero-eyebrow { font-size: 0.78rem; letter-spacing: 0.18em; color: rgba(169,214,138,0.92); }
+  .flagship-one-liner, .domain-summary, .team-tagline, .team-bio p, .flagship-bullets li { color: rgba(229,228,216,0.82); font-weight: 400; }
+
+  /* Animate-in helpers (IntersectionObserver will toggle .in-view) */
+  [data-animate] { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; will-change: opacity, transform; }
+  [data-animate].in-view { opacity: 1; transform: translateY(0); }
+
+  /* Hero quote & flagship cards initial states */
+  .mission-quote-secondary[data-animate="quote"] { opacity: 0; transform: translateY(6px); }
+  .mission-quote-secondary.in-view { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
+
+  .hero-flagship-card[data-animate="flagship"] { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease, box-shadow .35s ease; }
+  .hero-flagship-card.in-view { opacity: 1; transform: translateY(0); }
+
+  /* Subtle hover glow and lighter shadows for performance */
+  :root { --card-glow: rgba(169,214,138,0.08); }
+  .hero-flagship-card:hover, .team-card:hover, .component-subcard:hover { box-shadow: 0 12px 30px var(--card-glow); transform: translateY(-4px); }
+
+  /* Reduce very heavy shadows used site-wide and reuse medium shadow variable */
+  :root { --shadow-md: 0 8px 20px rgba(0,0,0,0.32); }
+  .split-copy--framed, .team-card--stacked, .engage-card, .pipeline-card { box-shadow: var(--shadow-md); }
+
+  /* Pipeline details: animate open/close via max-height (JS sets exact height) */
+  .component-body { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
+  .component-compact[open] .component-body { opacity: 1; }
+
+  /* Team bios: animated expand/collapse (JS toggles aria-hidden and max-height) */
+  .team-bio { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
+  .team-bio[aria-hidden="false"] { opacity: 1; }
+
+  /* Mobile responsiveness tweaks */
+  @media (max-width: 768px) {
+    .split-layout { gap: var(--space-lg); grid-template-columns: 1fr; }
+    .pipeline-flow { grid-template-columns: 1fr; }
+    .pipeline-domain { padding: var(--space-md); }
+    .component-subgrid { grid-template-columns: 1fr; }
+  }
+
+  /* Performance hint: reduce animation work on reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    [data-animate] { transition: none; opacity: 1 !important; transform: none !important; }
+    .component-body, .team-bio { transition: none !important; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // IntersectionObserver: reveal animated elements
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-animate]').forEach((el) => io.observe(el));
+
+    // Animate details (.component-compact) open/close by adjusting maxHeight
+    document.querySelectorAll('details.component-compact').forEach((details) => {
+      const body = details.querySelector('.component-body');
+      if (!body) return;
+      // Initialize
+      body.style.maxHeight = details.open ? body.scrollHeight + 'px' : '0px';
+      details.addEventListener('toggle', () => {
+        if (details.open) {
+          // expand to content height
+          body.style.maxHeight = body.scrollHeight + 'px';
+        } else {
+          // collapse
+          body.style.maxHeight = '0px';
+        }
+      });
+    });
+
+    // Team bios: animated expand/collapse using aria-hidden and maxHeight
+    const bioToggles = document.querySelectorAll('[data-bio-toggle]');
+    bioToggles.forEach((button) => {
+      const id = button.getAttribute('data-bio-toggle');
+      if (!id) return;
+      const region = document.getElementById(`bio-${id}`);
+      if (!region) return;
+      // set initial states
+      region.setAttribute('aria-hidden', region.hidden ? 'true' : 'false');
+      region.style.maxHeight = region.hidden ? '0px' : region.scrollHeight + 'px';
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', (!expanded).toString());
+        if (expanded) {
+          // collapse
+          region.setAttribute('aria-hidden', 'true');
+          region.style.maxHeight = '0px';
+          region.hidden = true;
+          button.textContent = 'Read bio';
+        } else {
+          // expand
+          region.hidden = false;
+          region.setAttribute('aria-hidden', 'false');
+          region.style.maxHeight = region.scrollHeight + 'px';
+          button.textContent = 'Hide bio';
+        }
+      });
+    });
+
+    // Section toggle: expand/collapse per-section details without losing content
+    document.querySelectorAll('.section-toggle').forEach((btn) => {
+      const targetId = btn.getAttribute('data-toggle-section');
+      if (!targetId) return;
+      const section = document.getElementById(targetId);
+      if (!section) return;
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          section.classList.add('collapsed');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = 'Show details';
+        } else {
+          section.classList.remove('collapsed');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.textContent = 'Hide details';
+        }
+      });
+    });
+
+    // Respect prefers-reduced-motion: reveal all immediately
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('[data-animate]').forEach((el) => el.classList.add('in-view'));
+    }
+  });
+</script>
