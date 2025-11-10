@@ -786,7 +786,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
                         {componentIndex < domain.components.length - 1 ? (
                           <div class="connector-line connector-line--compact" aria-hidden="true">
                             <span class="pipeline-line"></span>
-                            <span class="pipeline-arrow">{domain.id === 'mission-hub' && componentIndex === 0 ? '↕' : '↓'}</span>
+                            <span class="pipeline-arrow {domain.id === 'mission-hub' && componentIndex === 0 ? 'pipeline-arrow--bidirectional' : ''}">{domain.id === 'mission-hub' && componentIndex === 0 ? '↕' : '↓'}</span>
                             <span class="pipeline-line"></span>
                           </div>
                         ) : null}
@@ -1991,6 +1991,24 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     color: rgba(169, 214, 138, 0.9);
     font-size: 1.5rem;
     line-height: 1;
+  }
+
+  /* Bidirectional (↕) arrow variant: visually enhanced on larger screens */
+  .pipeline-arrow--bidirectional {
+    background: rgba(169, 214, 138, 0.12);
+    box-shadow: 0 0 16px rgba(169, 214, 138, 0.25);
+  }
+
+  /* Mobile normalization: show a single downward arrow for compact vertical flow */
+  @media (max-width: 640px) {
+    .pipeline-arrow--bidirectional { font-size: 0; position: relative; }
+    .pipeline-arrow--bidirectional::after {
+      content: '↓';
+      font-size: 1.5rem;
+      line-height: 1;
+      display: inline-block;
+      color: rgba(169, 214, 138, 0.9);
+    }
   }
 
   .status-indicator.active {
