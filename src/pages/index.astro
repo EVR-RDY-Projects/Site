@@ -25,15 +25,24 @@ const pipelineComponents = {
     name: 'SCOUT',
     status: 'Active Dev · 75%',
     variant: 'active',
-    domain: 'ot',
-    description: 'Lightweight host visibility agent for fragile industrial control systems — no kernel drivers, no intrusive footprint.',
-    outcome: 'Collects high-fidelity host data (event logs, processes, network tables) every 2-3 minutes with strict CPU/memory limits.',
+    designPhilosophy: `Built for fragile systems and harsh realities. SCOUT is engineered to provide host-level visibility where traditional EDRs cannot survive. It favors simplicity, safety, and control over intrusion or automation. Every collection action is throttled, logged, and reversible — ensuring that visibility never becomes vulnerability.
+
+SCOUT embodies the EVR:RDY principle of do more with less: it runs silently, leaves no footprint behind, and operates within the strictest safety and change-control boundaries of industrial environments.
+
+Simple. Predictable. Safe by design.`,
+    description: 'Lightweight host visibility for fragile industrial control systems — no kernel drivers, no intrusive footprint, no risk to process operations.',
+    outcome: 'Safely gathers host telemetry every 2–3 minutes without interrupting production, forming the first layer of the Telemetry Acquisition Platform Solution (T.A.P.S.).',
     image: '/img/scout.png',
     details: {
-      dataSize: '~10–60 KB per tick, ~5–30 MB/day per host',
-      transport: 'BITS, SMB drop, or robocopy with HMAC/AEAD integrity',
-      compatibility: 'Windows XP/2003 through Windows 11',
-      compliance: 'IEC 62443, NERC CIP, NIST SP 800-82'
+      'Collection cadence': '2–3 min interval (jittered for load safety)',
+      'Data captured': 'Event logs (Security/System/Application), process & service state, scheduled tasks, routes, interfaces',
+      'Data size': '~10–60 KB per tick (~5–30 MB/day per host)',
+      'Transport': 'BITS, SMB drop, or robocopy with per-file hashing, optional compression, HMAC/AEAD integrity',
+      'Compatibility': 'Windows XP/2003 → Windows 11',
+      'Operational impact': '<5% transient CPU load, sub-50 MB daily footprint',
+      'Implementation options — native': 'Native scripts (Batch + WSH/JScript) — transparent & change-control friendly',
+      'Implementation options — binary': 'Packaged binary (C++/Rust) — signed, robust, crypto + compression',
+      'Compliance': 'IEC 62443, NERC CIP, NIST SP 800-82 alignment'
     }
   },
   seer: {
@@ -41,15 +50,22 @@ const pipelineComponents = {
     name: 'SEER',
     status: 'PoC',
     variant: 'pilot',
-    domain: 'ot',
-    description: 'Low-cost telemetry node capturing packet data and ICS protocol metadata (Modbus, DNP3, S7) for forensic readiness.',
-    outcome: 'Delivers deep network visibility with full PCAP + Zeek metadata at prices small operators can afford.',
+    designPhilosophy: `Visibility without violation. SEER is designed around the idea that defenders must see everything without touching anything. It captures complete network behavior passively — no packet injection, no protocol interference, no system risk.
+
+By prioritizing metadata over volume, SEER ensures forensic completeness while keeping infrastructure lightweight. Every captured byte serves a purpose; every process is measurable, transparent, and verifiable.
+
+Collect quietly. Observe completely. Leave nothing unaccounted.`,
+    description: 'Low-cost telemetry capture and forward node delivering full PCAP and ICS protocol metadata (Modbus, DNP3, S7) for forensic readiness and continuous visibility.',
+    outcome: 'Bridges the visibility gap for small operators with Zeek + ICSNPP at a fraction of commercial cost, providing defensible forensic data, normalized metadata, and removable evidence storage for rapid, auditable incident response.',
     image: '/img/seer.png',
     details: {
-      throughput: '100 Mbps – 1 Gbps',
-      dataVolume: '5–15 GB/day JSON metadata, 24–72h PCAP retention per 4TB drive',
-      stack: 'Linux + Zeek + ICSNPP + Fluent Bit on commodity hardware',
-      compliance: 'IEC 62443, NERC CIP, MITRE ATT&CK for ICS'
+      'Throughput': '100 Mbps – 1 Gbps sustained',
+      'Data volume': '5–15 GB/day JSON metadata + 24–72 h PCAP retention per 4 TB drive',
+      'Stack': 'Linux + Zeek + ICSNPP + Fluent Bit',
+      'Design': 'Metadata-first logging, hot-swappable PCAP drives, removable evidence workflow',
+      'Hardware': 'Commodity fanless micro-PCs (e.g., Protectli) with redundant power',
+      'Forensic readiness': 'Per-drive hashing, chain-of-custody metadata, safe-swap scripts',
+      'Compliance': 'IEC 62443, NERC CIP (CIP-007, CIP-010), MITRE ATT&CK for ICS, NIST SP 800-82'
     }
   },
   ghost: {
@@ -57,15 +73,21 @@ const pipelineComponents = {
     name: 'GHOST',
     status: 'PoC',
     variant: 'pilot',
-    domain: 'buffer',
-    description: 'Hardware-enforced unidirectional data diode using optical/electrical isolation — eliminates inbound control risk.',
-    outcome: 'Physically enforces one-way data flow from OT to IT with zero software dependency.',
+    designPhilosophy: `Absolute assurance through physical truth. GHOST is engineered under one uncompromising premise — if a signal can’t travel backward, neither can an adversary.
+
+Its unidirectional optical and electrical isolation enforces trust boundaries that software alone can’t guarantee. No configuration can disable physics; no malware can reverse fiber. GHOST turns the concept of “air gap” into a measurable, repeatable hardware state.
+
+When in doubt, cut the wire.`,
+    description: 'Hardware-enforced unidirectional data diode using optical/electrical isolation to push telemetry out of OT networks while physically eliminating any inbound path.',
+    outcome: 'Provides physical assurance of unidirectional transfer, preventing command injection or remote exploitation; a low-cost, open-hardware alternative to commercial diodes that makes zone segmentation affordable for small utilities.',
     image: '/img/ghost.png',
     details: {
-      isolation: 'Optical/electrical TX-only with fail-safe design',
-      throughput: '100 Mbps–1 Gbps, negligible latency',
-      build: 'Commodity fiber media converters emulate commercial diodes',
-      compliance: 'IEC 62443 zone segmentation, NERC CIP-005 perimeter security'
+      'Isolation': 'Optical/electrical TX-only with fail-safe posture',
+      'Throughput': '100 Mbps–1 Gbps',
+      'Latency': 'Negligible (fiber delay only)',
+      'Build': 'Commodity media converters + loopback fiber pair replicating diode behavior',
+      'Scalability': 'Parallel paths for redundancy or aggregate bandwidth',
+      'Compliance': 'IEC 62443 (zones/conduits), NERC CIP-005, NIST SP 800-82'
     }
   },
   rampart: {
@@ -73,15 +95,22 @@ const pipelineComponents = {
     name: 'RAMPART',
     status: 'Active Dev',
     variant: 'active',
-    domain: 'mission-hub',
-    description: 'Trusted IT-side landing zone that receives, normalizes, and stages telemetry from GHOST Diode.',
-    outcome: 'Normalizes logs into consistent JSON schema, deduplicates, compresses, and forwards to Chronicle SIEM.',
+    designPhilosophy: `Trust, but verify — then fortify. RAMPART exists to transform raw telemetry into trusted intelligence without ever compromising source integrity. It is a digital stronghold where data is cleansed, normalized, and secured before entering the analytical domain.
+
+Designed as both a landing zone and a forensic bastion, RAMPART allows analysts remote access to packet captures and disk images without violating unidirectional flow. It bridges worlds — OT safety and IT insight — through disciplined engineering and immutable auditability.
+
+Normalize, preserve, and defend — the wall that watches both ways.`,
+    description: 'Trusted IT-side landing zone receiving all telemetry from GHOST. Normalizes, enriches, and stages data while providing a secure forensic workspace.',
+    outcome: 'Bridges OT and the TacSOC cloud — ensuring telemetry consistency, compression, and deduplication, and hosting forensic staging where analysts remotely access SEER PCAPs and host images without breaching the one-way boundary.',
     image: '/img/rampart.png',
     details: {
-      performance: '10k–50k events/sec normalization, <1s latency to SIEM',
-      dataVolume: '5–20 GB/day output per site',
-      functions: 'Ingest, normalize, deduplicate, stage forensics, forward to SOC',
-      protocols: 'Syslog, HTTPS, UDP forwarding'
+      'Performance': '10k–50k events/sec normalization, < 1 s latency to SIEM',
+      'Daily volume': '5–20 GB/site post-compression',
+      'Functions': 'Ingest, normalize, deduplicate, compress, forward to SIEM',
+      'Forensic access': 'Mounts SEER hot-swap drives and host images for SOC-side analysis',
+      'Integrity': 'Hashing, timestamping, chain-of-custody metadata per artifact',
+      'Protocols': 'Syslog, HTTPS, UDP forwarding',
+      'Compliance': 'IEC 62443, NERC CIP-007 & CIP-010, NIST SP 800-82, MITRE ATT&CK for ICS'
     }
   },
   aiTriage: {
@@ -89,14 +118,15 @@ const pipelineComponents = {
     name: 'AI Triage Cell',
     status: 'Design',
     variant: 'design',
-    domain: 'mission-hub',
-    description: 'AI-driven alert triage and correlation using Google Chronicle with YARA-L 2.0 detection rules.',
-    outcome: 'Reduces alert noise by 50-70% with <1min auto-classification, keeping analysts focused on real threats.',
+    description: 'AI-driven alert triage and correlation (Chronicle + YARA-L 2.0 + Gemini) that accelerates classification and reduces noise.',
+    outcome: 'Cuts alert noise 50–70% with < 1 min auto-classification, focusing analysts on real threats and enabling scale across pooled telemetry.',
     details: {
-      platform: 'Google Chronicle Security Operations + Gemini LLM',
-      metrics: '50–70% alert-noise reduction, <1min classification',
-      throughput: '10k–50k events/sec with automated playbook execution',
-      guardrails: 'OT safety-impacting actions require manual approval'
+      'Platform & automation': 'Chronicle Security Operations + Gemini LLM orchestration',
+      'Noise reduction': '50–70% alert-noise reduction',
+      'Classification speed': '< 1 min automated classification',
+      'Throughput': '10k–50k events/sec with playbook execution',
+      'Guardrails': 'OT safety-impacting actions require manual approval',
+      'Compliance': 'IEC 62443, NERC CIP, NIST SP 800-82 alignment'
     }
   },
   hunterKiller: {
@@ -104,14 +134,13 @@ const pipelineComponents = {
     name: 'Hunter/Killer Teams',
     status: 'Pilot',
     variant: 'pilot',
-    domain: 'mission-hub',
-    description: 'Elite veteran defenders executing R.A.I.D. playbooks (Recon → Acquire → Interpret → Defend) for threat hunting.',
-    outcome: 'Small 5-10 person teams deliver the defensive power of 50-person SOCs through discipline and automation.',
+    description: 'Elite veteran defenders executing R.A.I.D. playbooks (Recon → Acquire → Interpret → Defend) for structured threat hunting and response.',
+    outcome: '5–10 person teams compress the power of a 50-person SOC through discipline, automation, and unified L1–L3 functions plus mentorship.',
     details: {
-      model: 'Special operations: unified L1-L3 SOC roles with mentorship pipeline',
-      methodology: 'R.A.I.D. Framework for structured, repeatable hunts',
-      compensation: 'Above-market base + performance bonuses + equity ("Everyone Eats")',
-      growth: 'Apprentices → operators → new team formation via split-off doctrine'
+      'Model': 'Unified L1–L3 SOC roles + mentorship pipeline',
+      'Methodology': 'R.A.I.D. Framework (Recon → Acquire → Interpret → Defend)',
+      'Compensation': 'Above-market base + performance bonuses + equity ("Everyone Eats")',
+      'Growth': 'Apprentices → operators → new team formation via split-off doctrine'
     }
   },
   chronicleStack: {
@@ -119,14 +148,13 @@ const pipelineComponents = {
     name: 'Shared Chronicle Stack',
     status: 'Design',
     variant: 'design',
-    domain: 'mission-hub',
-    description: 'Pooled Chronicle SIEM infrastructure with shared detection rules, automation, and compliance reporting.',
-    outcome: 'Multi-tenant architecture cuts per-customer cost while enabling collective defense across all partners.',
+    description: 'Pooled Chronicle SIEM infrastructure with shared detection rules, automation, and compliance reporting for collective defense.',
+    outcome: 'Multi-tenant architecture cuts per-customer cost while enabling collective defense — detection at one site strengthens all partners.',
     details: {
-      architecture: 'Multi-tenant SIEM with separation + shared threat intelligence',
-      benefits: 'Detection at one site strengthens all, pooled telemetry and hunting',
-      compliance: 'Compliance-grade evidence retention and reporting',
-      scaling: 'Shared licenses and infrastructure reduce deployment costs'
+      'Architecture': 'Multi-tenant SIEM separation + shared threat intelligence',
+      'Benefits': 'Shared detections, pooled telemetry, collaborative hunting',
+      'Compliance': 'Evidence retention and reporting (regulatory alignment)',
+      'Scaling': 'Shared licenses and infrastructure reduce deployment costs'
     }
   }
 };
@@ -136,7 +164,11 @@ const tacSocGroup = {
   name: 'TacSOC Cloud',
   status: 'Design + Pilot',
   variant: 'design',
-  domain: 'mission-hub',
+  designPhilosophy: `Human precision at machine speed. TacSOC is built on the doctrine that elite teams, empowered by automation and purpose, can outperform massive bureaucratic SOCs. Its design fuses AI efficiency with military discipline — every alert triaged, every action logged, every operator accountable.
+
+It is not just a SOC; it is a mission command center for digital battlefields — where veterans, apprentices, and machines operate as one adaptive unit. Automation accelerates; humans decide.
+
+Few operators. High impact. No excuses.`,
   description: 'AI-driven, shared-service SOC that compresses the defensive power of a 50-person SOC into a 5-10 person elite veteran unit enhanced by automation and special-operations discipline.',
   outcome: 'Delivers coordinated detection, response, and reporting across all partner networks while training veterans into cybersecurity professionals.',
   image: '/img/tacsop.png',
@@ -165,8 +197,8 @@ const pipelineDomains = [
   },
   {
     id: 'buffer',
-    title: 'One-Way Buffer',
-    label: 'Cross-Domain Guard',
+    title: 'Bridging the Domains',
+    label: 'Data Diode',
     summary: 'GHOST hardware diode pushes telemetry forward while preventing any path back into OT.',
     status: 'Hardware PoC',
     statusVariant: 'pilot',
@@ -423,6 +455,9 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
             <p>"We have done so much, for so long, with so little, we are now qualified to do anything with nothing."</p>
             <cite>— unknown service member</cite>
           </blockquote>
+          <div class="mission-cta-block" data-animate="mission-cta">
+            <a href="#engage" class="cta-btn primary mission-cta-btn-full">Join the Mission</a>
+          </div>
         </article>
           <aside class="split-sidecards" aria-label="Challenge and solution">
           <article class="card hero-flagship-card">
@@ -695,10 +730,14 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
                                     </ul>
                                   </div>
                                 ) : null}
-                                <div class="component-section">
-                                  <strong>Domain:</strong>
-                                  <p>{component.domain === 'ot' ? 'Operational Technology Network' : component.domain === 'buffer' ? 'Cross-Domain Guard (One-Way Buffer)' : 'Mission Hub / IT Network'}</p>
-                                </div>
+                                {component.designPhilosophy ? (
+                                  <div class="component-section component-section--philosophy">
+                                    <strong>Design Philosophy:</strong>
+                                    {component.designPhilosophy.split('\n\n').map((chunk, idx, arr) => (
+                                      <p class={`design-philosophy-paragraph ${idx === 0 ? 'design-philosophy-paragraph--lead' : ''} ${idx === arr.length - 1 ? 'design-philosophy-paragraph--closer' : ''}`}>{chunk}</p>
+                                    ))}
+                                  </div>
+                                ) : null}
                               </div>
                             </details>
                           ) : (
@@ -711,6 +750,14 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
                               </summary>
                               <div class="component-body">
                                 {component.description ? <p>{component.description}</p> : null}
+                                {component.designPhilosophy ? (
+                                  <div class="component-section component-section--philosophy">
+                                    <strong>Design Philosophy:</strong>
+                                    {component.designPhilosophy.split('\n\n').map((chunk, idx, arr) => (
+                                      <p class={`design-philosophy-paragraph ${idx === 0 ? 'design-philosophy-paragraph--lead' : ''} ${idx === arr.length - 1 ? 'design-philosophy-paragraph--closer' : ''}`}>{chunk}</p>
+                                    ))}
+                                  </div>
+                                ) : null}
                                 {component.components ? (
                                   <div class="component-subgrid">
                                     {component.components.map((subComponent) => (
@@ -739,9 +786,9 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
                         {componentIndex < domain.components.length - 1 ? (
                           <div class="connector-line connector-line--compact" aria-hidden="true">
                             <span class="pipeline-line"></span>
-                            <span class="pipeline-arrow">↓</span>
+                            <span class="pipeline-arrow">{domain.id === 'mission-hub' && componentIndex === 0 ? '↕' : '↓'}</span>
                             <span class="pipeline-line"></span>
-          </div>
+                          </div>
                         ) : null}
                       </Fragment>
                     ))}
@@ -1073,6 +1120,60 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     flex-wrap: wrap;
     gap: var(--space-sm);
     margin-top: var(--space-lg);
+  }
+
+  /* Mission CTA block: center within remaining space below quote */
+  .mission-cta-block {
+    margin-top: auto;
+    margin-bottom: auto; /* equal spacing above/below inside the mission card */
+    display: grid;
+    place-items: center;
+    gap: var(--space-sm);
+  }
+
+  /* Fit the CTA nicely: centered, not overly wide on desktop, full-width on small screens */
+  .mission-cta-btn-full {
+    width: min(100%, clamp(220px, 60vw, 340px));
+    justify-self: center;
+  }
+
+  /* Enhance visual treatment just for the mission CTA without affecting other .cta-btn uses */
+  .mission-cta-block .cta-btn.primary {
+    box-shadow: 0 14px 28px rgba(169, 214, 138, 0.28), 0 0 0 1px rgba(169, 214, 138, 0.20);
+  }
+
+  .mission-cta-block .cta-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 36px rgba(169, 214, 138, 0.30), 0 0 0 2px rgba(169, 214, 138, 0.25);
+  }
+
+  .mission-cta-block .cta-btn.primary:active {
+    transform: translateY(0);
+    box-shadow: 0 10px 18px rgba(169, 214, 138, 0.22), 0 0 0 1px rgba(169, 214, 138, 0.18);
+  }
+
+  /* Accessible focus ring: high-contrast, not solely color-dependent */
+  .mission-cta-block .cta-btn:focus-visible {
+    outline: 3px solid var(--bright);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(169, 214, 138, 0.25), 0 10px 20px rgba(169, 214, 138, 0.2);
+  }
+
+  /* Respect reduced-motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .mission-cta-block .cta-btn {
+      transition: none;
+    }
+    .mission-cta-block .cta-btn:hover,
+    .mission-cta-block .cta-btn:active {
+      transform: none;
+      box-shadow: 0 8px 16px rgba(169, 214, 138, 0.20), 0 0 0 1px rgba(169, 214, 138, 0.18);
+    }
+  }
+
+  .cta-btn--xl {
+    padding: 1.05rem 1.6rem;
+    font-size: 1rem;
   }
 
   .cta-btn {
@@ -2042,6 +2143,55 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
 
   .component-section {
     margin-bottom: var(--space-sm);
+  }
+
+  .component-section--philosophy {
+    display: grid;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-md);
+    background: rgba(169, 214, 138, 0.06);
+    border: 1px solid rgba(169, 214, 138, 0.18);
+    border-radius: var(--radius-md);
+    position: relative;
+  }
+
+  .component-section--philosophy strong {
+    letter-spacing: 0.06em;
+  }
+
+  .component-section--philosophy::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(145deg, rgba(169,214,138,0.12), rgba(169,214,138,0));
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+  }
+
+  .design-philosophy-paragraph {
+    margin: 0 0 var(--space-sm) 0;
+    line-height: 1.6;
+    font-size: 0.92rem;
+  }
+
+  .design-philosophy-paragraph:first-of-type {
+    margin-top: var(--space-2xs);
+  }
+
+  .design-philosophy-paragraph--lead {
+    font-weight: 600;
+    color: rgba(229, 228, 216, 0.92);
+  }
+
+  .design-philosophy-paragraph--closer {
+    font-style: italic;
+    color: rgba(169, 214, 138, 0.9);
+  }
+
+  .design-philosophy-paragraph:last-child {
+    margin-bottom: 0;
   }
 
   .component-section:last-child {
