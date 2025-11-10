@@ -787,10 +787,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
                           <div class="connector-line connector-line--compact" aria-hidden="true">
                             <span class="pipeline-line"></span>
                             {domain.id === 'mission-hub' && componentIndex === 0 ? (
-                              <span class="pipeline-arrow pipeline-arrow--bidirectional" aria-label="Bidirectional flow">
-                                <span aria-hidden="true" class="arrow arrow-up">↑</span>
-                                <span aria-hidden="true" class="arrow arrow-down">↓</span>
-                              </span>
+                              <span class="pipeline-arrow pipeline-arrow--bidirectional" aria-label="Bidirectional flow" role="img"></span>
                             ) : (
                               <span class="pipeline-arrow">↓</span>
                             )}
@@ -1493,18 +1490,51 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
   flex-direction: column;
   width: 100%;
 }
-  /* Bidirectional arrow: explicit up & down arrows stacked for clarity */
+  /* Bidirectional arrow: display up/down side-by-side in oval container */
   .pipeline-arrow--bidirectional {
+    position: relative;
     background: rgba(169, 214, 138, 0.12);
-    box-shadow: 0 0 16px rgba(169, 214, 138, 0.25);
-    flex-direction: column;
-    gap: 2px;
-    font-size: 1rem; /* slightly smaller so both arrows fit comfortably */
+    box-shadow: 0 0 22px -4px rgba(169, 214, 138, 0.35), 0 0 0 1px rgba(169, 214, 138, 0.25);
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 4rem;  /* wider oval to fit both arrows */
+    height: 3rem;
+    border-radius: 2rem / 1.5rem;  /* explicit elliptical border-radius */
+  }
+  .pipeline-arrow--bidirectional::before,
+  .pipeline-arrow--bidirectional::after {
+    font-size: 1.4rem;
+    line-height: 1;
+    font-weight: 600;
+    color: rgba(169, 214, 138, 0.92);
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+  .pipeline-arrow--bidirectional::before { 
+    content: '↑'; 
+    padding-right: 4px;
+    border-right: 1px solid rgba(169, 214, 138, 0.3);
+  }
+  .pipeline-arrow--bidirectional::after { 
+    content: '↓'; 
+    padding-left: 4px;
   }
 
-  .pipeline-arrow--bidirectional .arrow {
-    display: block;
-    line-height: 1;
+  @media (max-width: 640px) {
+    .connector-line--compact .pipeline-arrow--bidirectional { 
+      width: 3.5rem; 
+      height: 2.75rem;
+      border-radius: 1.75rem / 1.375rem;
+      gap: 3px;
+    }
+    .pipeline-arrow--bidirectional::before, 
+    .pipeline-arrow--bidirectional::after { 
+      font-size: 1.2rem; 
+    }
+    .pipeline-arrow--bidirectional::before { padding-right: 3px; }
+    .pipeline-arrow--bidirectional::after { padding-left: 3px; }
   }
   flex-direction: column;
   gap: var(--space-sm);
