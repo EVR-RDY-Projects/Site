@@ -1,0 +1,191 @@
+---
+export interface Props {
+  name: string;
+  oneLiner: string;
+  bullets: string[];
+  status: 'poc' | 'active-dev' | 'beta' | 'production';
+  href: string;
+  demoUrl?: string;
+  docsUrl?: string;
+}
+
+const { name, oneLiner, bullets, status, href, demoUrl, docsUrl } = Astro.props;
+
+const statusLabels = {
+  'poc': 'PoC',
+  'active-dev': 'Active Development',
+  'beta': 'Beta',
+  'production': 'Production'
+};
+---
+
+<article class="product-card">
+  <h3>{name}</h3>
+  <p class="one-liner">{oneLiner}</p>
+  <ul class="features">
+    {bullets.map((bullet) => <li>{bullet}</li>)}
+  </ul>
+  <div class="meta">
+    <span class={`status status-indicator ${status}`}>{statusLabels[status]}</span>
+    <a href={href} class="btn">Details</a>
+    {demoUrl && <a href={demoUrl} class="link" target="_blank" rel="noopener">Demo</a>}
+    {docsUrl && <a href={docsUrl} class="link" target="_blank" rel="noopener">Docs</a>}
+  </div>
+</article>
+
+<style>
+  .product-card {
+    background: rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    border: 1px solid rgba(229, 228, 216, 0.15);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--bright);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .product-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(169, 214, 138, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .product-card:hover::before {
+    opacity: 1;
+  }
+
+  .product-card h3 {
+    font-size: 1.5rem;
+    color: var(--bone);
+    margin-bottom: var(--space-sm);
+    font-weight: 700;
+  }
+
+  .one-liner {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
+  }
+
+  .features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg) 0;
+  }
+
+  .features li {
+    color: var(--bone);
+    padding: var(--space-xs) 0;
+    position: relative;
+    padding-left: var(--space-lg);
+    font-size: 0.9rem;
+  }
+
+  .features li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    align-items: center;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .status.poc {
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    color: white;
+    box-shadow: 
+      0 2px 8px rgba(76, 175, 80, 0.3),
+      0 0 0 1px rgba(76, 175, 80, 0.2),
+      0 0 12px rgba(76, 175, 80, 0.2);
+  }
+
+  .status.active-dev {
+    background: linear-gradient(135deg, #2196f3, #42a5f5);
+    color: white;
+    box-shadow: 
+      0 2px 8px rgba(33, 150, 243, 0.3),
+      0 0 0 1px rgba(33, 150, 243, 0.2),
+      0 0 12px rgba(33, 150, 243, 0.2);
+  }
+
+  .status.beta {
+    background: linear-gradient(135deg, #ff9800, #ffb74d);
+    color: white;
+    box-shadow: 
+      0 2px 8px rgba(255, 152, 0, 0.3),
+      0 0 0 1px rgba(255, 152, 0, 0.2),
+      0 0 12px rgba(255, 152, 0, 0.2);
+  }
+
+  .status.production {
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    color: white;
+    box-shadow: 
+      0 2px 8px rgba(76, 175, 80, 0.3),
+      0 0 0 1px rgba(76, 175, 80, 0.2),
+      0 0 12px rgba(76, 175, 80, 0.2);
+  }
+
+  .meta .btn,
+  .meta .link {
+    background: linear-gradient(135deg, rgba(169, 214, 138, 0.15), rgba(185, 186, 175, 0.15));
+    border: 2px solid var(--bright);
+    box-sizing: border-box;
+    color: var(--bright);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .meta .btn:hover,
+  .meta .link:hover {
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: #8bc34a;
+    text-decoration: none;
+  }
+</style>

@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>Contact — EVR:RDY</title>
+    <meta name="description" content="Contact EVR:RDY Defensive Operations Group LLC. Reach out to discuss products, partnerships, or career opportunities." />
+    <link rel="canonical" href="https://evrrdy.com/contact" />
+  </Fragment>
+
+  <Header currentPath="/contact" pageTitle="Contact Us" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <section class="card animate-slide-up">
+        <h2>Contact Us</h2>
+        <p>Interested in our products, partnerships, or career opportunities? We'd love to hear from you.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Get in Touch</h2>
+        <div class="contact-info">
+          <p><strong>Email:</strong> <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a></p>
+          <p><strong>Website:</strong> <a href="https://evrrdy.com">https://evrrdy.com</a></p>
+          <p><strong>Company:</strong> EVR:RDY Defensive Operations Group LLC</p>
+          <p><strong>Location:</strong> United States</p>
+        </div>
+
+        <div class="contact-form">
+          <form action="mailto:ops@evrrdy.com" method="post" enctype="text/plain">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>What We're Looking For</h2>
+        <ul class="contact-reasons">
+          <li><strong>Product Inquiries:</strong> Questions about SCOUT, SEER, GHOST, RAMPART, TacSOC, or T.A.P.S.</li>
+          <li><strong>Partnerships:</strong> Collaborations with other organizations in the OT/ICS security space</li>
+          <li><strong>Career Opportunities:</strong> Open positions for developers, analysts, and engineers</li>
+          <li><strong>Pilot Programs:</strong> Interest in early access to our products</li>
+          <li><strong>Contributions:</strong> Ways to contribute to our open-source initiatives</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .contact-info {
+    margin: var(--space-lg) 0;
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .contact-info p {
+    margin: var(--space-sm) 0;
+    color: var(--bone);
+  }
+
+  .contact-info a {
+    color: var(--bright);
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+
+  .contact-form {
+    margin-top: var(--space-xl);
+  }
+
+  .form-group {
+    margin-bottom: var(--space-lg);
+  }
+
+  .form-group label {
+    display: block;
+    color: var(--bone);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(169, 214, 138, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--bone);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--bright);
+    box-shadow: 0 0 0 2px rgba(169, 214, 138, 0.2);
+  }
+
+  .contact-reasons {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .contact-reasons li {
+    color: var(--bone);
+    padding: var(--space-sm) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+  }
+
+  .contact-reasons li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    color: var(--ink);
+    border: 2px solid transparent;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 1rem;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+</style>

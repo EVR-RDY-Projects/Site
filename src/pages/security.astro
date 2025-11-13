@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>Security Statement — EVR:RDY</title>
+    <meta name="description" content="EVR:RDY Security Statement. Our commitment to security, responsible disclosure, and protecting critical infrastructure." />
+    <link rel="canonical" href="https://evrrdy.com/security" />
+  </Fragment>
+
+  <Header currentPath="/security" pageTitle="Security Statement" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <section class="card animate-slide-up">
+        <h1>Security Statement</h1>
+        <p><strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Our Commitment to Security</h2>
+        <p>EVR:RDY Defensive Operations Group LLC is committed to protecting critical infrastructure and maintaining the highest security standards in all our products and services. Security is at the core of everything we do.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Product Security</h2>
+        <p>Our products are designed with security-first principles:</p>
+        <ul>
+          <li><strong>OT-Safe Design:</strong> All components are designed to minimize impact on operational technology systems</li>
+          <li><strong>Air-Gap Friendly:</strong> Solutions like GHOST enable physical isolation between OT and IT networks</li>
+          <li><strong>Secure Communications:</strong> Encrypted and authenticated data transmission</li>
+          <li><strong>Minimal Footprint:</strong> Lightweight agents designed for legacy systems</li>
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Responsible Disclosure</h2>
+        <p>We take security vulnerabilities seriously. If you discover a security issue in our products or website, please report it responsibly:</p>
+        <ul>
+          <li>Email security concerns to: <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a></li>
+          <li>Include detailed information about the vulnerability</li>
+          <li>Allow us reasonable time to address the issue before public disclosure</li>
+          <li>Do not exploit vulnerabilities or access data without authorization</li>
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Website Security</h2>
+        <p>We implement security best practices for our website:</p>
+        <ul>
+          <li>HTTPS encryption for all communications</li>
+          <li>Regular security updates and patches</li>
+          <li>Secure hosting infrastructure</li>
+          <li>Limited data collection and retention</li>
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Open Source Security</h2>
+        <p>Our open-source products benefit from community security review. We encourage security researchers to review our code and report any issues through our responsible disclosure process.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Compliance</h2>
+        <p>We design our products to support compliance with industry standards and regulations relevant to critical infrastructure protection.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Contact</h2>
+        <p>For security-related inquiries or to report a vulnerability:</p>
+        <p><strong>Email:</strong> <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a></p>
+        <p><strong>Subject:</strong> Security Disclosure</p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .card ul li {
+    color: var(--bone);
+    padding: var(--space-xs) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+  }
+
+  .card ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+  }
+
+  .card a {
+    color: var(--bright);
+    text-decoration: none;
+  }
+
+  .card a:hover {
+    text-decoration: underline;
+  }
+</style>

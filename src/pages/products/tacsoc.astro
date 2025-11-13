@@ -1,0 +1,325 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const product = {
+  name: 'TacSOC',
+  descriptor: 'Tactical Security Operations Center',
+  oneLiner: 'EVR:RDY\'s first flagship product: an AI-enforced, OT-focused SOC built for precision threat hunting, incident response, and real defense. Where traditional SOCs drown in alerts, TacSOC runs lean.',
+  who: 'Small and mid-size OT/ICS operators who need enterprise-grade monitoring without enterprise costs, and teams that want to scale their defensive capabilities.',
+  features: [
+    'AI-powered threat detection and noise reduction',
+    'Automated Tier-1 analysis to free analysts for hunting',
+    'Hunter/Killer teams for proactive threat hunting',
+    'R.A.I.D. framework (Recon, Acquire, Interpret, Defend)',
+    'Resource pooling for cost-effective Chronicle integration',
+    'Mentorship program accelerating Tier-2 to Tier-3 progression',
+    'Small team efficiency with enterprise-grade capabilities'
+  ],
+  status: 'active-dev',
+  demoUrl: '',
+  docsUrl: '',
+  statusNote: 'Design + Pilot phase. Currently in active design and development.'
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{product.name} — {product.descriptor} | EVR:RDY</title>
+    <meta name="description" content={product.oneLiner} />
+    <link rel="canonical" href="https://evrrdy.com/products/tacsoc" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.oneLiner,
+      "brand": {
+        "@type": "Brand",
+        "name": "EVR:RDY"
+      }
+    })} />
+  </Fragment>
+
+  <Header currentPath="/products/tacsoc" pageTitle="TacSOC" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Products</a>
+        <span class="separator">/</span>
+        <span class="current">{product.name}</span>
+      </nav>
+
+      <section class="product-header">
+        <h1>{product.name} — {product.descriptor}</h1>
+        <p class="one-liner">{product.oneLiner}</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Who It's For</h2>
+        <p>{product.who}</p>
+      </section>
+
+      <!-- Quick Overview -->
+      <section class="card animate-slide-up">
+        <h2>TacSOC at a Glance</h2>
+        <div class="quick-overview">
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span class="overview-icon">🤖</span>
+              <div class="overview-content">
+                <h3>AI-Powered Analysis</h3>
+                <p>Automated threat detection and noise reduction using advanced AI models</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">👥</span>
+              <div class="overview-content">
+                <h3>Hunter/Killer Teams</h3>
+                <p>Small, elite analyst teams focused on proactive threat hunting</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">💡</span>
+              <div class="overview-content">
+                <h3>Shared Resources</h3>
+                <p>Cost-effective enterprise-grade monitoring through resource pooling</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🎯</span>
+              <div class="overview-content">
+                <h3>R.A.I.D. Framework</h3>
+                <p>Systematic approach to reconnaissance, acquisition, interpretation, and defense</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technical Capabilities -->
+      <section class="card animate-slide-up">
+        <h2>Technical Capabilities</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>AI Integration</h3>
+            <p class="feature-description">Uses advanced AI models to deduplicate and enrich telemetry, map events to MITRE ATT&CK, and automatically dismiss noise.</p>
+            <div class="feature-benefit">
+              <strong>Result:</strong> Analysts focus on true threats, enabling faster detection and resilient defenses.
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h3>Resource Pooling</h3>
+            <p class="feature-description">Leverages cloud‑native SIEMs — currently Google Chronicle — to enable license sharing across customers.</p>
+            <div class="feature-benefit">
+              <strong>Result:</strong> Provides enterprise‑grade monitoring without enterprise‑grade costs.
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h3>Hunter/Killer Teams</h3>
+            <p class="feature-description">Small, skilled groups blending Tier‑2 and Tier‑3 analysts under a Team Leader. AI takes Tier-1 work off the table, accelerating progression and scaling defense to many sites.</p>
+            <div class="feature-benefit">
+              <strong>Result:</strong> TacSOC is both a defense platform and a training engine.
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h3>R.A.I.D. Framework</h3>
+            <p class="feature-description">Recon, Acquire, Interpret, Defend — a systematic approach to threat hunting and defense operations.</p>
+            <div class="feature-benefit">
+              <strong>Result:</strong> Enables small, distributed teams to operate with autonomy and accountability without massive centralized SOCs.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Key Features</h2>
+        <ul class="features-list">
+          {product.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <div class="product-meta">
+          <span class={`status-indicator ${product.status}`}>Active Development</span>
+          {product.statusNote && <p class="status-note">{product.statusNote}</p>}
+          {product.demoUrl && (
+            <a href={product.demoUrl} class="btn-primary" target="_blank" rel="noopener">View Demo</a>
+          )}
+          {product.docsUrl && (
+            <a href={product.docsUrl} class="btn-secondary" target="_blank" rel="noopener">Documentation</a>
+          )}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .quick-overview {
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .overview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(14, 16, 18, 0.3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+  }
+
+  .overview-item:hover {
+    background: rgba(14, 16, 18, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .overview-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .overview-content h3 {
+    color: var(--bright);
+    margin: 0 0 var(--space-xs) 0;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .overview-content p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .feature-card {
+    background: rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    border: 1px solid rgba(229, 228, 216, 0.15);
+    transition: all var(--transition-normal);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--bright);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(169, 214, 138, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .feature-card:hover::before {
+    opacity: 1;
+  }
+
+  .feature-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--bone);
+    margin: 0 0 var(--space-sm) 0;
+  }
+
+  .feature-description {
+    color: var(--bone);
+    line-height: 1.5;
+    margin: 0 0 var(--space-md) 0;
+    font-size: 0.95rem;
+  }
+
+  .feature-benefit {
+    background: rgba(169, 214, 138, 0.1);
+    border-left: 3px solid var(--bright);
+    padding: var(--space-sm);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.9rem;
+    color: var(--bone);
+    text-align: left;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separator {
+    color: var(--muted);
+    margin: 0 var(--space-xs);
+  }
+
+  .breadcrumb .current {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid,
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

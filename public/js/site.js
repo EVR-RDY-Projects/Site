@@ -140,8 +140,7 @@
 			console.error("Failed to load resources:", error);
 			const resourcesContainer = document.getElementById("resources-grid");
 			if (resourcesContainer) {
-				resourcesContainer.innerHTML =
-					"<p>Failed to load resources. Please try again later.</p>";
+				resourcesContainer.innerHTML = "<p>Failed to load resources. Please try again later.</p>";
 			}
 		}
 	}

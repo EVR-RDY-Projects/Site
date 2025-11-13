@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const product = {
+  name: 'RAMPART',
+  descriptor: 'Resilient Architecture for Monitoring & Proactive Advanced Response Teams',
+  oneLiner: 'Data processing and forwarding engine that normalizes telemetry for SIEM ingestion. Enables remote forensic analysis while maintaining OT isolation.',
+  who: 'OT/ICS operators who need to forward telemetry to SIEM platforms like Google Chronicle while maintaining safe OT/IT boundaries.',
+  features: [
+    'Normalize and enrich telemetry from multiple sources',
+    'Chronicle-ready mappings and output formats',
+    'Queue and retry logic for reliable delivery',
+    'Supports JSONL, syslog, and custom formats',
+    'Integration with SCOUT, SEER, and other T.A.P.S. components',
+    'Remote forensic analysis capabilities',
+    'Maintains OT isolation while enabling IT-side analytics'
+  ],
+  status: 'active-dev',
+  demoUrl: '',
+  docsUrl: '',
+  statusNote: 'Core functionality implemented. Chronicle integration and workflow automation in development.'
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{product.name} — {product.descriptor} | EVR:RDY</title>
+    <meta name="description" content={product.oneLiner} />
+    <link rel="canonical" href="https://evrrdy.com/products/rampart" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.oneLiner,
+      "brand": {
+        "@type": "Brand",
+        "name": "EVR:RDY"
+      }
+    })} />
+  </Fragment>
+
+  <Header currentPath="/products/rampart" pageTitle="RAMPART" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Products</a>
+        <span class="separator">/</span>
+        <a href="/products/taps">T.A.P.S.</a>
+        <span class="separator">/</span>
+        <span class="current">{product.name}</span>
+      </nav>
+
+      <section class="product-header">
+        <h1>{product.name} — {product.descriptor}</h1>
+        <p class="one-liner">{product.oneLiner}</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Who It's For</h2>
+        <p>{product.who}</p>
+      </section>
+
+      <!-- Quick Overview -->
+      <section class="card animate-slide-up">
+        <h2>Quick Overview</h2>
+        <div class="quick-overview">
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span class="overview-icon">🔄</span>
+              <div class="overview-content">
+                <h3>Data Normalization</h3>
+                <p>Converts diverse telemetry formats into standardized Chronicle-ready data</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">📊</span>
+              <div class="overview-content">
+                <h3>Enrichment Engine</h3>
+                <p>Adds context and metadata to enhance threat detection capabilities</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🔗</span>
+              <div class="overview-content">
+                <h3>Chronicle Integration</h3>
+                <p>Built-in mappings for seamless Google Chronicle ingestion</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🛡️</span>
+              <div class="overview-content">
+                <h3>Queue & Retry</h3>
+                <p>Reliable transport with automatic retry and queue management</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Key Features</h2>
+        <ul class="features-list">
+          {product.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <div class="product-meta">
+          <span class={`status-indicator ${product.status}`}>Active Development</span>
+          {product.statusNote && <p class="status-note">{product.statusNote}</p>}
+          {product.demoUrl && (
+            <a href={product.demoUrl} class="btn-primary" target="_blank" rel="noopener">View Demo</a>
+          )}
+          {product.docsUrl && (
+            <a href={product.docsUrl} class="btn-secondary" target="_blank" rel="noopener">Documentation</a>
+          )}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .quick-overview {
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .overview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(14, 16, 18, 0.3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+  }
+
+  .overview-item:hover {
+    background: rgba(14, 16, 18, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .overview-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .overview-content h3 {
+    color: var(--bright);
+    margin: 0 0 var(--space-xs) 0;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .overview-content p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separator {
+    color: var(--muted);
+    margin: 0 var(--space-xs);
+  }
+
+  .breadcrumb .current {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

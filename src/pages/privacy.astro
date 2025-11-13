@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>Privacy Policy — EVR:RDY</title>
+    <meta name="description" content="EVR:RDY Privacy Policy. Learn how we handle data and protect your privacy." />
+    <link rel="canonical" href="https://evrrdy.com/privacy" />
+  </Fragment>
+
+  <Header currentPath="/privacy" pageTitle="Privacy Policy" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <section class="card animate-slide-up">
+        <h1>Privacy Policy</h1>
+        <p><strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Introduction</h2>
+        <p>EVR:RDY Defensive Operations Group LLC ("we", "us", "our") respects your privacy. This Privacy Policy explains how we collect, use, and protect information when you visit our website or use our services.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Information We Collect</h2>
+        <p>We may collect the following types of information:</p>
+        <ul>
+          <li><strong>Contact Information:</strong> Name, email address, and other information you provide when contacting us</li>
+          <li><strong>Website Usage:</strong> Information about how you interact with our website, including IP address, browser type, and pages visited</li>
+          <li><strong>Communications:</strong> Records of correspondence when you contact us</li>
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>How We Use Information</h2>
+        <p>We use collected information to:</p>
+        <ul>
+          <li>Respond to your inquiries and provide customer support</li>
+          <li>Improve our website and services</li>
+          <li>Send updates about our products and services (with your consent)</li>
+          <li>Comply with legal obligations</li>
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Data Security</h2>
+        <p>We implement appropriate technical and organizational measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Third-Party Services</h2>
+        <p>Our website may use third-party services for analytics or other functions. These services have their own privacy policies.</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Your Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Access your personal information</li>
+          <li>Correct inaccurate information</li>
+          <li>Request deletion of your information</li>
+          <li>Opt-out of marketing communications</li>
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Contact Us</h2>
+        <p>If you have questions about this Privacy Policy, please contact us at:</p>
+        <p><strong>Email:</strong> <a href="mailto:ops@evrrdy.com">ops@evrrdy.com</a></p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .card ul li {
+    color: var(--bone);
+    padding: var(--space-xs) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+  }
+
+  .card ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+  }
+
+  .card a {
+    color: var(--bright);
+    text-decoration: none;
+  }
+
+  .card a:hover {
+    text-decoration: underline;
+  }
+</style>

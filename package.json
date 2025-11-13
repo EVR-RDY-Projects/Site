@@ -1,0 +1,20 @@
+{
+  "name": "intergalactic-iron",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "predev": "shx rm -rf public/resources && shx mkdir -p public/resources && shx cp -r resources/* public/resources",
+    "dev": "astro dev --host",
+    "prebuild": "shx rm -rf public/resources && shx mkdir -p public/resources && shx cp -r resources/* public/resources",
+    "build": "astro build",
+    "preview": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.15.3"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "shx": "^0.3.4"
+  }
+}

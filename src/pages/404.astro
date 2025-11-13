@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>404 — Target Not Found | EVR:RDY</title>
+    <meta name="description" content="The page you're looking for has been compromised, retired, or never existed. Mission failed, but you can still navigate home." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://evrrdy.com/404" />
+  </Fragment>
+
+  <Header currentPath="/404" pageTitle="404 — Target Not Found" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <section class="card animate-slide-up error-404">
+        <h1 class="error-code">404</h1>
+        <h2>Target Not Found</h2>
+        <p>
+          The page you're looking for has been <strong>compromised</strong>, <strong>retired</strong>, or never existed. 
+          Like that requisition you put in six months ago, this URL is MIA.
+        </p>
+        <p>
+          We've done so much, for so long, with so little — but we still can't find this page.
+        </p>
+        
+        <blockquote class="error-quote">
+          "The only page worse than a 404 is a 500 after you've been trying to load it for an hour."<br>
+          <span>— Unknown Analyst, probably</span>
+        </blockquote>
+
+        <div class="error-actions">
+          <a href="/" class="learn-more-btn animate-glow">Return to Base</a>
+          <a href="/products" class="learn-more-btn animate-glow">Review Products</a>
+        </div>
+
+        <div class="error-links">
+          <p><strong>Quick Navigation:</strong></p>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/team">Team</a></li>
+            <li><a href="/resources">Resources</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>What Just Happened?</h2>
+        <p>Possible causes for this tactical failure:</p>
+        <ul class="error-reasons">
+          <li>The URL was mistyped (human error, happens to the best of us)</li>
+          <li>The page was moved or deleted (mission parameters changed)</li>
+          <li>The link you followed is broken (somebody's getting paperwork for this)</li>
+          <li>You're testing our 404 page (if so, mission accomplished — it works)</li>
+        </ul>
+        <p>
+          If you believe this is a legitimate operational issue, please 
+          <a href="/contact">contact our ops team</a> and we'll investigate.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .error-404 {
+    text-align: center;
+  }
+
+  .error-code {
+    font-size: clamp(6rem, 15vw, 12rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--bright), var(--muted));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: var(--space-lg) 0;
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(169, 214, 138, 0.3);
+    letter-spacing: -0.05em;
+  }
+
+  .error-404 h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--bone);
+    margin-bottom: var(--space-xl);
+  }
+
+  .error-404 p {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
+    max-width: 65ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .error-quote {
+    margin: var(--space-2xl) auto;
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-left: 4px solid var(--bright);
+    border-radius: var(--radius-lg);
+    font-style: italic;
+    max-width: 600px;
+  }
+
+  .error-quote span {
+    display: block;
+    margin-top: var(--space-md);
+    font-size: 0.9em;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: var(--space-2xl) 0;
+  }
+
+  .error-links {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(229, 228, 216, 0.2);
+  }
+
+  .error-links p {
+    margin-bottom: var(--space-md);
+  }
+
+  .error-links ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .error-links li {
+    margin: 0;
+  }
+
+  .error-links a {
+    color: var(--bright);
+    text-decoration: none;
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+    background: rgba(169, 214, 138, 0.05);
+  }
+
+  .error-links a:hover {
+    background: rgba(169, 214, 138, 0.15);
+    border-color: var(--bright);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(169, 214, 138, 0.2);
+  }
+
+  .error-reasons {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: var(--space-xl) auto;
+    text-align: left;
+  }
+
+  .error-reasons li {
+    padding: var(--space-md);
+    margin-bottom: var(--space-sm);
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--bright);
+    border-radius: var(--radius-md);
+    position: relative;
+    padding-left: var(--space-xl);
+  }
+
+  .error-reasons li::before {
+    content: '⚠️';
+    position: absolute;
+    left: var(--space-md);
+    top: var(--space-md);
+    font-size: 1.2em;
+  }
+
+  @media (max-width: 768px) {
+    .error-code {
+      font-size: clamp(4rem, 20vw, 8rem);
+    }
+
+    .error-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .error-actions .learn-more-btn {
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .error-links ul {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+  }
+</style>
+

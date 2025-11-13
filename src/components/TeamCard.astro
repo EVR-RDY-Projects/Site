@@ -1,0 +1,501 @@
+---
+export interface Props {
+  name: string;
+  role: string;
+  valueLine: string;
+  highlights: string[];
+  linkedin?: string;
+  github?: string;
+  photoSrc: string;
+  bio?: string;
+  resume?: {
+    summary: string;
+    experience: Array<{
+      title: string;
+      company: string;
+      period: string;
+      achievements: string[];
+    }>;
+    education?: Array<{
+      degree: string;
+      institution: string;
+      period?: string;
+    }>;
+    certifications?: string[];
+    expertise: string[];
+    contributions: string[];
+  };
+}
+
+const { name, role, valueLine, highlights, linkedin, github, photoSrc, bio, resume } = Astro.props;
+---
+
+<section class="team-member">
+  <div class="member-photo">
+    <img src={photoSrc} alt={name} class="member-photo-img" loading="lazy" />
+    {role.includes('Founder') && <div class="member-badge">Founder</div>}
+  </div>
+  <div class="member-info">
+    <h3>{name}</h3>
+    <p class="role">{role}</p>
+    <p class="value-line">{valueLine}</p>
+    <ul class="highlights">
+      {highlights.map((highlight) => <li>{highlight}</li>)}
+    </ul>
+    <div class="social-links">
+      {linkedin && (
+        <a href={linkedin} class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+      )}
+      {github && (
+        <a href={github} class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+      )}
+    </div>
+    {bio ? (
+      <div class="bio">
+        {bio.split('\n\n').map((paragraph, index) => (
+          <p class={index === 0 ? 'bio-title' : ''}>{paragraph}</p>
+        ))}
+      </div>
+    ) : null}
+  </div>
+</section>
+
+<style>
+  .team-member {
+    background: rgba(0, 0, 0, 0.4);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    backdrop-filter: blur(12px) saturate(120%);
+    border: 1px solid rgba(169, 214, 138, 0.25);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    text-align: center;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 10px 25px -5px rgba(0, 0, 0, 0.2),
+      0 4px 10px -2px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .team-member::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--bright), var(--muted));
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .team-member:hover {
+    transform: translateY(-2px);
+    border-color: rgba(169, 214, 138, 0.4);
+    box-shadow: 
+      0 16px 40px -8px rgba(0, 0, 0, 0.3),
+      0 8px 16px -4px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .team-member:hover::before {
+    opacity: 1;
+  }
+
+  .member-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    position: relative;
+    gap: var(--space-md);
+  }
+
+  .member-photo-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(169, 214, 138, 0.3);
+    transition: all var(--transition-normal);
+    box-shadow: 
+      0 8px 20px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .team-member:hover .member-photo-img {
+    transform: scale(1.05);
+    border-color: rgba(169, 214, 138, 0.6);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .member-badge {
+    background: rgba(169, 214, 138, 0.2);
+    color: var(--bright);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(169, 214, 138, 0.3);
+  }
+
+  .member-info h3 {
+    color: var(--bone);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-xs);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .role {
+    color: var(--bright);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .value-line {
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg) 0;
+    text-align: left;
+    background: rgba(169, 214, 138, 0.05);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 3px solid rgba(169, 214, 138, 0.3);
+  }
+
+  .highlights li {
+    color: var(--bone);
+    padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
+    position: relative;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  .social-links {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    justify-content: center;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(169, 214, 138, 0.1);
+    border: 2px solid rgba(169, 214, 138, 0.3);
+    color: var(--bright);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .social-link:hover {
+    background: rgba(169, 214, 138, 0.2);
+    border-color: rgba(169, 214, 138, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--bright);
+  }
+
+  .social-link svg {
+    fill: currentColor;
+  }
+
+  .resume {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-xl);
+    border-top: 2px solid rgba(169, 214, 138, 0.25);
+    text-align: left;
+  }
+
+  .resume-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .resume-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .resume-section h4 {
+    color: var(--bright);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid rgba(169, 214, 138, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .resume-summary {
+    color: var(--bone);
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .resume-item {
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid rgba(169, 214, 138, 0.15);
+  }
+
+  .resume-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .resume-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .resume-item-title {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .resume-item-title strong {
+    color: var(--bone);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .resume-company {
+    color: var(--bright);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .resume-period {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 4px 12px;
+    background: rgba(169, 214, 138, 0.1);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .resume-achievements {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: var(--space-lg);
+  }
+
+  .resume-achievements li {
+    color: var(--bone);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+    padding-left: var(--space-md);
+    position: relative;
+    font-size: 0.95rem;
+  }
+
+  .resume-achievements li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+  }
+
+  .resume-achievements li:last-child {
+    margin-bottom: 0;
+  }
+
+  .resume-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+
+  .resume-tag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    background: rgba(169, 214, 138, 0.15);
+    border: 1px solid rgba(169, 214, 138, 0.3);
+    border-radius: var(--radius-sm);
+    color: var(--bone);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+  }
+
+  .resume-tag:hover {
+    background: rgba(169, 214, 138, 0.25);
+    border-color: rgba(169, 214, 138, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .resume-contributions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .resume-contributions li {
+    color: var(--bone);
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+    padding-left: var(--space-xl);
+    position: relative;
+    font-size: 0.95rem;
+  }
+
+  .resume-contributions li::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-size: 0.9rem;
+  }
+
+  .resume-contributions li:last-child {
+    margin-bottom: 0;
+  }
+
+  .bio {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 2px solid rgba(169, 214, 138, 0.25);
+    text-align: left;
+  }
+
+  .bio p {
+    color: var(--bone);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
+  .bio p:first-child {
+    color: var(--bright);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    font-size: 1rem;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+  }
+
+  .bio p:last-child {
+    margin-bottom: 0;
+  }
+
+  .member-info {
+    width: 100%;
+  }
+
+  @media (min-width: 769px) {
+    .team-member {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-xl);
+      text-align: left;
+      align-items: start;
+    }
+
+    .member-photo {
+      margin-bottom: 0;
+      flex-shrink: 0;
+      align-items: flex-start;
+      padding-top: var(--space-sm);
+    }
+
+    .member-info h3,
+    .member-info .role,
+    .member-info .value-line,
+    .member-info .highlights,
+    .member-info .social-links {
+      text-align: left;
+    }
+
+    .social-links {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .team-member {
+      padding: var(--space-lg);
+    }
+
+    .member-photo-img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .member-info h3 {
+      font-size: 1.3rem;
+    }
+
+    .bio p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .resume-item-header {
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .resume-period {
+      align-self: flex-start;
+    }
+
+    .resume-section h4 {
+      font-size: 0.95rem;
+    }
+
+    .resume-item-title strong {
+      font-size: 1rem;
+    }
+  }
+</style>

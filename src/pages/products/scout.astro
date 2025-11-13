@@ -1,0 +1,360 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const product = {
+  name: 'SCOUT',
+  descriptor: 'Lightweight Host Telemetry Agent',
+  oneLiner: 'Production-ready "slow-and-low" monitoring agent with comprehensive state management, event collection, and system monitoring. Designed for minimal footprint on legacy OT/ICS systems.',
+  who: 'OT/ICS operators who need host-level visibility without impacting system performance.',
+  features: [
+    'Process and service event monitoring with configurable throttles',
+    'Back-pressure aware transport layer for safe data transmission',
+    'Watchdog and safe-mode functionality for system protection',
+    'Signed packages for secure deployment',
+    'JSONL and syslog output formats',
+    'Chronicle-ready via RAMPART integration',
+    'Minimal resource footprint designed for legacy systems'
+  ],
+  status: 'active-dev',
+  demoUrl: '',
+  docsUrl: '',
+  statusNote: '75% complete. Core infrastructure and data collection ready. Transport layer and sensor integration in progress.'
+};
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>{product.name} — {product.descriptor} | EVR:RDY</title>
+    <meta name="description" content={product.oneLiner} />
+    <link rel="canonical" href="https://evrrdy.com/products/scout" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.oneLiner,
+      "brand": {
+        "@type": "Brand",
+        "name": "EVR:RDY"
+      }
+    })} />
+  </Fragment>
+
+  <Header currentPath="/products/scout" pageTitle="SCOUT" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/products">Products</a>
+        <span class="separator">/</span>
+        <a href="/products/taps">T.A.P.S.</a>
+        <span class="separator">/</span>
+        <span class="current">{product.name}</span>
+      </nav>
+
+      <section class="product-header">
+        <h1>{product.name} — {product.descriptor}</h1>
+        <p class="one-liner">{product.oneLiner}</p>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Who It's For</h2>
+        <p>{product.who}</p>
+      </section>
+
+      <!-- Quick Overview -->
+      <section class="card animate-slide-up">
+        <h2>Quick Overview</h2>
+        <div class="quick-overview">
+          <div class="overview-grid">
+            <div class="overview-item">
+              <span class="overview-icon">🛡️</span>
+              <div class="overview-content">
+                <h3>Minimal Footprint</h3>
+                <p>Designed for minimal impact on legacy OT/ICS systems</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">📊</span>
+              <div class="overview-content">
+                <h3>Comprehensive Monitoring</h3>
+                <p>Process, service, and system state management with event collection</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">⚡</span>
+              <div class="overview-content">
+                <h3>Back-Pressure Aware</h3>
+                <p>Intelligent transport layer handles network congestion gracefully</p>
+              </div>
+            </div>
+            <div class="overview-item">
+              <span class="overview-icon">🔒</span>
+              <div class="overview-content">
+                <h3>Safe & Secure</h3>
+                <p>Watchdog modes and signed packages ensure system safety</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Key Features</h2>
+        <ul class="features-list">
+          {product.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+      </section>
+
+      <section class="card animate-slide-up">
+        <div class="product-meta">
+          <span class={`status-indicator ${product.status}`}>
+            {product.status === 'active-dev' ? 'Active Development' : product.status === 'poc' ? 'PoC' : product.status === 'beta' ? 'Beta' : 'Production'}
+          </span>
+          {product.statusNote && <p class="status-note">{product.statusNote}</p>}
+          {product.demoUrl && (
+            <a href={product.demoUrl} class="btn-primary" target="_blank" rel="noopener">View Demo</a>
+          )}
+          {product.docsUrl && (
+            <a href={product.docsUrl} class="btn-secondary" target="_blank" rel="noopener">Documentation</a>
+          )}
+        </div>
+      </section>
+
+      {product.demoUrl || product.docsUrl ? (
+        <section class="card animate-slide-up">
+          <h2>Resources</h2>
+          <div class="resource-links">
+            {product.demoUrl && (
+              <a href={product.demoUrl} class="resource-link" target="_blank" rel="noopener">
+                <span class="resource-icon">🎥</span>
+                <span>Demo Video</span>
+              </a>
+            )}
+            {product.docsUrl && (
+              <a href={product.docsUrl} class="resource-link" target="_blank" rel="noopener">
+                <span class="resource-icon">📚</span>
+                <span>Documentation</span>
+              </a>
+            )}
+          </div>
+        </section>
+      ) : null}
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .product-header {
+    text-align: center;
+    margin: var(--space-xl) 0;
+    padding: var(--space-xl);
+  }
+
+  .product-header h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--space-md);
+    color: var(--bone);
+  }
+
+  .one-liner {
+    font-size: 1.25rem;
+    color: var(--muted);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .features-list li {
+    color: var(--bone);
+    padding: var(--space-sm) 0;
+    padding-left: var(--space-xl);
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--bright);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .status-note {
+    color: var(--muted);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--bright), #8bc34a);
+    color: var(--ink);
+    border: 2px solid transparent;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--bright);
+    border: 2px solid var(--bright);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bright);
+    color: var(--ink);
+  }
+
+  .resource-links {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .resource-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--bright);
+    text-decoration: none;
+    padding: var(--space-md);
+    border: 1px solid rgba(169, 214, 138, 0.3);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+  }
+
+  .resource-link:hover {
+    background: rgba(169, 214, 138, 0.1);
+    border-color: var(--bright);
+    transform: translateY(-2px);
+  }
+
+  .resource-icon {
+    font-size: 1.5rem;
+  }
+
+  .quick-overview {
+    margin-bottom: var(--space-2xl);
+    padding: var(--space-lg);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(169, 214, 138, 0.2);
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .overview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: rgba(14, 16, 18, 0.3);
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+  }
+
+  .overview-item:hover {
+    background: rgba(14, 16, 18, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .overview-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: var(--space-xs);
+  }
+
+  .overview-content h3 {
+    color: var(--bright);
+    margin: 0 0 var(--space-xs) 0;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .overview-content p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .breadcrumb a {
+    color: var(--bright);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--bone);
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separator {
+    color: var(--muted);
+    margin: 0 var(--space-xs);
+  }
+
+  .breadcrumb .current {
+    color: var(--bone);
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

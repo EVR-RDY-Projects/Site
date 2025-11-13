@@ -1,0 +1,847 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import TeamCard from '../components/TeamCard.astro';
+
+const team = [
+  {
+    name: 'Erin Burns',
+    role: 'Founder, Master Host Analyst',
+    valueLine: '10+ years DFIR expertise across enterprise and ICS',
+    badge: 'Founder',
+    highlights: [
+      'Leadership',
+      'Operations',
+      'Strategy',
+      'Architecture',
+      'Systems',
+      'Cybersecurity'
+    ],
+    linkedin: 'https://www.linkedin.com/in/erinburns757/',
+    photoSrc: '/img/erin-burns.jpeg',
+    bio: '\n\nErin Burns is an information security professional with over 17 years of experience leading and executing large-scale cybersecurity engagements and operations. As the founder of EVR:RDY, he combines deep technical knowledge with strategic leadership to advance OT/ICS cyber defense capabilities.\n\nWith expertise in incident response, forensics, and hunt operations gained through daily analysis of national-level intrusions, Erin has planned and conducted multiple simultaneous defensive cyber operations in unique occupational technology and information technology environments, creating innovative procedures that enhance organizational effectiveness.'
+  },
+  {
+    name: 'Timothy DeBerry',
+    role: 'Principal Developer, Founding Engineer',
+    valueLine: 'Production-quality systems architect and secure coder',
+    badge: 'Principal Developer',
+    highlights: [
+      'Leadership',
+      'Development',
+      'Integration',
+      'Automation',
+      'Secure Coding',
+      'Secure Design'
+    ],
+    linkedin: 'https://www.linkedin.com/in/timothy-deberry-35425b75/',
+    github: 'https://github.com/nybblez0x42697A',
+    photoSrc: '/img/timothy-deberry.png',
+    bio: '\n\nTimothy DeBerry is a former combat Infantryman with multiple combat tours before transitioning to cyber operations as a Cyber Warrant Officer. With over 16 years of military service across infantry and cyber warfare roles, he brings exceptional leadership, operational excellence, and security-first engineering to EVR:RDY.\n\nAs one of the Founding Engineers and the Principal Developer at EVR:RDY, Timothy owns engineering governance and SDLC, architects and implements core software with security-first design principles, and drives integrations and release readiness for open-source, affordable solutions that protect critical infrastructure. With proficiency in Python, C, automation, and security engineering, he combines combat-proven leadership with technical expertise to build production-quality systems that operate reliably in industrial environments.'
+  },
+  {
+    name: 'Shayla LaPoint',
+    role: 'Lead Security Engineer, Founding Engineer',
+    valueLine: 'Network analysis and threat modeling specialist',
+    badge: 'Lead Security\nEngineer',
+    highlights: [
+      'Leadership',
+      'Secure Architecture',
+      'Network Analysis',
+      'Threat Modeling',
+      'Incident Response',
+      'Digital Forensics'
+    ],
+    linkedin: '',
+    photoSrc: '/img/shayla-lapoint.jpeg',
+    bio: '\n\nShayla LaPoint is a U.S. Army Cyber Warrant Officer with over a decade of experience in the Cyber Protection Brigade, where she led and executed missions focused on defending critical networks and infrastructure. With a Bachelor of Science in Information Systems Security, she combines deep technical acumen with operational leadership to advance cyber resilience across enterprise and tactical environments.\n\nSince entering the cybersecurity field in 2016, Shayla has developed and led initiatives in Defensive Cyber Operations (DCO), Industrial Control Systems (ICS)/SCADA security, cloud architecture protection, and tactical communications security. Her extensive background includes serving as a Cyber Operations Maneuver Planner and a Master Network Analyst, where she specialized in integrating sensing, detection, and response mechanisms into mission-critical systems.\n\nA CISSP-certified professional and holder of 12 SANS certifications, Shayla is recognized for her expertise in developing and employing continuous monitoring strategies that enhance situational awareness, reduce attack surfaces, and ensure mission assurance in complex operational environments. Her passion lies in bridging the gap between technical defense capabilities and mission objectives—ensuring that sensing and monitoring technologies empower decision-makers at every echelon.'
+  },
+  {
+    name: 'Dylan Knox',
+    role: 'Lead Hardware Engineer, Founding Engineer',
+    valueLine: 'Hardware design and prototyping innovator',
+    badge: 'Lead Hadrware Engineer',
+    highlights: [
+      'Leadership',
+      'Hardware Design',
+      'Electronics Design',
+      'Prototyping',
+      'Research & Development',
+      'Testing & Validation'
+    ],
+    linkedin: 'https://www.linkedin.com/in/dylan-knox-356887132/',
+    photoSrc: '/img/knox.png',
+    bio: '\n\nDylan Knox is a Lead Hardware Engineer specializing in custom electronics design, R&D, and rapid prototyping for critical infrastructure security solutions. His innovative approach to hardware engineering has been instrumental in developing the physical components that power EVR:RDY\'s telemetry acquisition platform.\n\nWith expertise spanning from conceptual design to production validation, Dylan has led the development of custom hardware solutions that meet the stringent requirements of OT/ICS environments. His work includes designing low-footprint sensors, developing air-gap communication devices, and creating hardware-enforced security mechanisms that protect critical infrastructure.\n\nDylan is recognized for his ability to bridge the gap between theoretical design and practical implementation, rapidly iterating from prototypes to production-ready hardware.'
+  }
+];
+---
+
+<BaseLayout>
+  <Fragment slot="head">
+    <title>Team — EVR:RDY</title>
+    <meta name="description" content="Meet the EVR:RDY team: defensive cyber professionals with real-world operational experience in critical infrastructure protection." />
+    <link rel="canonical" href="https://evrrdy.com/team" />
+  </Fragment>
+
+  <Header currentPath="/team" pageTitle="Our Team" />
+
+  <main id="main-content" class="content-wrap">
+    <div class="container">
+      <!-- Team Photo Grid -->
+      <section class="card team-photo-grid-section animate-slide-up">
+        <p class="team-intro">Defensive cyber professionals with real-world operational experience in critical infrastructure protection.</p>
+        <div class="team-photo-grid">
+          {team.map((member, index) => (
+            <button type="button" class="team-photo-link" data-member-index={index} aria-label={`View ${member.name}'s bio`}>
+              <div class="team-photo-wrapper">
+                <img src={member.photoSrc} alt={member.name} class={`team-photo-thumb ${member.name.toLowerCase().replace(/\s+/g, '-')}-photo`} loading="lazy" />
+                {member.badge && <div class="photo-badge">{member.badge}</div>}
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section class="card animate-slide-up">
+        <h2>Join the Team</h2>
+        <p>We seek talented, passionate individuals from academia and the ICS cybersecurity industry to collaborate, contribute, and lead as part of EVR:RDY.</p>
+        <div class="btn-row text-center">
+          <a href="mailto:ops@evrrdy.com?subject=Career Inquiry" class="learn-more-btn animate-glow">Get in Touch</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+  <!-- Team Member Modal -->
+  <div id="team-modal" class="team-modal">
+    <div class="team-modal-overlay" onclick="closeTeamModal()"></div>
+    <div class="team-modal-content">
+      <button class="team-modal-close" onclick="closeTeamModal()" aria-label="Close modal">&times;</button>
+      <div id="team-modal-body" class="team-modal-body">
+        <!-- Content will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .team-intro {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: var(--space-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .team-photo-grid-section {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .team-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-lg);
+  }
+
+  .team-photo-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(169, 214, 138, 0.1);
+    cursor: pointer;
+    position: relative;
+  }
+
+  button.team-photo-link {
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(169, 214, 138, 0.1);
+  }
+
+  .team-photo-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(169, 214, 138, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    border-radius: var(--radius-lg);
+  }
+
+  .team-photo-link:hover {
+    transform: translateY(-6px) scale(1.02);
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(169, 214, 138, 0.5);
+    box-shadow: 0 8px 25px rgba(169, 214, 138, 0.2);
+  }
+
+  .team-photo-link:hover::before {
+    opacity: 1;
+  }
+
+  .team-photo-wrapper {
+    position: relative;
+  }
+
+  @keyframes pulsate-glow {
+    0%, 100% {
+      box-shadow: 
+        0 0 10px rgba(169, 214, 138, 0.4),
+        0 0 20px rgba(169, 214, 138, 0.3),
+        0 0 30px rgba(169, 214, 138, 0.2),
+        0 0 0 4px rgba(169, 214, 138, 0.3);
+    }
+    50% {
+      box-shadow: 
+        0 0 20px rgba(169, 214, 138, 0.6),
+        0 0 40px rgba(169, 214, 138, 0.5),
+        0 0 60px rgba(169, 214, 138, 0.4),
+        0 0 0 4px rgba(169, 214, 138, 0.5);
+    }
+  }
+
+  .team-photo-thumb {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
+    border: 4px solid rgba(169, 214, 138, 0.3);
+    transition: all var(--transition-normal);
+    animation: pulsate-glow 3s ease-in-out infinite;
+    box-shadow: var(--shadow-md);
+  }
+
+  .team-photo-thumb.shayla-lapoint-photo {
+    object-position: top;
+  }
+
+  .team-photo-thumb.timothy-deberry-photo {
+    object-position: top;
+  }
+
+  .team-photo-thumb.erin-burns-photo {
+    object-position: center;
+  }
+
+  .team-photo-thumb.dylan-knox-photo {
+    object-position: top center;
+  }
+
+  .team-photo-link:hover .team-photo-thumb {
+    transform: scale(1.15);
+    border-color: rgba(169, 214, 138, 0.8);
+    animation-duration: 1.5s;
+    box-shadow: 
+      0 0 25px rgba(169, 214, 138, 0.7),
+      0 0 50px rgba(169, 214, 138, 0.6),
+      0 0 75px rgba(169, 214, 138, 0.5),
+      0 0 0 6px rgba(169, 214, 138, 0.6);
+  }
+
+  .photo-badge {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(169, 214, 138, 0.9);
+    color: var(--ink);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.45rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Team Modal Styles */
+  .team-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .team-modal.show {
+    display: block;
+    opacity: 1;
+  }
+
+  .team-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: var(--space-xl);
+    box-sizing: border-box;
+  }
+
+  .team-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    height: 100%;
+    max-height: 100vh;
+    margin: auto;
+    background: rgba(14, 16, 18, 0.98);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(169, 214, 138, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  .team-modal-close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: rgba(169, 214, 138, 0.2);
+    border: 2px solid rgba(169, 214, 138, 0.3);
+    color: var(--bright);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    z-index: 1051;
+    line-height: 1;
+  }
+
+  .team-modal-close:hover {
+    background: rgba(169, 214, 138, 0.3);
+    border-color: rgba(169, 214, 138, 0.6);
+    transform: scale(1.1);
+  }
+
+  .team-modal-body {
+    padding: var(--space-2xl);
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .team-modal-body::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .team-modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .team-modal-body::-webkit-scrollbar-thumb {
+    background: rgba(169, 214, 138, 0.3);
+    border-radius: 4px;
+  }
+
+  .team-modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(169, 214, 138, 0.5);
+  }
+
+  .team-modal-body .team-member {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .team-modal-body .team-member::before {
+    display: none;
+  }
+
+  .team-modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+    border-bottom: 2px solid rgba(169, 214, 138, 0.25);
+  }
+
+  .team-modal-header .member-photo {
+    position: relative;
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0 !important;
+    gap: 0 !important;
+    display: block !important;
+  }
+
+  .team-modal-header .modal-photo-img,
+  .team-modal-header .member-photo img {
+    width: 120px !important;
+    height: 120px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 4px solid rgba(169, 214, 138, 0.3);
+  }
+
+  .team-modal-header .member-badge {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(169, 214, 138, 0.9);
+    color: var(--ink);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .team-modal-info {
+    text-align: left !important;
+    flex: 1;
+  }
+
+  .team-modal-info h2 {
+    color: var(--bright);
+    margin: 0 0 var(--space-sm) 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  
+  .team-modal-body .modal-role-badge {
+    display: inline-block;
+    background: rgba(169, 214, 138, 0.9);
+    color: var(--ink);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin-right: var(--space-xs);
+    margin-top: var(--space-xs);
+    line-height: 1.2;
+  }
+  
+  .team-modal-body .bio-heading {
+    color: var(--bright);
+    margin: var(--space-xl) 0 0 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+  }
+  
+  .team-modal-body .bio {
+    margin-top: var(--space-md);
+  }
+
+  .team-modal-body .value-line {
+    color: var(--bone);
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .team-modal-body .highlights {
+    list-style: none;
+    padding: var(--space-sm) var(--space-md);
+    margin: 0 0 var(--space-lg) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    background: rgba(169, 214, 138, 0.05);
+    border-radius: var(--radius-md);
+    border-left: 3px solid rgba(169, 214, 138, 0.3);
+  }
+
+  .team-modal-body .highlights li {
+    color: var(--bone);
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: var(--space-xs) 0 var(--space-xs) var(--space-md);
+    position: relative;
+  }
+  
+  .team-modal-body .highlights li::before {
+    content: '✓';
+    color: var(--bright);
+    font-weight: bold;
+    font-size: 0.9rem;
+    position: absolute;
+    left: 0;
+  }
+
+  .team-modal-body .social-links {
+    display: flex;
+    gap: var(--space-md);
+    margin: 0 0 var(--space-lg) 0;
+    padding: 0;
+    justify-content: center;
+  }
+  
+  .team-modal-body .bio p {
+    color: var(--bone);
+    line-height: 1.8;
+    margin-bottom: var(--space-md);
+    font-size: 0.95rem;
+    max-width: none;
+  }
+
+  .team-modal-body .bio p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .team-modal-body .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(169, 214, 138, 0.1);
+    border: 2px solid rgba(169, 214, 138, 0.3);
+    color: var(--bright);
+    transition: all var(--transition-fast);
+    text-decoration: none;
+  }
+
+  .team-modal-body .social-link:hover {
+    background: rgba(169, 214, 138, 0.2);
+    border-color: rgba(169, 214, 138, 0.5);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--bright);
+  }
+
+
+  .team-member-anchor {
+    scroll-margin-top: 100px;
+  }
+
+  .team-grid-page {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+    margin: var(--space-2xl) 0;
+  }
+
+  /* Back to Top Button */
+  .back-to-top {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    background: rgba(169, 214, 138, 0.9);
+    color: var(--ink);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-fast);
+    z-index: 100;
+    border: 2px solid rgba(169, 214, 138, 1);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .back-to-top:hover {
+    background: var(--bright);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .team-photo-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .team-photo-thumb {
+      width: 110px;
+      height: 110px;
+    }
+
+    .team-photo-link {
+      padding: var(--space-lg);
+    }
+
+    .team-modal-overlay {
+      padding: var(--space-md);
+    }
+
+    .team-modal-content {
+      width: 95%;
+      max-height: calc(90vh - 2 * var(--space-md));
+    }
+
+    .team-modal-close {
+      top: var(--space-sm);
+      right: var(--space-sm);
+      width: 36px;
+      height: 36px;
+      font-size: 1.5rem;
+    }
+
+    .team-modal-body {
+      padding: var(--space-lg);
+    }
+
+    .team-modal-header {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--space-md);
+    }
+
+    .team-modal-header .member-photo {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 0 !important;
+      gap: 0 !important;
+      display: block !important;
+    }
+
+    .team-modal-header .modal-photo-img,
+    .team-modal-header .member-photo img {
+      width: 100px !important;
+      height: 100px !important;
+    }
+    
+    .team-modal-info {
+      text-align: center !important;
+    }
+
+    .team-modal-info h2 {
+      font-size: 1.5rem;
+    }
+
+    .team-grid-page {
+      gap: var(--space-xl);
+    }
+
+    .back-to-top {
+      bottom: var(--space-md);
+      right: var(--space-md);
+      width: 44px;
+      height: 44px;
+      font-size: 1.3rem;
+    }
+  }
+</style>
+
+<script define:vars={{team}}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const backToTop = document.querySelector('.back-to-top');
+    if (!backToTop) return;
+
+    // Show/hide back to top button
+    const toggleButton = () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    };
+
+    window.addEventListener('scroll', toggleButton);
+    toggleButton(); // Check on load
+
+    // Smooth scroll to top
+    backToTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Team modal functionality
+    const modal = document.getElementById('team-modal');
+    const modalBody = document.getElementById('team-modal-body');
+    const photoLinks = document.querySelectorAll('.team-photo-link');
+
+    window.openTeamModal = (index) => {
+      const member = team[index];
+      if (!member) return;
+
+      // Create modal content with proper structure
+      const highlightsHTML = member.highlights ? `
+        <ul class="highlights">
+          ${member.highlights.map(h => `<li>${h}</li>`).join('')}
+        </ul>
+      ` : '';
+
+      const socialLinksHTML = (member.linkedin || member.github) ? `
+        <div class="social-links">
+          ${member.linkedin ? `
+            <a href="${member.linkedin}" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+          ` : ''}
+          ${member.github ? `
+            <a href="${member.github}" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+          ` : ''}
+        </div>
+      ` : '';
+
+      // Parse bio to separate title from body
+      const bioParts = member.bio ? member.bio.split('\\n\\n') : [];
+      const bioTitle = bioParts.length > 0 ? bioParts[0] : '';
+      const bioParagraphs = bioParts.length > 1 ? bioParts.slice(1) : [];
+      
+      // Parse roles for badges
+      const roleBadges = member.role.split(',').map(r => r.trim()).filter(r => r.length > 0);
+      
+      modalBody.innerHTML = `
+        <div class="team-member">
+          <!-- Profile Header -->
+          <div class="team-modal-header">
+            <div class="member-photo" style="width: 120px; height: 120px; margin-bottom: 0; gap: 0;">
+              <img src="${member.photoSrc}" alt="${member.name}" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: top center; border: 4px solid rgba(169, 214, 138, 0.3);" />
+            </div>
+            <div class="team-modal-info">
+              <h2>${member.name}</h2>
+              <div style="margin-bottom: 24px;">
+                ${roleBadges.map(badge => `<span style="display: inline-block; background: rgba(169, 214, 138, 0.9); color: #0e1012; padding: 3px 10px; border-radius: 6px; font-size: 0.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); margin-right: 4px; margin-top: 4px;">${badge}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Links Section -->
+          ${socialLinksHTML}
+          
+          <!-- Highlights Section -->
+          ${highlightsHTML}
+          
+          <!-- Bio Heading -->
+          ${bioTitle ? `<p class="bio-heading">${bioTitle}</p>` : ''}
+          
+          <!-- Bio Body -->
+          ${bioParagraphs.length > 0 ? `
+            <div class="bio">
+              ${bioParagraphs.map(para => `<p>${para}</p>`).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      modal.classList.add('show');
+      
+      // Prevent background scrolling
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      
+      // Store scroll position for restoration
+      modal.dataset.scrollY = scrollY.toString();
+    };
+
+    window.closeTeamModal = () => {
+      modal.classList.remove('show');
+      
+      // Restore background scrolling
+      const scrollY = modal.dataset.scrollY ? parseInt(modal.dataset.scrollY) : 0;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      
+      // Restore scroll position
+      window.scrollTo(0, scrollY);
+    };
+
+    // Add click handlers to photo links
+    photoLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const index = parseInt(link.dataset.memberIndex);
+        if (!isNaN(index)) {
+          openTeamModal(index);
+        }
+      });
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('show')) {
+        closeTeamModal();
+      }
+    });
+
+    // Check for member parameter in URL and open modal if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberIndex = urlParams.get('member');
+    if (memberIndex !== null) {
+      const index = parseInt(memberIndex);
+      if (!isNaN(index) && index >= 0 && index < team.length) {
+        // Small delay to ensure modal is ready
+        setTimeout(() => {
+          openTeamModal(index);
+          // Clean up URL
+          window.history.replaceState({}, '', '/team');
+        }, 100);
+      }
+    }
+  });
+</script>
