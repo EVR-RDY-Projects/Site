@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main", "feature/website-refresh" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
