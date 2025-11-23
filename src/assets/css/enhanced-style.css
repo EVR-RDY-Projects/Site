@@ -567,10 +567,7 @@ body.loaded .card {
 }
 
 /* Modern Enhanced Hover States */
-.card:hover h2 {
-  transform: translateX(4px);
-  transition: transform var(--transition-fast);
-}
+/* Removed h2 transform on card hover */
 
 /* Modern Status Indicator Animations */
 /* Status indicator pulse animation removed to prevent blinking */

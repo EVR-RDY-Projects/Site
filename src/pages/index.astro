@@ -423,7 +423,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
           <h2 class="section-title">Mission</h2>
           <h1>Critical Infrastructure Defense</h1>
           <p class="hero-subhead">
-            EVR:RDY delivers the lowest-cost, scalable cybersecurity solutions for OT/ICS environments with limited budgets and resources. We combine open-source tools with vendor-grade support, pooled resources, and AI-enabled elite teams powered by Google SecOpsto reduce expense while defending the nation’s critical infrastructure from evolving cyber threats.
+            EVR:RDY delivers the lowest-cost, scalable cybersecurity solutions for OT/ICS environments with limited budgets and resources. We combine open-source tools with vendor-grade support, pooled resources, and AI-enabled elite teams powered by Google SecOps to reduce expenses while defending the nation’s critical infrastructure from evolving cyber threats.
           </p>
           <div class="hero-proof-band" data-animate="proof-band">
             <div class="hero-proof-item">
@@ -985,12 +985,10 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     .anchor-offset { scroll-margin-top: 130px; } /* slightly larger on mobile due to stacked nav */
   }
 
-  .command-brief section {
-    padding: 0 0 var(--space-xl) 0;
-  }
+
 
   .mission-hero {
-    padding-top: var(--space-md);
+    padding-top: var(--space-xl);
   }
 
   .hero-section {
@@ -1129,7 +1127,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
   /* Mission CTA block: center within remaining space below quote */
   .mission-cta-block {
     margin-top: auto;
-    margin-bottom: auto; /* equal spacing above/below inside the mission card */
+    margin-bottom: auto;
     display: grid;
     place-items: center;
     gap: var(--space-sm);
@@ -1248,8 +1246,10 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     display: grid;
     gap: var(--space-xl);
     grid-template-columns: 1fr;
-    margin: var(--space-xl) 0 var(--space-2xl);
+    margin: var(--space-xl) auto var(--space-2xl);
     max-width: 920px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .approach-card {
@@ -1260,9 +1260,13 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     border-radius: var(--radius-xl);
     padding: var(--space-xl);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .approach-card::before {
@@ -1314,6 +1318,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     border-radius: 999px;
     width: fit-content;
     margin: 0 0 var(--space-sm) 0;
+    white-space: nowrap;
   }
 
   .approach-bullets {
@@ -1414,12 +1419,114 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     display: none;
   }
 
+  /* Ensure approach content doesn't overflow horizontally */
+  .approach-card,
+  .approach-bio,
+  .approach-bio-container,
+  .approach-bio-preview,
+  .approach-bullets,
+  .approach-bullets li,
+  .approach-bio p,
+  .approach-bio-preview p {
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .approach-card h3 {
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .badge-row {
+    max-width: 100%;
+    width: fit-content;
+    min-width: 0;
+    box-sizing: border-box;
+    white-space: nowrap;
+    font-size: clamp(0.25rem, 1.5vw, 0.75rem);
+    padding: clamp(0.08rem, 0.5vw, 0.4rem) clamp(0.2rem, 1vw, 0.85rem);
+    letter-spacing: clamp(0em, 0.2vw, 0.12em);
+    line-height: 1.1;
+  }
+
   @media (max-width: 860px) {
-    .approach-grid { gap: var(--space-lg); margin: var(--space-lg) 0 var(--space-xl); }
-    .approach-card { padding: var(--space-lg); gap: var(--space-sm); }
-    .approach-card h3 { font-size: 1.3rem; }
-    .approach-bullets { gap: var(--space-sm); font-size: 0.95rem; }
-    .approach-bullets li { padding: var(--space-sm); }
+    .approach-grid { 
+      gap: var(--space-lg); 
+      margin: var(--space-lg) 0 var(--space-xl);
+      width: 100%;
+      max-width: 100%;
+    }
+    .approach-card { 
+      padding: var(--space-lg); 
+      gap: var(--space-sm);
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .approach-card {
+      padding: var(--space-md);
+      gap: var(--space-sm);
+    }
+    
+    .approach-card h3 {
+      font-size: 1.2rem;
+    }
+    
+    .approach-bullets {
+      font-size: 0.85rem;
+      gap: var(--space-xs);
+    }
+    
+    .approach-bullets li {
+      padding: var(--space-xs);
+    }
+    
+    .badge-row {
+      font-size: 0.55rem;
+      padding: 0.2rem 0.5rem;
+      letter-spacing: 0.04em;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .badge-row {
+      font-size: 0.5rem;
+      padding: 0.15rem 0.4rem;
+      letter-spacing: 0.02em;
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .badge-row {
+      font-size: 0.45rem;
+      padding: 0.12rem 0.35rem;
+      letter-spacing: 0.01em;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .badge-row {
+      font-size: 0.38rem;
+      padding: 0.08rem 0.25rem;
+      letter-spacing: 0em;
+    }
+  }
+  
+  @media (max-width: 350px) {
+    .badge-row {
+      font-size: 0.35rem;
+      padding: 0.06rem 0.2rem;
+      letter-spacing: 0em;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1431,7 +1538,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
   .split-layout,
   .section-grid {
     display: grid;
-    gap: var(--space-xl);
+    gap: var(--space-md);
     grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
     align-items: stretch;
   }
@@ -1480,15 +1587,17 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
 .split-sidecards {
   display: flex;
   flex-direction: column;
-  padding-top: var(--space-xs);
+  gap: var(--space-md);
   justify-content: flex-start; /* stack from top; we'll push the last card down */
   height: 100%;
+  margin: auto;
 }
 
 .split-sidecards > * {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin: auto;
 }
   /* Bidirectional arrow: display up/down side-by-side in oval container */
   .pipeline-arrow--bidirectional {
@@ -1537,15 +1646,23 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     .pipeline-arrow--bidirectional::after { padding-left: 3px; }
   }
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-lg);
   /* let cards size naturally; avoid forced full-height */
-}
 
-.split-sidecards .hero-flagship-card > *:last-child {
+
+.split-sidecards {
   margin-top: auto;
 }
 
+.hero-flagship-card > *:last-child {
+  margin: auto;
+}
+
   /* Resources section removed: cleanup styles */
+
+  .mission-hero .split-layout {
+    align-items: stretch;
+  }
 
   .mission-hero .split-copy--framed--mission {
     border-radius: var(--radius-xl);
@@ -1553,11 +1670,13 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-      padding: var(--space-lg);
+    padding: var(--space-lg);
+    height: auto;
+    align-self: stretch;
   }
   /* Position the quote roughly mid-gap below the facts for better visual balance */
   .mission-hero .split-copy--framed--mission .mission-quote {
-    margin-top: clamp(var(--space-md), 7vh, var(--space-2xl));
+    margin-top: auto;
   }
 
   @media (max-width: 768px) {
@@ -2186,6 +2305,13 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     .component-with-icon .component-image {
       width: 120px;
     }
+    .component-summary-overview {
+      -webkit-line-clamp: unset;
+      display: block;
+      font-size: 0.85rem;
+      overflow: visible;
+      -webkit-box-orient: initial;
+    }
   }
 
   .component-with-icon .status-indicator {
@@ -2764,16 +2890,21 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
   .team-role-tag {
     display: inline-flex;
     align-items: center;
-    padding: 0.3rem 0.75rem;
+    padding: clamp(0.1rem, 0.8vw, 0.3rem) clamp(0.3rem, 1.5vw, 0.75rem);
     border-radius: 999px;
     background: rgba(169, 214, 138, 0.18);
     color: rgba(229, 228, 216, 0.92);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
+    font-size: clamp(0.38rem, 1.8vw, 0.8rem);
+    letter-spacing: clamp(0em, 0.3vw, 0.08em);
     text-transform: uppercase;
     border: 1px solid rgba(169, 214, 138, 0.35);
     width: fit-content;
-    max-width: max-content;
+    max-width: 100%;
+    white-space: nowrap;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
   }
 
   .team-tagline {
@@ -2915,6 +3046,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
+    justify-content: center;
   }
 
   .reviewer-card {
@@ -3013,7 +3145,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
 <style>
   /* UI enhancements: spacing, dividers, contrast, animations, and responsive tweaks */
   .command-brief { gap: var(--space-xl); }
-  .command-brief section { padding: var(--space-xl) 0; position: relative; }
+  .command-brief section {position: relative; }
   .command-brief section:not(:first-child)::before {
     content: '';
     position: absolute;
@@ -3089,15 +3221,12 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
   .mission-quote-secondary[data-animate="quote"] { opacity: 0; transform: translateY(6px); }
   .mission-quote-secondary.in-view { opacity: 1; transform: translateY(0); transition: opacity .6s ease, transform .6s ease; }
 
-  .hero-flagship-card[data-animate="flagship"] { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease, box-shadow .35s ease; }
-  .hero-flagship-card.in-view { opacity: 1; transform: translateY(0); }
-
   [data-animate="proof-band"] { opacity: 0; transform: translateY(6px); }
   [data-animate="proof-band"].in-view { opacity: 1; transform: translateY(0); transition: opacity .5s ease .2s, transform .5s ease .2s; }
 
   /* Subtle hover glow and lighter shadows for performance */
   :root { --card-glow: rgba(169,214,138,0.08); }
-  .hero-flagship-card:hover, .team-card:hover, .component-subcard:hover { box-shadow: 0 12px 30px var(--card-glow); transform: translateY(-4px); }
+  .team-card:hover, .component-subcard:hover { box-shadow: 0 12px 30px var(--card-glow); transform: translateY(-4px); }
 
   /* Reduce very heavy shadows used site-wide and reuse medium shadow variable */
   :root { --shadow-md: 0 8px 20px rgba(0,0,0,0.32); }
@@ -3114,6 +3243,25 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
   /* Approach bios: animated expand/collapse */
   .approach-bio { max-height: 0; overflow: hidden; transition: max-height .36s ease, opacity .28s ease; opacity: 0; }
   .approach-bio[aria-hidden="false"] { opacity: 1; }
+  
+  /* Override for small screens - scale down content to fit */
+  @media (max-width: 450px) {
+    .approach-bio[aria-hidden="false"],
+    .team-bio[aria-hidden="false"] {
+      max-height: none !important;
+      height: auto !important;
+      overflow: visible !important;
+      transition: none !important;
+      opacity: 1 !important;
+    }
+    
+    .approach-bio[aria-hidden="true"],
+    .team-bio[aria-hidden="true"] {
+      max-height: 0 !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+    }
+  }
 
   /* Mobile responsiveness tweaks */
   @media (max-width: 768px) {
@@ -3121,6 +3269,253 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     .pipeline-flow { grid-template-columns: 1fr; }
     .pipeline-domain { padding: var(--space-md); }
     .component-subgrid { grid-template-columns: 1fr; }
+    
+    /* Smaller team role tags and badge rows on mobile */
+    .team-role-tag {
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    
+    .badge-row {
+      font-size: 0.6rem;
+      padding: 0.25rem 0.6rem;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  /* Extra small screens (450px and below) */
+  @media (max-width: 450px) {
+    .container {
+      padding-left: var(--space-xs);
+      padding-right: var(--space-xs);
+    }
+    
+    .hero-content {
+      padding: var(--space-sm);
+    }
+    
+    .split-layout,
+    .section-grid {
+      gap: var(--space-sm);
+      grid-template-columns: 1fr !important;
+    }
+    
+    .split-copy--framed,
+    .split-copy--framed--mission {
+      padding: var(--space-sm);
+    }
+    
+    .approach-card,
+    .hero-flagship-card,
+    .team-card,
+    .team-card--stacked {
+      padding: var(--space-sm);
+    }
+    
+    /* Override all minmax grids to single column */
+    .hero-proof-band,
+    .engage-grid,
+    .team-grid,
+    .component-subgrid,
+    .reviewer-grid,
+    .partner-grid,
+    .contributor-grid {
+      grid-template-columns: 1fr !important;
+    }
+    
+    /* Smaller team photos on mobile */
+    .team-photo {
+      width: 80px !important;
+      height: 80px !important;
+      min-width: 80px;
+      min-height: 80px;
+      max-width: 80px;
+      max-height: 80px;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      aspect-ratio: 1 / 1;
+    }
+    
+    .team-header {
+      gap: var(--space-xs);
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      max-width: 100%;
+    }
+    
+    .team-info {
+      min-width: 0;
+      flex: 1 1 auto;
+      max-width: 100%;
+      overflow: visible;
+    }
+    
+    .team-avatar {
+      flex: 0 0 80px;
+      width: 80px;
+      height: 80px;
+      min-width: 80px;
+      min-height: 80px;
+    }
+    
+    .team-name {
+      font-size: 1rem;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    .team-card,
+    .team-card--stacked {
+      max-width: 100%;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    
+    .team-bio p,
+    .team-tagline {
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    
+    .team-role-tag {
+      max-width: calc(100% - 90px);
+    }
+    
+    .badge-row {
+      font-size: 0.4rem;
+      padding: 0.1rem 0.25rem;
+      letter-spacing: 0em;
+      line-height: 1.1;
+    }
+    
+    .approach-card .badge-row {
+      font-size: 0.4rem !important;
+      padding: 0.1rem 0.25rem !important;
+      letter-spacing: 0em !important;
+    }
+    
+    /* Show full component summary text on small screens */
+    .component-summary-overview {
+      -webkit-line-clamp: unset;
+      display: block;
+      font-size: 0.8rem;
+      overflow: visible;
+    }
+    
+    .component-compact {
+      padding: var(--space-xs);
+    }
+    
+    .component-with-icon .component-image {
+      width: 100px;
+    }
+    
+    /* Approach cards on very small screens */
+    .approach-card {
+      padding: var(--space-sm);
+      gap: var(--space-xs);
+    }
+    
+    .approach-card h3 {
+      font-size: 1rem;
+    }
+    
+    .approach-bullets {
+      font-size: 0.75rem;
+      gap: var(--space-2xs);
+      margin: var(--space-xs) 0;
+    }
+    
+    .approach-bullets li {
+      padding: var(--space-2xs) var(--space-xs);
+      font-size: 0.75rem;
+    }
+    
+    .approach-bio p,
+    .approach-bio-preview p {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      margin: var(--space-xs) 0;
+    }
+    
+    .approach-bio-container {
+      max-width: 100%;
+      overflow: visible;
+      box-sizing: border-box;
+    }
+    
+    .approach-bio-preview {
+      max-width: 100%;
+      overflow: visible;
+      box-sizing: border-box;
+    }
+    
+    /* Same for team bios */
+    .team-bio,
+    .team-bio[aria-hidden="false"],
+    .team-bio[aria-hidden="true"] {
+      max-height: none !important;
+      height: auto !important;
+      overflow: visible !important;
+      opacity: 1 !important;
+      display: block !important;
+    }
+    
+    .team-bio p {
+      font-size: 0.7rem !important;
+      line-height: 1.4;
+    }
+    
+    .approach-bio p {
+      font-size: 0.8rem;
+    }
+    
+    /* Ensure team bio sections display fully too */
+    .team-bio,
+    .team-bio[aria-hidden="false"],
+    .team-bio[aria-hidden="true"] {
+      max-height: none !important;
+      overflow: visible !important;
+      opacity: 1 !important;
+      display: block !important;
+    }
+    
+    .team-bio[hidden] {
+      display: none !important;
+    }
+    
+    h1 {
+      font-size: 1.75rem;
+    }
+    
+    h2 {
+      font-size: 1.4rem;
+    }
+    
+    h3 {
+      font-size: 1.1rem;
+    }
+    
+    .cta-btn {
+      font-size: 0.85rem;
+      padding: 0.7rem 1.2rem;
+    }
+    
+    /* Ensure images and media don't overflow */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    /* Prevent text overflow */
+    * {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
   }
 
   /* Performance hint: reduce animation work on reduced-motion preference */
@@ -3145,15 +3540,27 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     document.querySelectorAll('[data-animate]').forEach((el) => io.observe(el));
 
     // Animate details (.component-compact) open/close by adjusting maxHeight
-    document.querySelectorAll('details.component-compact').forEach((details) => {
+    // Accordion behavior: only one section open at a time
+    const allDetails = document.querySelectorAll('details.component-compact');
+    allDetails.forEach((details) => {
       const body = details.querySelector('.component-body');
       if (!body) return;
       // Initialize
       body.style.maxHeight = details.open ? body.scrollHeight + 'px' : '0px';
       details.addEventListener('toggle', () => {
         if (details.open) {
+          // Close all other details elements
+          allDetails.forEach((otherDetails) => {
+            if (otherDetails !== details && otherDetails.open) {
+              otherDetails.open = false;
+            }
+          });
           // expand to content height
           body.style.maxHeight = body.scrollHeight + 'px';
+          // Scroll the opened section into view
+          setTimeout(() => {
+            details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
         } else {
           // collapse
           body.style.maxHeight = '0px';
@@ -3162,6 +3569,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     });
 
     // Team bios: animated expand/collapse using aria-hidden and maxHeight
+    // Accordion behavior: only one bio open at a time
     const bioToggles = document.querySelectorAll('[data-bio-toggle]');
     bioToggles.forEach((button) => {
       const id = button.getAttribute('data-bio-toggle');
@@ -3179,12 +3587,35 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
         const expanded = button.getAttribute('aria-expanded') === 'true';
         button.setAttribute('aria-expanded', (!expanded).toString());
         if (!expanded) {
+          // Close all other bio sections
+          bioToggles.forEach((otherButton) => {
+            if (otherButton !== button) {
+              const otherId = otherButton.getAttribute('data-bio-toggle');
+              const otherRegion = document.getElementById(`bio-${otherId}`);
+              const otherShowLessBtn = document.querySelector(`[data-bio-collapse="${otherId}"]`);
+              if (otherRegion && otherButton.getAttribute('aria-expanded') === 'true') {
+                otherRegion.setAttribute('aria-hidden', 'true');
+                otherRegion.style.maxHeight = '0px';
+                otherRegion.hidden = true;
+                otherButton.setAttribute('aria-expanded', 'false');
+                otherButton.style.display = 'inline-block';
+                if (otherShowLessBtn) otherShowLessBtn.style.display = 'none';
+              }
+            }
+          });
           // expand
           region.hidden = false;
           region.setAttribute('aria-hidden', 'false');
-          region.style.maxHeight = region.scrollHeight + 'px';
+          region.style.maxHeight = '9999px';
+          setTimeout(() => {
+            region.style.maxHeight = region.scrollHeight + 'px';
+          }, 50);
           button.style.display = 'none';
           if (showLessBtn) showLessBtn.style.display = 'inline-block';
+          // Scroll the parent card into view
+          setTimeout(() => {
+            button.closest('.team-card, .team-card--stacked')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
         }
       });
       
@@ -3202,6 +3633,7 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
     });
 
     // Approach bios: animated expand/collapse using aria-hidden and maxHeight
+    // Accordion behavior: only one approach section open at a time
     const approachToggles = document.querySelectorAll('[data-approach-toggle]');
     approachToggles.forEach((button) => {
       const id = button.getAttribute('data-approach-toggle');
@@ -3219,12 +3651,35 @@ const humorAside = 'The hardest steel is forged in the intense heat of the hotte
         const expanded = button.getAttribute('aria-expanded') === 'true';
         button.setAttribute('aria-expanded', (!expanded).toString());
         if (!expanded) {
+          // Close all other approach sections
+          approachToggles.forEach((otherButton) => {
+            if (otherButton !== button) {
+              const otherId = otherButton.getAttribute('data-approach-toggle');
+              const otherRegion = document.getElementById(`bio-${otherId}`);
+              const otherShowLessBtn = document.querySelector(`[data-approach-collapse="${otherId}"]`);
+              if (otherRegion && otherButton.getAttribute('aria-expanded') === 'true') {
+                otherRegion.setAttribute('aria-hidden', 'true');
+                otherRegion.style.maxHeight = '0px';
+                otherRegion.hidden = true;
+                otherButton.setAttribute('aria-expanded', 'false');
+                otherButton.style.display = 'inline-block';
+                if (otherShowLessBtn) otherShowLessBtn.style.display = 'none';
+              }
+            }
+          });
           // expand
           region.hidden = false;
           region.setAttribute('aria-hidden', 'false');
-          region.style.maxHeight = region.scrollHeight + 'px';
+          region.style.maxHeight = '9999px';
+          setTimeout(() => {
+            region.style.maxHeight = region.scrollHeight + 'px';
+          }, 50);
           button.style.display = 'none';
           if (showLessBtn) showLessBtn.style.display = 'inline-block';
+          // Scroll the parent card into view
+          setTimeout(() => {
+            button.closest('.approach-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
         }
       });
       
